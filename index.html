@@ -11,21 +11,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg:#030303;
-  --bg-raised:#0a0a0a;
-  --text:#f5f5f5;
-  --muted:rgba(255,255,255,0.50);
+:root{
+  --bg:#020408;
+  --bg-raised:#0a0f1a;
+  --text:#f5f7fb;
+  --muted:rgba(255,255,255,0.55);
   --muted-soft:rgba(255,255,255,0.25);
-  --border:rgba(255,255,255,0.06);
-  --border-hi:rgba(255,255,255,0.15);
+  --border:rgba(255,255,255,0.08);
+  --border-hi:rgba(255,255,255,0.18);
   --max:1200px;
   --mono:'IBM Plex Mono', monospace;
-  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
-  --ease-out:cubic-bezier(0.16,1,0.3,1);
 }
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;}
+
 body{
   font-family:'Inter',system-ui,-apple-system,sans-serif;
   background:var(--bg);
@@ -38,11 +37,12 @@ body{
 
 /* Navigation */
 .site-nav{
-  position:fixed;top:0;left:0;right:0;
+  position:fixed;
+  top:0;left:0;right:0;
   z-index:100;
   border-bottom:1px solid var(--border);
-  background:rgba(3,3,3,0.85);
-  backdrop-filter:blur(20px);
+  background:rgba(2,4,8,0.75);
+  backdrop-filter:blur(18px);
 }
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
 .nav-wordmark{
@@ -66,14 +66,39 @@ body{
 
 /* Hero */
 .hero{
+  position:relative;
   min-height:100vh;
   display:flex;
   align-items:center;
+  background:url("hero.png") center center / cover no-repeat;
+  overflow:hidden;
 }
+
+/* Blue to Black Gradient Overlay */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(115deg,
+      rgba(6,18,40,0.98) 0%,
+      rgba(8,20,48,0.92) 35%,
+      rgba(3,8,20,0.85) 65%,
+      rgba(0,0,0,0.96) 100%
+    ),
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size:auto, 80px 80px, 80px 80px;
+  pointer-events:none;
+}
+
 .hero-content{
+  position:relative;
+  z-index:2;
   max-width:840px;
   padding:160px 0 120px;
 }
+
 .eyebrow{
   font-family:var(--mono);
   font-size:11px;
@@ -82,21 +107,28 @@ body{
   color:var(--muted);
   margin-bottom:32px;
 }
+
 .hero h1{
   font-size:clamp(40px,5vw,64px);
   font-weight:300;
   line-height:1.08;
   margin-bottom:28px;
 }
-.hero h1 em{font-style:normal;font-weight:500;}
+
+.hero h1 em{
+  font-style:normal;
+  font-weight:500;
+}
+
 .hero p{
   max-width:600px;
   font-size:18px;
   font-weight:300;
-  color:rgba(255,255,255,0.85);
+  color:rgba(255,255,255,0.88);
   line-height:1.8;
-  margin-bottom:40px;
+  margin-bottom:36px;
 }
+
 .positioning-line{
   font-family:var(--mono);
   font-size:11px;
@@ -105,7 +137,9 @@ body{
   color:var(--muted);
   margin-bottom:48px;
 }
+
 .hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
+
 .cta{
   padding:14px 28px;
   font-family:var(--mono);
@@ -114,32 +148,43 @@ body{
   text-decoration:none;
   border:1px solid var(--border-hi);
   color:var(--text);
+  transition:all 0.25s ease;
 }
+
 .cta.primary{
   background:var(--text);
   color:var(--bg);
 }
 
+.cta:hover{
+  transform:translateY(-2px);
+}
+
 /* Content */
 .content-section{padding:120px 0;}
+
 .lead-text{
   max-width:720px;
   font-size:22px;
   font-weight:300;
   line-height:1.6;
-  color:rgba(255,255,255,0.85);
+  color:rgba(255,255,255,0.88);
 }
+
 .signal-grid{
   margin-top:48px;
   border:1px solid var(--border);
   background:var(--bg-raised);
 }
+
 .signal-row{
   display:grid;
   grid-template-columns:56px 1fr 1fr;
   border-bottom:1px solid var(--border);
 }
+
 .signal-row:last-child{border-bottom:none;}
+
 .signal-index{
   display:flex;
   align-items:center;
@@ -149,12 +194,14 @@ body{
   font-size:10px;
   color:var(--muted-soft);
 }
+
 .signal-name{
   padding:18px 24px;
   font-family:var(--mono);
   font-size:12px;
   text-transform:uppercase;
 }
+
 .signal-desc{
   padding:18px 24px 18px 0;
   font-family:var(--mono);
@@ -163,34 +210,13 @@ body{
   text-align:right;
 }
 
-/* Spec */
-.spec{border-top:1px solid var(--border);}
-.spec-row{
-  display:grid;
-  grid-template-columns:240px 1fr;
-  gap:64px;
-  padding:80px 0;
-  border-bottom:1px solid var(--border);
-}
-.spec-label{
-  font-family:var(--mono);
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:0.1em;
-  color:var(--muted);
-}
-.spec-body p{
-  max-width:640px;
-  font-size:18px;
-  font-weight:300;
-  line-height:1.8;
-}
-
 /* Responsive */
 @media(max-width:768px){
   .container{padding:0 24px;}
   .nav-links{display:none;}
-  .spec-row{grid-template-columns:1fr;gap:24px;}
+  .hero-content{padding:120px 0 80px;}
+  .signal-row{grid-template-columns:40px 1fr;}
+  .signal-desc{text-align:left;padding:0 24px 18px;}
 }
 </style>
 </head>
@@ -222,73 +248,6 @@ body{
     <div class="hero-actions">
       <a href="mailto:Craig@neraium.com" class="cta primary">Request Access</a>
       <a href="#" class="cta">Documentation</a>
-    </div>
-  </div>
-</section>
-
-<section class="content-section">
-  <div class="container">
-    <p class="lead-text">
-      Built for operators responsible for high consequence water infrastructure.
-      Neraium does not replace monitoring. It provides earlier structural insight so remediation
-      can occur before thresholds trigger alarms.
-    </p>
-
-    <div class="signal-grid">
-      <div class="signal-row">
-        <div class="signal-index">01</div>
-        <div class="signal-name">Pressure Differential</div>
-        <div class="signal-desc">Flow restriction early warning</div>
-      </div>
-      <div class="signal-row">
-        <div class="signal-index">02</div>
-        <div class="signal-name">Flow Irregularity</div>
-        <div class="signal-desc">Pump degradation onset</div>
-      </div>
-      <div class="signal-row">
-        <div class="signal-index">03</div>
-        <div class="signal-name">Chemical Variance</div>
-        <div class="signal-desc">Contamination signature</div>
-      </div>
-      <div class="signal-row">
-        <div class="signal-index">04</div>
-        <div class="signal-name">Thermal Drift</div>
-        <div class="signal-desc">Heat exchange instability</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="spec" id="platform">
-  <div class="container">
-    <div class="spec-row">
-      <div class="spec-label">Systemic Modeling</div>
-      <div class="spec-body">
-        <p>
-          The system learns the behavioral fingerprint of each asset. Normal operational
-          variance is separated from persistent structural degradation.
-        </p>
-      </div>
-    </div>
-
-    <div class="spec-row">
-      <div class="spec-label">Topology Aware Intelligence</div>
-      <div class="spec-body">
-        <p>
-          Infrastructure components exist in relationship to one another. Neraium maps
-          those relationships so degradation is interpreted in system context rather than in isolation.
-        </p>
-      </div>
-    </div>
-
-    <div class="spec-row">
-      <div class="spec-label">Silent Operation</div>
-      <div class="spec-body">
-        <p>
-          Neraium operates quietly. Insights surface only when confidence thresholds are met.
-          Decision authority remains with the operator.
-        </p>
-      </div>
     </div>
   </div>
 </section>
