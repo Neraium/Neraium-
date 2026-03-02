@@ -9,209 +9,139 @@
 
 <style>
 :root {
-  --black: #05070d;
-  --navy: #0c1422;
-  --deep: #132338;
-  --accent: #2e6df6;
-  --text: #ffffff;
-  --muted: rgba(255,255,255,0.72);
-  --faint: rgba(255,255,255,0.45);
-  --border: rgba(255,255,255,0.08);
-  --max: 1200px;
+  --black:#05070d;
+  --navy:#0c1422;
+  --deep:#132338;
+  --accent:#1e5df0;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,0.72);
+  --faint:rgba(255,255,255,0.45);
+  --border:rgba(255,255,255,0.08);
+  --max:1100px;
 }
 
-* { box-sizing: border-box; }
+*{box-sizing:border-box;}
 
-html, body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(180deg, var(--black) 0%, var(--navy) 45%, var(--deep) 100%);
-  color: var(--text);
-  font-family: 'Sora', sans-serif;
-  -webkit-font-smoothing: antialiased;
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--black) 0%,var(--navy) 45%,var(--deep) 100%);
+  color:var(--text);
+  font-family:'Sora',sans-serif;
+  line-height:1.9;
+  -webkit-font-smoothing:antialiased;
 }
 
-.container {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 40px;
+.container{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 40px;
 }
 
-header {
-  padding: 48px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+header{
+  padding:48px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.logo {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-weight: 600;
+.logo{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
 }
 
-nav {
-  display: flex;
-  gap: 36px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+nav{
+  display:flex;
+  gap:36px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
 }
 
-nav a {
-  color: var(--muted);
-  text-decoration: none;
+nav a{
+  color:var(--muted);
+  text-decoration:none;
 }
 
-nav a:hover { color: var(--text); }
+nav a:hover{color:var(--text);}
 
-.hero {
-  padding: 180px 0 140px;
+.hero{
+  padding:180px 0 140px;
 }
 
-.hero h1 {
-  font-size: clamp(60px, 8vw, 110px);
-  line-height: 0.95;
-  font-weight: 700;
-  margin-bottom: 50px;
-  letter-spacing: -0.03em;
+.hero h1{
+  font-size:clamp(60px,8vw,110px);
+  line-height:0.95;
+  font-weight:700;
+  margin-bottom:50px;
+  letter-spacing:-0.03em;
 }
 
-.hero p {
-  font-size: 24px;
-  max-width: 1000px;
-  color: var(--muted);
-  line-height: 1.85;
-  margin-bottom: 60px;
+.hero p{
+  font-size:24px;
+  max-width:1000px;
+  color:var(--muted);
+  margin-bottom:60px;
 }
 
-.signal {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 60px;
+.signal{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:60px;
 }
 
-.cta {
-  display: inline-block;
-  padding: 18px 46px;
-  background: var(--accent);
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 4px;
+.cta{
+  display:inline-block;
+  padding:18px 46px;
+  background:var(--accent);
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  border-radius:4px;
 }
 
-.section {
-  padding: 160px 0;
-  border-top: 1px solid var(--border);
+.section{
+  padding:160px 0;
+  border-top:1px solid var(--border);
 }
 
-.section h2 {
-  font-size: clamp(42px, 6vw, 72px);
-  margin-bottom: 40px;
-  letter-spacing: -0.02em;
+.section h2{
+  font-size:clamp(42px,6vw,72px);
+  margin-bottom:40px;
+  letter-spacing:-0.02em;
 }
 
-.section p {
-  font-size: 22px;
-  max-width: 1050px;
-  color: var(--muted);
-  line-height: 1.9;
+.section p{
+  font-size:22px;
+  max-width:1050px;
+  color:var(--muted);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 60px;
-  margin-top: 80px;
+.footer{
+  padding:120px 0;
+  border-top:1px solid var(--border);
+  text-align:center;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--faint);
 }
 
-.block h3 {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  color: var(--accent);
-}
-
-.block p {
-  font-size: 20px;
-  color: var(--muted);
-  line-height: 1.9;
-}
-
-.form {
-  margin-top: 60px;
-  max-width: 700px;
-}
-
-.form label {
-  display: block;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  color: var(--accent);
-}
-
-.form input,
-.form textarea {
-  width: 100%;
-  padding: 16px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  color: white;
-  font-size: 16px;
-  margin-bottom: 24px;
-}
-
-.form button {
-  padding: 18px 46px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.contact-info {
-  margin-top: 80px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 14px;
-  line-height: 2.1;
-  color: var(--muted);
-}
-
-footer {
-  padding: 120px 0;
-  border-top: 1px solid var(--border);
-  text-align: center;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--faint);
-  text-transform: uppercase;
-}
-
-@media (max-width: 768px) {
-  .container { padding: 0 24px; }
-  header { flex-direction: column; gap: 20px; }
-  .hero { padding: 120px 0 100px; }
-  .section { padding: 100px 0; }
+@media(max-width:768px){
+  .container{padding:0 24px;}
+  header{flex-direction:column;gap:20px;}
+  .hero{padding:120px 0 100px;}
+  .section{padding:100px 0;}
 }
 </style>
 </head>
@@ -222,8 +152,7 @@ footer {
 <header>
 <div class="logo">NERAIUM</div>
 <nav>
-<a href="#context">Context</a>
-<a href="#model">Model</a>
+<a href="technical.html">Technical</a>
 <a href="#contact">Contact</a>
 </nav>
 </header>
@@ -231,100 +160,44 @@ footer {
 
 <section class="hero">
 <div class="container">
-<h1>
-Infrastructure Is Becoming Intelligence-Dependent.
-</h1>
-
+<h1>Infrastructure Is Becoming Intelligence-Dependent.</h1>
 <p>
 High-consequence water systems now operate within dense telemetry environments.
 As instrumentation expands, analytical capability expands with it.
-Without disciplined separation, intelligence collapses into automation risk.
-Neraium defines the structural boundary between signal and authority.
+Without structural separation, intelligence collapses into automation risk.
+Neraium defines the boundary between signal and authority.
 </p>
-
-<div class="signal">
-Read-Only · Non-Actuating · Governed Outputs
-</div>
-
-<a class="cta" href="#contact">Engage</a>
+<div class="signal">Read-Only · Non-Actuating · Governed Outputs</div>
+<a class="cta" href="technical.html">View Architecture</a>
 </div>
 </section>
 
-<section class="section" id="context">
+<section class="section">
 <div class="container">
-<h2>The Operational Reality</h2>
+<h2>Institutional Shift</h2>
 <p>
-Deterioration is rarely instantaneous.
-It emerges as sustained multivariate drift across temperature, flow, pressure, and energy signals.
-By the time traditional thresholds trigger, cost and exposure have already compounded.
-Institutions require earlier signal without surrendering control.
+Deterioration rarely appears as immediate failure. It emerges as sustained multivariate drift across temperature, flow, pressure, and energy signals.
+Traditional thresholds respond late.
+Institutions require earlier classification without surrendering control.
+Neraium operates as a read-only intelligence layer, preserving operational authority while elevating visibility.
 </p>
-</div>
-</section>
-
-<section class="section" id="model">
-<div class="container">
-<h2>The Neraium Model</h2>
-
-<div class="grid">
-<div class="block">
-<h3>Early Deterioration Classification</h3>
-<p>
-Persistent structural deviation is identified across correlated signals before reactive events occur.
-</p>
-</div>
-
-<div class="block">
-<h3>Read-Only Architecture</h3>
-<p>
-Neraium does not actuate, override, or modify operational systems.
-Authority remains with the operator.
-</p>
-</div>
-
-<div class="block">
-<h3>Governed Intelligence Layer</h3>
-<p>
-Outputs are structured for audit environments, oversight bodies, and liability-sensitive infrastructure.
-</p>
-</div>
-</div>
 </div>
 </section>
 
 <section class="section" id="contact">
 <div class="container">
 <h2>Engage</h2>
-
-<form class="form" action="https://formspree.io/f/xzdalpzy" method="POST">
-
-<label>Name</label>
-<input type="text" name="name" required>
-
-<label>Email</label>
-<input type="email" name="email" required>
-
-<label>Organization</label>
-<input type="text" name="organization">
-
-<label>Message</label>
-<textarea name="message" rows="5" required></textarea>
-
-<button type="submit">Submit</button>
-</form>
-
-<div class="contact-info">
-Craig Curtis<br>
-Founder & Chief Executive Officer<br><br>
-Craig@neraium.com<br>
+<p>
+Craig Curtis  
+Founder & Chief Executive Officer  
+Craig@neraium.com  
 602-833-7441
-</div>
-
+</p>
 </div>
 </section>
 
-<footer>
-© 2026 Neraium
+<footer class="footer">
+© Neraium
 </footer>
 
 </body>
