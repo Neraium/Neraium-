@@ -37,31 +37,30 @@ body{
     height:100%;
     pointer-events:none;
     z-index:0;
-    opacity:0.18;
+    opacity:0.14;
 }
 
 .drift-line{
     fill:none;
     stroke:var(--accent);
     stroke-linecap:round;
-    stroke-width:3;
+    stroke-width:2;
 }
 
 .drift-line.primary{
-    stroke-dasharray:10 12;
-    animation:driftMove 18s linear infinite;
+    stroke-dasharray:4 10;
+    animation:driftMove 24s linear infinite;
 }
 
 .drift-line.secondary{
-    stroke-dasharray:6 14;
-    animation:driftMove 28s linear infinite;
+    stroke-dasharray:3 14;
+    animation:driftMove 36s linear infinite;
     opacity:0.6;
 }
 
 @keyframes driftMove{
     from { stroke-dashoffset:0; }
-    to { stroke-dashoffset:-400; }
-}
+    to { stroke-dashoffset:-300; }
 }
 
 /* Layout */
@@ -232,13 +231,21 @@ h1{
 </body>
 <svg class="drift-bg" viewBox="0 0 1440 900" preserveAspectRatio="none">
     <path class="drift-line primary"
-        d="M0 500
-           C250 420, 450 580, 700 500
-           C950 420, 1150 580, 1400 500
-           C1650 420, 1850 580, 2100 500" />
-    
+        d="M0 520
+           L200 518
+           L400 522
+           L600 519
+           L800 521
+           L1000 517
+           L1200 520
+           L1440 518" />
+
     <path class="drift-line secondary"
         d="M0 600
-           C300 520, 600 680, 900 600
-           C1200 520, 1500 680, 1800 600" />
+           L240 603
+           L480 598
+           L720 601
+           L960 597
+           L1200 602
+           L1440 600" />
 </svg>
