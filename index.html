@@ -9,7 +9,7 @@
 
 <style>
 :root {
-  --black: #05070d;
+  --black: #04070d;
   --navy: #0b1422;
   --deep: #0f213d;
   --accent: #00d9ff;
@@ -17,7 +17,7 @@
   --text-muted: rgba(255,255,255,0.72);
   --text-faint: rgba(255,255,255,0.45);
   --border: rgba(0,217,255,0.18);
-  --glass: rgba(255,255,255,0.04);
+  --glass: rgba(255,255,255,0.035);
   --max: 1200px;
 }
 
@@ -32,8 +32,8 @@ html, body {
 body {
   font-family: 'Sora', sans-serif;
   background:
-    radial-gradient(1200px 600px at 50% -15%, rgba(0,217,255,0.15), transparent 60%),
-    linear-gradient(180deg, var(--black) 0%, var(--navy) 45%, var(--deep) 100%);
+    radial-gradient(1000px 600px at 50% -10%, rgba(0,217,255,0.15), transparent 60%),
+    linear-gradient(180deg, var(--black) 0%, var(--navy) 50%, var(--deep) 100%);
   color: var(--text);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -59,7 +59,6 @@ header {
   background: linear-gradient(135deg, var(--accent), #00b8ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 nav {
@@ -75,7 +74,6 @@ nav {
 nav a {
   color: var(--text-muted);
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
 nav a:hover {
@@ -83,15 +81,14 @@ nav a:hover {
 }
 
 .hero {
-  padding: 160px 0 120px;
+  padding: 170px 0 120px;
 }
 
 .hero h1 {
   font-family: 'Abril Fatface', serif;
-  font-size: clamp(52px, 8vw, 96px);
+  font-size: clamp(56px, 8vw, 100px);
   line-height: 1;
-  margin: 0 0 30px 0;
-  letter-spacing: -0.02em;
+  margin: 0 0 28px 0;
 }
 
 .hero h1 span {
@@ -100,40 +97,37 @@ nav a:hover {
 }
 
 .hero p {
-  font-size: 20px;
+  font-size: 21px;
   color: var(--text-muted);
-  max-width: 820px;
-  margin: 0 0 54px 0;
+  max-width: 860px;
+  margin-bottom: 36px;
 }
 
-.cta-group {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+.signal-line {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 50px;
 }
 
 .cta {
-  padding: 18px 42px;
+  padding: 18px 44px;
   background: var(--accent);
   color: var(--black);
   text-decoration: none;
-  border-radius: 10px;
+  border-radius: 8px;
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.05em;
   font-family: 'IBM Plex Mono', monospace;
   text-transform: uppercase;
   border: 2px solid var(--accent);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.cta:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 60px rgba(0, 217, 255, 0.35);
 }
 
 .section {
-  padding: 140px 0;
+  padding: 150px 0;
   border-top: 1px solid rgba(255,255,255,0.06);
 }
 
@@ -143,38 +137,29 @@ nav a:hover {
 
 .section h2 {
   font-family: 'Abril Fatface', serif;
-  font-size: clamp(42px, 6vw, 72px);
-  margin: 0 0 40px 0;
+  font-size: clamp(44px, 6vw, 74px);
+  margin-bottom: 40px;
 }
 
 .section p {
   font-size: 20px;
   color: var(--text-muted);
-  max-width: 960px;
+  max-width: 950px;
   line-height: 1.8;
-  margin: 0;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 40px;
   margin-top: 80px;
 }
 
 .card {
   background: var(--glass);
-  border: 2px solid var(--border);
-  border-radius: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
   padding: 50px;
-  backdrop-filter: blur(12px);
-  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-}
-
-.card:hover {
-  border-color: var(--accent);
-  background: rgba(0,217,255,0.06);
-  transform: translateY(-6px);
 }
 
 .card h3 {
@@ -182,31 +167,22 @@ nav a:hover {
   font-size: 14px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin: 0 0 20px 0;
+  margin-bottom: 20px;
   color: var(--accent);
 }
 
 .card p {
   font-size: 17px;
   color: var(--text-muted);
-  margin: 0;
   line-height: 1.8;
 }
 
-.contact-block {
-  margin-top: 60px;
-  padding: 40px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: rgba(0,217,255,0.04);
+.contact {
+  margin-top: 80px;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 14px;
-  line-height: 1.9;
+  line-height: 2;
   color: var(--text-muted);
-}
-
-.contact-block strong {
-  color: var(--text);
 }
 
 .footer {
@@ -236,7 +212,7 @@ nav a:hover {
   <header>
     <div class="logo">NERAIUM</div>
     <nav>
-      <a href="#now">Why Now</a>
+      <a href="#why">Why Now</a>
       <a href="#model">Model</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -247,32 +223,33 @@ nav a:hover {
   <div class="container">
     <h1>
       <span>Systemic</span>
-      Infrastructure Intelligence
+      Infrastructure Intelligence<br>
+      for High-Consequence Water Systems
     </h1>
     <p>
-      Detect sustained deterioration before failure.
-      A read-only intelligence layer for high-consequence water systems, producing governed outputs institutions can trust.
+      Detect sustained deterioration before failure. A read-only intelligence layer that produces governed outputs institutions can rely on.
     </p>
 
-    <div class="cta-group">
-      <a class="cta" href="mailto:Craig@neraium.com">Start Discussion</a>
+    <div class="signal-line">
+      READ-ONLY · NON-ACTUATING · GOVERNED OUTPUTS
     </div>
+
+    <a class="cta" href="mailto:Craig@neraium.com">Start Discussion</a>
   </div>
 </section>
 
-<section class="section alt" id="now">
+<section class="section alt" id="why">
   <div class="container">
     <h2>Why It Matters Now</h2>
     <p>
-      Undetected deterioration compounds cost, inefficiency, and exposure long before failure occurs.
-      As infrastructure digitizes, institutions require intelligence that is independent from operational control and defensible under review.
+      Undetected deterioration compounds cost, inefficiency, and exposure long before failure occurs. As infrastructure digitizes, institutions require intelligence that is independent from operational control and defensible under review.
     </p>
   </div>
 </section>
 
 <section class="section" id="model">
   <div class="container">
-    <h2>How It Works in Practice</h2>
+    <h2>How It Works</h2>
 
     <div class="grid">
       <div class="card">
@@ -285,15 +262,14 @@ nav a:hover {
       <div class="card">
         <h3>Read-Only Boundary</h3>
         <p>
-          Neraium does not actuate, control, or modify infrastructure.
-          Authority remains with operators.
+          Neraium does not actuate, control, or modify infrastructure. Authority remains with operators.
         </p>
       </div>
 
       <div class="card">
         <h3>Governed Intelligence</h3>
         <p>
-          Structured, traceable classifications designed for institutional review, oversight, and liability environments.
+          Structured classifications designed for institutional review, oversight, and liability environments.
         </p>
       </div>
     </div>
@@ -304,10 +280,10 @@ nav a:hover {
   <div class="container">
     <h2>Contact</h2>
 
-    <div class="contact-block">
-      <strong>Craig Curtis</strong><br>
-      Founder / CEO<br>
-      <a href="mailto:Craig@neraium.com" style="color: var(--accent); text-decoration: none;">Craig@neraium.com</a><br>
+    <div class="contact">
+      Craig Curtis<br>
+      Founder & Chief Executive Officer<br><br>
+      Craig@neraium.com<br>
       602-833-7441
     </div>
   </div>
