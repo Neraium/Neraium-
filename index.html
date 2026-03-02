@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neraium | Systemic Infrastructure Intelligence</title>
-<meta name="description" content="Neraium defines systemic infrastructure intelligence for live telemetry environments.">
+<meta name="description" content="Neraium provides read-only systemic infrastructure intelligence for live water telemetry environments.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,477 +12,185 @@
 
 <style>
 :root {
-  --bg:           #030303;
-  --bg-raised:    #0a0a0a;
-  --text:         #f5f5f5;
-  --muted:        rgba(255,255,255,0.50);
-  --muted-soft:   rgba(255,255,255,0.25);
-  --accent:       #ffffff;
-  --border:       rgba(255,255,255,0.06);
-  --border-hi:    rgba(255,255,255,0.15);
-  --max:          1200px;
-  --mono:         'IBM Plex Mono', monospace;
-  --ease:         cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --bg:#030303;
+  --bg-raised:#0a0a0a;
+  --text:#f5f5f5;
+  --muted:rgba(255,255,255,0.50);
+  --muted-soft:rgba(255,255,255,0.25);
+  --border:rgba(255,255,255,0.06);
+  --border-hi:rgba(255,255,255,0.15);
+  --max:1200px;
+  --mono:'IBM Plex Mono', monospace;
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
 
-.container {
-  width: 100%;
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 48px;
-}
+.container{max-width:var(--max);margin:0 auto;padding:0 48px;}
 
 /* Navigation */
-.site-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  border-bottom: 1px solid var(--border);
-  background: rgba(3,3,3,0.85);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  transition: border-color 0.3s var(--ease);
+.site-nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  border-bottom:1px solid var(--border);
+  background:rgba(3,3,3,0.85);
+  backdrop-filter:blur(20px);
 }
-
-.site-nav:hover {
-  border-color: rgba(255,255,255,0.10);
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-wordmark{
+  font-family:var(--mono);
+  font-size:13px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--text);
+  text-decoration:none;
 }
-
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
+.nav-links{display:flex;gap:40px;list-style:none;}
+.nav-links a{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-decoration:none;
 }
-
-.nav-wordmark {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text);
-  text-decoration: none;
-  position: relative;
-  padding: 8px 0;
-}
-
-.nav-wordmark::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--accent);
-  transition: width 0.4s var(--ease-out);
-}
-
-.nav-wordmark:hover::after {
-  width: 100%;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  position: relative;
-  padding: 8px 0;
-  transition: color 0.3s var(--ease);
-}
-
-.nav-links a::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.4s var(--ease-out);
-}
-
-.nav-links a:hover {
-  color: var(--text);
-}
-
-.nav-links a:hover::before {
-  transform: scaleX(1);
-  transform-origin: left;
-}
+.nav-links a:hover{color:var(--text);}
 
 /* Hero */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+}
+.hero-content{
+  max-width:840px;
+  padding:160px 0 120px;
+}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:32px;
+}
+.hero h1{
+  font-size:clamp(40px,5vw,64px);
+  font-weight:300;
+  line-height:1.08;
+  margin-bottom:28px;
+}
+.hero h1 em{font-style:normal;font-weight:500;}
+.hero p{
+  max-width:600px;
+  font-size:18px;
+  font-weight:300;
+  color:rgba(255,255,255,0.85);
+  line-height:1.8;
+  margin-bottom:40px;
+}
+.positioning-line{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:48px;
+}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
+.cta{
+  padding:14px 28px;
+  font-family:var(--mono);
+  font-size:11px;
+  text-transform:uppercase;
+  text-decoration:none;
+  border:1px solid var(--border-hi);
+  color:var(--text);
+}
+.cta.primary{
+  background:var(--text);
+  color:var(--bg);
 }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(40,40,40,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(30,30,30,0.08) 0%, transparent 50%),
-    linear-gradient(100deg, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.90) 100%),
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: auto, auto, auto, 80px 80px, 80px 80px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%);
-  pointer-events: none;
-  animation: gridPulse 10s ease-in-out infinite;
+/* Content */
+.content-section{padding:120px 0;}
+.lead-text{
+  max-width:720px;
+  font-size:22px;
+  font-weight:300;
+  line-height:1.6;
+  color:rgba(255,255,255,0.85);
+}
+.signal-grid{
+  margin-top:48px;
+  border:1px solid var(--border);
+  background:var(--bg-raised);
+}
+.signal-row{
+  display:grid;
+  grid-template-columns:56px 1fr 1fr;
+  border-bottom:1px solid var(--border);
+}
+.signal-row:last-child{border-bottom:none;}
+.signal-index{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-right:1px solid var(--border);
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--muted-soft);
+}
+.signal-name{
+  padding:18px 24px;
+  font-family:var(--mono);
+  font-size:12px;
+  text-transform:uppercase;
+}
+.signal-desc{
+  padding:18px 24px 18px 0;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--muted-soft);
+  text-align:right;
 }
 
-@keyframes gridPulse {
-  0%, 100% { opacity: 0.9; }
-  50% { opacity: 1; }
+/* Spec */
+.spec{border-top:1px solid var(--border);}
+.spec-row{
+  display:grid;
+  grid-template-columns:240px 1fr;
+  gap:64px;
+  padding:80px 0;
+  border-bottom:1px solid var(--border);
 }
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 840px;
-  padding: 160px 0 120px;
+.spec-label{
+  font-family:var(--mono);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--muted);
 }
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 40px;
-}
-
-.eyebrow::before {
-  content: "";
-  display: block;
-  width: 32px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--muted-soft), transparent);
-}
-
-.eyebrow span {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.hero h1 {
-  font-size: clamp(40px, 5.2vw, 64px);
-  font-weight: 300;
-  line-height: 1.08;
-  letter-spacing: -0.028em;
-  margin-bottom: 28px;
-}
-
-.hero h1 em {
-  font-style: normal;
-  font-weight: 500;
-  color: var(--accent);
-}
-
-.hero p {
-  max-width: 560px;
-  font-size: 17px;
-  font-weight: 300;
-  color: var(--muted);
-  line-height: 1.75;
-  margin-bottom: 48px;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-/* CTAs */
-.cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 28px;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 2px;
-  transition: all 0.3s var(--ease-out);
-  position: relative;
-  overflow: hidden;
-}
-
-.cta::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 100%);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.cta:hover::before {
-  opacity: 1;
-}
-
-.cta.primary {
-  background: var(--text);
-  color: var(--bg);
-  border: 1px solid var(--text);
-}
-
-.cta.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255,255,255,0.12);
-}
-
-.cta.secondary {
-  border: 1px solid var(--border-hi);
-  background: rgba(255,255,255,0.03);
-  color: var(--text);
-}
-
-.cta.secondary:hover {
-  border-color: rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.06);
-  transform: translateY(-2px);
-}
-
-.cta.secondary::after {
-  content: "↗";
-  margin-left: 8px;
-  font-size: 11px;
-  opacity: 0.5;
-  transition: all 0.3s var(--ease-out);
-}
-
-.cta.secondary:hover::after {
-  opacity: 1;
-  transform: translate(2px, -2px);
-}
-
-/* Spec Sections */
-.spec { 
-  border-top: 1px solid var(--border); 
-}
-
-.spec-row {
-  display: grid;
-  grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
-  gap: 64px;
-  padding: 80px 0;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-  transition: all 0.4s var(--ease-out);
-}
-
-.spec-row:hover {
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.015) 50%, transparent 100%);
-}
-
-.spec-label { 
-  padding-top: 4px; 
-  position: sticky;
-  top: 100px;
-  height: fit-content;
-}
-
-.spec-label .section-index {
-  display: block;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--muted-soft);
-  letter-spacing: 0.12em;
-  margin-bottom: 12px;
-}
-
-.spec-label h2 {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.spec-body p {
-  max-width: 640px;
-  font-size: 18px;
-  font-weight: 300;
-  color: rgba(255,255,255,0.88);
-  line-height: 1.8;
-  letter-spacing: -0.01em;
-}
-
-.spec-body p + p { 
-  margin-top: 20px; 
-}
-
-/* Signal Grid */
-.signal-grid {
-  margin-top: 40px;
-  border: 1px solid var(--border);
-  background: var(--bg-raised);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.signal-row {
-  display: grid;
-  grid-template-columns: 56px 1fr 1fr;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.2s var(--ease);
-}
-
-.signal-row:last-child { 
-  border-bottom: none; 
-}
-
-.signal-row:hover {
-  background: rgba(255,255,255,0.02);
-}
-
-.signal-index {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid var(--border);
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--muted-soft);
-  padding: 18px 0;
-  background: rgba(255,255,255,0.02);
-}
-
-.signal-name {
-  padding: 18px 24px;
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text);
-}
-
-.signal-desc {
-  padding: 18px 24px 18px 0;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--muted-soft);
-  text-align: right;
-  letter-spacing: 0.02em;
-}
-
-/* Content Section */
-.content-section {
-  padding: 120px 0;
-  position: relative;
-}
-
-.content-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-}
-
-.lead-text {
-  max-width: 720px;
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 1.6;
-  color: rgba(255,255,255,0.85);
-  letter-spacing: -0.01em;
-}
-
-.lead-text strong {
-  font-weight: 400;
-  color: var(--text);
+.spec-body p{
+  max-width:640px;
+  font-size:18px;
+  font-weight:300;
+  line-height:1.8;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .container { padding: 0 24px; }
-  .nav-links { display: none; }
-  .nav-inner { height: 56px; }
-  
-  .spec-row { 
-    grid-template-columns: 1fr; 
-    gap: 24px;
-    padding: 60px 0;
-  }
-  
-  .spec-label { 
-    position: static; 
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 16px;
-  }
-  
-  .hero-content { 
-    padding: 120px 0 80px; 
-  }
-  
-  .signal-row {
-    grid-template-columns: 40px 1fr;
-    grid-template-rows: auto auto;
-  }
-  
-  .signal-index {
-    grid-row: 1 / 3;
-    padding: 16px 0;
-  }
-  
-  .signal-name {
-    padding: 16px 16px 4px;
-    border-bottom: none;
-  }
-  
-  .signal-desc {
-    padding: 0 16px 16px;
-    text-align: left;
-  }
-  
-  .lead-text {
-    font-size: 19px;
-  }
+@media(max-width:768px){
+  .container{padding:0 24px;}
+  .nav-links{display:none;}
+  .spec-row{grid-template-columns:1fr;gap:24px;}
 }
 </style>
 </head>
@@ -494,8 +202,6 @@ body {
     <a href="#" class="nav-wordmark">Neraium</a>
     <ul class="nav-links">
       <li><a href="#platform">Platform</a></li>
-      <li><a href="#intelligence">Intelligence</a></li>
-      <li><a href="#deployment">Deployment</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
@@ -503,32 +209,31 @@ body {
 
 <section class="hero">
   <div class="container hero-content">
-    <div class="eyebrow">
-      <span>Systemic Infrastructure Intelligence</span>
-    </div>
-    <h1>Infrastructure that <em>anticipates</em> before it fails.</h1>
+    <div class="eyebrow">Systemic Infrastructure Intelligence</div>
+    <h1>Infrastructure that <em>anticipates failure</em> before it occurs.</h1>
     <p>
       Water systems degrade silently. Pressure loss, flow irregularity, pump stress,
-      and chemical imbalance each leave a signal trace well before they produce
-      a visible event. Neraium reads those traces continuously across the full
-      sensor environment, not in isolation but as a correlated system.
+      and chemical imbalance leave measurable signals long before visible failure.
+      Neraium interprets those signals across the full telemetry environment as a unified system.
     </p>
+    <div class="positioning-line">
+      Read only. Non actuating. Operator authority preserved.
+    </div>
     <div class="hero-actions">
-      <a href="#" class="cta primary">Request Access</a>
-      <a href="#" class="cta secondary">View Documentation</a>
+      <a href="mailto:Craig@neraium.com" class="cta primary">Request Access</a>
+      <a href="#" class="cta">Documentation</a>
     </div>
   </div>
 </section>
 
-<section class="content-section" id="water">
+<section class="content-section">
   <div class="container">
     <p class="lead-text">
-      Traditional monitoring treats sensors as <strong>independent data points</strong>. 
-      Neraium constructs a unified field model where every measurement exists in 
-      relation to the whole—pressure differentials inform flow predictions; 
-      chemical signatures correlate with thermal patterns.
+      Built for operators responsible for high consequence water infrastructure.
+      Neraium does not replace monitoring. It provides earlier structural insight so remediation
+      can occur before thresholds trigger alarms.
     </p>
-    
+
     <div class="signal-grid">
       <div class="signal-row">
         <div class="signal-index">01</div>
@@ -538,7 +243,7 @@ body {
       <div class="signal-row">
         <div class="signal-index">02</div>
         <div class="signal-name">Flow Irregularity</div>
-        <div class="signal-desc">Pump cavitation detection</div>
+        <div class="signal-desc">Pump degradation onset</div>
       </div>
       <div class="signal-row">
         <div class="signal-index">03</div>
@@ -548,7 +253,7 @@ body {
       <div class="signal-row">
         <div class="signal-index">04</div>
         <div class="signal-name">Thermal Drift</div>
-        <div class="signal-desc">Insulation degradation</div>
+        <div class="signal-desc">Heat exchange instability</div>
       </div>
     </div>
   </div>
@@ -557,45 +262,31 @@ body {
 <section class="spec" id="platform">
   <div class="container">
     <div class="spec-row">
-      <div class="spec-label">
-        <span class="section-index">01</span>
-        <h2>Systemic Perception</h2>
-      </div>
+      <div class="spec-label">Systemic Modeling</div>
       <div class="spec-body">
         <p>
-          The system learns the unique behavioral fingerprint of your infrastructure. 
-          Each sensor node contributes to a living model that understands normal 
-          operational variance versus anomalous degradation patterns.
+          The system learns the behavioral fingerprint of each asset. Normal operational
+          variance is separated from persistent structural degradation.
         </p>
       </div>
     </div>
-    
+
     <div class="spec-row">
-      <div class="spec-label">
-        <span class="section-index">02</span>
-        <h2>Predictive Topology</h2>
-      </div>
+      <div class="spec-label">Topology Aware Intelligence</div>
       <div class="spec-body">
         <p>
-          Degradation propagates through networks in predictable patterns. Our graph 
-          neural networks map the physical topology of your distribution systems, 
-          identifying critical nodes where minor fluctuations cascade into systemic 
-          failures.
+          Infrastructure components exist in relationship to one another. Neraium maps
+          those relationships so degradation is interpreted in system context rather than in isolation.
         </p>
       </div>
     </div>
-    
+
     <div class="spec-row">
-      <div class="spec-label">
-        <span class="section-index">03</span>
-        <h2>Silent Operation</h2>
-      </div>
+      <div class="spec-label">Silent Operation</div>
       <div class="spec-body">
         <p>
-          Intelligence should not demand attention. Neraium operates in the periphery, 
-          surfacing only signals that require human judgment. The interface is a 
-          command center for the rare moments when the system encounters true 
-          ambiguity—designed for decision velocity, not dashboard density.
+          Neraium operates quietly. Insights surface only when confidence thresholds are met.
+          Decision authority remains with the operator.
         </p>
       </div>
     </div>
