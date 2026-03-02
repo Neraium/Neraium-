@@ -9,120 +9,108 @@
 
 <style>
 :root {
-  --black: #05070d;
-  --navy: #0b1220;
-  --deep: #0f1c34;
+  --bg-0: #04060c;
+  --bg-1: #0b1324;
   --accent: #3b82f6;
   --text: #ffffff;
   --muted: rgba(255,255,255,0.65);
   --border: rgba(255,255,255,0.08);
-  --max: 1180px;
+  --max: 1200px;
 }
 
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
 
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, var(--black), var(--navy));
+  background: linear-gradient(180deg, var(--bg-0), var(--bg-1));
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.55;
+}
+
+/* CONTAINER */
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 48px;
 }
 
 /* HEADER */
 header {
+  padding: 36px 0;
   position: relative;
   z-index: 5;
-  padding: 40px 0;
 }
 
-.container {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 40px;
+.nav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.brand {
-  font-size: 34px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-nav {
-  float:right;
-  margin-top:-28px;
-}
-
-nav a {
-  margin-left: 32px;
-  font-size: 14px;
+.nav a {
   text-decoration:none;
-  color: var(--muted);
+  font-size:14px;
+  color:var(--muted);
+  margin-left:32px;
 }
 
-nav a:hover {
-  color: var(--text);
+.nav a:hover {
+  color:var(--text);
 }
 
 /* HERO */
 .hero {
-  position: relative;
-  height: 90vh;
-  min-height: 680px;
+  position:relative;
+  min-height:90vh;
   display:flex;
   align-items:center;
   background:
-    linear-gradient(90deg, rgba(5,7,13,0.92) 0%, rgba(5,7,13,0.75) 40%, rgba(5,7,13,0.55) 70%, rgba(5,7,13,0.85) 100%),
+    linear-gradient(90deg, rgba(4,6,12,0.95) 0%, rgba(4,6,12,0.82) 45%, rgba(4,6,12,0.65) 70%, rgba(4,6,12,0.92) 100%),
     url("hero.png") center / cover no-repeat;
 }
 
 .hero-content {
-  max-width: 640px;
-}
-
-.category {
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--accent);
-  margin-bottom: 22px;
+  max-width:720px;
 }
 
 .hero h1 {
-  font-size: 56px;
-  font-weight: 600;
-  margin-bottom: 24px;
-  line-height: 1.1;
+  font-size:64px;
+  font-weight:600;
+  line-height:1.05;
+  margin-bottom:28px;
+  letter-spacing:-0.02em;
+}
+
+.hero h1 span {
+  display:block;
+  color:var(--accent);
 }
 
 .hero p {
-  font-size: 18px;
-  color: var(--muted);
-  margin-bottom: 40px;
+  font-size:18px;
+  color:var(--muted);
+  margin-bottom:40px;
 }
 
 .cta {
   display:inline-block;
   padding:14px 34px;
   border:1px solid var(--accent);
-  color: var(--accent);
+  color:var(--accent);
   text-decoration:none;
-  font-size:14px;
-  letter-spacing:0.08em;
+  font-size:13px;
+  letter-spacing:0.1em;
   text-transform:uppercase;
 }
 
 .cta:hover {
-  background: var(--accent);
+  background:var(--accent);
   color:#000;
 }
 
 /* SECTION */
 .section {
-  padding:140px 0;
+  padding:160px 0;
   border-top:1px solid var(--border);
 }
 
@@ -132,29 +120,31 @@ nav a:hover {
 }
 
 .section p {
-  max-width:720px;
+  max-width:760px;
   color:var(--muted);
+  font-size:17px;
 }
 
 .metrics {
-  margin-top:50px;
+  margin-top:60px;
   font-size:15px;
   color:var(--accent);
   line-height:2;
 }
 
+/* FOOTER */
 footer {
-  padding:100px 0 60px;
+  padding:120px 0 60px;
   border-top:1px solid var(--border);
   font-size:14px;
   color:var(--muted);
 }
 
-/* MOBILE */
+/* RESPONSIVE */
 @media (max-width:900px) {
-  nav { float:none; margin-top:20px; }
-  .hero { height:auto; padding:120px 0; }
-  .hero h1 { font-size:40px; }
+  .container { padding: 0 28px; }
+  .hero { min-height:auto; padding:120px 0; }
+  .hero h1 { font-size:42px; }
 }
 </style>
 </head>
@@ -162,23 +152,28 @@ footer {
 <body>
 
 <header>
-  <div class="container">
-    <div class="brand">Neraium</div>
-    <nav>
+  <div class="container nav">
+    <div></div>
+    <div>
       <a href="technical.html">Technical</a>
       <a href="#contact">Contact</a>
-    </nav>
+    </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="container">
     <div class="hero-content">
-      <div class="category">Systemic Infrastructure Intelligence</div>
-      <h1>Infrastructure Is Becoming Intelligence Dependent</h1>
+      <h1>
+        Neraium<br>
+        <span>defines systemic infrastructure intelligence</span>
+      </h1>
+
       <p>
-        Neraium surfaces sustained structural deviation across live telemetry environments while operational authority remains preserved.
+        Neraium surfaces sustained structural deviation across live telemetry environments 
+        while operational authority remains preserved.
       </p>
+
       <a href="#contact" class="cta">Start Discussion</a>
     </div>
   </div>
@@ -188,13 +183,26 @@ footer {
   <div class="container">
     <h2>Empirical Testing</h2>
     <p>
-      Tested across 707 independent degradation trajectories using NASA CMAPSS data. Sustained structural deviation surfaced well before terminal failure states.
+      Tested across 707 independent degradation trajectories using NASA CMAPSS data. 
+      Sustained structural deviation surfaced well before terminal states.
     </p>
+
     <div class="metrics">
       96.9% detection coverage<br>
       183 cycle median lead time<br>
       Hundreds of operating hours prior to failure
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Operational Role</h2>
+    <p>
+      Neraium operates as a read only intelligence layer. 
+      It does not actuate, modify, or override infrastructure. 
+      Decision authority remains with operators.
+    </p>
   </div>
 </section>
 
