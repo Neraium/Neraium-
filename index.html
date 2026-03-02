@@ -13,42 +13,38 @@
   --bg-1: #0b1324;
   --accent: #3b82f6;
   --text: #ffffff;
-  --muted: rgba(255,255,255,0.65);
+  --muted: rgba(255,255,255,0.62);
   --border: rgba(255,255,255,0.08);
   --max: 1200px;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior:smooth; }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, var(--bg-0), var(--bg-1));
-  color: var(--text);
-  line-height: 1.55;
+  font-family:'Inter',sans-serif;
+  background:linear-gradient(180deg,var(--bg-0),var(--bg-1));
+  color:var(--text);
+  line-height:1.5;
 }
 
-/* CONTAINER */
 .container {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 48px;
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 48px;
 }
 
 /* HEADER */
 header {
-  position: relative;
-  z-index: 10;
-  padding: 36px 0;
+  padding:32px 0;
+  position:relative;
+  z-index:10;
 }
 
 .nav {
   display:flex;
-  justify-content:space-between;
-  align-items:center;
+  justify-content:flex-end;
 }
 
 .nav a {
@@ -58,14 +54,12 @@ header {
   margin-left:32px;
 }
 
-.nav a:hover {
-  color:var(--text);
-}
+.nav a:hover { color:var(--text); }
 
 /* HERO */
 .hero {
   position:relative;
-  min-height:90vh;
+  min-height:92vh;
   display:flex;
   align-items:center;
   background:
@@ -73,16 +67,14 @@ header {
     url("hero.png") center / cover no-repeat;
 }
 
-.hero-content {
-  max-width:720px;
-}
+.hero-content { max-width:760px; }
 
 .hero h1 {
-  font-size:64px;
+  font-size:70px;
   font-weight:600;
-  line-height:1.05;
-  margin-bottom:28px;
-  letter-spacing:-0.02em;
+  line-height:1.03;
+  letter-spacing:-0.025em;
+  margin-bottom:32px;
 }
 
 .hero h1 span {
@@ -93,7 +85,8 @@ header {
 .hero p {
   font-size:18px;
   color:var(--muted);
-  margin-bottom:40px;
+  margin-bottom:44px;
+  max-width:640px;
 }
 
 .cta {
@@ -115,70 +108,47 @@ header {
 
 /* SECTION */
 .section {
-  padding:160px 0;
+  padding:170px 0;
   border-top:1px solid var(--border);
 }
 
 .section h2 {
   font-size:32px;
-  margin-bottom:24px;
+  font-weight:600;
+  margin-bottom:28px;
 }
 
 .section p {
-  max-width:760px;
-  color:var(--muted);
+  max-width:720px;
   font-size:17px;
+  color:var(--muted);
 }
 
+/* METRIC GRID */
 .metrics {
-  margin-top:60px;
-  font-size:15px;
-  color:var(--accent);
-  line-height:2;
+  margin-top:70px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
 }
 
-/* FORM */
-form {
-  margin-top:50px;
-  max-width:600px;
-}
-
-form input,
-form textarea {
-  width:100%;
-  margin-bottom:20px;
-  padding:14px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid var(--border);
-  color:var(--text);
-  font-family:inherit;
+.metric {
   font-size:14px;
+  color:var(--muted);
 }
 
-form input:focus,
-form textarea:focus {
-  outline:none;
-  border-color:var(--accent);
-}
-
-form button {
-  padding:14px 30px;
-  background:transparent;
-  border:1px solid var(--accent);
+.metric strong {
+  display:block;
+  font-size:26px;
   color:var(--accent);
-  font-size:13px;
-  text-transform:uppercase;
-  letter-spacing:0.1em;
-  cursor:pointer;
-  transition:0.2s ease;
+  margin-bottom:8px;
 }
 
-form button:hover {
-  background:var(--accent);
-  color:#000;
+/* DENSITY CONTRAST */
+.section.compact {
+  padding:120px 0;
 }
 
-/* FOOTER */
 footer {
   padding:120px 0 60px;
   border-top:1px solid var(--border);
@@ -188,9 +158,10 @@ footer {
 
 /* RESPONSIVE */
 @media (max-width:900px) {
-  .container { padding: 0 28px; }
-  .hero { min-height:auto; padding:120px 0; }
+  .container { padding:0 28px; }
+  .hero { min-height:auto; padding:140px 0; }
   .hero h1 { font-size:42px; }
+  .metrics { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -199,11 +170,8 @@ footer {
 
 <header>
   <div class="container nav">
-    <div></div>
-    <div>
-      <a href="technical.html">Technical</a>
-      <a href="#contact">Contact</a>
-    </div>
+    <a href="technical.html">Technical</a>
+    <a href="#contact">Contact</a>
   </div>
 </header>
 
@@ -216,8 +184,7 @@ footer {
       </h1>
 
       <p>
-        Neraium surfaces sustained structural deviation across live telemetry environments 
-        while operational authority remains preserved.
+        Neraium surfaces sustained structural deviation across live telemetry environments while operational authority remains preserved.
       </p>
 
       <a href="#contact" class="cta">Start Discussion</a>
@@ -228,26 +195,35 @@ footer {
 <section class="section">
   <div class="container">
     <h2>Empirical Testing</h2>
+
     <p>
-      Tested across 707 independent degradation trajectories using NASA CMAPSS data. 
-      Sustained structural deviation surfaced well before terminal states.
+      Tested across 707 independent degradation trajectories using NASA CMAPSS data. Sustained structural deviation surfaced well before terminal states.
     </p>
 
     <div class="metrics">
-      96.9% detection coverage<br>
-      183 cycle median lead time<br>
-      Hundreds of operating hours prior to failure
+      <div class="metric">
+        <strong>96.9%</strong>
+        detection coverage
+      </div>
+
+      <div class="metric">
+        <strong>183 cycles</strong>
+        median lead time
+      </div>
+
+      <div class="metric">
+        <strong>Hundreds of hours</strong>
+        prior to failure
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section compact">
   <div class="container">
     <h2>Operational Role</h2>
     <p>
-      Neraium operates as a read only intelligence layer. 
-      It does not actuate, modify, override, or control infrastructure systems. 
-      Decision authority remains with operators.
+      Neraium operates as a read only intelligence layer. It does not actuate, modify, override, or control infrastructure systems. Decision authority remains with operators.
     </p>
   </div>
 </section>
@@ -263,11 +239,11 @@ footer {
       602-833-7441
     </p>
 
-    <form action="https://formspree.io/f/xzdalpzy" method="POST">
-      <input type="text" name="name" placeholder="Name" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <textarea name="message" placeholder="Message" rows="5" required></textarea>
-      <button type="submit">Send</button>
+    <form action="https://formspree.io/f/xzdalpzy" method="POST" style="margin-top:50px; max-width:600px;">
+      <input type="text" name="name" placeholder="Name" required style="width:100%; margin-bottom:18px; padding:14px; background:rgba(255,255,255,0.04); border:1px solid var(--border); color:var(--text);">
+      <input type="email" name="email" placeholder="Email" required style="width:100%; margin-bottom:18px; padding:14px; background:rgba(255,255,255,0.04); border:1px solid var(--border); color:var(--text);">
+      <textarea name="message" placeholder="Message" rows="5" required style="width:100%; margin-bottom:20px; padding:14px; background:rgba(255,255,255,0.04); border:1px solid var(--border); color:var(--text);"></textarea>
+      <button type="submit" class="cta">Send</button>
     </form>
 
   </div>
