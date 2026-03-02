@@ -14,8 +14,8 @@
   --accent:#2e6df6;
   --text:#ffffff;
   --text-muted:rgba(255,255,255,0.68);
-  --border:rgba(46,109,246,0.14);
-  --max:1100px;
+  --border:rgba(46,109,246,0.10);
+  --max:1080px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -25,15 +25,14 @@ body{
   background:linear-gradient(160deg,var(--bg),var(--bg-deep));
   color:var(--text);
   line-height:1.65;
-  -webkit-font-smoothing:antialiased;
 }
 
 header{
-  padding:60px 0 0;
+  padding:60px 0 20px;
   max-width:var(--max);
   margin:auto;
-  padding-left:32px;
-  padding-right:32px;
+  padding-left:36px;
+  padding-right:36px;
 }
 
 header a{
@@ -50,75 +49,63 @@ header a:hover{color:var(--accent)}
 main{
   max-width:var(--max);
   margin:auto;
-  padding:160px 32px 260px;
+  padding:140px 36px 200px;
 }
 
 h1{
-  font-size:clamp(64px,7vw,96px);
+  font-size:clamp(64px,7vw,90px);
   font-weight:600;
   margin-bottom:40px;
 }
 
 .lead{
-  font-size:24px;
+  font-size:22px;
   color:var(--text-muted);
-  max-width:900px;
-  margin-bottom:160px;
+  max-width:860px;
+  margin-bottom:120px;
 }
 
 .section{
-  margin-top:200px;
-  border-top:1px solid var(--border);
-  padding-top:70px;
+  margin-top:160px;
 }
 
 .section h2{
-  font-size:32px;
+  font-size:28px;
   font-weight:600;
-  margin-bottom:28px;
+  margin-bottom:24px;
 }
 
 .section p{
   font-size:20px;
   color:var(--text-muted);
-  max-width:900px;
-  margin-bottom:24px;
+  max-width:860px;
+  margin-bottom:22px;
 }
 
 .arch{
-  margin-top:60px;
-  padding:70px;
+  margin-top:50px;
+  padding:60px;
   border:1px solid var(--border);
   background:rgba(255,255,255,.03);
   font-family:'IBM Plex Mono',monospace;
   font-size:14px;
-  line-height:2.4;
+  line-height:2.3;
   color:var(--accent);
   white-space:pre-line;
 }
 
 .validation-image{
-  margin-top:50px;
+  margin-top:40px;
   max-width:100%;
   border:1px solid var(--border);
 }
 
 footer{
-  margin-top:240px;
-  border-top:1px solid var(--border);
-  padding-top:120px;
+  padding:100px 0 120px;
   text-align:center;
   font-size:12px;
   letter-spacing:.06em;
   color:rgba(255,255,255,0.45);
-}
-
-@media (max-width:768px){
-  main{padding:120px 28px 180px;}
-  .section{margin-top:140px;}
-  .arch{padding:40px;}
-  h1{font-size:clamp(48px,10vw,72px);}
-  .lead{font-size:20px;}
 }
 </style>
 </head>
@@ -153,7 +140,6 @@ Live Telemetry
 
 → Operator Review
 </div>
-
 </section>
 
 <section class="section">
