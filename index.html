@@ -83,8 +83,8 @@ body{
 .hero-content{
   position:relative;
   z-index:2;
-  max-width:760px;
-  padding:96px 0 84px;
+  max-width:700px;
+  padding:88px 0 76px;
 }
 
 .eyebrow{
@@ -98,11 +98,11 @@ body{
 }
 
 .hero h1{
-  font-size:clamp(48px, 6vw, 68px);
+  font-size:clamp(46px, 5.8vw, 64px);
   font-weight:600;
-  line-height:1.04;
+  line-height:1.03;
   letter-spacing:-0.025em;
-  margin-bottom:22px;
+  margin-bottom:18px;
 }
 
 .hero h1 span{
@@ -111,10 +111,10 @@ body{
 }
 
 .hero p{
-  max-width:640px;
-  font-size:18px;
+  max-width:560px;
+  font-size:17px;
   color:var(--muted);
-  margin-bottom:36px;
+  margin-bottom:30px;
 }
 
 .hero-actions{
@@ -309,26 +309,9 @@ body{
   border-top:1px solid var(--border);
 }
 
-.site-footer-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:24px;
-}
-
 .site-footer p{
   font-size:14px;
   color:var(--muted-soft);
-}
-
-.footer-link{
-  color:var(--muted-soft);
-  text-decoration:none;
-  font-size:14px;
-}
-
-.footer-link:hover{
-  color:var(--text);
 }
 
 /* Responsive */
@@ -366,11 +349,6 @@ body{
     grid-template-columns:1fr;
     gap:28px;
   }
-
-  .site-footer-row{
-    flex-direction:column;
-    align-items:flex-start;
-  }
 }
 
 @media (max-width: 640px){
@@ -404,11 +382,11 @@ body{
 
       <h1>
         Neraium
-        <span>surfaces sustained structural deviation</span>
+        <span>surfaces structural deviation</span>
       </h1>
 
       <p>
-        Neraium maps persistent signal deviation across live telemetry environments while operational authority remains preserved.
+        Read only signal interpretation for live telemetry environments.
       </p>
 
       <div class="hero-actions">
@@ -487,10 +465,7 @@ body{
 
 <footer class="site-footer">
   <div class="container">
-    <div class="site-footer-row">
-      <p>© 2026 Neraium</p>
-      <a class="footer-link" href="technical.html">Technical Overview</a>
-    </div>
+    <p>© 2026 Neraium</p>
   </div>
 </footer>
 
