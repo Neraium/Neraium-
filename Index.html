@@ -8,9 +8,9 @@
 <style>
 :root{
     --text:#e8eef5;
-    --accent:#4da3ff;
     --muted:rgba(232,238,245,0.64);
     --muted2:rgba(232,238,245,0.50);
+    --accent:#4da3ff;
 }
 
 *{ box-sizing:border-box; }
@@ -27,7 +27,6 @@ body{
     overflow-x:hidden;
     color:var(--text);
 
-    /* Extended depth so it never drops to plain black */
     background:
         radial-gradient(1400px 900px at 18% 0%, rgba(77,163,255,0.16), transparent 62%),
         radial-gradient(1200px 1000px at 92% 38%, rgba(0,120,255,0.09), transparent 72%),
@@ -55,7 +54,6 @@ nav{
     font-weight:600;
     letter-spacing:2px;
     font-size:13px;
-    color:var(--text);
 }
 
 .nav-center{
@@ -126,7 +124,7 @@ nav{
     font-size:19px;
     color:var(--muted);
     margin:0 0 26px 0;
-    max-width:600px;
+    max-width:620px;
 }
 
 .cta{
@@ -155,7 +153,7 @@ nav{
 
 /* SECTIONS */
 .section{
-    padding:92px 24px 112px;
+    padding:92px 24px 110px;
     max-width:760px;
     margin:0 auto;
     border-top:1px solid rgba(255,255,255,0.05);
@@ -178,21 +176,39 @@ nav{
 .section p{
     font-size:17px;
     color:var(--muted);
-    max-width:560px;
+    max-width:580px;
     line-height:1.65;
-    margin:0;
 }
 
-/* STEWARDSHIP (minimal, no photo) */
+/* TECHNICAL BOX */
+.tech-box{
+    margin-top:40px;
+    padding:28px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px;
+}
+
+.tech-box h3{
+    margin:0 0 18px 0;
+    font-size:18px;
+    font-weight:600;
+    color:var(--text);
+}
+
+.tech-list{
+    display:grid;
+    gap:12px;
+    font-size:15px;
+    color:var(--muted);
+}
+
+/* STEWARDSHIP */
 .steward{
     padding:92px 24px 120px;
     max-width:760px;
     margin:0 auto;
     border-top:1px solid rgba(255,255,255,0.05);
-}
-
-.steward .eyebrow{
-    margin-bottom:10px;
 }
 
 .steward h2{
@@ -204,8 +220,8 @@ nav{
 .steward .line{
     font-size:16px;
     color:var(--muted);
+    max-width:580px;
     line-height:1.6;
-    max-width:560px;
 }
 
 footer{
@@ -231,7 +247,6 @@ footer{
 
     <div class="nav-center">
         <a href="#layer">Infrastructure Layer</a>
-        <a href="#delivery">Delivery Partners</a>
         <a href="#governance">Governance</a>
         <a href="#stewardship">Stewardship</a>
     </div>
@@ -242,36 +257,43 @@ footer{
 <div class="spacer"></div>
 
 <section class="hero">
-    <h1>Structural Deterioration Identified Before Failure.</h1>
+    <h1>Structural Deterioration Classified Before Operational Failure.</h1>
 
-    <p>Infrastructure intelligence for mission-critical water systems.</p>
+    <p>
+        Deterministic classification of structural degradation in high-consequence water infrastructure.
+    </p>
 
     <a href="mailto:craig@neraium.com" class="cta">Initiate Alignment Discussion</a>
 
-    <div class="micro">Read-only • Deterministic • Non-actuating</div>
+    <div class="micro">
+        Read-only • Deterministic • Non-actuating
+    </div>
 </section>
 
 <section id="layer" class="section">
     <div class="eyebrow">Architecture</div>
-    <h2>Institutional Infrastructure Layer</h2>
+    <h2>Read-Only Infrastructure Intelligence Layer</h2>
     <p>
-        Neraium operates as a deterministic intelligence layer for high-consequence water environments, classifying sustained structural degradation before operational failure occurs.
+        Neraium operates as a deterministic intelligence boundary for high-consequence water environments, identifying sustained structural deterioration without introducing actuation pathways or operational override.
     </p>
-</section>
 
-<section id="delivery" class="section">
-    <div class="eyebrow">Distribution</div>
-    <h2>Delivered Through Service Providers</h2>
-    <p>
-        Neraium integrates through trusted contractors and service partners, enhancing portfolios with governed deterioration classification while preserving strict operational boundaries.
-    </p>
+    <div class="tech-box">
+        <h3>System Properties</h3>
+        <div class="tech-list">
+            <div>• Structured telemetry ingestion</div>
+            <div>• Deterministic degradation classification logic</div>
+            <div>• No actuation or control pathways</div>
+            <div>• Boundary-preserving system architecture</div>
+            <div>• Output constraints mapped to defined authority levels</div>
+        </div>
+    </div>
 </section>
 
 <section id="governance" class="section">
     <div class="eyebrow">Assurance</div>
-    <h2>Deterministic Governance Model</h2>
+    <h2>Governed Classification Model</h2>
     <p>
-        Classification outputs are bound to defined architectural guardrails. Neraium does not actuate, override, or modify physical systems.
+        All outputs are bound to defined architectural guardrails. Neraium does not override, modify, or control physical systems. It functions strictly as a read-only intelligence layer.
     </p>
 </section>
 
