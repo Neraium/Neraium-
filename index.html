@@ -15,7 +15,6 @@
   --accent:#2e6df6;
   --text:#ffffff;
   --text-muted:rgba(255,255,255,0.68);
-  --border:rgba(46,109,246,0.10);
   --max:1080px;
 }
 
@@ -26,7 +25,7 @@ body{
   background:linear-gradient(160deg,var(--bg),var(--bg-deep));
   color:var(--text);
   line-height:1.65;
-  -webkit-font-smoothing:antialiased;
+  text-align:center;
 }
 
 .container{
@@ -38,7 +37,7 @@ body{
 header{
   padding:60px 0 20px;
   display:flex;
-  justify-content:flex-end;
+  justify-content:center;
 }
 
 nav{
@@ -76,13 +75,17 @@ nav a:hover{color:var(--accent)}
   font-size:32px;
   font-weight:500;
   margin-bottom:20px;
-  max-width:880px;
+  max-width:800px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .subline{
   font-size:20px;
   color:var(--text-muted);
   max-width:720px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .section{
@@ -99,12 +102,14 @@ nav a:hover{color:var(--accent)}
   font-size:20px;
   color:var(--text-muted);
   max-width:820px;
+  margin:auto;
 }
 
 .validation-list{
   margin-top:26px;
   font-size:19px;
   color:var(--text-muted);
+  list-style:none;
 }
 
 .validation-list li{
@@ -135,7 +140,6 @@ nav a:hover{color:var(--accent)}
 
 footer{
   padding:100px 0 120px;
-  text-align:center;
   font-size:12px;
   letter-spacing:.06em;
   color:rgba(255,255,255,0.45);
