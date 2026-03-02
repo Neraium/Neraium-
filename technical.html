@@ -14,13 +14,12 @@
   --bg-1:#0b1324;
   --bg-2:#0e1a33;
   --accent:#4d8dff;
-  --accent-soft:rgba(77,141,255,0.14);
   --text:#ffffff;
   --muted:rgba(255,255,255,0.70);
   --muted-soft:rgba(255,255,255,0.56);
   --border:rgba(255,255,255,0.08);
   --max:1200px;
-  --radius:14px;
+  --radius:10px;
 }
 
 *{
@@ -48,36 +47,22 @@ body{
   padding:0 48px;
 }
 
-/* Header */
-
-.site-header{
-  padding:32px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.site-header .bar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px;
-}
-
-.site-header a{
-  color:var(--muted-soft);
-  text-decoration:none;
-  font-size:14px;
-  font-weight:500;
-  transition:color 0.2s ease;
-}
-
-.site-header a:hover{
-  color:var(--text);
-}
-
 /* Intro */
 
 .intro{
-  padding:140px 0 110px;
+  padding:120px 0 96px;
+}
+
+.back-link{
+  display:inline-block;
+  margin-bottom:28px;
+  color:var(--muted-soft);
+  text-decoration:none;
+  font-size:14px;
+}
+
+.back-link:hover{
+  color:var(--text);
 }
 
 .intro h1{
@@ -85,7 +70,7 @@ body{
   font-weight:600;
   line-height:1.06;
   letter-spacing:-0.02em;
-  margin-bottom:24px;
+  margin-bottom:22px;
 }
 
 .intro p{
@@ -94,7 +79,7 @@ body{
   color:var(--muted);
 }
 
-/* Spec Rows */
+/* Spec Grid */
 
 .spec{
   border-top:1px solid var(--border);
@@ -104,12 +89,8 @@ body{
   display:grid;
   grid-template-columns:minmax(220px, 300px) minmax(0, 1fr);
   gap:40px;
-  padding:80px 0;
+  padding:72px 0;
   border-bottom:1px solid var(--border);
-}
-
-.spec-label{
-  padding-top:2px;
 }
 
 .spec-label h2{
@@ -124,13 +105,13 @@ body{
   color:var(--muted);
 }
 
-/* Architecture Stack */
+/* Architecture */
 
 .arch-card{
-  margin-top:28px;
-  padding:28px;
+  margin-top:24px;
+  padding:24px;
   border:1px solid var(--border);
-  background:rgba(255,255,255,0.025);
+  background:rgba(255,255,255,0.022);
   border-radius:var(--radius);
 }
 
@@ -162,10 +143,10 @@ body{
 /* Validation */
 
 .validation-card{
-  margin-top:28px;
-  padding:24px;
+  margin-top:24px;
+  padding:22px;
   border:1px solid var(--border);
-  background:rgba(255,255,255,0.025);
+  background:rgba(255,255,255,0.022);
   border-radius:var(--radius);
 }
 
@@ -175,12 +156,12 @@ body{
   max-width:760px;
   height:auto;
   margin:0 auto;
-  border-radius:10px;
+  border-radius:8px;
   border:1px solid rgba(255,255,255,0.06);
 }
 
 .validation-note{
-  margin-top:18px;
+  margin-top:16px;
   font-size:15px;
   color:var(--muted-soft);
 }
@@ -188,12 +169,29 @@ body{
 /* Footer */
 
 .site-footer{
-  padding:100px 0 56px;
+  padding:96px 0 56px;
+}
+
+.site-footer-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:24px;
 }
 
 .site-footer p{
   font-size:14px;
   color:var(--muted-soft);
+}
+
+.footer-link{
+  color:var(--muted-soft);
+  text-decoration:none;
+  font-size:14px;
+}
+
+.footer-link:hover{
+  color:var(--text);
 }
 
 /* Responsive */
@@ -204,7 +202,7 @@ body{
   }
 
   .intro{
-    padding:110px 0 90px;
+    padding:96px 0 80px;
   }
 
   .intro h1{
@@ -213,17 +211,17 @@ body{
 
   .spec-row{
     grid-template-columns:1fr;
-    gap:22px;
-    padding:56px 0;
+    gap:20px;
+    padding:52px 0;
+  }
+
+  .site-footer-row{
+    flex-direction:column;
+    align-items:flex-start;
   }
 }
 
 @media (max-width: 640px){
-  .site-header .bar{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
   .intro h1{
     font-size:36px;
   }
@@ -237,17 +235,10 @@ body{
 
 <body>
 
-<header class="site-header">
-  <div class="container">
-    <div class="bar">
-      <a href="index.html">← Neraium</a>
-      <a href="index.html#contact">Contact</a>
-    </div>
-  </div>
-</header>
-
 <section class="intro">
   <div class="container">
+    <a class="back-link" href="index.html">← Neraium</a>
+
     <h1>Technical Overview</h1>
     <p>
       Neraium operates as a read only signal interpretation layer across live telemetry environments. Persistent structural deviation is mapped for context, persistence, and operator review.
@@ -329,7 +320,10 @@ body{
 
 <footer class="site-footer">
   <div class="container">
-    <p>© 2026 Neraium</p>
+    <div class="site-footer-row">
+      <p>© 2026 Neraium</p>
+      <a class="footer-link" href="index.html#contact">Contact</a>
+    </div>
   </div>
 </footer>
 
