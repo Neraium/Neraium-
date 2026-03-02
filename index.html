@@ -10,12 +10,14 @@
 <style>
 :root {
   --black: #05070d;
-  --deep: #0f1b2d;
+  --navy: #0c1422;
+  --deep: #132338;
   --accent: #2e6df6;
   --text: #ffffff;
-  --muted: rgba(255,255,255,0.65);
+  --muted: rgba(255,255,255,0.72);
+  --faint: rgba(255,255,255,0.45);
   --border: rgba(255,255,255,0.08);
-  --max: 1100px;
+  --max: 1200px;
 }
 
 * { box-sizing: border-box; }
@@ -23,7 +25,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg, #05070d 0%, #0b1422 50%, #132338 100%);
+  background: linear-gradient(180deg, var(--black) 0%, var(--navy) 45%, var(--deep) 100%);
   color: var(--text);
   font-family: 'Sora', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -64,27 +66,25 @@ nav a {
   text-decoration: none;
 }
 
-nav a:hover {
-  color: var(--text);
-}
+nav a:hover { color: var(--text); }
 
 .hero {
   padding: 180px 0 140px;
 }
 
 .hero h1 {
-  font-size: clamp(56px, 8vw, 104px);
+  font-size: clamp(60px, 8vw, 110px);
   line-height: 0.95;
   font-weight: 700;
-  margin: 0 0 40px 0;
+  margin-bottom: 50px;
   letter-spacing: -0.03em;
 }
 
 .hero p {
-  font-size: 22px;
-  max-width: 880px;
+  font-size: 24px;
+  max-width: 1000px;
   color: var(--muted);
-  line-height: 1.8;
+  line-height: 1.85;
   margin-bottom: 60px;
 }
 
@@ -111,7 +111,7 @@ nav a:hover {
 }
 
 .section {
-  padding: 150px 0;
+  padding: 160px 0;
   border-top: 1px solid var(--border);
 }
 
@@ -123,52 +123,87 @@ nav a:hover {
 
 .section p {
   font-size: 22px;
-  max-width: 960px;
+  max-width: 1050px;
   color: var(--muted);
   line-height: 1.9;
 }
 
-form input,
-form textarea {
-  width: 100%;
-  padding: 18px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: #fff;
-  font-size: 16px;
-  margin-top: 8px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 60px;
+  margin-top: 80px;
 }
 
-form label {
-  font-size: 12px;
-  letter-spacing: 0.14em;
+.block h3 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
+  margin-bottom: 20px;
   color: var(--accent);
-  margin-bottom: 6px;
-  display: block;
 }
 
-form button {
+.block p {
+  font-size: 20px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.form {
+  margin-top: 60px;
+  max-width: 700px;
+}
+
+.form label {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  padding: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: white;
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+.form button {
   padding: 18px 46px;
   background: var(--accent);
-  color: #000;
+  color: #fff;
   border: none;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-top: 16px;
   cursor: pointer;
 }
 
-.footer {
-  padding: 110px 0;
+.contact-info {
+  margin-top: 80px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  line-height: 2.1;
+  color: var(--muted);
+}
+
+footer {
+  padding: 120px 0;
   border-top: 1px solid var(--border);
   text-align: center;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.14em;
-  color: rgba(255,255,255,0.4);
+  color: var(--faint);
   text-transform: uppercase;
 }
 
@@ -184,110 +219,112 @@ form button {
 <body>
 
 <div class="container">
-  <header>
-    <div class="logo">NERAIUM</div>
-    <nav>
-      <a href="#shift">Shift</a>
-      <a href="#model">Model</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+<header>
+<div class="logo">NERAIUM</div>
+<nav>
+<a href="#context">Context</a>
+<a href="#model">Model</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
 </div>
 
 <section class="hero">
-  <div class="container">
-    <h1>
-      Infrastructure is becoming<br>
-      <span class="accent">intelligence dependent.</span>
-    </h1>
+<div class="container">
+<h1>
+Infrastructure Is Becoming Intelligence-Dependent.
+</h1>
 
-    <p>
-      As operational systems digitize, intelligence expands toward control.
-      In high-consequence water environments, analysis and authority must remain separate.
-      Neraium defines that boundary.
-    </p>
+<p>
+High-consequence water systems now operate within dense telemetry environments.
+As instrumentation expands, analytical capability expands with it.
+Without disciplined separation, intelligence collapses into automation risk.
+Neraium defines the structural boundary between signal and authority.
+</p>
 
-    <div class="signal">
-      Read-Only · Non-Actuating · Governed Outputs
-    </div>
+<div class="signal">
+Read-Only · Non-Actuating · Governed Outputs
+</div>
 
-    <a class="cta" href="#contact">Engage</a>
-  </div>
+<a class="cta" href="#contact">Engage</a>
+</div>
 </section>
 
-<section class="section" id="shift">
-  <div class="container">
-    <h2>The Structural Shift</h2>
-    <p>
-      Undetected deterioration compounds cost and exposure long before failure.
-      As telemetry density increases, infrastructure requires a disciplined intelligence layer that strengthens operators without introducing automation risk.
-    </p>
-  </div>
+<section class="section" id="context">
+<div class="container">
+<h2>The Operational Reality</h2>
+<p>
+Deterioration is rarely instantaneous.
+It emerges as sustained multivariate drift across temperature, flow, pressure, and energy signals.
+By the time traditional thresholds trigger, cost and exposure have already compounded.
+Institutions require earlier signal without surrendering control.
+</p>
+</div>
 </section>
 
 <section class="section" id="model">
-  <div class="container">
-    <h2>The Neraium Model</h2>
+<div class="container">
+<h2>The Neraium Model</h2>
 
-    <div class="grid">
-      <div class="block">
-        <h3>Drift Detection</h3>
-        <p>
-          Identify sustained multivariate deterioration across live operational signals before reactive events.
-        </p>
-      </div>
+<div class="grid">
+<div class="block">
+<h3>Early Deterioration Classification</h3>
+<p>
+Persistent structural deviation is identified across correlated signals before reactive events occur.
+</p>
+</div>
 
-      <div class="block">
-        <h3>Structural Boundary</h3>
-        <p>
-          Neraium does not actuate equipment or modify control systems.
-          Operational authority remains fully intact.
-        </p>
-      </div>
+<div class="block">
+<h3>Read-Only Architecture</h3>
+<p>
+Neraium does not actuate, override, or modify operational systems.
+Authority remains with the operator.
+</p>
+</div>
 
-      <div class="block">
-        <h3>Institutional Integrity</h3>
-        <p>
-          Structured classifications designed for oversight, audit, and liability-sensitive environments.
-        </p>
-      </div>
-    </div>
-  </div>
+<div class="block">
+<h3>Governed Intelligence Layer</h3>
+<p>
+Outputs are structured for audit environments, oversight bodies, and liability-sensitive infrastructure.
+</p>
+</div>
+</div>
+</div>
 </section>
 
 <section class="section" id="contact">
-  <div class="container">
-    <h2>Contact</h2>
+<div class="container">
+<h2>Engage</h2>
 
-    <form action="https://formspree.io/f/xzdalpzy" method="POST">
+<form class="form" action="https://formspree.io/f/xzdalpzy" method="POST">
 
-      <label for="name">Name</label>
-      <input type="text" name="name" id="name" required>
+<label>Name</label>
+<input type="text" name="name" required>
 
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" required>
+<label>Email</label>
+<input type="email" name="email" required>
 
-      <label for="organization">Organization</label>
-      <input type="text" name="organization" id="organization">
+<label>Organization</label>
+<input type="text" name="organization">
 
-      <label for="message">Message</label>
-      <textarea name="message" id="message" rows="5" required></textarea>
+<label>Message</label>
+<textarea name="message" rows="5" required></textarea>
 
-      <button type="submit">Submit</button>
+<button type="submit">Submit</button>
+</form>
 
-    </form>
+<div class="contact-info">
+Craig Curtis<br>
+Founder & Chief Executive Officer<br><br>
+Craig@neraium.com<br>
+602-833-7441
+</div>
 
-    <div class="contact" style="margin-top:60px;">
-      Craig Curtis<br>
-      Founder & Chief Executive Officer<br><br>
-      <a href="mailto:Craig@neraium.com" style="color:var(--accent); text-decoration:none;">Craig@neraium.com</a><br>
-      <a href="tel:+16028337441" style="color:var(--accent); text-decoration:none;">602-833-7441</a>
-    </div>
-  </div>
+</div>
 </section>
 
-<footer class="footer">
-  © 2026 Neraium
+<footer>
+© 2026 Neraium
 </footer>
 
 </body>
