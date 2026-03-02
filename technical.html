@@ -33,19 +33,9 @@ body{
   padding:120px 28px 160px;
 }
 
-.logo{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  color:var(--accent);
-  margin-bottom:40px;
-}
-
 h1{
   font-size:clamp(48px,6vw,72px);
-  line-height:1.08;
-  margin-bottom:28px;
+  margin-bottom:30px;
 }
 
 .lead{
@@ -71,18 +61,18 @@ h1{
   margin-bottom:20px;
 }
 
-.architecture{
+.arch{
   margin-top:40px;
   padding:40px;
   border:1px solid var(--border);
-  background:rgba(255,255,255,0.03);
+  background:rgba(255,255,255,.03);
   font-family:'IBM Plex Mono',monospace;
   font-size:13px;
   line-height:1.7;
   color:var(--accent);
 }
 
-.footer{
+footer{
   margin-top:180px;
   border-top:1px solid var(--border);
   padding-top:80px;
@@ -90,13 +80,6 @@ h1{
   font-size:13px;
   color:rgba(255,255,255,0.45);
 }
-
-a{
-  color:var(--accent);
-  text-decoration:none;
-}
-
-a:hover{opacity:0.9}
 </style>
 </head>
 
@@ -104,43 +87,26 @@ a:hover{opacity:0.9}
 
 <div class="container">
 
-<div class="logo">NERAIUM TECHNICAL ARCHITECTURE</div>
-
-<h1>
-Read Only Infrastructure Intelligence Layer
-</h1>
+<h1>Technical Architecture</h1>
 
 <p class="lead">
-Neraium operates as an independent intelligence layer within high consequence water systems. The platform analyzes sustained multivariate drift across live telemetry environments while preserving full operational authority.
+Neraium functions as a non actuating intelligence layer within live water telemetry environments. The platform evaluates sustained multivariate drift while preserving full operational authority.
 </p>
 
 <div class="section">
 <h2>System Boundary</h2>
 <p>
-Neraium does not actuate valves, modify flow, override control logic, or adjust mechanical systems. The platform remains structurally independent from operational control environments.
+The platform does not actuate valves, modify flow, override control systems, or adjust mechanical operations. Neraium remains structurally independent from control logic.
 </p>
 <p>
-All outputs are advisory classifications. Human operators retain final decision authority.
+All outputs are advisory classifications. Human operators retain final authority.
 </p>
 </div>
 
 <div class="section">
-<h2>Telemetry Ingestion</h2>
-<p>
-The platform integrates with existing telemetry sources including temperature, pressure, flow, and energy signals. No equipment modification is required.
-</p>
-<p>
-Signal streams are normalized and evaluated for sustained structural deviation rather than isolated alarm events.
-</p>
-</div>
+<h2>Signal Processing Flow</h2>
 
-<div class="section">
-<h2>Multivariate Drift Detection</h2>
-<p>
-Deterioration develops gradually across correlated signals. Neraium evaluates temporal persistence and cross signal coupling to identify early structural decay.
-</p>
-
-<div class="architecture">
+<div class="arch">
 Telemetry Environment  
 → Signal Normalization  
 → Multivariate Correlation Modeling  
@@ -152,28 +118,22 @@ Telemetry Environment
 </div>
 
 <div class="section">
-<h2>Governed Classification Output</h2>
+<h2>Classification Output</h2>
 <p>
-Each classification is structured, traceable, and reviewable. Signal lineage, temporal persistence, and contextual metadata are preserved for institutional oversight environments.
-</p>
-<p>
-The platform supports audit review without introducing control risk.
+Each classification preserves signal lineage, temporal persistence, and contextual metadata to support institutional oversight and review environments.
 </p>
 </div>
 
 <div class="section">
-<h2>Institutional Role</h2>
+<h2>Deployment Model</h2>
 <p>
-As infrastructure becomes increasingly instrumented, intelligence must remain structurally separated from actuation.
-</p>
-<p>
-Neraium defines systemic infrastructure intelligence for high consequence water systems.
+Integration occurs alongside existing telemetry infrastructure. No equipment modification is required.
 </p>
 </div>
 
-<div class="footer">
+<footer>
 © 2026 Neraium | Systemic Infrastructure Intelligence
-</div>
+</footer>
 
 </div>
 
