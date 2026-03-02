@@ -7,8 +7,8 @@
 
 <style>
 :root{
-    --bg-top:#050e15;
-    --bg-bottom:#03070b;
+    --bg-deep:#02060a;
+    --bg-mid:#06121c;
     --accent:#4da3ff;
     --text:#e6edf5;
 }
@@ -27,13 +27,15 @@ body{
     background:
         radial-gradient(1200px 800px at 20% 10%, rgba(77,163,255,0.18), transparent 60%),
         radial-gradient(900px 600px at 80% 70%, rgba(77,163,255,0.08), transparent 65%),
-        linear-gradient(180deg, #06121c 0%, #02060a 100%);
+        linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
     color:var(--text);
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    position:relative;
 }
 
-    body::before{
+/* Subtle atmospheric motion */
+body::before{
     content:"";
     position:fixed;
     inset:0;
@@ -41,12 +43,17 @@ body{
         radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03), transparent 70%);
     mix-blend-mode:overlay;
     pointer-events:none;
-    animation:drift 18s ease-in-out infinite alternate;
+    animation:drift 20s ease-in-out infinite alternate;
 }
 
 @keyframes drift{
     0%{ transform:translateY(-10px) scale(1); }
     100%{ transform:translateY(10px) scale(1.02); }
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
 }
 
 /* NAV */
@@ -60,9 +67,9 @@ nav{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    background:rgba(5,14,21,0.92);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid rgba(255,255,255,0.04);
+    background:rgba(6,18,28,0.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,0.05);
     z-index:100;
 }
 
@@ -74,9 +81,13 @@ nav{
 
 .nav-links{
     display:flex;
-    gap:18px;
+    gap:20px;
     font-size:13px;
+}
+
+.nav-links a{
     color:rgba(230,237,245,0.6);
+    transition:color 0.2s ease;
 }
 
 .nav-links a:hover{
@@ -118,9 +129,10 @@ nav{
     box-shadow:0 8px 24px rgba(77,163,255,0.22);
     transition:all 0.25s ease;
 }
+
 .cta:hover{
     transform:translateY(-2px);
-    box-shadow:0 18px 50px rgba(77,163,255,0.35);
+    box-shadow:0 16px 45px rgba(77,163,255,0.35);
 }
 
 .micro{
