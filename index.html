@@ -9,12 +9,12 @@
 
 <style>
 :root {
-  --black: #05070c;
-  --steel: #0e1623;
+  --black: #04060b;
+  --steel: #0c1420;
   --deep: #132338;
   --accent: #2e6df6;
   --text: #ffffff;
-  --muted: rgba(255,255,255,0.7);
+  --muted: rgba(255,255,255,0.68);
   --border: rgba(255,255,255,0.08);
   --max: 1200px;
 }
@@ -24,7 +24,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg, #05070c 0%, #0e1623 50%, #132338 100%);
+  background: linear-gradient(180deg, #04060b 0%, #0c1420 50%, #132338 100%);
   color: var(--text);
   font-family: 'Sora', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -37,7 +37,7 @@ html, body {
 }
 
 header {
-  padding: 50px 0;
+  padding: 48px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,8 +46,8 @@ header {
 .logo {
   font-family: 'IBM Plex Mono', monospace;
   font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.12em;
+  font-size: 13px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -55,8 +55,8 @@ nav {
   display: flex;
   gap: 40px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
@@ -70,37 +70,37 @@ nav a:hover {
 }
 
 .hero {
-  padding: 160px 0 140px;
+  padding: 180px 0 160px;
 }
 
 .hero h1 {
-  font-size: clamp(52px, 7vw, 96px);
+  font-size: clamp(56px, 8vw, 110px);
+  line-height: 0.95;
   font-weight: 700;
-  line-height: 1;
-  margin-bottom: 30px;
-  letter-spacing: -0.02em;
+  margin: 0 0 50px 0;
+  letter-spacing: -0.03em;
 }
 
 .hero p {
-  font-size: 22px;
-  max-width: 900px;
+  font-size: 24px;
+  max-width: 950px;
   color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 50px;
+  line-height: 1.8;
+  margin-bottom: 70px;
 }
 
 .signal {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 11px;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 60px;
+  margin-bottom: 70px;
 }
 
 .cta {
   display: inline-block;
-  padding: 18px 44px;
+  padding: 18px 48px;
   background: var(--accent);
   color: white;
   text-decoration: none;
@@ -112,27 +112,28 @@ nav a:hover {
 }
 
 .section {
-  padding: 140px 0;
+  padding: 160px 0;
   border-top: 1px solid var(--border);
 }
 
 .section h2 {
-  font-size: clamp(40px, 6vw, 70px);
-  margin-bottom: 40px;
+  font-size: clamp(44px, 6vw, 80px);
+  margin-bottom: 50px;
+  letter-spacing: -0.02em;
 }
 
 .section p {
-  font-size: 21px;
-  max-width: 1000px;
+  font-size: 23px;
+  max-width: 1050px;
   color: var(--muted);
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 60px;
-  margin-top: 80px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 70px;
+  margin-top: 100px;
 }
 
 .block h3 {
@@ -140,31 +141,31 @@ nav a:hover {
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   color: var(--accent);
 }
 
 .block p {
-  font-size: 20px;
+  font-size: 21px;
   color: var(--muted);
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
 .contact {
-  margin-top: 100px;
+  margin-top: 120px;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 14px;
-  line-height: 2;
+  line-height: 2.2;
   color: var(--muted);
 }
 
-footer {
-  padding: 100px 0;
+.footer {
+  padding: 120px 0;
   border-top: 1px solid var(--border);
   text-align: center;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: rgba(255,255,255,0.4);
   text-transform: uppercase;
 }
@@ -184,8 +185,8 @@ footer {
   <header>
     <div class="logo">NERAIUM</div>
     <nav>
-      <a href="#capability">Capability</a>
-      <a href="#approach">Approach</a>
+      <a href="#shift">Shift</a>
+      <a href="#model">Model</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -194,58 +195,63 @@ footer {
 <section class="hero">
   <div class="container">
     <h1>
-      Infrastructure Intelligence
-      for Operational Water Systems
+      Infrastructure Is Becoming
+      Intelligence-Dependent.
     </h1>
 
     <p>
-      Neraium detects sustained structural deterioration in live water systems before failure occurs.
-      A read-only analytical layer that strengthens operators without altering control authority.
+      As operational systems become fully instrumented, intelligence expands toward control.
+      In high-consequence water environments, analysis and authority must remain structurally separate.
+      Neraium defines that boundary.
     </p>
 
     <div class="signal">
-      Drift Detection · Read-Only Architecture · Governed Outputs
+      Read-Only · Non-Actuating · Governed Outputs
     </div>
 
     <a class="cta" href="mailto:Craig@neraium.com">Engage</a>
   </div>
 </section>
 
-<section class="section" id="capability">
+<section class="section" id="shift">
   <div class="container">
-    <h2>Operational Capability</h2>
-
-    <div class="grid">
-      <div class="block">
-        <h3>Early Deterioration Signal</h3>
-        <p>
-          Identify sustained multivariate degradation across temperature, flow, pressure, and energy signals weeks before reactive events.
-        </p>
-      </div>
-
-      <div class="block">
-        <h3>Boundary Integrity</h3>
-        <p>
-          Neraium does not actuate equipment, override systems, or introduce automation risk. Authority remains fully with the operator.
-        </p>
-      </div>
-
-      <div class="block">
-        <h3>Institutional Alignment</h3>
-        <p>
-          Structured, traceable outputs designed for oversight environments, audit review, and liability-sensitive infrastructure.
-        </p>
-      </div>
-    </div>
+    <h2>The Structural Shift</h2>
+    <p>
+      Undetected deterioration compounds cost, inefficiency, and exposure long before failure occurs.
+      As telemetry density increases across critical water infrastructure, institutions require an intelligence layer that strengthens operators without introducing automation risk.
+      Intelligence must inform.
+      Operators must decide.
+    </p>
   </div>
 </section>
 
-<section class="section" id="approach">
+<section class="section" id="model">
   <div class="container">
-    <h2>Infrastructure Is Becoming Intelligence-Dependent</h2>
-    <p>
-      As telemetry density increases, intelligence becomes foundational to operational resilience. Neraium defines the analytical layer between raw signal and institutional decision.
-    </p>
+    <h2>The Neraium Model</h2>
+
+    <div class="grid">
+      <div class="block">
+        <h3>Drift Detection</h3>
+        <p>
+          Identify sustained multivariate deterioration across live operational signals weeks before reactive events.
+        </p>
+      </div>
+
+      <div class="block">
+        <h3>Structural Boundary</h3>
+        <p>
+          Neraium does not actuate equipment, override systems, or introduce automated control.
+          Operational authority remains fully intact.
+        </p>
+      </div>
+
+      <div class="block">
+        <h3>Institutional Integrity</h3>
+        <p>
+          Structured classifications designed for oversight, audit environments, and liability-sensitive infrastructure.
+        </p>
+      </div>
+    </div>
 
     <div class="contact" id="contact">
       Craig Curtis<br>
@@ -256,7 +262,7 @@ footer {
   </div>
 </section>
 
-<footer>
+<footer class="footer">
   © 2026 Neraium
 </footer>
 
