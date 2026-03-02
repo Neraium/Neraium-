@@ -6,7 +6,6 @@
 <title>Neraium | Systemic Infrastructure Intelligence</title>
 
 <link rel="preload" as="image" href="hero.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -17,7 +16,7 @@
   --text:#ffffff;
   --text-muted:rgba(255,255,255,0.68);
   --border:rgba(46,109,246,0.14);
-  --max:980px;
+  --max:1000px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -37,7 +36,7 @@ body{
 }
 
 header{
-  padding:42px 0;
+  padding:48px 0;
   display:flex;
   justify-content:flex-end;
 }
@@ -91,15 +90,26 @@ nav a:hover{color:var(--accent)}
 }
 
 .section h2{
-  font-size:34px;
+  font-size:32px;
   font-weight:600;
   margin-bottom:30px;
 }
 
 .section p{
-  font-size:21px;
+  font-size:20px;
   color:var(--text-muted);
-  max-width:720px;
+  max-width:760px;
+  margin-bottom:24px;
+}
+
+.validation-list{
+  margin-top:30px;
+  font-size:19px;
+  color:var(--text-muted);
+}
+
+.validation-list li{
+  margin-bottom:12px;
 }
 
 .contact{
@@ -133,32 +143,6 @@ footer{
   letter-spacing:.06em;
   color:rgba(255,255,255,0.45);
 }
-
-@media (max-width:768px){
-  .hero{
-    padding:160px 0 180px;
-  }
-
-  .section{
-    padding:160px 0;
-  }
-
-  .contact{
-    padding:180px 0;
-  }
-
-  .brand{
-    font-size:clamp(54px,14vw,90px);
-  }
-
-  .tagline{
-    font-size:22px;
-  }
-
-  .subline{
-    font-size:18px;
-  }
-}
 </style>
 </head>
 
@@ -166,7 +150,7 @@ footer{
 
 <div class="container">
 <header>
-<nav aria-label="Primary">
+<nav>
 <a href="technical.html">Technical</a>
 <a href="#contact">Contact</a>
 </nav>
@@ -187,18 +171,23 @@ Early detection of structural deterioration in live water systems using existing
 
 <section class="section">
 <div class="container">
-<h2>The Shift</h2>
+<h2>Empirical Validation</h2>
 <p>
-Infrastructure is becoming intelligent. In high consequence systems, observation must remain structurally independent from control.
+Multivariate drift detection validated across 707 turbofan degradation trajectories using NASA CMAPSS datasets.
 </p>
+<ul class="validation-list">
+<li>96.9 percent detection coverage</li>
+<li>Median 183 cycle lead time</li>
+<li>Zero baseline window admissions</li>
+</ul>
 </div>
 </section>
 
 <section class="section">
 <div class="container">
-<h2>The Role</h2>
+<h2>The Structural Boundary</h2>
 <p>
-Neraium operates as a read only intelligence layer. It identifies sustained multivariate deterioration and produces structured classifications for institutional review.
+Observation remains structurally independent from control. Neraium does not actuate, modify, or override infrastructure systems.
 </p>
 </div>
 </section>
