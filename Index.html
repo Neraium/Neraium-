@@ -3,252 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium | Infrastructure Intelligence</title>
+<title>Neraium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{
-    --text:#eef4fb;
-    --muted:rgba(238,244,251,0.68);
-    --muted2:rgba(238,244,251,0.50);
-    --accent:#4da3ff;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-*{ box-sizing:border-box; }
-
-html, body{
-    margin:0;
-    padding:0;
-    scroll-behavior:smooth;
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(
+    to bottom,
+    #0b2a40 0%,
+    #081e2d 40%,
+    #05141f 70%,
+    #02080d 100%
+  );
+  color: #e6edf3;
+  line-height: 1.6;
 }
 
-body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-    color:var(--text);
-
-    background:
-        radial-gradient(1800px 1200px at 20% -5%, rgba(77,163,255,0.22), transparent 65%),
-        radial-gradient(1400px 1200px at 95% 35%, rgba(0,120,255,0.12), transparent 70%),
-        radial-gradient(1200px 1600px at 50% 100%, rgba(0,90,200,0.08), transparent 75%),
-        linear-gradient(180deg, #071c2a 0%, #04131d 45%, #02070c 100%);
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 8%;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
 }
 
-/* NAV */
-nav{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:64px;
-    padding:0 24px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    background:rgba(7,22,34,0.88);
-    backdrop-filter:blur(16px);
-    border-bottom:1px solid rgba(255,255,255,0.06);
-    z-index:100;
+.logo img {
+  height: 36px;
+  display: block;
 }
 
-.brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-weight:600;
-    letter-spacing:2px;
-    font-size:13px;
+.nav-links a {
+  margin-left: 28px;
+  text-decoration: none;
+  color: #9fb3c8;
+  font-weight: 500;
+  transition: 0.2s ease;
 }
 
-.logo-icon{
-    height:22px;
-    width:auto;
-    opacity:0.9;
+.nav-links a:hover {
+  color: #ffffff;
 }
 
-.nav-center{
-    display:flex;
-    gap:28px;
-    font-size:13px;
+section {
+  padding: 120px 8%;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.nav-center a{
-    position:relative;
-    color:rgba(238,244,251,0.65);
-    text-decoration:none;
-    transition:color 0.2s ease;
+.hero {
+  padding-top: 140px;
 }
 
-.nav-center a::after{
-    content:"";
-    position:absolute;
-    left:0;
-    bottom:-6px;
-    width:0;
-    height:1px;
-    background:rgba(77,163,255,0.85);
-    transition:width 0.25s ease;
+h1 {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  max-width: 800px;
 }
 
-.nav-center a:hover{
-    color:var(--text);
+.subtitle {
+  font-size: 22px;
+  margin-top: 24px;
+  color: #9fb3c8;
+  max-width: 700px;
 }
 
-.nav-center a:hover::after{
-    width:100%;
+.cta {
+  margin-top: 40px;
 }
 
-.nav-cta{
-    font-size:13px;
-    padding:6px 14px;
-    border:1px solid rgba(255,255,255,0.18);
-    border-radius:7px;
-    color:rgba(238,244,251,0.85);
-    text-decoration:none;
-    transition:all 0.2s ease;
+.cta a {
+  background: linear-gradient(90deg, #4ea3ff, #3d8be6);
+  padding: 16px 34px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 0 30px rgba(78,163,255,0.3);
+  transition: 0.2s ease;
 }
 
-.nav-cta:hover{
-    border-color:rgba(77,163,255,0.75);
-    color:var(--text);
+.cta a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(78,163,255,0.45);
 }
 
-.spacer{
-    height:64px;
+.meta {
+  margin-top: 28px;
+  color: #7f95aa;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
-/* HERO */
-.hero{
-    padding:140px 24px 120px;
-    max-width:720px;
-    margin:0 auto;
+h2 {
+  font-size: 36px;
+  margin-bottom: 24px;
+  font-weight: 700;
 }
 
-.hero h1{
-    font-size:clamp(38px, 7vw, 68px);
-    line-height:1.0;
-    margin:0 0 20px 0;
-    font-weight:700;
-    letter-spacing:-0.7px;
-    transform:translateX(1px);
+p {
+  max-width: 800px;
+  font-size: 18px;
+  color: #9fb3c8;
 }
 
-.hero p{
-    font-size:20px;
-    color:var(--muted);
-    margin:0 0 32px 0;
-    max-width:640px;
+.tech-box {
+  margin-top: 50px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 30px;
+  border-radius: 12px;
 }
 
-.cta{
-    display:inline-block;
-    padding:15px 24px;
-    background:linear-gradient(135deg,#4da3ff,#3a8de0);
-    color:#04111c;
-    font-weight:600;
-    border-radius:9px;
-    text-decoration:none;
-    box-shadow:0 12px 32px rgba(77,163,255,0.30);
-    transition:all 0.25s ease;
+.tech-box h3 {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
 }
 
-.cta:hover{
-    transform:translateY(-2px);
-    box-shadow:0 24px 65px rgba(77,163,255,0.40);
+.tech-box ul {
+  list-style: none;
 }
 
-.micro{
-    margin-top:30px;
-    font-size:13px;
-    color:var(--muted2);
-    letter-spacing:0.7px;
+.tech-box li {
+  margin-bottom: 12px;
+  color: #9fb3c8;
+  font-size: 15px;
 }
 
-/* SECTIONS */
-.section{
-    padding:110px 24px 130px;
-    max-width:720px;
-    margin:0 auto;
-    border-top:1px solid rgba(255,255,255,0.06);
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.05);
+  margin: 120px 0;
 }
 
-.eyebrow{
-    font-size:12px;
-    letter-spacing:1.8px;
-    text-transform:uppercase;
-    color:rgba(238,244,251,0.42);
-    margin-bottom:14px;
+.ceo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.section h2{
-    font-size:28px;
-    margin:0 0 18px 0;
-    font-weight:600;
-}
-
-.section p{
-    font-size:18px;
-    color:var(--muted);
-    max-width:600px;
-    line-height:1.7;
-}
-
-/* TECH BOX */
-.tech-box{
-    margin-top:48px;
-    padding:32px;
-    background:rgba(255,255,255,0.035);
-    border:1px solid rgba(255,255,255,0.10);
-    border-radius:12px;
-    backdrop-filter:blur(8px);
-}
-
-.tech-box h3{
-    margin:0 0 20px 0;
-    font-size:19px;
-    font-weight:600;
-}
-
-.tech-list{
-    display:grid;
-    gap:14px;
-    font-size:16px;
-    color:var(--muted);
-}
-
-/* STEWARDSHIP */
-.steward{
-    padding:110px 24px 150px;
-    max-width:720px;
-    margin:0 auto;
-    border-top:1px solid rgba(255,255,255,0.06);
-}
-
-.steward h2{
-    font-size:28px;
-    margin:0 0 14px 0;
-    font-weight:600;
-}
-
-.steward .line{
-    font-size:17px;
-    color:var(--muted);
-    max-width:600px;
-    line-height:1.7;
-}
-
-footer{
-    padding:40px 24px 60px;
-    text-align:center;
-    color:rgba(238,244,251,0.45);
-    font-size:12px;
-    border-top:1px solid rgba(255,255,255,0.05);
-}
-
-/* MOBILE */
-@media(max-width:900px){
-    .nav-center{ display:none; }
-    .nav-cta{ display:none; }
+footer {
+  text-align: center;
+  padding: 60px 8%;
+  font-size: 14px;
+  color: #5f7387;
+  border-top: 1px solid rgba(255,255,255,0.05);
 }
 </style>
 </head>
@@ -256,75 +166,87 @@ footer{
 <body>
 
 <nav>
-    <div class="brand">
-        <img src="logo.svg" alt="Neraium Logo" class="logo-icon">
-        <span>NERAIUM</span>
-    </div>
-
-    <div class="nav-center">
-        <a href="#how">How It Works</a>
-        <a href="#governance">Governance</a>
-        <a href="#stewardship">Stewardship</a>
-    </div>
-
-    <a href="mailto:craig@neraium.com" class="nav-cta">Contact</a>
+  <div class="logo">
+    <img src="logo.svg" alt="Neraium Logo">
+  </div>
+  <div class="nav-links">
+    <a href="#platform">Platform</a>
+    <a href="#governance">Governance</a>
+    <a href="#distribution">Distribution</a>
+    <a href="#leadership">Leadership</a>
+  </div>
 </nav>
 
-<div class="spacer"></div>
-
 <section class="hero">
-    <h1>Deterioration Identified Weeks Before Failure.</h1>
+  <h1>Infrastructure Deterioration Identified Before Failure.</h1>
+  <p class="subtitle">
+    Neraium operates as a deterministic intelligence layer for mission-critical water environments.
+  </p>
 
-    <p>
-        A read-only intelligence layer for high-consequence water systems.
-    </p>
+  <div class="cta">
+    <a href="#">Initiate Alignment Discussion</a>
+  </div>
 
-    <a href="mailto:craig@neraium.com" class="cta">
-        Initiate Alignment Discussion
-    </a>
-
-    <div class="micro">
-        Read-only • No actuation • Audit-traceable output
-    </div>
+  <div class="meta">
+    Read-only • Deterministic • Non-actuating
+  </div>
 </section>
 
-<section id="how" class="section">
-    <div class="eyebrow">How It Works</div>
-    <h2>Early Detection Without Operational Risk</h2>
-    <p>
-        Neraium ingests native telemetry and identifies sustained deterioration patterns before operational failure. The system is strictly read-only.
-    </p>
+<div class="divider"></div>
 
-    <div class="tech-box">
-        <h3>System Characteristics</h3>
-        <div class="tech-list">
-            <div>• Continuous telemetry ingestion</div>
-            <div>• Pattern-based deterioration detection</div>
-            <div>• No control or actuation capability</div>
-            <div>• Operates within defined system boundaries</div>
-            <div>• Structured outputs with audit traceability</div>
-        </div>
-    </div>
+<section id="platform">
+  <h2>Institutional Infrastructure Layer</h2>
+  <p>
+    Neraium classifies sustained structural degradation before operational consequence occurs. 
+    Outputs are governed, auditable, and architecturally bounded.
+  </p>
+
+  <div class="tech-box">
+    <h3>Technical Foundation</h3>
+    <ul>
+      <li>Multivariate drift detection across native telemetry</li>
+      <li>Baseline vector anchoring with persistence validation</li>
+      <li>Deterministic classification thresholds</li>
+      <li>Architectural non-interference boundary enforcement</li>
+      <li>Governed audit traceability</li>
+    </ul>
+  </div>
 </section>
 
-<section id="governance" class="section">
-    <div class="eyebrow">Governance</div>
-    <h2>Designed to Preserve System Boundaries</h2>
-    <p>
-        Neraium does not override operators, modify controls, or introduce automation pathways. It functions solely as a read-only intelligence layer.
-    </p>
+<div class="divider"></div>
+
+<section id="governance">
+  <h2>Deterministic Governance Model</h2>
+  <p>
+    Classification outputs are bound to defined architectural guardrails. 
+    Neraium does not actuate, override, or modify physical systems.
+  </p>
 </section>
 
-<section id="stewardship" class="steward">
-    <div class="eyebrow">Stewardship</div>
-    <h2>Independent Stewardship</h2>
-    <div class="line">
-        Founded and led by Craig Curtis. Infrastructure systems operator and platform architect.
-    </div>
+<div class="divider"></div>
+
+<section id="distribution">
+  <h2>Delivered Through Mechanical Contractors</h2>
+  <p>
+    Neraium integrates through trusted service providers, 
+    enhancing contractor portfolios with governed deterioration classification 
+    while preserving operational control boundaries.
+  </p>
+</section>
+
+<div class="divider"></div>
+
+<section id="leadership" class="ceo-section">
+  <h2>Founder & CEO</h2>
+  <p>
+    Craig Curtis founded Neraium to establish a deterministic intelligence layer 
+    for high-consequence infrastructure environments. The focus: institutional clarity, 
+    architectural discipline, and governed classification in mission-critical water systems.
+  </p>
 </section>
 
 <footer>
-    © 2026 Neraium
+  © 2026 Neraium. Institutional Infrastructure Intelligence.
 </footer>
 
 </body>
