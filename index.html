@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Neraium defines Systemic Infrastructure Intelligence. Validated multivariate drift detection with preserved operational authority.">
 <title>Neraium | Systemic Infrastructure Intelligence</title>
 
 <link rel="preload" as="image" href="hero.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap&font-display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -14,18 +16,24 @@
   --bg-deep:#0b1424;
   --accent:#2e6df6;
   --text:#ffffff;
-  --text-muted:rgba(255,255,255,0.65);
-  --max:1000px;
+  --text-muted:rgba(255,255,255,0.68);
+  --max:1040px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   font-family:'Inter',sans-serif;
   background:linear-gradient(160deg,var(--bg),var(--bg-deep));
   color:var(--text);
-  line-height:1.6;
+  line-height:1.65;
   text-align:center;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 
 .container{
@@ -35,13 +43,13 @@ body{
 }
 
 header{
-  padding:60px 0 20px;
+  padding:64px 0 24px;
 }
 
 nav{
   display:flex;
   justify-content:center;
-  gap:40px;
+  gap:42px;
 }
 
 nav a{
@@ -64,27 +72,27 @@ nav a:hover{color:var(--accent)}
 }
 
 .brand{
-  font-size:clamp(90px,12vw,140px);
+  font-size:clamp(96px,12vw,150px);
   font-weight:700;
   letter-spacing:0.06em;
-  margin-bottom:30px;
+  margin-bottom:28px;
 }
 
 .category{
-  font-size:28px;
+  font-size:clamp(24px,2.4vw,30px);
   font-weight:500;
-  margin-bottom:22px;
+  margin-bottom:20px;
 }
 
 .subline{
-  font-size:19px;
+  font-size:clamp(17px,1.8vw,20px);
   color:var(--text-muted);
-  max-width:700px;
+  max-width:720px;
   margin:0 auto;
 }
 
 .section{
-  padding:200px 0;
+  padding:180px 0;
 }
 
 .section h2{
@@ -95,27 +103,27 @@ nav a:hover{color:var(--accent)}
 .section p{
   font-size:19px;
   color:var(--text-muted);
-  max-width:760px;
+  max-width:780px;
   margin:0 auto;
 }
 
 .metrics{
-  margin-top:30px;
+  margin-top:28px;
   font-size:18px;
   color:var(--text-muted);
   list-style:none;
 }
 
-.metrics li{margin-bottom:10px}
+.metrics li{margin-bottom:8px}
 
 .contact{
-  padding:220px 0;
+  padding:200px 0;
 }
 
 .contact p{
   font-size:18px;
   color:var(--text-muted);
-  margin-bottom:40px;
+  margin-bottom:36px;
   line-height:1.6;
 }
 
@@ -127,17 +135,22 @@ nav a:hover{color:var(--accent)}
   text-decoration:none;
   border-radius:4px;
   font-weight:600;
+  transition:background .2s ease;
+}
+
+.cta:hover{
+  background:#1f56d9;
 }
 
 footer{
   padding:100px 0;
   font-size:12px;
-  color:rgba(255,255,255,0.4);
+  color:rgba(255,255,255,0.45);
 }
 
 @media (max-width:768px){
   .hero{padding:160px 0 200px;}
-  .section{padding:140px 0;}
+  .section{padding:120px 0;}
   .contact{padding:140px 0;}
 }
 </style>
@@ -145,14 +158,14 @@ footer{
 
 <body>
 
-<div class="container">
-<header>
-<nav>
+<header class="container">
+<nav aria-label="Primary">
 <a href="technical.html">Technical</a>
 <a href="#contact">Contact</a>
 </nav>
 </header>
-</div>
+
+<main>
 
 <section class="hero">
 <div class="container">
@@ -198,6 +211,8 @@ Craig@neraium.com<br>
 <a href="mailto:Craig@neraium.com" class="cta">Contact</a>
 </div>
 </section>
+
+</main>
 
 <footer>
 © 2026 Neraium
