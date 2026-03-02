@@ -41,9 +41,9 @@ header{
 }
 
 .logo{
-  font-size:16px;
-  font-weight:600;
+  font-size:14px;
   letter-spacing:2px;
+  font-weight:600;
   color:var(--accent);
 }
 
@@ -67,16 +67,20 @@ nav a:hover{color:var(--accent)}
   background-blend-mode:multiply;
 }
 
-.hero h1{
-  font-size:clamp(56px,6vw,86px);
-  line-height:1.04;
-  letter-spacing:-0.02em;
-  max-width:900px;
-  margin-bottom:32px;
+.brand{
+  font-size:clamp(70px,10vw,130px);
+  letter-spacing:0.10em;
+  font-weight:700;
+  margin-bottom:30px;
 }
 
-.hero p{
-  font-size:24px;
+.tagline{
+  font-size:30px;
+  margin-bottom:20px;
+}
+
+.subline{
+  font-size:22px;
   color:var(--text-muted);
   max-width:720px;
 }
@@ -142,12 +146,13 @@ footer{
 
 <section class="hero">
 <div class="container">
-<h1>
-Systemic Infrastructure Intelligence
-</h1>
-<p>
+
+<h1 class="brand">NERAIUM</h1>
+<p class="tagline">Systemic Infrastructure Intelligence</p>
+<p class="subline">
 Early detection of structural deterioration in live water systems using existing telemetry.
 </p>
+
 </div>
 </section>
 
@@ -155,7 +160,7 @@ Early detection of structural deterioration in live water systems using existing
 <div class="container">
 <h2>The Shift</h2>
 <p>
-Infrastructure is becoming increasingly instrumented and intelligence dependent. In high consequence environments, observation must remain independent from control. Structural separation becomes necessary.
+Infrastructure is becoming intelligent. In high consequence environments, observation must remain structurally independent from control. Structural separation becomes necessary.
 </p>
 </div>
 </section>
