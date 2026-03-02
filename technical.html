@@ -13,22 +13,18 @@
   --bg-1: #0b1324;
   --accent: #3b82f6;
   --text: #ffffff;
-  --muted: rgba(255,255,255,0.65);
+  --muted: rgba(255,255,255,0.62);
   --border: rgba(255,255,255,0.08);
   --max: 1200px;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(180deg, var(--bg-0), var(--bg-1));
   color: var(--text);
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .container {
@@ -37,74 +33,72 @@ body {
   padding: 0 48px;
 }
 
-/* HEADER */
 header {
-  padding: 36px 0;
+  padding: 32px 0;
   border-bottom: 1px solid var(--border);
 }
 
-.nav {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+header a {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
 }
 
-.nav a {
-  text-decoration:none;
-  font-size:14px;
-  color:var(--muted);
-  margin-left:32px;
-}
-
-.nav a:hover {
-  color:var(--text);
+header a:hover {
+  color: var(--text);
 }
 
 /* HERO */
 .hero {
-  padding: 140px 0 120px;
+  padding: 160px 0 120px;
 }
 
 .hero h1 {
-  font-size: 52px;
+  font-size: 56px;
   font-weight: 600;
-  line-height: 1.08;
-  margin-bottom: 28px;
   letter-spacing: -0.02em;
+  margin-bottom: 32px;
 }
 
 .hero p {
-  max-width: 760px;
+  max-width: 720px;
   font-size: 18px;
   color: var(--muted);
 }
 
-/* SECTIONS */
+/* SECTION */
 .section {
-  padding: 140px 0;
+  padding: 150px 0;
   border-top: 1px solid var(--border);
 }
 
 .section h2 {
-  font-size: 30px;
-  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 28px;
 }
 
 .section p {
-  max-width: 760px;
+  max-width: 720px;
   font-size: 17px;
   color: var(--muted);
 }
 
+/* SYSTEM STACK */
 .arch {
-  margin-top: 50px;
+  margin-top: 60px;
   font-size: 15px;
-  line-height: 2.2;
+  line-height: 2.4;
   color: var(--accent);
   font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
-/* FOOTER */
+/* DENSITY CONTRAST */
+.section.dense {
+  padding: 110px 0;
+}
+
 footer {
   padding: 120px 0 60px;
   border-top: 1px solid var(--border);
@@ -112,7 +106,6 @@ footer {
   color: var(--muted);
 }
 
-/* RESPONSIVE */
 @media (max-width:900px) {
   .container { padding: 0 28px; }
   .hero h1 { font-size: 38px; }
@@ -123,13 +116,8 @@ footer {
 <body>
 
 <header>
-  <div class="container nav">
-    <div>
-      <a href="index.html">← Neraium</a>
-    </div>
-    <div>
-      <a href="index.html#contact">Contact</a>
-    </div>
+  <div class="container">
+    <a href="index.html">← Neraium</a>
   </div>
 </header>
 
@@ -145,7 +133,7 @@ footer {
 
 <section class="section">
   <div class="container">
-    <h2>Model Structure</h2>
+    <h2>System Structure</h2>
 
     <div class="arch">
 Live Telemetry<br>
@@ -158,12 +146,12 @@ Operator Review
   </div>
 </section>
 
-<section class="section">
+<section class="section dense">
   <div class="container">
     <h2>Signal Integrity</h2>
     <p>
       Outputs include signal lineage, temporal persistence, and contextual metadata.
-      Interpretation artifacts are surfaced without asserting operational outcomes or triggering automated control.
+      Interpretation artifacts are surfaced without asserting operational outcomes.
     </p>
   </div>
 </section>
