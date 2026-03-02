@@ -80,6 +80,10 @@ nav a:hover {
   letter-spacing: -0.03em;
 }
 
+.hero h1 .accent {
+  color: var(--accent);
+}
+
 .hero p {
   font-size: 22px;
   max-width: 880px;
@@ -194,7 +198,8 @@ footer {
 <section class="hero">
   <div class="container">
     <h1>
-      Infrastructure Is Becoming Intelligence-Dependent.
+      Infrastructure is becoming<br>
+      <span class="accent">intelligence dependent.</span>
     </h1>
 
     <p>
@@ -252,8 +257,8 @@ footer {
     <div class="contact" id="contact">
       Craig Curtis<br>
       Founder & Chief Executive Officer<br><br>
-      Craig@neraium.com<br>
-      602-833-7441
+      <a href="mailto:Craig@neraium.com" style="color: var(--accent); text-decoration: none;">Craig@neraium.com</a><br>
+      <a href="tel:+16028337441" style="color: var(--accent); text-decoration: none;">602-833-7441</a>
     </div>
   </div>
 </section>
