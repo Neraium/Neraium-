@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium | Systemic Infrastructure Intelligence</title>
-<meta name="description" content="Neraium is a read-only infrastructure intelligence layer for high-consequence water environments, combining multivariate drift detection with governance for audit-grade outputs.">
+<title>Neraium | Infrastructure Intelligence</title>
+<meta name="description" content="Neraium is a read-only infrastructure intelligence layer for high-consequence water environments.">
 
 <style>
 :root{
@@ -13,13 +13,11 @@
   --accent:#2e6df6;
   --accent2:#1f56d9;
   --text:#ffffff;
-  --muted:rgba(255,255,255,.72);
+  --muted:rgba(255,255,255,.75);
   --muted2:rgba(255,255,255,.55);
   --border:rgba(255,255,255,.12);
   --card:rgba(255,255,255,.05);
-  --card2:rgba(255,255,255,.08);
-  --max:1120px;
-  --r:14px;
+  --max:1080px;
 }
 
 *{box-sizing:border-box}
@@ -28,8 +26,7 @@ body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
   background:
-    radial-gradient(900px 520px at 18% -12%, rgba(46,109,246,.24), transparent 60%),
-    radial-gradient(900px 520px at 82% 0%, rgba(120,120,255,.14), transparent 60%),
+    radial-gradient(900px 500px at 20% -10%, rgba(46,109,246,.22), transparent 60%),
     linear-gradient(180deg,var(--bg0),var(--bg1));
   color:var(--text);
   line-height:1.55;
@@ -42,11 +39,7 @@ body{
 }
 
 header{
-  padding:26px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:18px;
+  padding:28px 0;
 }
 
 .logo{
@@ -56,222 +49,87 @@ header{
   text-transform:uppercase;
 }
 
-nav{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
-
-nav a{
-  color:var(--muted2);
-  text-decoration:none;
-  font-size:13px;
-  padding:9px 11px;
-  border-radius:10px;
-  border:1px solid transparent;
-}
-
-nav a:hover{
-  color:var(--text);
-  background:rgba(255,255,255,.04);
-  border-color:rgba(255,255,255,.14);
-}
-
 .hero{
-  padding:96px 0 72px;
+  padding:110px 0 80px;
   text-align:center;
 }
 
-.badges{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:18px;
-}
-
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.04);
-  color:var(--muted);
-  font-size:12px;
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:999px;
-  background:var(--accent);
-  box-shadow:0 0 0 6px rgba(46,109,246,.16);
-}
-
 .hero h1{
-  font-size:clamp(34px,4.7vw,60px);
-  line-height:1.04;
-  margin:0 0 22px;
+  font-size:clamp(34px,4.5vw,58px);
+  line-height:1.05;
+  margin-bottom:24px;
 }
 
 .hero p{
-  max-width:860px;
-  margin:0 auto 30px;
-  font-size:19px;
+  max-width:820px;
+  margin:0 auto 36px;
+  font-size:20px;
   color:var(--muted);
-}
-
-.ctaRow{
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:14px;
 }
 
 .cta{
   display:inline-block;
-  padding:15px 34px;
+  padding:16px 36px;
   background:var(--accent);
   color:white;
   text-decoration:none;
   border-radius:10px;
   font-weight:600;
-  transition:.2s ease;
 }
 
-.cta:hover{background:var(--accent2)}
-
-.ctaSecondary{
-  display:inline-block;
-  padding:15px 26px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.14);
-  color:white;
-  text-decoration:none;
-  border-radius:10px;
-  font-weight:600;
-}
-
-.ctaSecondary:hover{
-  background:rgba(255,255,255,.08);
+.cta:hover{
+  background:var(--accent2);
 }
 
 .section{
-  padding:92px 0;
+  padding:100px 0;
   border-top:1px solid rgba(255,255,255,.08);
   text-align:center;
 }
 
 .section h2{
   font-size:34px;
-  margin:0 0 18px;
+  margin-bottom:20px;
 }
 
 .section p{
-  max-width:860px;
+  max-width:820px;
   margin:0 auto;
-  font-size:18px;
+  font-size:19px;
   color:var(--muted);
 }
 
 .grid{
-  margin-top:52px;
+  margin-top:50px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:26px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
 }
 
 .card{
   background:var(--card);
   padding:32px;
-  border-radius:var(--r);
+  border-radius:14px;
   border:1px solid var(--border);
   text-align:left;
 }
 
 .card h3{
-  margin:0 0 12px;
+  margin-bottom:14px;
   font-size:18px;
 }
 
 .card p{
-  margin:0;
-  font-size:15px;
+  font-size:16px;
   color:var(--muted);
-}
-
-.split{
-  margin-top:42px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:22px;
-  text-align:left;
-}
-
-.panel{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:var(--r);
-  padding:26px;
-}
-
-.panel h4{
-  margin:0 0 10px;
-  font-size:15px;
-  letter-spacing:.10em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.85);
-}
-
-.panel ul{
-  margin:0;
-  padding-left:18px;
-  color:var(--muted);
-  font-size:15px;
-}
-
-.panel li{margin:10px 0}
-
-.techbox{
-  margin-top:36px;
-  text-align:left;
-  background:rgba(46,109,246,.07);
-  border:1px solid rgba(46,109,246,.22);
-  border-radius:var(--r);
-  padding:24px;
-}
-
-.techbox strong{
-  display:block;
-  margin-bottom:10px;
-  font-size:12px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.88);
-}
-
-.mono{
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  font-size:13px;
-  color:rgba(255,255,255,.80);
-  white-space:pre-wrap;
-  line-height:1.55;
 }
 
 .footer{
-  padding:76px 0;
+  padding:80px 0;
   border-top:1px solid rgba(255,255,255,.08);
   text-align:center;
   color:var(--muted2);
   font-size:14px;
-}
-
-@media (max-width:900px){
-  .split{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -281,136 +139,74 @@ nav a:hover{
 <div class="container">
   <header>
     <div class="logo">NERAIUM</div>
-    <nav>
-      <a href="#shift">Shift</a>
-      <a href="#drift">Drift</a>
-      <a href="#governance">Governance</a>
-      <a href="#contact">Contact</a>
-    </nav>
   </header>
 </div>
 
 <section class="hero">
   <div class="container">
-    <div class="badges">
-      <span class="badge"><span class="dot"></span> Read-only architecture</span>
-      <span class="badge">Non-actuating</span>
-      <span class="badge">Audit-grade outputs</span>
-    </div>
-
-    <h1>Systemic Infrastructure Intelligence for High-Consequence Water</h1>
+    <h1>Infrastructure Intelligence for High-Consequence Water Systems</h1>
     <p>
-      Neraium combines multivariate drift detection with governance to convert native telemetry into deterioration insight that institutions can trust.
-      We do not control equipment. We do not modify systems. We classify sustained degradation and produce structured evidence outputs.
+      Neraium detects sustained deterioration in live water systems before failure occurs.
+      We operate as a fully read-only intelligence layer, producing governed outputs without controlling or modifying equipment.
     </p>
-
-    <div class="ctaRow">
-      <a class="cta" href="mailto:founder@neraium.com">Investor Discussion</a>
-      <a class="ctaSecondary" href="#drift">How drift is detected</a>
-    </div>
+    <a class="cta" href="mailto:founder@neraium.com">Investor Discussion</a>
   </div>
 </section>
 
-<section id="shift" class="section">
+<section class="section">
   <div class="container">
-    <h2>Structural Shift</h2>
+    <h2>The Problem</h2>
     <p>
-      As physical infrastructure becomes increasingly instrumented, intelligence expands toward operational authority.
-      In high-consequence environments, analysis must remain separate from control.
-      That separation becomes a structural requirement.
+      Water infrastructure degrades gradually. Most organizations discover deterioration only after alarms trigger, efficiency drops, or failures occur. Existing systems generate data, but they do not classify sustained structural decline early enough to act with confidence.
     </p>
   </div>
 </section>
 
-<section id="drift" class="section">
+<section class="section">
   <div class="container">
-    <h2>Drift Detection, Not Threshold Alarms</h2>
-    <p>
-      High-consequence water systems rarely fail without precursors.
-      The precursor is not a single sensor crossing a limit.
-      It is sustained multivariate drift across correlated signals over time.
-    </p>
+    <h2>The Neraium Approach</h2>
 
     <div class="grid">
       <div class="card">
-        <h3>Multivariate drift</h3>
+        <h3>Drift Detection</h3>
         <p>
-          Detect persistent deviation across temperature, flow, pressure, and energy signals, not isolated spikes.
+          We identify persistent deviation across operational signals over time, surfacing deterioration before reactive thresholds are crossed.
         </p>
       </div>
+
       <div class="card">
-        <h3>Persistence confirmation</h3>
+        <h3>Read-Only Architecture</h3>
         <p>
-          Classify deterioration only when deviation persists, reducing noise and preventing reactive false positives.
+          Neraium does not actuate, control, or modify physical systems. Intelligence remains structurally separate from operations.
         </p>
       </div>
+
       <div class="card">
-        <h3>Lead time framing</h3>
+        <h3>Governed Outputs</h3>
         <p>
-          Translate drift onset into lead time against downstream alarms, failures, or consequence events.
+          Every classification is structured, traceable, and defensible for institutional review, audit, and oversight environments.
         </p>
-      </div>
-    </div>
-
-    <div class="techbox">
-      <strong>Technical Box</strong>
-      <div class="mono">Inputs: native telemetry streams
-Baseline: stable operating window
-Detection: multivariate distance and correlation shift
-Confirmation: persistence and consistency checks
-Output: deterioration class + onset timestamp + lead time</div>
-    </div>
-  </div>
-</section>
-
-<section id="governance" class="section">
-  <div class="container">
-    <h2>Governance Makes Intelligence Institutional</h2>
-    <p>
-      Drift detection creates insight.
-      Governance makes that insight admissible for institutional decision making.
-      Neraium provides a deterministic boundary between analytics and record.
-    </p>
-
-    <div class="split">
-      <div class="panel">
-        <h4>What governance does</h4>
-        <ul>
-          <li>Defines what counts as evidence, and what does not</li>
-          <li>Version-controls assumptions, baselines, and decision criteria</li>
-          <li>Produces audit-ready artifacts with traceable provenance</li>
-          <li>Maintains read-only boundary discipline by design</li>
-        </ul>
-      </div>
-
-      <div class="panel">
-        <h4>Why it matters</h4>
-        <ul>
-          <li>High-consequence environments require defensible records</li>
-          <li>Liability, oversight, and insurance depend on traceability</li>
-          <li>Institutions cannot operationalize intelligence that cannot be explained</li>
-          <li>Governance converts insight into durable institutional action</li>
-        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section id="contact" class="section">
+<section class="section">
   <div class="container">
-    <h2>Institutional Formation</h2>
+    <h2>Why It Matters</h2>
     <p>
-      Neraium is engaging infrastructure operators and early institutional capital to define systemic infrastructure intelligence for high-consequence water environments.
+      As infrastructure becomes more digitized, intelligence must become more accountable.
+      Early detection reduces reactive cost exposure, operational disruption, and liability.
+      Governance ensures that insight can be trusted at institutional scale.
     </p>
-    <div class="ctaRow" style="margin-top:28px;">
+    <div style="margin-top:40px;">
       <a class="cta" href="mailto:founder@neraium.com">Request Discussion</a>
-      <a class="ctaSecondary" href="#drift">Review drift approach</a>
     </div>
   </div>
 </section>
 
 <div class="footer">
-  © 2026 Neraium. Read-only infrastructure intelligence.
+  © 2026 Neraium. Read-Only Infrastructure Intelligence.
 </div>
 
 </body>
