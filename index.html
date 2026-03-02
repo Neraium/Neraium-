@@ -242,6 +242,52 @@ body {
   color: rgba(255,255,255,0.82);
   line-height: 1.74;
 }
+.spec-body p + p { margin-top: 16px; }
+
+/* ── Signal list ─────────────────────────── */
+.signal-grid {
+  margin-top: 32px;
+  border: 1px solid var(--border);
+  background: var(--bg-raised);
+  overflow: hidden;
+}
+.signal-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 1fr;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+.signal-row:last-child { border-bottom: none; }
+.signal-index {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  border-right: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted-soft);
+  letter-spacing: 0.06em;
+  background: rgba(255,255,255,0.018);
+  padding: 15px 0;
+}
+.signal-name {
+  padding: 15px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+}
+.signal-desc {
+  padding: 15px 20px 15px 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted-soft);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
 
 /* ── Metrics ─────────────────────────────── */
 .metrics {
@@ -385,6 +431,7 @@ body {
   .hero-content { padding: 120px 0 80px; }
   .hero h1 { font-size: 40px; }
   .spec-row { grid-template-columns: 1fr; gap: 20px; padding: 48px 0; }
+  .signal-desc { display: none; }
   .metrics { grid-template-columns: 1fr; }
   .metric { padding: 22px 0; border-left: none !important; padding-left: 0 !important; border-bottom: 1px solid var(--border); }
   .metric:last-child { border-bottom: none; }
@@ -405,6 +452,7 @@ body {
       <a href="/" class="nav-wordmark">Neraium</a>
       <ul class="nav-links">
         <li><a href="#system">System</a></li>
+        <li><a href="#water">Water</a></li>
         <li><a href="#governance">Governance</a></li>
         <li><a href="#validation">Validation</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -453,10 +501,64 @@ body {
       </div>
     </div>
 
-    <!-- 02 Governance -->
-    <div class="spec-row" id="governance">
+    <!-- 02 Water Infrastructure -->
+    <div class="spec-row" id="water">
       <div class="spec-label">
         <span class="section-index">02</span>
+        <h2>Water Infrastructure</h2>
+      </div>
+      <div class="spec-body">
+        <p>
+          Water systems degrade silently. Pressure loss, flow irregularity, pump stress,
+          and chemical imbalance each leave a signal trace well before they produce
+          a visible event. Neraium reads those traces continuously across the full
+          sensor environment — not in isolation, but as a correlated system.
+        </p>
+        <p>
+          Applicable across municipal distribution networks, commercial aquatic systems,
+          industrial process water, and managed recreational facilities. Any environment
+          with live telemetry and an operator responsible for system integrity.
+        </p>
+
+        <div class="signal-grid">
+          <div class="signal-row">
+            <div class="signal-index">01</div>
+            <div class="signal-name">Pressure Deviation</div>
+            <div class="signal-desc">line loss · transient surge · zone isolation</div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-index">02</div>
+            <div class="signal-name">Flow Irregularity</div>
+            <div class="signal-desc">leak signature · demand shift · blockage onset</div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-index">03</div>
+            <div class="signal-name">Pump Degradation</div>
+            <div class="signal-desc">vibration drift · efficiency loss · bearing wear</div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-index">04</div>
+            <div class="signal-name">Chemical Drift</div>
+            <div class="signal-desc">pH shift · chlorine variance · turbidity rise</div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-index">05</div>
+            <div class="signal-name">Thermal Variance</div>
+            <div class="signal-desc">temperature stratification · heat exchanger load</div>
+          </div>
+          <div class="signal-row">
+            <div class="signal-index">06</div>
+            <div class="signal-name">Valve & Actuator State</div>
+            <div class="signal-desc">position drift · cycle count · response lag</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 Governance -->
+    <div class="spec-row" id="governance">
+      <div class="spec-label">
+        <span class="section-index">03</span>
         <h2>Governance</h2>
       </div>
       <div class="spec-body">
@@ -468,10 +570,10 @@ body {
       </div>
     </div>
 
-    <!-- 03 Empirical Validation -->
+    <!-- 04 Empirical Validation -->
     <div class="spec-row" id="validation">
       <div class="spec-label">
-        <span class="section-index">03</span>
+        <span class="section-index">04</span>
         <h2>Empirical Validation</h2>
       </div>
       <div class="spec-body">
@@ -496,10 +598,10 @@ body {
       </div>
     </div>
 
-    <!-- 04 Contact -->
+    <!-- 05 Contact -->
     <div class="spec-row" id="contact">
       <div class="spec-label">
-        <span class="section-index">04</span>
+        <span class="section-index">05</span>
         <h2>Contact</h2>
       </div>
       <div class="spec-body">
