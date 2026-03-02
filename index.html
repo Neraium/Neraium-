@@ -14,7 +14,7 @@
   --accent:#2e6df6;
   --text:#ffffff;
   --text-muted:rgba(255,255,255,0.68);
-  --border:rgba(46,109,246,0.16);
+  --border:rgba(46,109,246,0.14);
   --max:980px;
 }
 
@@ -24,7 +24,7 @@ body{
   font-family:'Inter',sans-serif;
   background:linear-gradient(160deg,var(--bg),var(--bg-deep));
   color:var(--text);
-  line-height:1.55;
+  line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
 
@@ -34,16 +34,16 @@ body{
   padding:0 26px;
 }
 
-/* Header tightened */
+/* Header */
 header{
-  padding:36px 0;
+  padding:42px 0;
   display:flex;
   justify-content:flex-end;
 }
 
 nav{
   display:flex;
-  gap:28px;
+  gap:32px;
 }
 
 nav a{
@@ -51,72 +51,74 @@ nav a{
   font-family:'IBM Plex Mono',monospace;
   font-size:11px;
   text-transform:uppercase;
-  letter-spacing:.10em;
+  letter-spacing:.12em;
   color:rgba(255,255,255,0.6);
 }
 
 nav a:hover{color:var(--accent)}
 
-/* Hero lifted higher */
+/* Hero */
 .hero{
-  padding:180px 0 220px;
+  padding:220px 0 260px;
   background:
-    linear-gradient(rgba(5,9,18,0.60),rgba(5,9,18,0.88)),
+    linear-gradient(rgba(5,9,18,0.55),rgba(5,9,18,0.90)),
     url('hero.png') center/cover no-repeat;
   background-blend-mode:multiply;
 }
 
 .brand{
-  font-size:clamp(72px,9vw,120px);
+  font-size:clamp(80px,10vw,130px);
   font-weight:700;
-  letter-spacing:0.06em;
-  margin-bottom:30px;
+  letter-spacing:0.05em;
+  margin-bottom:40px;
 }
 
 .tagline{
-  font-size:28px;
+  font-size:30px;
   font-weight:500;
-  margin-bottom:18px;
+  margin-bottom:24px;
 }
 
 .subline{
-  font-size:20px;
+  font-size:21px;
   color:var(--text-muted);
   max-width:720px;
 }
 
-/* Sections */
+/* Major Section */
 .section{
-  padding:200px 0;
+  padding:240px 0;
   border-top:1px solid var(--border);
 }
 
 .section h2{
-  font-size:34px;
+  font-size:36px;
   font-weight:600;
-  margin-bottom:26px;
+  margin-bottom:32px;
 }
 
 .section p{
-  font-size:20px;
+  font-size:21px;
   color:var(--text-muted);
   max-width:760px;
 }
 
+/* Contact */
 .contact{
-  padding:200px 0;
+  padding:260px 0;
   border-top:1px solid var(--border);
 }
 
 .contact p{
-  font-size:18px;
+  font-size:19px;
   color:var(--text-muted);
-  margin-bottom:42px;
+  margin-bottom:50px;
+  line-height:1.7;
 }
 
 .cta{
   display:inline-block;
-  padding:16px 40px;
+  padding:18px 44px;
   background:var(--accent);
   color:#fff;
   text-decoration:none;
@@ -125,8 +127,9 @@ nav a:hover{color:var(--accent)}
   font-size:14px;
 }
 
+/* Footer */
 footer{
-  padding:120px 0;
+  padding:140px 0;
   border-top:1px solid var(--border);
   text-align:center;
   font-size:12px;
@@ -134,18 +137,22 @@ footer{
   color:rgba(255,255,255,0.45);
 }
 
-/* Mobile tuning */
+/* Mobile refinement */
 @media (max-width:768px){
-  header{
-    padding:28px 0;
+  .hero{
+    padding:160px 0 180px;
   }
 
-  .hero{
-    padding:140px 0 160px;
+  .section{
+    padding:140px 0;
+  }
+
+  .contact{
+    padding:160px 0;
   }
 
   .brand{
-    font-size:clamp(48px,12vw,80px);
+    font-size:clamp(54px,14vw,90px);
   }
 
   .tagline{
@@ -214,4 +221,5 @@ Craig@neraium.com<br>
 © 2026 Neraium
 </footer>
 
-</body
+</body>
+</html>
