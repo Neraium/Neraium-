@@ -1,197 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium</title>
-  <style>
-    :root {
-      --navy: #0a1a2f;
-      --deep: #0f2747;
-      --accent: #2e6df6;
-      --light: #f5f7fa;
-      --gray: #8a94a6;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neraium | Systemic Infrastructure Intelligence</title>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
+<style>
+:root {
+  --bg-dark: #0b1626;
+  --bg-deep: #0f223d;
+  --accent: #2f6df6;
+  --text-primary: #ffffff;
+  --text-secondary: #9aa6b8;
+  --card-bg: rgba(255,255,255,0.04);
+}
 
-    body {
-      background: linear-gradient(180deg, var(--navy), var(--deep));
-      color: white;
-      line-height: 1.6;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+body {
+  background: linear-gradient(180deg, var(--bg-dark), var(--bg-deep));
+  color: var(--text-primary);
+  line-height: 1.6;
+}
 
-    header {
-      padding: 28px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
-    .logo {
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: 1px;
-    }
+header {
+  padding: 32px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    nav a {
-      color: var(--gray);
-      text-decoration: none;
-      margin-left: 28px;
-      font-size: 14px;
-      transition: 0.2s;
-    }
+.logo {
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 18px;
+}
 
-    nav a:hover {
-      color: white;
-    }
+nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-left: 28px;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
 
-    .hero {
-      padding: 100px 0 80px;
-      text-align: center;
-    }
+nav a:hover {
+  color: var(--text-primary);
+}
 
-    .hero h1 {
-      font-size: 48px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+.hero {
+  padding: 120px 0 90px;
+  text-align: center;
+}
 
-    .hero p {
-      font-size: 18px;
-      color: var(--gray);
-      max-width: 750px;
-      margin: 0 auto 40px;
-    }
+.hero h1 {
+  font-size: 52px;
+  font-weight: 700;
+  max-width: 900px;
+  margin: 0 auto 24px;
+}
 
-    .cta {
-      display: inline-block;
-      padding: 14px 32px;
-      background: var(--accent);
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: 0.2s;
-    }
+.hero p {
+  font-size: 19px;
+  color: var(--text-secondary);
+  max-width: 750px;
+  margin: 0 auto 48px;
+}
 
-    .cta:hover {
-      background: #1f56d9;
-    }
+.cta {
+  display: inline-block;
+  padding: 15px 34px;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
 
-    .section {
-      padding: 80px 0;
-    }
+.cta:hover {
+  background: #1f56d9;
+}
 
-    .section h2 {
-      font-size: 32px;
-      margin-bottom: 24px;
-      text-align: center;
-    }
+.section {
+  padding: 90px 0;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 40px;
-      margin-top: 40px;
-    }
+.section h2 {
+  text-align: center;
+  font-size: 34px;
+  margin-bottom: 20px;
+}
 
-    .card {
-      background: rgba(255,255,255,0.05);
-      padding: 32px;
-      border-radius: 8px;
-      transition: 0.2s;
-    }
+.section-sub {
+  text-align: center;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto 50px;
+}
 
-    .card:hover {
-      background: rgba(255,255,255,0.08);
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+}
 
-    .card h3 {
-      margin-bottom: 12px;
-      font-size: 18px;
-    }
+.card {
+  background: var(--card-bg);
+  padding: 34px;
+  border-radius: 10px;
+  transition: 0.25s ease;
+}
 
-    .card p {
-      color: var(--gray);
-      font-size: 15px;
-    }
+.card:hover {
+  background: rgba(255,255,255,0.07);
+  transform: translateY(-4px);
+}
 
-    footer {
-      padding: 60px 0;
-      text-align: center;
-      color: var(--gray);
-      font-size: 14px;
-    }
-  </style>
+.card h3 {
+  margin-bottom: 14px;
+  font-size: 19px;
+}
+
+.card p {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+footer {
+  padding: 60px 0;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+</style>
 </head>
+
 <body>
 
+<div class="container">
+  <header>
+    <div class="logo">NERAIUM</div>
+    <nav>
+      <a href="#">Platform</a>
+      <a href="#">Use Cases</a>
+      <a href="#">Governance</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+</div>
+
+<section class="hero">
   <div class="container">
-    <header>
-      <div class="logo">NERAIUM</div>
-      <nav>
-        <a href="#">Platform</a>
-        <a href="#">Use Cases</a>
-        <a href="#">Governance</a>
-        <a href="#">Contact</a>
-      </nav>
-    </header>
+    <h1>Systemic Infrastructure Intelligence for High-Consequence Water Environments</h1>
+    <p>
+      Neraium converts native operational telemetry into structured, governed deterioration insight.
+      Fully read-only. Non-actuating. Boundary-preserving.
+    </p>
+    <a href="#" class="cta">Request Early Access</a>
   </div>
+</section>
 
-  <section class="hero">
-    <div class="container">
-      <h1>Systemic Infrastructure Intelligence for High-Consequence Water Systems</h1>
-      <p>
-        Neraium transforms native operational telemetry into structured, governed deterioration insight — without controlling, actuating, or modifying physical systems.
-      </p>
-      <a href="#" class="cta">Request Early Access</a>
-    </div>
-  </section>
+<section class="section">
+  <div class="container">
+    <h2>Infrastructure-Grade Intelligence</h2>
+    <p class="section-sub">
+      Purpose-built for environments where failure carries operational, financial, and institutional consequence.
+    </p>
 
-  <section class="section">
-    <div class="container">
-      <h2>What We Do</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Multivariate Drift Detection</h3>
-          <p>
-            Identifies persistent structural deviation patterns before reactive failure occurs.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Read-Only Intelligence Layer</h3>
-          <p>
-            Fully non-actuating architecture that preserves system boundary integrity.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Governed Evidence Output</h3>
-          <p>
-            Structured decision artifacts aligned with institutional audit requirements.
-          </p>
-        </div>
+    <div class="grid">
+      <div class="card">
+        <h3>Multivariate Drift Detection</h3>
+        <p>
+          Identifies persistent structural deviation across correlated telemetry signals
+          before reactive failure thresholds are triggered.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Read-Only Architecture</h3>
+        <p>
+          No control. No actuation. No system modification.
+          Intelligence without boundary intrusion.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Governed Evidence Output</h3>
+        <p>
+          Structured deterioration artifacts aligned with audit discipline,
+          institutional review, and long-horizon asset stewardship.
+        </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer>
-    © 2026 Neraium. All rights reserved.
-  </footer>
+<footer>
+  © 2026 Neraium. All rights reserved.
+</footer>
 
 </body>
 </html>
