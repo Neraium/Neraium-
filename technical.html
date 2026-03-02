@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Technical architecture of Neraium's systemic infrastructure intelligence layer.">
 <title>Neraium | Technical Architecture</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap&font-display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -13,8 +14,8 @@
   --bg-deep:#0b1424;
   --accent:#2e6df6;
   --text:#ffffff;
-  --text-muted:rgba(255,255,255,0.65);
-  --max:1000px;
+  --text-muted:rgba(255,255,255,0.68);
+  --max:1040px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -23,12 +24,14 @@ body{
   font-family:'Inter',sans-serif;
   background:linear-gradient(160deg,var(--bg),var(--bg-deep));
   color:var(--text);
-  line-height:1.6;
+  line-height:1.65;
   text-align:center;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 
 header{
-  padding:60px 0 20px;
+  padding:64px 0 24px;
 }
 
 header a{
@@ -49,49 +52,54 @@ main{
 }
 
 h1{
-  font-size:clamp(60px,7vw,80px);
-  margin-bottom:60px;
+  font-size:clamp(56px,6vw,78px);
+  margin-bottom:80px;
 }
 
 .section{
-  margin-top:160px;
+  margin-top:140px;
 }
 
 .section h2{
-  font-size:26px;
-  margin-bottom:24px;
+  font-size:24px;
+  margin-bottom:22px;
 }
 
 .section p{
-  font-size:19px;
+  font-size:18px;
   color:var(--text-muted);
-  max-width:760px;
-  margin:0 auto 20px;
+  max-width:780px;
+  margin:0 auto 18px;
 }
 
 .arch{
-  margin:50px auto 0;
-  padding:60px;
+  margin:48px auto 0;
+  padding:52px;
   max-width:760px;
   border:1px solid rgba(46,109,246,0.12);
   background:rgba(255,255,255,.03);
   font-family:'IBM Plex Mono',monospace;
   font-size:14px;
-  line-height:2.3;
+  line-height:2.1;
   color:var(--accent);
-  white-space:pre-line;
+  letter-spacing:.03em;
+}
+
+.arch div{
+  margin:14px 0;
 }
 
 .validation-image{
   margin:40px auto;
   max-width:100%;
+  height:auto;
   border:1px solid rgba(46,109,246,0.12);
 }
 
 footer{
   padding:100px 0;
   font-size:12px;
-  color:rgba(255,255,255,0.4);
+  color:rgba(255,255,255,0.45);
 }
 </style>
 </head>
@@ -110,18 +118,14 @@ footer{
 <h2>Signal Evaluation Model</h2>
 
 <div class="arch">
-Live Telemetry
-↓
-Signal Normalization
-↓
-Cross Signal Correlation
-↓
-Temporal Drift Persistence
-↓
-Structured Classification
-↓
-Operator Review
+<div>Live Telemetry</div>
+<div>Signal Normalization</div>
+<div>Cross Signal Correlation</div>
+<div>Temporal Drift Persistence</div>
+<div>Structured Classification</div>
+<div>Operator Review</div>
 </div>
+
 </section>
 
 <section class="section">
@@ -131,17 +135,24 @@ Operator Review
 Admission at cycle 36. Failure at cycle 243. Lead time 207 cycles.
 </p>
 
-<img src="image_9010.png" alt="Representative drift detection plot" class="validation-image" loading="lazy">
+<img src="image_9010.png"
+     alt="Representative drift detection output"
+     class="validation-image"
+     loading="lazy">
 
 <p>
 Tested across FD001 through FD004 datasets comprising 707 degradation trajectories.
 </p>
+
 </section>
+
+<section class="section">
 <h2>Boundary</h2>
 
 <p>
 Neraium does not actuate, modify, or override infrastructure systems.
 </p>
+
 </section>
 
 </main>
