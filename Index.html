@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium | Systemic Infrastructure Intelligence</title>
+<title>Neraium | Structural Intelligence for Water Contractors</title>
 
 <style>
 :root{
-    --bg:#0c1116;
-    --panel:#111822;
-    --border:#1c2633;
-    --text:#e8edf2;
-    --muted:#9aa6b2;
+    --bg:#0b1117;
+    --panel:#121a23;
+    --border:#1d2834;
+    --text:#e6edf3;
+    --muted:#97a6b5;
     --accent:#3da9fc;
 }
 
@@ -28,11 +28,35 @@ body{
 .container{
     max-width:1100px;
     margin:auto;
-    padding:80px 24px;
+    padding:90px 24px;
+}
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 24px;
+    border-bottom:1px solid var(--border);
+}
+
+.logo{
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+nav a{
+    color:var(--muted);
+    text-decoration:none;
+    margin-left:24px;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:var(--text);
 }
 
 h1{
-    font-size:clamp(36px,5vw,56px);
+    font-size:clamp(36px,5vw,58px);
     line-height:1.1;
     margin:0 0 24px 0;
     font-weight:700;
@@ -40,27 +64,23 @@ h1{
 }
 
 h2{
-    font-size:32px;
+    font-size:30px;
     margin-bottom:40px;
     font-weight:600;
 }
 
-p.lead{
+.lead{
     font-size:20px;
     color:var(--muted);
-    max-width:700px;
+    max-width:750px;
     margin-bottom:40px;
-}
-
-.accent{
-    color:var(--accent);
 }
 
 .button{
     display:inline-block;
     padding:14px 28px;
     background:var(--accent);
-    color:#0c1116;
+    color:#0b1117;
     font-weight:600;
     text-decoration:none;
     border-radius:6px;
@@ -78,7 +98,7 @@ p.lead{
 
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:24px;
 }
 
@@ -106,6 +126,18 @@ p.lead{
     color:var(--muted);
 }
 
+.steps{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:24px;
+}
+
+.step{
+    padding:20px;
+    border-left:3px solid var(--accent);
+    background:var(--panel);
+}
+
 .footer{
     text-align:center;
     padding:40px 20px;
@@ -118,60 +150,85 @@ p.lead{
 
 <body>
 
+<header>
+    <div class="logo">NERAIUM</div>
+    <nav>
+        <a href="#">Platform</a>
+        <a href="#">Contractors</a>
+        <a href="#">Contact</a>
+    </nav>
+</header>
+
 <div class="container">
     <h1>
-        Systemic Infrastructure Intelligence for 
-        <span class="accent">Water Contractors</span>
+        Structural Intelligence for Water Contractors
     </h1>
 
     <p class="lead">
-        We classify structural deterioration in live water systems weeks before failure 
-        using the telemetry you already have.
+        Classify structural deterioration in live water systems before failure occurs. 
+        Deliver proactive service instead of reactive dispatch.
     </p>
 
-    <a href="#" class="button">Request Early Access</a>
+    <a href="#" class="button">Strengthen Your Service Model</a>
+
+    <p style="margin-top:20px;color:var(--muted);font-size:14px;">
+        No new hardware. Read-only architecture. Delivered through contractors.
+    </p>
 </div>
 
 <div class="container section">
-    <h2>The Contractor Advantage</h2>
+    <h2>Contractor Outcomes</h2>
 
     <div class="grid">
-
         <div class="card">
-            <h3>No New Hardware</h3>
+            <h3>Protect Margin</h3>
             <p>
-                Operates directly on existing BMS, SCADA, and historian exports.
-                Zero retrofit required.
+                Detect sustained deterioration before emergency dispatch 
+                compresses labor efficiency and project profitability.
             </p>
         </div>
 
         <div class="card">
-            <h3>Read-Only Architecture</h3>
+            <h3>Win Renewals</h3>
             <p>
-                Non-actuating. No control. No system modification.
-                Intelligence without operational risk.
+                Differentiate from price-based competitors with measurable,
+                proactive structural insight.
             </p>
         </div>
 
         <div class="card">
-            <h3>Embedded in Your Service Model</h3>
+            <h3>Reduce Reactive Volatility</h3>
             <p>
-                Delivered through contractors as a differentiated, margin-aligned
-                service layer.
+                Shift work from crisis response to planned intervention windows.
             </p>
         </div>
-
     </div>
 </div>
 
 <div class="container section">
-    <h2>The Problem</h2>
+    <h2>How Neraium Fits Into Your Workflow</h2>
 
-    <p class="lead">
-        Water systems degrade gradually. Most contractors discover deterioration
-        only after it becomes an emergency. Reactive work compresses margin.
-        Proactive classification protects it.
-    </p>
+    <div class="steps">
+        <div class="step">
+            <strong>1. Ingest Existing Telemetry</strong>
+            <p>Uses current BMS, SCADA, and historian exports.</p>
+        </div>
+
+        <div class="step">
+            <strong>2. Classify Sustained Drift</strong>
+            <p>Multivariate analysis isolates structural deterioration patterns.</p>
+        </div>
+
+        <div class="step">
+            <strong>3. Identify Deterioration Windows</strong>
+            <p>Flag progressive degradation weeks before visible failure.</p>
+        </div>
+
+        <div class="step">
+            <strong>4. Deliver Proactive Action</strong>
+            <p>Contractors act before emergency response becomes necessary.</p>
+        </div>
+    </div>
 </div>
 
 <div class="footer">
