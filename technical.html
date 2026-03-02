@@ -10,19 +10,15 @@
 
 <style>
 :root {
-  --bg:         #000000;
-  --bg-raised:  #0a0a0a;
-  --bg-code:    #0d0d0d;
-  --text:       #ffffff;
-  --muted:      rgba(255,255,255,0.52);
-  --muted-soft: rgba(255,255,255,0.32);
-  --border:     rgba(255,255,255,0.09);
-  --border-hi:  rgba(255,255,255,0.20);
-  --green:      #4ade80;
-  --amber:      #fbbf24;
-  --blue:       #93c5fd;
-  --max:        1200px;
-  --mono:       'IBM Plex Mono', monospace;
+  --bg:           #000000;
+  --bg-raised:    #0c0c0c;
+  --text:         #ffffff;
+  --muted:        rgba(255,255,255,0.52);
+  --muted-soft:   rgba(255,255,255,0.32);
+  --border:       rgba(255,255,255,0.09);
+  --border-hi:    rgba(255,255,255,0.20);
+  --max:          1200px;
+  --mono:         'IBM Plex Mono', monospace;
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -50,16 +46,18 @@ body {
   top: 0; left: 0; right: 0;
   z-index: 100;
   border-bottom: 1px solid var(--border);
-  background: rgba(0,0,0,0.92);
+  background: rgba(0,0,0,0.90);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
+
 .nav-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 56px;
 }
+
 .nav-wordmark {
   font-family: var(--mono);
   font-size: 13px;
@@ -69,12 +67,14 @@ body {
   color: var(--text);
   text-decoration: none;
 }
+
 .nav-links {
   display: flex;
   align-items: center;
   gap: 36px;
   list-style: none;
 }
+
 .nav-links a {
   font-family: var(--mono);
   font-size: 11px;
@@ -93,6 +93,7 @@ body {
   padding: 148px 0 88px;
   border-bottom: 1px solid var(--border);
 }
+
 .back-link {
   display: inline-flex;
   align-items: center;
@@ -108,7 +109,10 @@ body {
   transition: color 0.15s;
 }
 .back-link:hover { color: var(--text); }
-.back-link::before { content: "←"; font-size: 12px; }
+.back-link::before {
+  content: "←";
+  font-size: 12px;
+}
 
 .intro-eyebrow {
   display: flex;
@@ -132,6 +136,7 @@ body {
   text-transform: uppercase;
   color: var(--muted);
 }
+
 .intro h1 {
   font-size: clamp(38px, 5vw, 60px);
   font-weight: 300;
@@ -139,8 +144,12 @@ body {
   letter-spacing: -0.030em;
   margin-bottom: 24px;
 }
-.intro h1 em { font-style: normal; font-weight: 600; }
-.intro-lead {
+.intro h1 em {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.intro p {
   max-width: 620px;
   font-size: 16px;
   font-weight: 300;
@@ -150,6 +159,7 @@ body {
 
 /* ── Spec layout ─────────────────────────── */
 .spec { border-top: 1px solid var(--border); }
+
 .spec-row {
   display: grid;
   grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
@@ -157,7 +167,9 @@ body {
   padding: 64px 0;
   border-bottom: 1px solid var(--border);
 }
+
 .spec-label { padding-top: 3px; }
+
 .spec-label .section-index {
   display: block;
   font-family: var(--mono);
@@ -166,6 +178,7 @@ body {
   letter-spacing: 0.10em;
   margin-bottom: 8px;
 }
+
 .spec-label h2 {
   font-family: var(--mono);
   font-size: 11px;
@@ -174,42 +187,47 @@ body {
   text-transform: uppercase;
   color: var(--muted);
 }
-.spec-body > p {
+
+.spec-body p {
   max-width: 680px;
   font-size: 17px;
   font-weight: 300;
   color: rgba(255,255,255,0.82);
   line-height: 1.74;
 }
-.spec-body > p + p { margin-top: 16px; }
 
 /* ── Architecture pipeline ───────────────── */
 .arch-card {
-  margin-top: 32px;
+  margin-top: 36px;
   border: 1px solid var(--border);
-  background: var(--bg-raised);
+  background: rgba(255,255,255,0.012);
+  padding: 0;
   overflow: hidden;
 }
+
 .arch-step {
   display: grid;
-  grid-template-columns: 48px 1fr auto;
+  grid-template-columns: 48px 1fr;
   align-items: center;
+  gap: 0;
   border-bottom: 1px solid var(--border);
 }
 .arch-step:last-child { border-bottom: none; }
+
 .arch-step-index {
   display: flex;
   align-items: center;
   justify-content: center;
-  align-self: stretch;
+  height: 100%;
+  padding: 16px 0;
   border-right: 1px solid var(--border);
   font-family: var(--mono);
   font-size: 10px;
   color: var(--muted-soft);
   letter-spacing: 0.06em;
   background: rgba(255,255,255,0.018);
-  padding: 16px 0;
 }
+
 .arch-step-label {
   padding: 16px 20px;
   font-family: var(--mono);
@@ -219,252 +237,43 @@ body {
   text-transform: uppercase;
   color: rgba(255,255,255,0.78);
 }
-.arch-step-desc {
-  padding: 16px 20px 16px 0;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--muted-soft);
-  letter-spacing: 0.04em;
-  text-align: right;
-}
 
-/* ── Code block ──────────────────────────── */
-.code-block {
-  margin-top: 28px;
-  border: 1px solid var(--border);
-  background: var(--bg-code);
-  overflow: hidden;
-}
-.code-block-header {
+/* Arrow connector between steps */
+.arch-connector {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(255,255,255,0.018);
-}
-.code-block-lang {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted-soft);
-}
-.code-block-file {
+  padding: 0 0 0 68px;
+  height: 20px;
   font-family: var(--mono);
   font-size: 10px;
   color: var(--muted-soft);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
 }
-.code-block pre {
-  padding: 24px;
-  overflow-x: auto;
-  font-family: var(--mono);
-  font-size: 13px;
-  line-height: 1.8;
-  color: rgba(255,255,255,0.80);
-}
-.code-block pre .kw  { color: var(--blue); }
-.code-block pre .fn  { color: rgba(255,255,255,0.90); }
-.code-block pre .str { color: var(--green); }
-.code-block pre .num { color: var(--amber); }
-.code-block pre .cm  { color: var(--muted-soft); font-style: italic; }
-.code-block pre .op  { color: var(--muted); }
-
-/* ── Data table ──────────────────────────── */
-.data-table-wrap {
-  margin-top: 28px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-}
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--mono);
-  font-size: 12px;
-}
-.data-table thead tr {
-  background: rgba(255,255,255,0.025);
-  border-bottom: 1px solid var(--border);
-}
-.data-table thead th {
-  padding: 12px 16px;
-  text-align: left;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted-soft);
-  white-space: nowrap;
-}
-.data-table tbody tr { border-bottom: 1px solid var(--border); }
-.data-table tbody tr:last-child { border-bottom: none; }
-.data-table tbody tr:hover { background: rgba(255,255,255,0.015); }
-.data-table tbody td {
-  padding: 13px 16px;
-  color: rgba(255,255,255,0.78);
-  letter-spacing: 0.03em;
-  vertical-align: top;
-}
-.data-table tbody td:first-child { color: var(--text); }
-.tag {
-  display: inline-block;
-  padding: 2px 8px;
-  border: 1px solid var(--border);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.tag.pass { border-color: rgba(74,222,128,0.30); color: var(--green); }
-.tag.warn { border-color: rgba(251,191,36,0.30);  color: var(--amber); }
-
-/* ── Stat grid ───────────────────────────── */
-.stat-grid {
-  margin-top: 28px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0,1fr));
-  border: 1px solid var(--border);
-}
-.stat-cell {
-  padding: 24px 20px;
-  border-right: 1px solid var(--border);
-}
-.stat-cell:last-child { border-right: none; }
-.stat-cell strong {
-  display: block;
-  font-family: var(--mono);
-  font-size: 26px;
-  font-weight: 400;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-}
-.stat-cell span {
-  display: block;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  line-height: 1.5;
-}
-
-/* ── Terminal block ──────────────────────── */
-.terminal {
-  margin-top: 28px;
-  border: 1px solid var(--border);
-  background: var(--bg-code);
-  overflow: hidden;
-}
-.terminal-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(255,255,255,0.018);
-}
-.terminal-dot {
-  width: 8px; height: 8px;
-  border: 1px solid var(--border);
-}
-.terminal-title {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted-soft);
-  margin-left: 4px;
-}
-.terminal pre {
-  padding: 20px 24px;
-  font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.9;
-  color: rgba(255,255,255,0.70);
-  overflow-x: auto;
-}
-.terminal pre .t-label { color: var(--muted-soft); }
-.terminal pre .t-val   { color: var(--text); }
-.terminal pre .t-pass  { color: var(--green); }
-.terminal pre .t-warn  { color: var(--amber); }
-.terminal pre .t-key   { color: var(--blue); }
 
 /* ── Validation image ────────────────────── */
 .validation-card {
-  margin-top: 28px;
+  margin-top: 36px;
   border: 1px solid var(--border);
-  background: var(--bg-raised);
+  background: rgba(255,255,255,0.012);
+  padding: 0;
   overflow: hidden;
 }
+
 .validation-card img {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
   border-bottom: 1px solid var(--border);
-  filter: brightness(0.90) contrast(1.05);
+  filter: brightness(0.92) contrast(1.04);
 }
+
 .validation-note {
   padding: 14px 20px;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.08em;
   color: var(--muted-soft);
-}
-
-/* ── Param table ─────────────────────────── */
-.param-table-wrap {
-  margin-top: 28px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-}
-.param-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--mono);
-  font-size: 12px;
-}
-.param-table thead tr {
-  background: rgba(255,255,255,0.025);
-  border-bottom: 1px solid var(--border);
-}
-.param-table thead th {
-  padding: 10px 16px;
-  text-align: left;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted-soft);
-}
-.param-table tbody tr { border-bottom: 1px solid var(--border); }
-.param-table tbody tr:last-child { border-bottom: none; }
-.param-table tbody td {
-  padding: 12px 16px;
-  color: rgba(255,255,255,0.75);
-  vertical-align: top;
-}
-.param-table tbody td:first-child { color: var(--text); white-space: nowrap; }
-.type-badge {
-  display: inline-block;
-  padding: 1px 7px;
-  border: 1px solid rgba(147,197,253,0.20);
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  color: var(--blue);
-}
-
-/* ── Inline note ─────────────────────────── */
-.inline-note {
-  margin-top: 20px;
-  padding: 14px 18px;
-  border-left: 2px solid var(--border-hi);
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.7;
-  letter-spacing: 0.03em;
 }
 
 /* ── Footer ──────────────────────────────── */
@@ -495,17 +304,10 @@ body {
   .intro { padding: 112px 0 72px; }
   .intro h1 { font-size: 36px; }
   .spec-row { grid-template-columns: 1fr; gap: 20px; padding: 48px 0; }
-  .stat-grid { grid-template-columns: repeat(2, 1fr); }
-  .stat-cell:nth-child(2) { border-right: none; }
-  .stat-cell { border-bottom: 1px solid var(--border); }
-  .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
-  .arch-step-desc { display: none; }
 }
+
 @media (max-width: 640px) {
   .intro h1 { font-size: 30px; }
-  .stat-grid { grid-template-columns: 1fr; }
-  .stat-cell { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
-  .stat-cell:last-child { border-bottom: none !important; }
 }
 </style>
 </head>
@@ -530,9 +332,14 @@ body {
 <section class="intro">
   <div class="container">
     <a class="back-link" href="index.html">Neraium</a>
-    <div class="intro-eyebrow"><span>Documentation</span></div>
+
+    <div class="intro-eyebrow">
+      <span>Documentation</span>
+    </div>
+
     <h1>Technical<br><em>Overview</em></h1>
-    <p class="intro-lead">
+
+    <p>
       Neraium operates as a read-only signal interpretation layer across live telemetry
       environments. Persistent structural deviation is mapped for context, persistence,
       and governed operator review.
@@ -544,7 +351,6 @@ body {
 <section class="spec">
   <div class="container">
 
-    <!-- 01 Interpretation Model -->
     <div class="spec-row">
       <div class="spec-label">
         <span class="section-index">01</span>
@@ -552,154 +358,39 @@ body {
       </div>
       <div class="spec-body">
         <p>
-          Live telemetry is ingested as a read-only stream, normalized per-sensor across
-          a rolling context window, then compared across correlated signal clusters.
-          Deviation persistence is tracked before any interpretation artifact is surfaced.
+          Live telemetry is normalized, compared across correlated signals, and mapped for
+          deviation persistence before being surfaced as structured signal interpretation.
         </p>
 
         <div class="arch-card">
           <div class="arch-step">
             <div class="arch-step-index">01</div>
-            <div class="arch-step-label">Live Telemetry Ingestion</div>
-            <div class="arch-step-desc">read-only stream</div>
+            <div class="arch-step-label">Live Telemetry</div>
           </div>
           <div class="arch-step">
             <div class="arch-step-index">02</div>
-            <div class="arch-step-label">Per-Sensor Normalization</div>
-            <div class="arch-step-desc">rolling window · z-score</div>
+            <div class="arch-step-label">Signal Normalization</div>
           </div>
           <div class="arch-step">
             <div class="arch-step-index">03</div>
             <div class="arch-step-label">Cross-Signal Correlation</div>
-            <div class="arch-step-desc">pearson r · lag-adjusted</div>
           </div>
           <div class="arch-step">
             <div class="arch-step-index">04</div>
             <div class="arch-step-label">Deviation Persistence Mapping</div>
-            <div class="arch-step-desc">temporal threshold · cycle count</div>
           </div>
           <div class="arch-step">
             <div class="arch-step-index">05</div>
             <div class="arch-step-label">Structured Signal Interpretation</div>
-            <div class="arch-step-desc">lineage-tagged artifact</div>
           </div>
           <div class="arch-step">
             <div class="arch-step-index">06</div>
             <div class="arch-step-label">Operator Review</div>
-            <div class="arch-step-desc">no actuation · read-only</div>
           </div>
-        </div>
-
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-block-lang">Python</span>
-            <span class="code-block-file">normalization.py</span>
-          </div>
-          <pre><span class="cm"># Per-sensor z-score normalization over rolling context window</span>
-<span class="kw">def</span> <span class="fn">normalize_stream</span>(signal: np.ndarray, window: <span class="kw">int</span> = <span class="num">30</span>) -> np.ndarray:
-    normalized = np.zeros_like(signal, dtype=np.float32)
-    <span class="kw">for</span> i <span class="kw">in</span> range(len(signal)):
-        start   = max(<span class="num">0</span>, i - window)
-        segment = signal[start : i + <span class="num">1</span>]
-        mu      = np.mean(segment)
-        std     = np.std(segment) + <span class="num">1e-8</span>  <span class="cm"># avoid division by zero</span>
-        normalized[i] = (signal[i] - mu) / std
-    <span class="kw">return</span> normalized
-
-<span class="cm"># Deviation persistence: flag if z-score exceeds threshold
-# for at least `min_cycles` consecutive observations</span>
-<span class="kw">def</span> <span class="fn">persistence_map</span>(
-    z: np.ndarray,
-    threshold: <span class="kw">float</span> = <span class="num">2.1</span>,
-    min_cycles: <span class="kw">int</span> = <span class="num">5</span>
-) -> np.ndarray:
-    flags  = np.abs(z) > threshold
-    result = np.zeros_like(flags, dtype=np.int8)
-    count  = <span class="num">0</span>
-    <span class="kw">for</span> i, f <span class="kw">in</span> enumerate(flags):
-        count    = count + <span class="num">1</span> <span class="kw">if</span> f <span class="kw">else</span> <span class="num">0</span>
-        result[i] = <span class="num">1</span> <span class="kw">if</span> count >= min_cycles <span class="kw">else</span> <span class="num">0</span>
-    <span class="kw">return</span> result</pre>
-        </div>
-
-        <div class="code-block" style="margin-top:16px;">
-          <div class="code-block-header">
-            <span class="code-block-lang">Python</span>
-            <span class="code-block-file">correlation.py</span>
-          </div>
-          <pre><span class="cm"># Lag-adjusted cross-signal correlation across sensor cluster</span>
-<span class="kw">def</span> <span class="fn">cross_correlate</span>(
-    signals: dict[str, np.ndarray],
-    max_lag: <span class="kw">int</span> = <span class="num">10</span>,
-    r_threshold: <span class="kw">float</span> = <span class="num">0.72</span>
-) -> dict[tuple, float]:
-    keys  = list(signals.keys())
-    pairs = {}
-    <span class="kw">for</span> i <span class="kw">in</span> range(len(keys)):
-        <span class="kw">for</span> j <span class="kw">in</span> range(i + <span class="num">1</span>, len(keys)):
-            a, b   = signals[keys[i]], signals[keys[j]]
-            best_r, best_lag = <span class="num">0.0</span>, <span class="num">0</span>
-            <span class="kw">for</span> lag <span class="kw">in</span> range(-max_lag, max_lag + <span class="num">1</span>):
-                b_shifted = np.roll(b, lag)
-                r = np.corrcoef(a, b_shifted)[<span class="num">0</span>, <span class="num">1</span>]
-                <span class="kw">if</span> abs(r) > abs(best_r):
-                    best_r, best_lag = r, lag
-            <span class="kw">if</span> abs(best_r) >= r_threshold:
-                pairs[(keys[i], keys[j])] = {
-                    <span class="str">"r"</span>:   round(best_r, <span class="num">4</span>),
-                    <span class="str">"lag"</span>: best_lag
-                }
-    <span class="kw">return</span> pairs</pre>
-        </div>
-
-        <div class="param-table-wrap">
-          <table class="param-table">
-            <thead>
-              <tr>
-                <th>Parameter</th>
-                <th>Type</th>
-                <th>Default</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>window</td>
-                <td><span class="type-badge">int</span></td>
-                <td>30</td>
-                <td>Rolling normalization window in cycles</td>
-              </tr>
-              <tr>
-                <td>threshold</td>
-                <td><span class="type-badge">float</span></td>
-                <td>2.1</td>
-                <td>Z-score magnitude required for deviation flag</td>
-              </tr>
-              <tr>
-                <td>min_cycles</td>
-                <td><span class="type-badge">int</span></td>
-                <td>5</td>
-                <td>Minimum consecutive flags before persistence is recorded</td>
-              </tr>
-              <tr>
-                <td>max_lag</td>
-                <td><span class="type-badge">int</span></td>
-                <td>10</td>
-                <td>Maximum cycle lag for cross-signal correlation search</td>
-              </tr>
-              <tr>
-                <td>r_threshold</td>
-                <td><span class="type-badge">float</span></td>
-                <td>0.72</td>
-                <td>Minimum Pearson r for a correlated pair to be retained</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
 
-    <!-- 02 Empirical Reference -->
     <div class="spec-row">
       <div class="spec-label">
         <span class="section-index">02</span>
@@ -707,116 +398,18 @@ body {
       </div>
       <div class="spec-body">
         <p>
-          Validated across the full NASA CMAPSS benchmark — FD001 through FD004 —
-          comprising 707 independent degradation trajectories across single and
-          multi-fault operating regimes.
+          Tested across FD001 through FD004 datasets comprising 707 degradation trajectories.
+          In the representative reference case, sustained deviation surfaced at cycle 36
+          with failure at cycle 243.
         </p>
 
-        <div class="stat-grid">
-          <div class="stat-cell">
-            <strong>707</strong>
-            <span>Degradation trajectories evaluated</span>
-          </div>
-          <div class="stat-cell">
-            <strong>96.9%</strong>
-            <span>Detection coverage across all datasets</span>
-          </div>
-          <div class="stat-cell">
-            <strong>183</strong>
-            <span>Median lead time in cycles</span>
-          </div>
-          <div class="stat-cell">
-            <strong>2.1%</strong>
-            <span>False positive rate</span>
-          </div>
-        </div>
-
-        <div class="data-table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Dataset</th>
-                <th>Trajectories</th>
-                <th>Operating Conditions</th>
-                <th>Fault Modes</th>
-                <th>Detection Coverage</th>
-                <th>Median Lead (cycles)</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>FD001</td>
-                <td>100</td>
-                <td>1</td>
-                <td>1</td>
-                <td>98.0%</td>
-                <td>211</td>
-                <td><span class="tag pass">Pass</span></td>
-              </tr>
-              <tr>
-                <td>FD002</td>
-                <td>260</td>
-                <td>6</td>
-                <td>1</td>
-                <td>95.8%</td>
-                <td>174</td>
-                <td><span class="tag pass">Pass</span></td>
-              </tr>
-              <tr>
-                <td>FD003</td>
-                <td>100</td>
-                <td>1</td>
-                <td>2</td>
-                <td>97.0%</td>
-                <td>196</td>
-                <td><span class="tag pass">Pass</span></td>
-              </tr>
-              <tr>
-                <td>FD004</td>
-                <td>249</td>
-                <td>6</td>
-                <td>2</td>
-                <td>96.4%</td>
-                <td>158</td>
-                <td><span class="tag warn">Review</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="terminal">
-          <div class="terminal-header">
-            <div class="terminal-dot"></div>
-            <div class="terminal-dot"></div>
-            <div class="terminal-dot"></div>
-            <span class="terminal-title">Representative Case · FD001 · Unit 14</span>
-          </div>
-          <pre><span class="t-label">dataset           </span>  <span class="t-val">FD001</span>
-<span class="t-label">unit_id           </span>  <span class="t-val">14</span>
-<span class="t-label">total_cycles      </span>  <span class="t-val">243</span>
-<span class="t-label">deviation_onset   </span>  <span class="t-val">cycle 36</span>
-<span class="t-label">failure_cycle     </span>  <span class="t-val">cycle 243</span>
-<span class="t-label">lead_time         </span>  <span class="t-val">207 cycles</span>
-<span class="t-label">detection_status  </span>  <span class="t-pass">DETECTED</span>
-<span class="t-label">false_positive    </span>  <span class="t-val">false</span>
-<span class="t-label">sensors_flagged   </span>  <span class="t-val">[ s4, s9, s11, s14, s15 ]</span>
-<span class="t-label">peak_z_score      </span>  <span class="t-val">4.83  (s11, cycle 187)</span>
-<span class="t-label">persistence_len   </span>  <span class="t-val">207 cycles continuous</span>
-<span class="t-label">correlated_pairs  </span>  <span class="t-val">{ (s4,s11): r=0.91 lag=2 }</span>
-<span class="t-label">                  </span>  <span class="t-val">{ (s9,s15): r=0.84 lag=1 }</span>
-<span class="t-label">artifact_id       </span>  <span class="t-val">nrm-fd001-u14-c036</span>
-<span class="t-label">governance_hash   </span>  <span class="t-val">a3f9c1d...b72e</span></pre>
-        </div>
-
         <div class="validation-card">
-          <img src="IMG_9010.png" alt="Representative drift detection output — FD001 Unit 14" loading="lazy">
-          <div class="validation-note">FD001 · Unit 14 · Deviation onset cycle 36 · Failure cycle 243 · Lead time 207 cycles</div>
+          <img src="IMG_9010.png" alt="Representative drift detection output" loading="lazy">
+          <div class="validation-note">Reference lead time — 207 cycles prior to failure</div>
         </div>
       </div>
     </div>
 
-    <!-- 03 Signal Integrity -->
     <div class="spec-row">
       <div class="spec-label">
         <span class="section-index">03</span>
@@ -824,64 +417,12 @@ body {
       </div>
       <div class="spec-body">
         <p>
-          Every interpretation artifact carries a complete provenance record: originating
-          sensor identifiers, normalization window applied, cycle at which persistence was
-          first recorded, and the correlated signal pairs that contributed to classification.
-          No inference is made without a traceable input chain.
+          Outputs preserve signal lineage, temporal persistence, and contextual metadata.
+          Interpretation artifacts are surfaced without asserting operational outcomes.
         </p>
-
-        <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-block-lang">JSON Schema</span>
-            <span class="code-block-file">artifact.schema.json</span>
-          </div>
-          <pre>{
-  <span class="t-key">"artifact_id"</span>:        <span class="str">"nrm-{dataset}-{unit}-c{onset_cycle}"</span>,
-  <span class="t-key">"schema_version"</span>:     <span class="str">"1.2"</span>,
-  <span class="t-key">"generated_at"</span>:       <span class="str">"ISO 8601 UTC"</span>,
-  <span class="t-key">"source"</span>: {
-    <span class="t-key">"dataset"</span>:            <span class="str">"string"</span>,
-    <span class="t-key">"unit_id"</span>:           <span class="str">"string"</span>,
-    <span class="t-key">"sensors_flagged"</span>:    <span class="str">["string"]</span>
-  },
-  <span class="t-key">"normalization"</span>: {
-    <span class="t-key">"method"</span>:            <span class="str">"z-score"</span>,
-    <span class="t-key">"window_cycles"</span>:     <span class="num">30</span>,
-    <span class="t-key">"threshold"</span>:        <span class="num">2.1</span>
-  },
-  <span class="t-key">"deviation"</span>: {
-    <span class="t-key">"onset_cycle"</span>:       <span class="str">"integer"</span>,
-    <span class="t-key">"persistence_len"</span>:   <span class="str">"integer"</span>,
-    <span class="t-key">"peak_z"</span>:           <span class="str">"float"</span>,
-    <span class="t-key">"peak_sensor"</span>:      <span class="str">"string"</span>,
-    <span class="t-key">"peak_cycle"</span>:       <span class="str">"integer"</span>
-  },
-  <span class="t-key">"correlation_pairs"</span>: [
-    {
-      <span class="t-key">"sensors"</span>:         <span class="str">["string", "string"]</span>,
-      <span class="t-key">"r"</span>:              <span class="str">"float"</span>,
-      <span class="t-key">"lag_cycles"</span>:     <span class="str">"integer"</span>
-    }
-  ],
-  <span class="t-key">"governance"</span>: {
-    <span class="t-key">"read_only"</span>:        <span class="kw">true</span>,
-    <span class="t-key">"actuation"</span>:       <span class="kw">false</span>,
-    <span class="t-key">"decision_authority"</span>: <span class="str">"operator"</span>,
-    <span class="t-key">"lineage_hash"</span>:    <span class="str">"sha256"</span>
-  }
-}</pre>
-        </div>
-
-        <div class="inline-note">
-          Lineage hash is computed over the concatenation of: dataset identifier,
-          unit identifier, sensor list, onset cycle, normalization parameters, and
-          ISO timestamp. It is appended to every artifact at generation time and
-          cannot be modified post-issuance.
-        </div>
       </div>
     </div>
 
-    <!-- 04 Governance -->
     <div class="spec-row">
       <div class="spec-label">
         <span class="section-index">04</span>
@@ -891,56 +432,11 @@ body {
         <p>
           Neraium structures outputs for institutional review. Traceable artifacts preserve
           lineage, persistence, and context so governance remains explicit at the point
-          of decision. All outputs are versioned and immutable post-generation.
+          of decision.
         </p>
-
-        <div class="data-table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Property</th>
-                <th>Value</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>read_only</td>
-                <td><span class="tag pass">true</span></td>
-                <td>No write operations issued to source systems at any stage</td>
-              </tr>
-              <tr>
-                <td>actuation</td>
-                <td><span class="tag">false</span></td>
-                <td>System cannot trigger control events or modify setpoints</td>
-              </tr>
-              <tr>
-                <td>decision_authority</td>
-                <td>operator</td>
-                <td>All action decisions remain exclusively with human operators</td>
-              </tr>
-              <tr>
-                <td>lineage_preserved</td>
-                <td><span class="tag pass">true</span></td>
-                <td>Full input chain recorded per artifact via SHA-256 hash</td>
-              </tr>
-              <tr>
-                <td>artifact_mutability</td>
-                <td>immutable</td>
-                <td>Artifacts are write-once; no post-generation modification permitted</td>
-              </tr>
-              <tr>
-                <td>temporal_persistence</td>
-                <td>full record</td>
-                <td>Onset cycle, duration, and peak values stored with each artifact</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
     </div>
 
-    <!-- 05 Boundary -->
     <div class="spec-row">
       <div class="spec-label">
         <span class="section-index">05</span>
@@ -949,63 +445,8 @@ body {
       <div class="spec-body">
         <p>
           Neraium does not actuate, modify, override, or control infrastructure systems.
-          Decision authority remains exclusively with operators. The following operations
-          are outside system scope by design.
+          Decision authority remains exclusively with operators.
         </p>
-
-        <div class="data-table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Operation</th>
-                <th>In Scope</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Telemetry ingestion (read)</td>
-                <td><span class="tag pass">Yes</span></td>
-                <td>Read-only stream access only</td>
-              </tr>
-              <tr>
-                <td>Signal normalization</td>
-                <td><span class="tag pass">Yes</span></td>
-                <td>Internal computation; no output to source system</td>
-              </tr>
-              <tr>
-                <td>Deviation artifact generation</td>
-                <td><span class="tag pass">Yes</span></td>
-                <td>Structured record surfaced for operator review</td>
-              </tr>
-              <tr>
-                <td>Setpoint modification</td>
-                <td><span class="tag">No</span></td>
-                <td>Explicitly excluded from system capability</td>
-              </tr>
-              <tr>
-                <td>Control signal issuance</td>
-                <td><span class="tag">No</span></td>
-                <td>No interface to actuation layer exists</td>
-              </tr>
-              <tr>
-                <td>Automated remediation</td>
-                <td><span class="tag">No</span></td>
-                <td>All remediation decisions remain with operators</td>
-              </tr>
-              <tr>
-                <td>Alert routing / escalation</td>
-                <td><span class="tag warn">Optional</span></td>
-                <td>Passive notification only; no priority enforcement</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="inline-note">
-          The read-only constraint is enforced at the integration layer, not as a policy.
-          Neraium establishes no write credentials to source infrastructure at deployment.
-        </div>
       </div>
     </div>
 
