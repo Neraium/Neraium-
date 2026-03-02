@@ -55,7 +55,7 @@ body{
 
 .hero{
   position:relative;
-  min-height:92vh;
+  min-height:88vh;
   display:flex;
   align-items:center;
   background:url("hero.png") center center / cover no-repeat;
@@ -68,14 +68,14 @@ body{
   inset:0;
   background:
     linear-gradient(100deg,
-      rgba(4,6,12,0.84) 0%,
-      rgba(4,6,12,0.64) 42%,
+      rgba(4,6,12,0.88) 0%,
+      rgba(4,6,12,0.66) 42%,
       rgba(4,6,12,0.28) 72%,
       rgba(4,6,12,0.56) 100%
     ),
     linear-gradient(180deg,
-      rgba(4,6,12,0.12) 0%,
-      rgba(4,6,12,0.48) 100%
+      rgba(4,6,12,0.10) 0%,
+      rgba(4,6,12,0.46) 100%
     ),
     radial-gradient(circle at 76% 42%, rgba(77,141,255,0.14), transparent 34%);
 }
@@ -83,8 +83,8 @@ body{
 .hero-content{
   position:relative;
   z-index:2;
-  max-width:700px;
-  padding:88px 0 76px;
+  max-width:760px;
+  padding:96px 0 84px;
 }
 
 .eyebrow{
@@ -98,9 +98,9 @@ body{
 }
 
 .hero h1{
-  font-size:clamp(46px, 5.8vw, 64px);
+  font-size:clamp(48px, 6vw, 68px);
   font-weight:600;
-  line-height:1.03;
+  line-height:1.04;
   letter-spacing:-0.025em;
   margin-bottom:18px;
 }
@@ -136,6 +136,7 @@ body{
   letter-spacing:0.08em;
   text-transform:uppercase;
   transition:all 0.2s ease;
+  border-radius:8px;
 }
 
 .cta:hover{
@@ -155,29 +156,27 @@ body{
   color:var(--text);
 }
 
-/* Sections */
+/* Spec Layout */
 
-.section{
-  padding:150px 0;
+.spec{
   border-top:1px solid var(--border);
 }
 
-.section.compact{
-  padding:110px 0;
+.spec-row{
+  display:grid;
+  grid-template-columns:minmax(220px, 300px) minmax(0, 1fr);
+  gap:40px;
+  padding:72px 0;
+  border-bottom:1px solid var(--border);
 }
 
-.section-header{
-  margin-bottom:28px;
-}
-
-.section-header h2{
-  font-size:30px;
+.spec-label h2{
+  font-size:24px;
   font-weight:600;
   line-height:1.1;
-  margin-bottom:14px;
 }
 
-.section-header p{
+.spec-body p{
   max-width:760px;
   font-size:17px;
   color:var(--muted);
@@ -186,14 +185,14 @@ body{
 /* Metrics */
 
 .metrics{
-  margin-top:56px;
+  margin-top:26px;
   display:grid;
   grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:22px;
+  gap:18px;
 }
 
 .metric{
-  padding:26px 22px;
+  padding:22px 20px;
   border:1px solid var(--border);
   background:rgba(255,255,255,0.022);
   border-radius:var(--radius);
@@ -201,7 +200,7 @@ body{
 
 .metric strong{
   display:block;
-  font-size:26px;
+  font-size:24px;
   font-weight:600;
   color:var(--accent);
   margin-bottom:8px;
@@ -211,7 +210,7 @@ body{
   display:block;
   font-size:14px;
   color:var(--muted);
-  line-height:1.45;
+  line-height:1.4;
 }
 
 /* Contact */
@@ -219,21 +218,12 @@ body{
 .contact-grid{
   display:grid;
   grid-template-columns:minmax(280px, 360px) minmax(320px, 1fr);
-  gap:44px;
+  gap:40px;
   align-items:start;
 }
 
-.contact-copy h2{
-  font-size:30px;
-  font-weight:600;
-  line-height:1.1;
-  margin-bottom:18px;
-}
-
 .contact-copy p{
-  font-size:17px;
-  color:var(--muted);
-  margin-bottom:26px;
+  margin-bottom:22px;
 }
 
 .contact-meta{
@@ -257,7 +247,7 @@ body{
 
 .contact-form{
   width:100%;
-  padding:26px;
+  padding:24px;
   border:1px solid var(--border);
   background:rgba(255,255,255,0.022);
   border-radius:var(--radius);
@@ -306,12 +296,28 @@ body{
 
 .site-footer{
   padding:96px 0 56px;
-  border-top:1px solid var(--border);
+}
+
+.site-footer-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:24px;
 }
 
 .site-footer p{
   font-size:14px;
   color:var(--muted-soft);
+}
+
+.footer-link{
+  color:var(--muted-soft);
+  text-decoration:none;
+  font-size:14px;
+}
+
+.footer-link:hover{
+  color:var(--text);
 }
 
 /* Responsive */
@@ -333,12 +339,10 @@ body{
     font-size:42px;
   }
 
-  .section{
-    padding:120px 0;
-  }
-
-  .section.compact{
-    padding:96px 0;
+  .spec-row{
+    grid-template-columns:1fr;
+    gap:20px;
+    padding:52px 0;
   }
 
   .metrics{
@@ -348,6 +352,11 @@ body{
   .contact-grid{
     grid-template-columns:1fr;
     gap:28px;
+  }
+
+  .site-footer-row{
+    flex-direction:column;
+    align-items:flex-start;
   }
 }
 
@@ -365,9 +374,8 @@ body{
     align-items:flex-start;
   }
 
-  .section-header h2,
-  .contact-copy h2{
-    font-size:26px;
+  .spec-label h2{
+    font-size:22px;
   }
 }
 </style>
@@ -386,7 +394,7 @@ body{
       </h1>
 
       <p>
-        Read only signal interpretation for live telemetry environments.
+        Read only signal interpretation for live telemetry environments with governance preserved at the point of review.
       </p>
 
       <div class="hero-actions">
@@ -397,75 +405,99 @@ body{
   </div>
 </section>
 
-<section class="section">
+<section class="spec">
   <div class="container">
-    <div class="section-header">
-      <h2>Empirical Testing</h2>
-      <p>
-        Tested across 707 independent degradation trajectories using NASA CMAPSS data. Sustained deviation surfaced well before terminal states.
-      </p>
-    </div>
 
-    <div class="metrics">
-      <div class="metric">
-        <strong>96.9%</strong>
-        <span>detection coverage</span>
+    <div class="spec-row">
+      <div class="spec-label">
+        <h2>Empirical Testing</h2>
       </div>
 
-      <div class="metric">
-        <strong>183 cycles</strong>
-        <span>median lead time</span>
-      </div>
-
-      <div class="metric">
-        <strong>Hundreds of hours</strong>
-        <span>prior to failure</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section compact">
-  <div class="container">
-    <div class="section-header">
-      <h2>Operational Role</h2>
-      <p>
-        Neraium operates as a read only intelligence layer. It does not actuate, modify, override, or control infrastructure systems. Decision authority remains with operators.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="contact">
-  <div class="container">
-    <div class="contact-grid">
-      <div class="contact-copy">
-        <h2>Contact</h2>
+      <div class="spec-body">
         <p>
-          Start a direct conversation.
+          Tested across 707 independent degradation trajectories using NASA CMAPSS data. Sustained deviation surfaced well before terminal states.
         </p>
 
-        <div class="contact-meta">
-          <div>Craig Curtis</div>
-          <div>Founder / CEO</div>
-          <div><a href="mailto:Craig@neraium.com">Craig@neraium.com</a></div>
-          <div><a href="tel:6028337441">602-833-7441</a></div>
+        <div class="metrics">
+          <div class="metric">
+            <strong>96.9%</strong>
+            <span>detection coverage</span>
+          </div>
+
+          <div class="metric">
+            <strong>183 cycles</strong>
+            <span>median lead time</span>
+          </div>
+
+          <div class="metric">
+            <strong>Hundreds of hours</strong>
+            <span>prior to failure</span>
+          </div>
         </div>
       </div>
-
-      <form class="contact-form" action="https://formspree.io/f/xzdalpzy" method="POST">
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="message" rows="5" placeholder="Message" required></textarea>
-        <button type="submit">Send</button>
-      </form>
     </div>
+
+    <div class="spec-row">
+      <div class="spec-label">
+        <h2>Operational Role</h2>
+      </div>
+
+      <div class="spec-body">
+        <p>
+          Neraium operates as a read only intelligence layer. It does not actuate, modify, override, or control infrastructure systems. Decision authority remains with operators.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec-row">
+      <div class="spec-label">
+        <h2>Governance</h2>
+      </div>
+
+      <div class="spec-body">
+        <p>
+          Neraium structures signal interpretation for institutional review. Outputs preserve signal lineage, temporal persistence, and contextual traceability while decision authority remains with operators.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec-row" id="contact">
+      <div class="spec-label">
+        <h2>Contact</h2>
+      </div>
+
+      <div class="spec-body">
+        <div class="contact-grid">
+          <div class="contact-copy">
+            <p>Start a direct conversation.</p>
+
+            <div class="contact-meta">
+              <div>Craig Curtis</div>
+              <div>Founder / CEO</div>
+              <div><a href="mailto:Craig@neraium.com">Craig@neraium.com</a></div>
+              <div><a href="tel:6028337441">602-833-7441</a></div>
+            </div>
+          </div>
+
+          <form class="contact-form" action="https://formspree.io/f/xzdalpzy" method="POST">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <textarea name="message" rows="5" placeholder="Message" required></textarea>
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <footer class="site-footer">
   <div class="container">
-    <p>© 2026 Neraium</p>
+    <div class="site-footer-row">
+      <p>© 2026 Neraium</p>
+      <a class="footer-link" href="technical.html">Technical Overview</a>
+    </div>
   </div>
 </footer>
 
