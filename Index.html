@@ -41,7 +41,7 @@ nav{
     left:0;
     width:100%;
     height:64px;
-    padding:0 24px; /* aligned with hero */
+    padding:0 24px;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -52,9 +52,18 @@ nav{
 }
 
 .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
     font-weight:600;
     letter-spacing:2px;
     font-size:13px;
+}
+
+.logo-icon{
+    height:22px;
+    width:auto;
+    opacity:0.9;
 }
 
 .nav-center{
@@ -104,12 +113,14 @@ nav{
     color:var(--text);
 }
 
-.spacer{ height:64px; }
+.spacer{
+    height:64px;
+}
 
 /* HERO */
 .hero{
     padding:140px 24px 120px;
-    max-width:720px; /* tightened for visual centering */
+    max-width:720px;
     margin:0 auto;
 }
 
@@ -119,7 +130,7 @@ nav{
     margin:0 0 20px 0;
     font-weight:700;
     letter-spacing:-0.7px;
-    transform:translateX(1px); /* optical balance */
+    transform:translateX(1px);
 }
 
 .hero p{
@@ -245,7 +256,10 @@ footer{
 <body>
 
 <nav>
-    <div class="brand">NERAIUM</div>
+    <div class="brand">
+        <img src="logo.svg" alt="Neraium Logo" class="logo-icon">
+        <span>NERAIUM</span>
+    </div>
 
     <div class="nav-center">
         <a href="#how">How It Works</a>
@@ -265,7 +279,9 @@ footer{
         A read-only intelligence layer for high-consequence water systems.
     </p>
 
-    <a href="mailto:craig@neraium.com" class="cta">Initiate Alignment Discussion</a>
+    <a href="mailto:craig@neraium.com" class="cta">
+        Initiate Alignment Discussion
+    </a>
 
     <div class="micro">
         Read-only • No actuation • Audit-traceable output
@@ -312,4 +328,4 @@ footer{
 </footer>
 
 </body>
-</html
+</html>
