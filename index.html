@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -10,21 +9,19 @@
 
 <style>
 :root {
-  --black: #0a0a0a;
-  --dark-grey: #1a1a1a;
-  --mid-grey: #2d2d2d;
+  --black: #05070d;
+  --navy: #0b1422;
+  --deep: #0f213d;
   --accent: #00d9ff;
-  --accent-warm: #ff6b35;
   --text: #ffffff;
-  --text-muted: rgba(255,255,255,0.7);
-  --text-faint: rgba(255,255,255,0.4);
-  --border: rgba(0,217,255,0.15);
+  --text-muted: rgba(255,255,255,0.72);
+  --text-faint: rgba(255,255,255,0.45);
+  --border: rgba(0,217,255,0.18);
+  --glass: rgba(255,255,255,0.04);
   --max: 1200px;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html, body {
   margin: 0;
@@ -34,26 +31,12 @@ html, body {
 
 body {
   font-family: 'Sora', sans-serif;
-  background: linear-gradient(135deg, var(--black) 0%, #0f1419 50%, #0a1220 100%);
+  background:
+    radial-gradient(1200px 600px at 50% -15%, rgba(0,217,255,0.15), transparent 60%),
+    linear-gradient(180deg, var(--black) 0%, var(--navy) 45%, var(--deep) 100%);
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  position: relative;
-}
-
-/* Atmospheric background elements */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(0,217,255,0.08) 0%, transparent 40%),
-    radial-gradient(circle at 80% 60%, rgba(255,107,53,0.04) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: -1;
 }
 
 .container {
@@ -67,31 +50,21 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 100px;
-  position: relative;
-  z-index: 10;
 }
 
 .logo {
   font-family: 'Abril Fatface', serif;
   font-size: 28px;
-  font-weight: 400;
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, var(--accent), #00b8ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: logoGlow 6s ease-in-out infinite;
-}
-
-@keyframes logoGlow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
 }
 
 nav {
   display: flex;
-  gap: 50px;
+  gap: 40px;
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -103,116 +76,60 @@ nav a {
   color: var(--text-muted);
   text-decoration: none;
   transition: color 0.3s ease;
-  position: relative;
-}
-
-nav a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--accent);
-  transition: width 0.3s ease;
 }
 
 nav a:hover {
   color: var(--accent);
 }
 
-nav a:hover::after {
-  width: 100%;
-}
-
 .hero {
-  padding: 180px 0 140px;
-  position: relative;
-  z-index: 5;
-}
-
-.hero-content {
-  max-width: 1100px;
+  padding: 160px 0 140px;
 }
 
 .hero h1 {
   font-family: 'Abril Fatface', serif;
   font-size: clamp(52px, 8vw, 96px);
-  font-weight: 400;
   line-height: 1;
   margin: 0 0 30px 0;
   letter-spacing: -0.02em;
-  animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  opacity: 0;
 }
 
 .hero h1 span {
   display: block;
-  background: linear-gradient(135deg, var(--accent), var(--accent-warm));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-@keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  color: var(--accent);
 }
 
 .hero p {
-  font-size: 18px;
-  line-height: 1.8;
+  font-size: 20px;
   color: var(--text-muted);
-  max-width: 700px;
-  margin: 0 0 50px 0;
-  animation: fadeInUp 1s ease 0.2s both;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  max-width: 760px;
+  margin: 0 0 60px 0;
 }
 
 .cta-group {
   display: flex;
   gap: 20px;
-  animation: fadeInUp 1s ease 0.4s both;
+  flex-wrap: wrap;
 }
 
 .cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
   padding: 18px 42px;
   background: var(--accent);
   color: var(--black);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.05em;
   font-family: 'IBM Plex Mono', monospace;
   text-transform: uppercase;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   border: 2px solid var(--accent);
-  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .cta:hover {
-  transform: translate(4px, -4px);
-  box-shadow: 0 20px 60px rgba(0, 217, 255, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 60px rgba(0, 217, 255, 0.35);
 }
 
 .cta.secondary {
@@ -220,184 +137,83 @@ nav a:hover::after {
   color: var(--accent);
 }
 
-.cta.secondary:hover {
-  background: rgba(0, 217, 255, 0.1);
-}
-
-/* Structural diagram element */
-.diagram {
-  margin-top: 100px;
-  padding: 40px;
-  background: rgba(0, 217, 255, 0.05);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  color: var(--accent);
-  overflow: auto;
-  animation: fadeInUp 1s ease 0.6s both;
-  line-height: 1.6;
-  letter-spacing: 0.05em;
-}
-
-.diagram code {
-  display: block;
-  white-space: pre;
-}
-
 .section {
-  padding: 160px 0;
-  position: relative;
-  z-index: 3;
+  padding: 150px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
 }
 
 .section.alt {
-  background: rgba(0, 217, 255, 0.02);
-  border-top: 2px solid var(--border);
-  border-bottom: 2px solid var(--border);
+  background: rgba(0,217,255,0.02);
 }
 
 .section h2 {
   font-family: 'Abril Fatface', serif;
-  font-size: clamp(40px, 6vw, 72px);
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-size: clamp(42px, 6vw, 72px);
   margin: 0 0 40px 0;
-  line-height: 1.1;
 }
 
 .section p {
-  font-size: 18px;
+  font-size: 20px;
   color: var(--text-muted);
   max-width: 900px;
-  margin: 0 auto;
   line-height: 1.8;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
   margin-top: 80px;
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--glass);
   border: 2px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 50px;
-  backdrop-filter: blur(10px);
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
 }
 
 .card:hover {
   border-color: var(--accent);
-  background: rgba(0, 217, 255, 0.08);
-  transform: translate(-6px, -12px);
-  box-shadow: 0 30px 80px rgba(0, 217, 255, 0.15);
-}
-
-.card:hover::before {
-  opacity: 1;
+  background: rgba(0,217,255,0.06);
+  transform: translateY(-6px);
 }
 
 .card h3 {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 14px;
-  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin: 0 0 20px 0;
+  margin-bottom: 20px;
   color: var(--accent);
-  position: relative;
-  z-index: 2;
 }
 
 .card p {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--text-muted);
-  margin: 0;
-  position: relative;
-  z-index: 2;
-  line-height: 1.8;
-}
-
-.cta-center {
-  text-align: center;
-  margin-top: 80px;
-  animation: fadeInUp 1s ease both;
 }
 
 .footer {
-  padding: 100px 0;
-  border-top: 2px solid var(--border);
+  padding: 120px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
   text-align: center;
   color: var(--text-faint);
   font-size: 13px;
   letter-spacing: 0.08em;
   font-family: 'IBM Plex Mono', monospace;
   text-transform: uppercase;
-  position: relative;
-  z-index: 2;
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 0 24px;
-  }
-
-  header {
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  nav {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .hero {
-    padding: 100px 0 80px;
-  }
-
-  .cta-group {
-    flex-direction: column;
-  }
-
-  .diagram {
-    font-size: 11px;
-    padding: 24px;
-  }
-
-  .section {
-    padding: 80px 0;
-  }
-
-  .grid {
-    gap: 20px;
-  }
-
-  .card {
-    padding: 30px;
-  }
+  .container { padding: 0 24px; }
+  header { flex-direction: column; gap: 30px; }
+  .hero { padding: 100px 0 80px; }
+  .section { padding: 90px 0; }
+  .card { padding: 30px; }
 }
 </style>
-
 </head>
 
 <body>
@@ -415,36 +231,20 @@ nav a:hover::after {
 
 <section class="hero">
   <div class="container">
-    <div class="hero-content">
-      <h1>
-        <span>Systemic</span>
-        Intelligence for Critical Infrastructure
-      </h1>
-      <p>
-        Detect sustained deterioration before failure. Read-only analysis layer that never actuates. 
-        Governed intelligence for high-consequence water systems.
-      </p>
+    <h1>
+      <span>Systemic</span>
+      Infrastructure Intelligence
+    </h1>
+    <p>
+      Detect sustained deterioration before failure.
+      A read-only intelligence layer for high-consequence water systems.
+      Governed outputs. No actuation. Institutional trust.
+    </p>
 
-```
-  <div class="cta-group">
-    <a class="cta" href="mailto:founder@neraium.com">Start Discussion →</a>
-    <a class="cta secondary" href="#model">Learn More ↓</a>
-  </div>
-
-  <div class="diagram">
-    <code>INFRASTRUCTURE
-```
-
-├── Physical Systems (Read-Only)
-├── Operational Authority (Operator)
-└── [NERAIUM]
-├── Drift Detection
-├── Multivariate Analysis
-└── Governed Intelligence Output
-└── → Institutional Review</code>
-</div>
-</div>
-
+    <div class="cta-group">
+      <a class="cta" href="mailto:founder@neraium.com">Start Discussion</a>
+      <a class="cta secondary" href="#model">Learn More</a>
+    </div>
   </div>
 </section>
 
@@ -452,10 +252,10 @@ nav a:hover::after {
   <div class="container">
     <h2>The Structural Shift</h2>
     <p>
-      Infrastructure is becoming increasingly instrumented.
+      Infrastructure is increasingly instrumented.
       Intelligence is expanding toward operational authority.
-      In high-consequence systems, analysis must remain separate from control.
-      <strong>That separation becomes structural.</strong>
+      In high-consequence environments, analysis must remain structurally separate from control.
+      Neraium defines that boundary.
     </p>
   </div>
 </section>
@@ -464,31 +264,29 @@ nav a:hover::after {
   <div class="container">
     <h2>The Neraium Model</h2>
 
-```
-<div class="grid">
-  <div class="card">
-    <h3>→ Drift Detection</h3>
-    <p>
-      Identify persistent multivariate deterioration across correlated operational signals. Detect slow systematic decay before reactive thresholds trigger.
-    </p>
-  </div>
+    <div class="grid">
+      <div class="card">
+        <h3>Drift Detection</h3>
+        <p>
+          Identify persistent multivariate deterioration across correlated operational signals before reactive thresholds trigger.
+        </p>
+      </div>
 
-  <div class="card">
-    <h3>→ Read-Only Boundary</h3>
-    <p>
-      Neraium does not actuate, control, or modify infrastructure. Authority remains with operators. Intelligence informs. Humans decide.
-    </p>
-  </div>
+      <div class="card">
+        <h3>Read-Only Boundary</h3>
+        <p>
+          Neraium does not actuate, control, or modify infrastructure.
+          Authority remains with operators.
+        </p>
+      </div>
 
-  <div class="card">
-    <h3>→ Governed Intelligence</h3>
-    <p>
-      Classifications are structured, traceable, and defensible for institutional review, oversight, and liability environments.
-    </p>
-  </div>
-</div>
-```
-
+      <div class="card">
+        <h3>Governed Intelligence</h3>
+        <p>
+          Structured, traceable classifications designed for institutional review, oversight, and liability environments.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -496,21 +294,18 @@ nav a:hover::after {
   <div class="container">
     <h2>Institutional Formation</h2>
     <p>
-      As infrastructure digitizes, intelligence becomes infrastructure. 
-      Neraium defines the systemic intelligence layer for high-consequence water systems—a structural boundary between observation and control.
+      As infrastructure digitizes, intelligence becomes infrastructure.
+      Neraium establishes the systemic intelligence layer for high-consequence water systems.
     </p>
 
-```
-<div class="cta-center">
-  <a class="cta" href="mailto:founder@neraium.com">Request Discussion →</a>
-</div>
-```
-
+    <div style="margin-top:60px;">
+      <a class="cta" href="mailto:founder@neraium.com">Request Discussion</a>
+    </div>
   </div>
 </section>
 
 <footer class="footer">
-  © 2026 Neraium. Systemic Infrastructure Intelligence. Built for operators.
+  © 2026 Neraium. Systemic Infrastructure Intelligence.
 </footer>
 
 </body>
