@@ -5,29 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neraium | Systemic Infrastructure Intelligence</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#02050b;
-  --text:#f2f6ff;
-  --sub:rgba(242,246,255,0.92);
-  --border:rgba(255,255,255,0.08);
-  --accent:#00b4ff;
   --nav-h:72px;
-  --max:1100px;
-  --pad:24px;
+  --text:#ffffff;
+  --sub:rgba(255,255,255,0.9);
+  --border:rgba(255,255,255,0.08);
+  --bg:#02050b;
   --mono:'IBM Plex Mono', monospace;
-  --sans:'Inter', sans-serif;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
-  font-family:var(--sans);
+  font-family:'Inter', sans-serif;
   background:var(--bg);
   color:var(--text);
-  overflow-x:hidden;
 }
 
 /* NAV */
@@ -38,40 +33,23 @@ nav{
   left:0;
   right:0;
   height:var(--nav-h);
-  background:rgba(2,5,11,0.4);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--border);
-  z-index:100;
-}
-
-.nav-inner{
-  height:100%;
   display:flex;
   align-items:center;
   justify-content:flex-end;
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 var(--pad);
+  padding:0 40px;
+  background:rgba(2,5,11,0.55);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+  z-index:10;
 }
 
-.nav-links{
-  display:flex;
-  gap:28px;
-  list-style:none;
-}
-
-.nav-links a{
-  font-family:var(--mono);
-  font-size:11px;
+nav a{
+  margin-left:30px;
+  font-size:12px;
   letter-spacing:2px;
   text-transform:uppercase;
   text-decoration:none;
-  color:rgba(242,246,255,0.9);
-  transition:color 0.2s;
-}
-
-.nav-links a:hover{
-  color:var(--accent);
+  color:rgba(255,255,255,0.85);
 }
 
 /* HERO */
@@ -82,103 +60,54 @@ nav{
   min-height:720px;
   display:flex;
   align-items:center;
-  overflow:hidden;
+  padding-top:var(--nav-h);
+  padding-left:8%;
+  padding-right:24px;
 
-  /* IMAGE MOVED HERE */
   background-image:url("hero.png");
   background-size:cover;
   background-position:center center;
   background-repeat:no-repeat;
 }
 
-/* Light overlay */
-.hero::after{
+/* subtle dark wash */
+.hero::before{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(
-    to bottom,
-    rgba(2,5,11,0.05) 0%,
-    rgba(2,5,11,0.15) 40%,
-    rgba(2,5,11,0.35) 70%,
-    rgba(2,5,11,0.55) 100%
-  );
-  z-index:1;
+  background:rgba(0,0,0,0.35);
 }
 
-.hero-inner{
+/* content */
+
+.hero-content{
   position:relative;
-  z-index:2;
-  max-width:720px;
-  margin-left:8%;
-  padding:0 var(--pad);
+  max-width:700px;
 }
 
 .hero h1{
-  font-size:clamp(54px,8vw,105px);
+  font-size:clamp(56px,8vw,110px);
   font-weight:800;
-  letter-spacing:-1.5px;
-  margin-bottom:10px;
-  text-shadow:0 4px 20px rgba(0,0,0,0.45);
+  letter-spacing:-1px;
+  margin-bottom:12px;
 }
 
 .hero h2{
-  font-size:clamp(20px,2.4vw,28px);
+  font-size:clamp(20px,2.4vw,30px);
   font-weight:500;
-  margin-bottom:24px;
+  margin-bottom:26px;
   color:var(--sub);
-  text-shadow:0 2px 14px rgba(0,0,0,0.4);
 }
 
 .hero p{
   font-size:clamp(16px,1.2vw,18px);
   line-height:1.7;
   color:var(--sub);
-  text-shadow:0 2px 10px rgba(0,0,0,0.4);
-}
-
-/* SECTION */
-
-section{
-  padding:120px 0;
-  border-top:1px solid var(--border);
-}
-
-.container{
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 var(--pad);
-}
-
-h2.section-title{
-  font-size:30px;
-  margin-bottom:20px;
-  font-weight:600;
-}
-
-.section-lead{
-  max-width:720px;
-  color:var(--sub);
-  line-height:1.7;
-  font-size:16px;
-}
-
-footer{
-  padding:100px 0;
-  border-top:1px solid var(--border);
-  text-align:center;
-  font-size:13px;
-  color:rgba(242,246,255,0.6);
-  line-height:1.8;
 }
 
 @media(max-width:768px){
-  .hero-inner{
-    margin-left:0;
-  }
-
-  section{
-    padding:80px 0;
+  .hero{
+    padding-left:24px;
   }
 }
 </style>
@@ -187,17 +116,13 @@ footer{
 <body>
 
 <nav>
-  <div class="nav-inner">
-    <ul class="nav-links">
-      <li><a href="technical.html">Technical</a></li>
-      <li><a href="governance.html">Governance</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
+  <a href="technical.html">Technical</a>
+  <a href="governance.html">Governance</a>
+  <a href="#contact">Contact</a>
 </nav>
 
-<header class="hero">
-  <div class="hero-inner">
+<section class="hero">
+  <div class="hero-content">
     <h1>NERAIUM</h1>
     <h2>Systemic Infrastructure Intelligence</h2>
     <p>
@@ -207,23 +132,7 @@ footer{
       Operator authority remains preserved.
     </p>
   </div>
-</header>
-
-<section>
-  <div class="container">
-    <h2 class="section-title">Read Only Infrastructure Intelligence</h2>
-    <p class="section-lead">
-      Neraium connects to existing BAS, SCADA, historians, and sensor systems
-      without altering operational infrastructure.
-    </p>
-  </div>
 </section>
-
-<footer id="contact">
-  Craig Curtis<br>
-  craig@neraium.com<br><br>
-  © 2026 Neraium
-</footer>
 
 </body>
 </html>
