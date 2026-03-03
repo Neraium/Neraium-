@@ -1,522 +1,391 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NERAIUM | Systemic Infrastructure Intelligence</title>
-  <meta name="description" content="Neraium is a read only systemic infrastructure intelligence layer for telemetry review, deviation analysis, and evidence grade records." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neraium | Systemic Infrastructure Intelligence</title>
+<meta name="description" content="Read-only systemic intelligence for water infrastructure. Continuous detection of sustained structural deviation before failure.">
 
-  <meta property="og:title" content="NERAIUM | Systemic Infrastructure Intelligence" />
-  <meta property="og:description" content="Read only infrastructure intelligence for telemetry review, deviation analysis, and evidence grade records." />
-  <meta property="og:type" content="website" />
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-0: #050a15;
+  --bg-1: #0a0f1f;
+  --bg-2: #0f152d;
+  --text-0: #f0f6ff;
+  --text-1: rgba(240,246,255,0.85);
+  --text-2: rgba(240,246,255,0.55);
+  --text-3: rgba(240,246,255,0.32);
+  --water-primary: #00b8ff;
+  --water-secondary: #00d4ff;
+  --water-accent: #0099ff;
+  --accent-dim: rgba(0,184,255,0.15);
+  --border: rgba(0,184,255,0.25);
+  --border-strong: rgba(0,184,255,0.4);
+  --max: 1320px;
+  --serif: 'Merriweather', serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
 
-  <style>
-    :root{
-      --bg-0:#04070e;
-      --bg-1:#070b16;
-      --bg-2:#0a1022;
-      --bg-3:#0c1430;
+*,
+*::before,
+*::after {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-      --card:#0a1020;
-      --card-2:#0b1326;
+html { scroll-behavior:smooth; }
 
-      --text:#eaf2ff;
-      --muted:rgba(234,242,255,0.72);
-      --muted-2:rgba(234,242,255,0.50);
+body {
+  font-family:var(--serif);
+  background:linear-gradient(135deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%);
+  color:var(--text-0);
+  line-height:1.65;
+  overflow-x:hidden;
+  position:relative;
+  -webkit-font-smoothing:antialiased;
+}
 
-      --accent:#2e73ff;
-      --accent-2:#46d5ff;
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 15% 30%, rgba(0,184,255,0.12) 0%, transparent 35%),
+    radial-gradient(circle at 85% 70%, rgba(0,184,255,0.08) 0%, transparent 45%);
+  pointer-events:none;
+  z-index:0;
+}
 
-      --line:rgba(140,170,240,0.10);
-      --line-2:rgba(140,170,240,0.18);
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(0deg, rgba(0,184,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,184,255,0.04) 1px, transparent 1px);
+  background-size:70px 70px;
+  pointer-events:none;
+  z-index:0;
+}
 
-      --shadow: 0 18px 55px rgba(0,0,0,0.40);
-      --shadow-soft: 0 10px 32px rgba(0,0,0,0.30);
+.container {
+  width:100%;
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 60px;
+  position:relative;
+  z-index:2;
+}
 
-      --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans:'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      --r:14px;
+/* HERO BRAND */
 
-      --hero-shift: 0px;
-    }
+.hero-brand {
+  padding:180px 0 140px;
+  border-bottom:1px solid var(--border);
+  text-align:center;
+  position:relative;
+}
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:var(--sans);
-      background: radial-gradient(1200px 700px at 10% 0%, rgba(46,115,255,0.12), transparent 60%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(70,213,255,0.10), transparent 60%),
-                  linear-gradient(180deg, var(--bg-0), var(--bg-1));
-      color:var(--text);
-      line-height:1.6;
-      overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+.hero-brand::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse 900px 700px at 50% 50%, rgba(0,184,255,0.15) 0%, transparent 60%);
+  pointer-events:none;
+}
 
-    /* subtle grid */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background-image:
-        linear-gradient(rgba(70,213,255,0.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(70,213,255,0.018) 1px, transparent 1px);
-      background-size: 48px 48px;
-      opacity:0.9;
-      z-index:0;
-    }
+.brand-name {
+  font-size:clamp(100px,16vw,180px);
+  font-weight:900;
+  line-height:0.95;
+  background:linear-gradient(135deg,var(--water-primary),var(--water-secondary));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 50px rgba(0,184,255,0.7));
+  margin-bottom:32px;
+}
 
-    a{color:inherit}
-    .container{
-      width:100%;
-      max-width:1200px;
-      margin:0 auto;
-      padding:0 22px;
-      position:relative;
-      z-index:2;
-    }
+.brand-subtitle {
+  font-size:clamp(14px,1.8vw,20px);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--text-2);
+}
 
-    /* NAV */
-    .nav{
-      position:fixed;
-      top:0; left:0; right:0;
-      z-index:60;
-      background: rgba(4,7,14,0.74);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav-inner{
-      height:64px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-    }
-    .brand{
-      display:flex;
-      align-items:baseline;
-      gap:10px;
-      text-decoration:none;
-      white-space:nowrap;
-    }
-    .brand strong{
-      font-family:var(--mono);
-      letter-spacing:4px;
-      font-weight:800;
-      font-size:13px;
-      color:rgba(234,242,255,0.94);
-    }
-    .brand span{
-      font-family:var(--mono);
-      letter-spacing:2px;
-      font-size:10px;
-      color:rgba(70,213,255,0.70);
-      text-transform:uppercase;
-    }
+/* HERO */
 
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:22px;
-      list-style:none;
-      margin:0;
-      padding:0;
-    }
-    .nav-links a{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      text-decoration:none;
-      color: rgba(234,242,255,0.66);
-      padding:8px 6px;
-      border-bottom: 1px solid transparent;
-      transition: 0.2s ease;
-    }
-    .nav-links a:hover{
-      color: rgba(234,242,255,0.92);
-      border-bottom-color: rgba(46,115,255,0.55);
-    }
-    .nav-cta{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-shrink:0;
-    }
-    .btn{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      text-decoration:none;
-      padding:10px 14px;
-      border-radius:12px;
-      border: 1px solid var(--line-2);
-      background: rgba(10,16,32,0.55);
-      color: rgba(234,242,255,0.86);
-      transition: 0.22s ease;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-    }
-    .btn:hover{
-      border-color: rgba(46,115,255,0.55);
-      background: rgba(10,16,32,0.75);
-      box-shadow: var(--shadow-soft);
-    }
-    .btn.primary{
-      border-color: rgba(46,115,255,0.55);
-      background: linear-gradient(180deg, rgba(46,115,255,0.24), rgba(10,16,32,0.55));
-      color: rgba(234,242,255,0.95);
-    }
-    .btn.primary:hover{
-      border-color: rgba(70,213,255,0.55);
-    }
+.hero {
+  min-height:80vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:100px 0;
+  text-align:center;
+  position:relative;
+}
 
-    .hamburger{
-      display:none;
-      width:42px; height:42px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(10,16,32,0.55);
-      color: rgba(234,242,255,0.86);
-      cursor:pointer;
-    }
-    .hamburger:active{transform: translateY(1px)}
-    .hamburger svg{display:block;margin:auto}
-    .mobile-panel{
-      display:none;
-      border-top:1px solid var(--line);
-      background: rgba(4,7,14,0.86);
-      backdrop-filter: blur(18px);
-    }
-    .mobile-panel .container{
-      padding-top:10px;
-      padding-bottom:14px;
-    }
-    .mobile-panel a{
-      display:block;
-      padding:12px 6px;
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      text-decoration:none;
-      color: rgba(234,242,255,0.74);
-      border-bottom:1px solid var(--line);
-    }
-    .mobile-panel a:last-child{border-bottom:none}
+.hero-title {
+  font-size:clamp(44px,8vw,72px);
+  font-weight:800;
+  margin-bottom:32px;
+}
 
-    /* HERO */
-    .hero{
-      position:relative;
-      padding: 132px 0 72px;
-      overflow:hidden;
-      border-bottom: 1px solid var(--line);
-    }
+.hero-title span {
+  background:linear-gradient(135deg,var(--water-primary),var(--water-secondary));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(46,115,255,0.52) 0%,
-          rgba(18,38,86,0.84) 42%,
-          rgba(4,7,14,0.96) 100%
-        ),
-        url("hero.png");
-      background-size: cover;
-      background-repeat:no-repeat;
-      background-position: center calc(50% + var(--hero-shift));
-      opacity: 1;
-      z-index:0;
-      transform: scale(1.02);
-      filter: saturate(1.05) contrast(1.02);
-    }
+.hero-subtitle {
+  font-size:clamp(16px,2vw,20px);
+  color:var(--text-1);
+  margin-bottom:56px;
+  max-width:800px;
+  margin-left:auto;
+  margin-right:auto;
+}
 
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: radial-gradient(900px 420px at 12% 18%, rgba(70,213,255,0.10), transparent 60%),
-                  radial-gradient(800px 360px at 88% 22%, rgba(46,115,255,0.12), transparent 60%);
-      z-index:0;
-      pointer-events:none;
-    }
+/* BUTTONS */
 
-    .hero-inner{
-      position:relative;
-      z-index:1;
-      display:grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 34px;
-      align-items:end;
-    }
+.cta {
+  padding:16px 48px;
+  border:2px solid var(--water-primary);
+  color:var(--water-primary);
+  text-decoration:none;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  transition:0.3s;
+  display:inline-block;
+  margin:0 10px;
+}
 
-    .wordmark{
-      font-family:var(--sans);
-      font-weight:800;
-      letter-spacing: 8px;
-      font-size: clamp(44px, 6vw, 92px);
-      line-height: 0.95;
-      margin:0 0 10px;
-      text-transform:uppercase;
-      color: rgba(234,242,255,0.96);
-      text-shadow: 0 18px 55px rgba(0,0,0,0.35);
-    }
-    .tagline{
-      font-family:var(--sans);
-      font-size: clamp(18px, 2.2vw, 34px);
-      font-weight:600;
-      margin:0 0 16px;
-      color: rgba(234,242,255,0.92);
-      letter-spacing: -0.5px;
-    }
-    .lead{
-      margin:0;
-      max-width: 720px;
-      font-size: 16px;
-      color: rgba(234,242,255,0.76);
-    }
-    .lead b{color: rgba(234,242,255,0.92); font-weight:600}
+.cta:hover {
+  background:var(--water-primary);
+  color:var(--bg-0);
+  box-shadow:0 0 50px rgba(0,184,255,0.5);
+}
 
-    .hero-actions{
-      display:flex;
-      gap:12px;
-      justify-content:flex-end;
-      flex-wrap:wrap;
-      padding-bottom: 6px;
-    }
+/* SPEC SECTIONS */
 
-    .badge-row{
-      margin-top: 22px;
-      display:flex;
-      gap: 12px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(140,170,240,0.16);
-      background: rgba(6,10,18,0.55);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 1.6px;
-      text-transform:uppercase;
-      color: rgba(234,242,255,0.78);
-      white-space:nowrap;
-    }
-    .dot{
-      width:8px;height:8px;border-radius:999px;
-      background: rgba(70,213,255,0.95);
-      box-shadow: 0 0 16px rgba(70,213,255,0.35);
-    }
+.spec-row {
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:90px;
+  padding:140px 0;
+  border-bottom:1px solid var(--border);
+}
 
-    /* SECTION */
-    section{
-      padding: 72px 0;
-      border-bottom: 1px solid var(--line);
-      position:relative;
-      z-index:2;
-    }
-    .section-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:20px;
-      margin-bottom: 22px;
-    }
-    .kicker{
-      font-family:var(--mono);
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform:uppercase;
-      color: rgba(70,213,255,0.70);
-      margin:0 0 10px;
-    }
-    h2{
-      margin:0;
-      font-size: clamp(26px, 3vw, 38px);
-      letter-spacing:-0.4px;
-      line-height:1.15;
-    }
-    .sub{
-      margin:10px 0 0;
-      color: var(--muted);
-      max-width: 720px;
-      font-size: 14px;
-    }
+.spec-label .section-index {
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--water-primary);
+  margin-bottom:20px;
+}
 
-    /* Cards */
-    .grid-3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .card{
-      border-radius: var(--r);
-      border: 1px solid rgba(140,170,240,0.14);
-      background: linear-gradient(180deg, rgba(11,19,38,0.82), rgba(7,11,22,0.82));
-      box-shadow: 0 10px 32px rgba(0,0,0,0.22);
-      padding: 18px 18px;
-      min-height: 150px;
-    }
-    .card .label{
-      font-family:var(--mono);
-      font-size: 10px;
-      letter-spacing: 2.5px;
-      text-transform:uppercase;
-      color: rgba(46,115,255,0.92);
-      margin:0 0 10px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .card .label::before{
-      content:"";
-      width:10px;height:2px;border-radius:2px;
-      background: rgba(70,213,255,0.75);
-      box-shadow: 0 0 16px rgba(70,213,255,0.20);
-    }
-    .card h3{
-      margin:0 0 8px;
-      font-size: 16px;
-      letter-spacing:-0.2px;
-    }
-    .card p{
-      margin:0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height:1.7;
-    }
+.spec-label h2 {
+  font-size:40px;
+}
 
-    /* Validation stats */
-    .stats{
-      margin-top: 14px;
-      border-radius: var(--r);
-      border: 1px solid rgba(140,170,240,0.16);
-      background: linear-gradient(180deg, rgba(10,16,32,0.80), rgba(7,11,22,0.80));
-      overflow:hidden;
-      box-shadow: var(--shadow-soft);
-    }
-    .stats-top{
-      display:flex;
-      gap:14px;
-      align-items:center;
-      justify-content:space-between;
-      padding: 14px 16px;
-      border-bottom:1px solid rgba(140,170,240,0.12);
-      background: rgba(70,213,255,0.04);
-      flex-wrap:wrap;
-    }
-    .stats-top strong{
-      font-family:var(--mono);
-      letter-spacing:2px;
-      text-transform:uppercase;
-      font-size:10px;
-      color: rgba(234,242,255,0.86);
-    }
-    .stats-top span{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:1.6px;
-      color: rgba(234,242,255,0.56);
-      text-transform:uppercase;
-    }
-    .stats-grid{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: rgba(140,170,240,0.12);
-    }
-    .stat{
-      background: rgba(6,10,18,0.65);
-      padding: 16px 16px;
-    }
-    .stat .v{
-      font-size: 26px;
-      font-weight:800;
-      letter-spacing:-0.6px;
-      color: rgba(234,242,255,0.94);
-    }
-    .stat .k{
-      margin-top: 6px;
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      color: rgba(234,242,255,0.60);
-      line-height:1.35;
-    }
-    .stat .v.accent{color: rgba(70,213,255,0.92)}
-    .note{
-      margin-top: 12px;
-      color: rgba(234,242,255,0.54);
-      font-size: 12px;
-      max-width: 880px;
-    }
+.spec-body p {
+  font-size:16px;
+  line-height:1.9;
+  color:var(--text-1);
+  margin-bottom:36px;
+}
 
-    /* System boundary block */
-    .boundary{
-      border-radius: var(--r);
-      border: 1px solid rgba(140,170,240,0.16);
-      background: linear-gradient(180deg, rgba(11,19,38,0.74), rgba(7,11,22,0.82));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .boundary-h{
-      padding: 14px 16px;
-      border-bottom:1px solid rgba(140,170,240,0.12);
-      background: rgba(46,115,255,0.06);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .boundary-h .title{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:2.5px;
-      text-transform:uppercase;
-      color: rgba(234,242,255,0.86);
-    }
-    .boundary-h .pill{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      padding:8px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(140,170,240,0.16);
-      background: rgba(6,10,18,0.55);
-      color: rgba(234,242,255,0.70);
-      white-space:nowrap;
-    }
-    .boundary-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: rgba(140,170,240,0.12);
-    }
-    .boundary-cell{
-      background: rgba(6,10,18,0.62);
-      padding: 16px 16px;
-      min-height: 120px;
-    }
-    .boundary-cell h4{
-      margin:0 0 10px;
-      font-family:var(--mono);
-      font-size:10
+/* SIGNAL GRID */
+
+.signal-grid {
+  border:1px solid var(--border-strong);
+  background:rgba(0,184,255,0.05);
+  margin-top:64px;
+}
+
+.signal-row {
+  display:grid;
+  grid-template-columns:100px 1fr 1.6fr;
+  border-bottom:1px solid var(--border);
+}
+
+.signal-row:last-child { border-bottom:none; }
+
+.signal-index {
+  text-align:center;
+  padding:26px;
+  font-family:var(--mono);
+  color:var(--water-primary);
+}
+
+.signal-name {
+  padding:26px;
+  font-family:var(--mono);
+  text-transform:uppercase;
+}
+
+.signal-desc {
+  padding:26px;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--text-2);
+  text-align:right;
+}
+
+/* METRICS */
+
+.metrics {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  margin-top:64px;
+  border:1px solid var(--border-strong);
+  background:rgba(0,184,255,0.05);
+}
+
+.metric {
+  text-align:center;
+  padding:64px;
+  border-right:1px solid var(--border);
+}
+
+.metric:last-child { border-right:none; }
+
+.metric strong {
+  display:block;
+  font-size:56px;
+  background:linear-gradient(135deg,var(--water-primary),var(--water-secondary));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:18px;
+}
+
+.metric span {
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-2);
+}
+
+/* FOOTER */
+
+.site-footer {
+  padding:88px 0;
+  border-top:1px solid var(--border);
+  text-align:center;
+}
+
+.site-footer p {
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-3);
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero-brand">
+  <div class="container">
+    <h1 class="brand-name">Neraium</h1>
+    <p class="brand-subtitle">Systemic Infrastructure Intelligence for Water Systems</p>
+  </div>
+</section>
+
+<section class="hero">
+  <div class="container">
+    <h2 class="hero-title"><span>Detect</span> Sustained Structural Deviation</h2>
+    <p class="hero-subtitle">
+      Continuous multi-signal deviation detection across live water telemetry before failure.
+      Read-only. No control. Operator authority preserved.
+    </p>
+    <a href="#contact" class="cta">Start Discussion →</a>
+    <a href="technical.html" class="cta">Technical Overview ↗</a>
+  </div>
+</section>
+
+<section class="spec">
+<div class="container">
+
+<div class="spec-row">
+  <div class="spec-label">
+    <span class="section-index">01</span>
+    <h2>Operational Boundary</h2>
+  </div>
+  <div class="spec-body">
+    <p>Neraium is a <strong>read-only infrastructure intelligence layer</strong>. It does not actuate, control, modify, or override systems.</p>
+    <p>All operational authority remains with licensed operators.</p>
+  </div>
+</div>
+
+<div class="spec-row">
+  <div class="spec-label">
+    <span class="section-index">02</span>
+    <h2>System Parameters</h2>
+  </div>
+  <div class="spec-body">
+    <p>Infrastructure degradation begins with correlated drift across pressure, flow, vibration, thermal, and chemical domains.</p>
+
+    <div class="signal-grid">
+      <div class="signal-row">
+        <div class="signal-index">01</div>
+        <div class="signal-name">Pressure Deviation</div>
+        <div class="signal-desc">line loss . surge behavior</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-index">02</div>
+        <div class="signal-name">Flow Irregularity</div>
+        <div class="signal-desc">leak signature . blockage onset</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-index">03</div>
+        <div class="signal-name">Pump Degradation</div>
+        <div class="signal-desc">vibration drift . efficiency decay</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spec-row">
+  <div class="spec-label">
+    <span class="section-index">03</span>
+    <h2>Empirical Validation</h2>
+  </div>
+  <div class="spec-body">
+    <p>Validated across 707 degradation trajectories using NASA CMAPSS telemetry.</p>
+
+    <div class="metrics">
+      <div class="metric">
+        <strong>96.9%</strong>
+        <span>Detection Rate</span>
+      </div>
+      <div class="metric">
+        <strong>183</strong>
+        <span>Mean Lead Time</span>
+      </div>
+      <div class="metric">
+        <strong>100+ hrs</strong>
+        <span>Warning Window</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© 2026 Neraium. All Rights Reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
