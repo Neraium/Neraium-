@@ -1,114 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Neraium | Systemic Infrastructure Intelligence</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
 <style>
 :root{
   --nav-h:72px;
-  --text:#ffffff;
-  --sub:rgba(255,255,255,0.9);
-  --border:rgba(255,255,255,0.08);
   --bg:#02050b;
-  --mono:'IBM Plex Mono', monospace;
+
+  /* Image tuning */
+  --img-bright:1.08;
+  --img-contrast:1.08;
+  --img-sat:0.92;
+  --img-scale:1.08;
+  --img-x:48%;     /* move left or right */
+  --img-y:50%;     /* base vertical position */
+
+  /* Overlay tuning (keep light so photo stays visible) */
+  --overlay-top:0.18;
+  --overlay-mid:0.22;
+  --overlay-bot:0.34;
+
+  /* Text panel tuning */
+  --scrim-a:0.10;
+  --scrim-b:0.52;
+
+  --text:#ffffff;
+  --sub:rgba(255,255,255,0.90);
+  --muted:rgba(255,255,255,0.78);
+  --border:rgba(255,255,255,0.08);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-
+html,body{height:100%}
 body{
-  font-family:'Inter', sans-serif;
+  font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background:var(--bg);
   color:var(--text);
+  overflow-x:hidden;
 }
 
 /* NAV */
-
 nav{
   position:fixed;
-  top:0;
-  left:0;
-  right:0;
+  top:0; left:0; right:0;
   height:var(--nav-h);
+  z-index:20;
   display:flex;
   align-items:center;
-  justify-content:flex-end;
-  padding:0 40px;
-  background:rgba(2,5,11,0.55);
-  backdrop-filter:blur(10px);
+  justify-content:center;
+  background:rgba(2,5,11,0.42);
+  backdrop-filter: blur(10px);
   border-bottom:1px solid var(--border);
-  z-index:10;
 }
-
+.nav-inner{
+  width:100%;
+  max-width:1100px;
+  padding:0 24px;
+  display:flex;
+  justify-content:flex-end;
+  gap:34px;
+}
 nav a{
-  margin-left:30px;
   font-size:12px;
   letter-spacing:2px;
   text-transform:uppercase;
   text-decoration:none;
-  color:rgba(255,255,255,0.85);
+  color:rgba(255,255,255,0.82);
+  transition:color .2s;
 }
+nav a:hover{color:#ffffff}
 
 /* HERO */
-
 .hero{
   position:relative;
-  height:100vh;
-  min-height:720px;
+  min-height:100vh;
+  padding-top:var(--nav-h);
   display:flex;
   align-items:center;
-  padding-top:var(--nav-h);
-  padding-left:8%;
-  padding-right:24px;
-
-  background-image:url("hero.png");
-  background-size:cover;
-  background-position:center center;
-  background-repeat:no-repeat;
+  overflow:hidden;
+  background:var(--bg);
 }
 
-/* subtle dark wash */
-.hero::before{
-  content:"";
+/* Image layer */
+.hero-media{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,0.35);
+  z-index:0;
+  transform: translate3d(0,0,0);
+}
+.hero-media .img{
+  position:absolute;
+  inset:-10%;
+  background-image:url("hero.png");
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position: var(--img-x) var(--img-y);
+  transform: scale(var(--img-scale)) translate3d(0,0,0);
+  filter: brightness(var(--img-bright)) contrast(var(--img-contrast)) saturate(var(--img-sat));
+  will-change: transform;
 }
 
-/* content */
+/* Light global overlay to keep contrast but not kill photo */
+.hero-media .overlay{
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    to bottom,
+    rgba(2,5,11,var(--overlay-top)) 0%,
+    rgba(2,5,11,var(--overlay-mid)) 55%,
+    rgba(2,5,11,var(--overlay-bot)) 100%
+  );
+}
 
-.hero-content{
+/* Content */
+.hero-inner{
   position:relative;
-  max-width:700px;
+  z-index:2;
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 24px;
+}
+.hero-copy{
+  max-width:760px;
+  padding:28px 26px 26px;
+  border-radius:16px;
+  background: linear-gradient(
+    to bottom,
+    rgba(2,5,11,var(--scrim-a)) 0%,
+    rgba(2,5,11,var(--scrim-b)) 100%
+  );
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
 }
 
-.hero h1{
-  font-size:clamp(56px,8vw,110px);
+h1{
+  font-size:clamp(56px,8.4vw,104px);
   font-weight:800;
-  letter-spacing:-1px;
-  margin-bottom:12px;
+  letter-spacing:-1.6px;
+  line-height:0.98;
+  text-shadow: 0 10px 34px rgba(0,0,0,0.55);
+}
+h2{
+  margin-top:14px;
+  font-size:clamp(22px,2.6vw,34px);
+  font-weight:600;
+  color:rgba(255,255,255,0.92);
+  text-shadow: 0 6px 22px rgba(0,0,0,0.50);
+}
+p{
+  margin-top:18px;
+  font-size:clamp(16px,1.2vw,19px);
+  line-height:1.75;
+  color:rgba(255,255,255,0.82);
+  text-shadow: 0 4px 18px rgba(0,0,0,0.45);
 }
 
-.hero h2{
-  font-size:clamp(20px,2.4vw,30px);
-  font-weight:500;
-  margin-bottom:26px;
-  color:var(--sub);
-}
-
-.hero p{
-  font-size:clamp(16px,1.2vw,18px);
-  line-height:1.7;
-  color:var(--sub);
-}
-
-@media(max-width:768px){
-  .hero{
-    padding-left:24px;
-  }
+/* Small screens */
+@media (max-width: 820px){
+  .hero{align-items:flex-start}
+  .hero-inner{padding-top:44px}
+  .hero-copy{padding:22px 18px}
+  .nav-inner{gap:22px}
+  nav a{font-size:11px}
 }
 </style>
 </head>
@@ -116,23 +175,63 @@ nav a{
 <body>
 
 <nav>
-  <a href="technical.html">Technical</a>
-  <a href="governance.html">Governance</a>
-  <a href="#contact">Contact</a>
+  <div class="nav-inner">
+    <a href="technical.html">Technical</a>
+    <a href="governance.html">Governance</a>
+    <a href="#contact">Contact</a>
+  </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-content">
-    <h1>NERAIUM</h1>
-    <h2>Systemic Infrastructure Intelligence</h2>
-    <p>
-      We ingest existing telemetry, detect sustained structural deviation,
-      and deliver reviewable intelligence before failure occurs.
-      No automation. No control commands. No system modification.
-      Operator authority remains preserved.
-    </p>
+<header class="hero">
+  <div class="hero-media" aria-hidden="true">
+    <div class="img" id="heroImg"></div>
+    <div class="overlay"></div>
   </div>
-</section>
+
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <h1>NERAIUM</h1>
+      <h2>Systemic Infrastructure Intelligence</h2>
+      <p>
+        We ingest existing telemetry, detect sustained structural deviation, and deliver reviewable intelligence before failure occurs.
+        No automation. No control commands. No system modification. Operator authority remains preserved.
+      </p>
+    </div>
+  </div>
+</header>
+
+<footer id="contact" style="padding:90px 24px; background:#02050b; border-top:1px solid rgba(255,255,255,0.08); text-align:center; color:rgba(255,255,255,0.70);">
+  Craig Curtis<br>
+  <a href="mailto:craig@neraium.com" style="color:rgba(255,255,255,0.85); text-decoration:none;">craig@neraium.com</a><br><br>
+  © 2026 Neraium
+</footer>
+
+<script>
+(function(){
+  const el = document.getElementById('heroImg');
+  if(!el) return;
+
+  // Smooth parallax that works on iOS (no background-attachment fixed)
+  let latestY = 0;
+  let ticking = false;
+
+  function onScroll(){
+    latestY = window.scrollY || 0;
+    if(ticking) return;
+    ticking = true;
+
+    requestAnimationFrame(() => {
+      // Adjust strength here: 0.10 to 0.18 is the sweet spot
+      const shift = Math.min(90, latestY * 0.14);
+      el.style.transform = `scale(var(--img-scale)) translate3d(0, ${shift * -1}px, 0)`;
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+</script>
 
 </body>
 </html>
