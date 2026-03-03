@@ -67,6 +67,7 @@ nav{
   text-transform:uppercase;
   text-decoration:none;
   color:rgba(242,246,255,0.9);
+  transition:color 0.2s;
 }
 
 .nav-links a:hover{
@@ -82,22 +83,15 @@ nav{
   display:flex;
   align-items:center;
   overflow:hidden;
-}
 
-/* Full image */
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
+  /* IMAGE MOVED HERE */
   background-image:url("hero.png");
   background-size:cover;
   background-position:center center;
   background-repeat:no-repeat;
-  filter:brightness(1.15) contrast(1.05);
-  z-index:0;
 }
 
-/* Softer smoother fade */
+/* Light overlay */
 .hero::after{
   content:"";
   position:absolute;
@@ -105,7 +99,7 @@ nav{
   background:linear-gradient(
     to bottom,
     rgba(2,5,11,0.05) 0%,
-    rgba(2,5,11,0.12) 40%,
+    rgba(2,5,11,0.15) 40%,
     rgba(2,5,11,0.35) 70%,
     rgba(2,5,11,0.55) 100%
   );
@@ -156,15 +150,17 @@ section{
   padding:0 var(--pad);
 }
 
-.section-title{
+h2.section-title{
   font-size:30px;
   margin-bottom:20px;
+  font-weight:600;
 }
 
 .section-lead{
   max-width:720px;
   color:var(--sub);
   line-height:1.7;
+  font-size:16px;
 }
 
 footer{
@@ -173,11 +169,16 @@ footer{
   text-align:center;
   font-size:13px;
   color:rgba(242,246,255,0.6);
+  line-height:1.8;
 }
 
 @media(max-width:768px){
   .hero-inner{
     margin-left:0;
+  }
+
+  section{
+    padding:80px 0;
   }
 }
 </style>
@@ -210,11 +211,11 @@ footer{
 
 <section>
   <div class="container">
-    <div class="section-title">Read Only Infrastructure Intelligence</div>
-    <div class="section-lead">
+    <h2 class="section-title">Read Only Infrastructure Intelligence</h2>
+    <p class="section-lead">
       Neraium connects to existing BAS, SCADA, historians, and sensor systems
       without altering operational infrastructure.
-    </div>
+    </p>
   </div>
 </section>
 
