@@ -1,10 +1,10 @@
-(<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neraium | Systemic Infrastructure Intelligence</title>
-<meta name="description" content="Read-only infrastructure intelligence for telemetry analysis and evidence-grade records.">
+<meta name="description" content="Read-only infrastructure intelligence for telemetry analysis and empirical multivariate drift detection.">
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -34,7 +34,13 @@ nav{
   z-index:100;
 }
 .nav-inner{display:flex;justify-content:space-between;align-items:center;height:64px}
-.brand{font-family:var(--mono);letter-spacing:3px;font-size:14px;color:var(--accent);text-decoration:none}
+.brand{
+  font-family:var(--mono);
+  letter-spacing:3px;
+  font-size:14px;
+  color:var(--accent);
+  text-decoration:none;
+}
 .nav-links{list-style:none;display:flex;gap:28px}
 .nav-links a{
   font-family:var(--mono);
@@ -51,7 +57,12 @@ nav{
 .hero{
   position:relative;
   padding:200px 0 160px;
-  background:linear-gradient(180deg,#0d1e3a 0%,#0b111c 60%,#05080f 100%);
+  background:linear-gradient(
+    180deg,
+    #0d1e3a 0%,
+    #0b111c 60%,
+    #05080f 100%
+  );
   overflow:hidden;
 }
 .hero::before{
@@ -64,18 +75,43 @@ nav{
 .hero::after{
   content:"";
   position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(13,30,58,.85) 0%,rgba(11,17,28,.95) 70%,rgba(5,8,15,1) 100%);
+  background:linear-gradient(
+    180deg,
+    rgba(13,30,58,.85) 0%,
+    rgba(11,17,28,.95) 70%,
+    rgba(5,8,15,1) 100%
+  );
   z-index:1;
 }
 .hero .container{position:relative;z-index:2}
-.hero h1{font-size:96px;font-weight:700;letter-spacing:-2px}
-.hero h2{font-size:36px;margin-top:10px}
-.hero p{margin-top:22px;max-width:560px;color:var(--muted)}
-.hero-divider{margin-top:40px;width:80px;height:2px;background:var(--accent)}
+
+.hero h1{
+  font-size:96px;
+  font-weight:700;
+  letter-spacing:-2px;
+}
+.hero h2{
+  font-size:36px;
+  margin-top:10px;
+}
+.hero p{
+  margin-top:22px;
+  max-width:580px;
+  color:var(--muted);
+}
+.hero-divider{
+  margin-top:40px;
+  width:80px;
+  height:2px;
+  background:var(--accent);
+}
 
 /* SECTIONS */
 
-section{padding:110px 0;border-top:1px solid var(--border)}
+section{
+  padding:110px 0;
+  border-top:1px solid var(--border);
+}
 .section-label{
   font-family:var(--mono);
   font-size:10px;
@@ -84,8 +120,16 @@ section{padding:110px 0;border-top:1px solid var(--border)}
   color:var(--accent);
   margin-bottom:14px;
 }
-.section-title{font-size:32px;font-weight:600;margin-bottom:16px}
-.section-body{max-width:620px;color:var(--muted);margin-bottom:40px}
+.section-title{
+  font-size:32px;
+  font-weight:600;
+  margin-bottom:16px;
+}
+.section-body{
+  max-width:650px;
+  color:var(--muted);
+  margin-bottom:40px;
+}
 
 /* GRID */
 
@@ -103,7 +147,7 @@ section{padding:110px 0;border-top:1px solid var(--border)}
 .card h3{font-size:18px;margin-bottom:10px}
 .card p{font-size:14px;color:var(--muted)}
 
-/* EVIDENCE STATS */
+/* STATS */
 
 .stats{
   display:grid;
@@ -114,7 +158,7 @@ section{padding:110px 0;border-top:1px solid var(--border)}
 }
 .stat{
   background:var(--surface);
-  padding:28px;
+  padding:30px;
 }
 .stat-label{
   font-family:var(--mono);
@@ -125,7 +169,7 @@ section{padding:110px 0;border-top:1px solid var(--border)}
   margin-bottom:8px;
 }
 .stat-value{
-  font-size:18px;
+  font-size:20px;
   font-weight:600;
 }
 
@@ -207,7 +251,7 @@ footer{
     <a href="#" class="brand">NERAIUM</a>
     <ul class="nav-links">
       <li><a href="#platform">Platform</a></li>
-      <li><a href="#evidence">Evidence</a></li>
+      <li><a href="#validation">Validation</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
@@ -219,8 +263,8 @@ footer{
     <h2>Systemic Infrastructure Intelligence</h2>
     <p>
       Neraium is a read-only infrastructure intelligence layer.
-      It ingests telemetry, analyzes sustained deviation patterns,
-      and produces reviewable records without issuing control commands.
+      It ingests telemetry, performs multivariate drift analysis,
+      and produces structured outputs for operator review without issuing control commands.
     </p>
     <div class="hero-divider"></div>
   </div>
@@ -231,66 +275,59 @@ footer{
     <div class="section-label">Platform</div>
     <div class="section-title">Infrastructure Intelligence Layer</div>
     <div class="section-body">
-      Designed to evaluate telemetry from existing systems and produce contextual analytical outputs for operator review.
+      Designed to evaluate telemetry from existing systems and produce contextual analytical outputs while preserving system boundary integrity.
     </div>
 
     <div class="grid">
       <div class="card">
-        <h3>Telemetry Ingestion</h3>
-        <p>Receives system data without issuing control signals.</p>
+        <h3>Read-Only Telemetry Ingestion</h3>
+        <p>Receives operational data without modifying system state.</p>
       </div>
       <div class="card">
         <h3>Multivariate Drift Detection</h3>
-        <p>Detects sustained multi-signal deviation relative to baseline behavior.</p>
+        <p>Mahalanobis-based deviation modeling across correlated parameters.</p>
       </div>
       <div class="card">
-        <h3>Structured Records</h3>
-        <p>Preserves contextual outputs for review and governance documentation.</p>
+        <h3>Structured Evidence Outputs</h3>
+        <p>Preserves analytical state for review and governance documentation.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="evidence">
+<section id="validation">
   <div class="container">
     <div class="section-label">Empirical Validation</div>
     <div class="section-title">Multivariate Drift Detection — Benchmark Results</div>
 
     <div class="section-body">
-      Analytical validation was conducted using the NASA C-MAPSS degradation benchmark dataset
-      across FD001–FD004 subsets. Methodology included 30-cycle baseline modeling,
-      Mahalanobis multivariate drift computation, 7-cycle smoothing,
-      2-hit admission logic, and a 4σ threshold.
-      This represents benchmark validation and does not reflect live water infrastructure deployment.
+      Validation conducted using NASA C-MAPSS FD001–FD004 subsets.
+      Methodology: 30-cycle baseline, Mahalanobis drift, 7-cycle smoothing,
+      2-hit admission logic, 4σ threshold.
+      Benchmark environment only.
     </div>
 
     <div class="stats">
-
       <div class="stat">
         <div class="stat-label">Engines Evaluated</div>
         <div class="stat-value">707 (FD001–FD004)</div>
       </div>
-
       <div class="stat">
         <div class="stat-label">Detection Coverage</div>
         <div class="stat-value">96.9%</div>
       </div>
-
       <div class="stat">
         <div class="stat-label">Median Lead Time</div>
         <div class="stat-value">183 Cycles</div>
       </div>
-
       <div class="stat">
-        <div class="stat-label">Baseline-Window Admissions</div>
+        <div class="stat-label">Baseline Admissions</div>
         <div class="stat-value">0</div>
       </div>
-
     </div>
 
     <div style="margin-top:40px;color:var(--muted);max-width:640px;">
-      Stress-tested under baseline variation and telemetry degradation
-      within the benchmark environment.
+      Stress-tested under baseline variation and telemetry degradation.
     </div>
 
   </div>
