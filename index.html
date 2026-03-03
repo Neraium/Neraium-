@@ -9,9 +9,9 @@
 
 <style>
 :root{
-  --bg:#03060d;
+  --bg:#02050b;
   --text:#f2f6ff;
-  --sub:rgba(242,246,255,0.95);
+  --sub:rgba(242,246,255,0.92);
   --border:rgba(255,255,255,0.08);
   --accent:#00b4ff;
   --nav-h:72px;
@@ -38,7 +38,7 @@ nav{
   left:0;
   right:0;
   height:var(--nav-h);
-  background:rgba(3,6,13,0.55);
+  background:rgba(2,5,11,0.55);
   backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
   z-index:100;
@@ -77,35 +77,35 @@ nav{
 
 .hero{
   position:relative;
-  min-height:100vh;
+  min-height:120vh;
   display:flex;
   align-items:center;
-  padding:calc(var(--nav-h) + 80px) 0 120px;
+  padding-top:calc(var(--nav-h) + 100px);
+  padding-bottom:160px;
   overflow:hidden;
 }
 
-/* Background image */
 .hero-bg{
   position:absolute;
   inset:0;
   background-image:url("hero.png");
-  background-size:cover;
-  background-position:center center;
+  background-size:110% auto; /* zoomed out slightly */
+  background-position:center top;
   background-repeat:no-repeat;
-  filter:brightness(1.05) contrast(1.08);
+  filter:brightness(1.08) contrast(1.05);
   z-index:0;
 }
 
-/* Subtle cinematic vertical fade */
+/* Softer vertical fade */
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
   background:linear-gradient(
     to bottom,
-    rgba(3,6,13,0.25) 0%,
-    rgba(3,6,13,0.45) 60%,
-    rgba(3,6,13,0.75) 100%
+    rgba(2,5,11,0.15) 0%,
+    rgba(2,5,11,0.35) 55%,
+    rgba(2,5,11,0.65) 100%
   );
   z-index:1;
 }
@@ -118,28 +118,27 @@ nav{
   padding:0 var(--pad);
 }
 
-/* Strong text clarity */
 .hero h1{
   font-size:clamp(56px,8vw,110px);
   font-weight:800;
   letter-spacing:-2px;
-  margin-bottom:14px;
-  text-shadow:0 4px 30px rgba(0,0,0,0.6);
+  margin-bottom:16px;
+  text-shadow:0 4px 28px rgba(0,0,0,0.5);
 }
 
 .hero h2{
   font-size:clamp(20px,2.5vw,30px);
   font-weight:500;
-  margin-bottom:28px;
+  margin-bottom:30px;
   color:var(--sub);
-  text-shadow:0 2px 20px rgba(0,0,0,0.6);
+  text-shadow:0 2px 18px rgba(0,0,0,0.5);
 }
 
 .hero p{
   font-size:clamp(16px,1.3vw,18px);
   line-height:1.7;
   color:var(--sub);
-  text-shadow:0 2px 18px rgba(0,0,0,0.6);
+  text-shadow:0 2px 14px rgba(0,0,0,0.5);
 }
 
 /* SECTION */
@@ -177,6 +176,10 @@ footer{
 @media(max-width:768px){
   .hero-inner{
     margin-left:0;
+  }
+
+  .hero-bg{
+    background-size:130% auto;
   }
 }
 </style>
