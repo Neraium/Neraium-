@@ -127,15 +127,46 @@ nav{
 }
 
 /* Subtle depth gradient */
+.hero{
+  position:relative;
+  min-height:90vh;
+  display:flex;
+  align-items:center;
+  padding-top:calc(var(--nav-h) + 40px);
+  overflow:hidden;
+}
+
+.hero-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+
+/* Image layer */
+.hero-bg:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url("hero.png");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  opacity:0.9;
+  filter:brightness(1.1) contrast(1.03);
+  z-index:1;
+}
+
+/* Subtle depth gradient */
 .hero-bg:before{
   content:"";
   position:absolute;
   inset:0;
   background:linear-gradient(
     to bottom,
-    rgba(6,16,32,0.18) 0%,
-    rgba(6,16,32,0.35) 45%,
-    rgba(2,6,12,0.92) 100%
+    rgba(6,14,28,0.25) 0%,
+    rgba(6,14,28,0.45) 50%,
+    rgba(2,6,12,0.9) 100%
   );
   z-index:2;
 }
@@ -146,18 +177,24 @@ nav{
 }
 
 .hero h1{
-  font-size:clamp(46px,6vw,78px);
-  letter-spacing:-1px;
-  max-width:800px;
+  font-size:clamp(64px,8vw,110px);
+  letter-spacing:-2px;
+  font-weight:700;
+}
+
+.hero h2{
+  margin-top:12px;
+  font-size:clamp(20px,2.5vw,30px);
+  font-weight:400;
+  color:rgba(242,246,255,0.85);
 }
 
 .hero p{
-  margin-top:26px;
-  max-width:720px;
+  margin-top:28px;
+  max-width:760px;
   font-size:18px;
-  color:var(--sub);
+  color:rgba(242,246,255,0.82);
 }
-
 /* SECTION */
 
 section{
@@ -217,7 +254,8 @@ section{
 <header class="hero">
   <div class="hero-bg"></div>
   <div class="container hero-inner">
-    <h1>Systemic Infrastructure Intelligence</h1>
+    <h1>NERAIUM</h1>
+    <h2>Systemic Infrastructure Intelligence</h2>
     <p>
       Neraium monitors existing telemetry to identify sustained structural deviation before failure.
       No control commands. No automation. No system modification.
@@ -225,7 +263,6 @@ section{
     </p>
   </div>
 </header>
-
 <section>
   <div class="container">
     <div class="grid">
