@@ -259,6 +259,7 @@ nav{
   z-index:0;
   background-color:#02040a;
 }
+
 .hero-bg:before{
   content:"";
   position:absolute;
@@ -266,12 +267,13 @@ nav{
   background:
     linear-gradient(
       180deg,
-      rgba(55,110,255,0.60) 0%,
-      rgba(20,45,95,0.82) 45%,
-      rgba(5,11,22,0.96) 100%
+      rgba(25,70,190,0.75) 0%,
+      rgba(12,32,78,0.88) 45%,
+      rgba(4,8,18,0.98) 100%
     );
   z-index:2;
 }
+
 .hero-bg:after{
   content:"";
   position:absolute;
@@ -280,8 +282,8 @@ nav{
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
-  opacity:0.62;
-  filter:saturate(0.95) contrast(1.02);
+  opacity:0.78;
+  filter:brightness(1.08) contrast(1.05);
   z-index:1;
   transform:scale(1.02);
 }
@@ -851,7 +853,6 @@ footer a:hover{color:rgba(0,180,255,0.95)}
       <a class="btn btn-secondary" href="#contact">Contact</a>
     </div>
 
-    <div class="hero-metrics" aria-label="Validation metrics">
       <div class="metric">
         <div class="k">Benchmark Scope</div>
         <div class="v">707</div>
@@ -1053,6 +1054,47 @@ footer a:hover{color:rgba(0,180,255,0.95)}
   </div>
 </section>
 
+<section id="validation">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Validation</div>
+      <div>
+        <div class="h2">Prototype performance metrics</div>
+        <div class="lead">
+          
+          Demonstrated on NASA C-MAPSS degradation trajectories.
+          These metrics represent benchmark results and do not constitute field validation in water infrastructure.
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <small>Dataset Scope</small>
+        <h3>707 Engines</h3>
+        <p>FD001 through FD004 degradation trajectories.</p>
+      </div>
+
+      <div class="card">
+        <small>Detection Coverage</small>
+        <h3>96.9 Percent</h3>
+        <p>Deviation admitted prior to terminal failure.</p>
+      </div>
+
+      <div class="card">
+        <small>Median Lead Time</small>
+        <h3>183 Cycles</h3>
+        <p>Between admission and failure point.</p>
+      </div>
+
+      <div class="card">
+        <small>Baseline Integrity</small>
+        <h3>Zero Admissions</h3>
+        <p>No false admissions during baseline stability window.</p>
+      </div>
+    </div>
+  </div>
+</section>
 <section id="deployment">
   <div class="container">
     <div class="section-head">
