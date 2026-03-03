@@ -12,6 +12,7 @@
 :root{
   --text:#f2f6ff;
   --sub:rgba(242,246,255,0.82);
+  --muted:rgba(242,246,255,0.55);
   --accent:#00b4ff;
   --mono:'IBM Plex Mono', monospace;
   --sans:'Inter', sans-serif;
@@ -76,7 +77,7 @@ nav{
 
 .nav-links{
   display:flex;
-  gap:26px;
+  gap:28px;
   list-style:none;
 }
 
@@ -97,10 +98,10 @@ nav{
 
 .hero{
   position:relative;
-  min-height:120vh;
+  min-height:105vh;
   display:flex;
   align-items:center;
-  padding-top:calc(var(--nav-h) + 60px);
+  padding-top:calc(var(--nav-h) + 40px);
   overflow:hidden;
 }
 
@@ -110,7 +111,7 @@ nav{
   z-index:0;
 }
 
-/* Image layer */
+/* Tighter image */
 .hero-bg:after{
   content:"";
   position:absolute;
@@ -121,11 +122,11 @@ nav{
   background-repeat:no-repeat;
   background-attachment:fixed;
   opacity:1;
-  filter:brightness(1.25) contrast(1.06);
+  filter:brightness(1.25) contrast(1.05);
   z-index:1;
 }
 
-/* Subtle blue to black gradient */
+/* Subtle depth gradient */
 .hero-bg:before{
   content:"";
   position:absolute;
@@ -133,8 +134,8 @@ nav{
   background:linear-gradient(
     to bottom,
     rgba(6,16,32,0.18) 0%,
-    rgba(6,16,32,0.40) 50%,
-    rgba(2,6,12,0.90) 100%
+    rgba(6,16,32,0.35) 45%,
+    rgba(2,6,12,0.92) 100%
   );
   z-index:2;
 }
@@ -145,28 +146,22 @@ nav{
 }
 
 .hero h1{
-  font-size:clamp(64px,7vw,100px);
-  letter-spacing:-2px;
-}
-
-.hero h2{
-  margin-top:14px;
-  font-size:clamp(20px,2.5vw,30px);
-  font-weight:400;
-  color:var(--sub);
+  font-size:clamp(46px,6vw,78px);
+  letter-spacing:-1px;
+  max-width:800px;
 }
 
 .hero p{
   margin-top:26px;
-  max-width:760px;
+  max-width:720px;
   font-size:18px;
   color:var(--sub);
 }
 
-/* SECTION BELOW */
+/* SECTION */
 
 section{
-  padding:100px 0;
+  padding:90px 0;
   border-top:1px solid rgba(255,255,255,0.06);
 }
 
@@ -198,7 +193,7 @@ section{
 @media(max-width:900px){
   .grid{grid-template-columns:1fr}
   .nav-links{display:none}
-  .hero{min-height:100vh}
+  .hero{min-height:90vh}
   .hero-bg:after{background-attachment:scroll}
 }
 </style>
@@ -222,12 +217,11 @@ section{
 <header class="hero">
   <div class="hero-bg"></div>
   <div class="container hero-inner">
-    <h1>NERAIUM</h1>
-    <h2>Systemic Infrastructure Intelligence</h2>
+    <h1>Systemic Infrastructure Intelligence</h1>
     <p>
-      Neraium monitors your existing telemetry to identify sustained structural deviation before failure.
+      Neraium monitors existing telemetry to identify sustained structural deviation before failure.
       No control commands. No automation. No system modification.
-      Operator authority remains fully preserved.
+      Operational authority remains fully preserved.
     </p>
   </div>
 </header>
