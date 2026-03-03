@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium | Early Infrastructure Deviation Detection</title>
+<title>Neraium | Systemic Infrastructure Intelligence</title>
 <meta name="description" content="Read-only infrastructure intelligence that detects sustained structural deviation using existing telemetry. No control commands. No system modification. Operator authority preserved.">
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg-0:#03060c;
-  --bg-1:#06111f;
+  --bg-0:#02050b;
+  --bg-1:#05101d;
   --panel:#0b1a2f;
   --text:#f2f6ff;
   --sub:rgba(242,246,255,0.78);
@@ -78,7 +78,7 @@ nav{
 }
 .nav-links{
   display:flex;
-  gap:20px;
+  gap:22px;
   list-style:none;
 }
 .nav-links a{
@@ -90,22 +90,11 @@ nav{
   text-decoration:none;
 }
 .nav-links a:hover{color:var(--accent)}
-.nav-cta{
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  background:var(--accent);
-  color:#000;
-  padding:8px 14px;
-  border-radius:6px;
-  text-decoration:none;
-}
 
 /* HERO */
 .hero{
   position:relative;
-  min-height:100vh;
+  min-height:120vh;
   display:flex;
   align-items:center;
   padding-top:calc(var(--nav-h) + 60px);
@@ -123,9 +112,9 @@ nav{
   inset:0;
   background:linear-gradient(
     180deg,
-    rgba(6,18,36,0.55) 0%,
-    rgba(4,12,24,0.78) 55%,
-    rgba(2,6,12,0.96) 100%
+    rgba(6,18,36,0.45) 0%,
+    rgba(4,12,24,0.70) 50%,
+    rgba(2,6,12,0.95) 100%
   );
   z-index:2;
 }
@@ -133,15 +122,16 @@ nav{
 .hero-bg:after{
   content:"";
   position:absolute;
-  inset:0;
+  inset:-10%;
   background-image:url("hero.png");
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
-  opacity:0.86;
-  filter:brightness(1.12) contrast(1.06);
+  background-attachment:fixed;
+  opacity:0.95;
+  filter:brightness(1.25) contrast(1.08);
   z-index:1;
-  transform:scale(1.02);
+  transform:scale(1.1);
 }
 
 .hero-inner{
@@ -150,23 +140,26 @@ nav{
 }
 
 .hero h1{
-  font-size:clamp(44px,6vw,76px);
-  line-height:1.05;
-  letter-spacing:-1px;
+  font-size:clamp(54px,7vw,92px);
+  letter-spacing:-2px;
+}
+
+.hero h2{
+  margin-top:10px;
+  font-size:clamp(18px,2.5vw,28px);
+  font-weight:400;
+  color:var(--sub);
 }
 
 .hero p{
-  margin-top:20px;
+  margin-top:22px;
   max-width:720px;
   font-size:18px;
   color:var(--sub);
 }
 
 .hero-actions{
-  margin-top:32px;
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
+  margin-top:34px;
 }
 
 .btn{
@@ -174,19 +167,11 @@ nav{
   font-size:12px;
   letter-spacing:2px;
   text-transform:uppercase;
-  padding:12px 20px;
+  padding:14px 24px;
   border-radius:6px;
   text-decoration:none;
-}
-
-.btn-primary{
   background:var(--accent);
   color:#000;
-}
-
-.btn-secondary{
-  border:1px solid var(--accent);
-  color:var(--accent);
 }
 
 /* GRID */
@@ -214,19 +199,12 @@ nav{
   color:var(--sub);
 }
 
-/* FOOTER */
-footer{
-  padding:70px 0;
-  border-top:1px solid rgba(255,255,255,0.08);
-  color:var(--muted);
-  font-size:14px;
-}
-
 /* RESPONSIVE */
 @media(max-width:900px){
   .grid{grid-template-columns:1fr}
   .nav-links{display:none}
-  .hero-actions{flex-direction:column}
+  .hero{min-height:100vh}
+  .hero-bg:after{background-attachment:scroll}
 }
 </style>
 </head>
@@ -240,39 +218,37 @@ footer{
       <span class="brand-text">NERAIUM</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#how">How It Works</a></li>
-      <li><a href="technical.html">Technical</a></li>
+      <li><a href="technical.html">Technical Overview</a></li>
     </ul>
-    <a class="nav-cta" href="technical.html">Technical</a>
   </div>
 </nav>
 
 <header class="hero">
   <div class="hero-bg"></div>
   <div class="container hero-inner">
-    <h1>Early Detection Without Operational Disruption</h1>
+    <h1>NERAIUM</h1>
+    <h2>Systemic Infrastructure Intelligence</h2>
     <p>
       Neraium monitors your existing telemetry to identify sustained structural deviation before failure.
       No control commands. No automation. No system modification.
-      You remain in full authority.
+      Operator authority remains fully preserved.
     </p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="technical.html">Technical Overview</a>
+      <a class="btn" href="technical.html">Technical Overview</a>
     </div>
   </div>
 </header>
 
-<section id="how">
+<section>
   <div class="container">
-    <h2>How It Works</h2>
     <div class="grid">
       <div class="card">
         <h3>Connect to Existing Telemetry</h3>
-        <p>Integrates with current BAS, SCADA, and historian systems. No additional hardware required.</p>
+        <p>Integrates with BAS, SCADA, and historian systems without hardware changes.</p>
       </div>
       <div class="card">
         <h3>Detect Sustained Deviation</h3>
-        <p>Correlates multiple signals to identify structural drift, not just threshold alarms.</p>
+        <p>Identifies structural drift across multiple signals, not just threshold alarms.</p>
       </div>
       <div class="card">
         <h3>Surface Structured Insight</h3>
@@ -281,12 +257,6 @@ footer{
     </div>
   </div>
 </section>
-
-<footer>
-  <div class="container">
-    © 2026 Neraium. Read-only. Non actuating. Operator authority preserved.
-  </div>
-</footer>
 
 </body>
 </html>
