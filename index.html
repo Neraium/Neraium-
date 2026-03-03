@@ -56,7 +56,8 @@ body::before {
 /* Scan line */
 .scan-line {
   position: fixed;
-  left: 0; right: 0;
+  left: 0;
+  right: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(0,212,240,0.2) 50%, transparent 100%);
   animation: scanDown 10s linear infinite;
@@ -79,14 +80,18 @@ body::before {
   filter: blur(100px);
 }
 .orb-1 {
-  width: 700px; height: 700px;
+  width: 700px;
+  height: 700px;
   background: radial-gradient(circle, rgba(0,212,240,0.05) 0%, transparent 70%);
-  top: -200px; left: -200px;
+  top: -200px;
+  left: -200px;
 }
 .orb-2 {
-  width: 500px; height: 500px;
+  width: 500px;
+  height: 500px;
   background: radial-gradient(circle, rgba(0,60,200,0.04) 0%, transparent 70%);
-  bottom: 10%; right: -100px;
+  bottom: 10%;
+  right: -100px;
 }
 
 .container {
@@ -98,10 +103,12 @@ body::before {
   z-index: 2;
 }
 
-/* ===== NAVIGATION ===== */
+/* Navigation */
 nav {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   background: rgba(5,7,9,0.88);
   backdrop-filter: blur(24px);
@@ -162,7 +169,7 @@ nav {
   box-shadow: 0 0 20px rgba(0,212,240,0.4);
 }
 
-/* ===== HERO ===== */
+/* Hero */
 .hero-section {
   min-height: 100vh;
   display: flex;
@@ -216,7 +223,10 @@ h1.hero-title {
   margin-bottom: 28px;
 }
 
-h1.hero-title .accent { color: var(--accent); text-shadow: 0 0 40px rgba(0,212,240,0.25); }
+h1.hero-title .accent {
+  color: var(--accent);
+  text-shadow: 0 0 40px rgba(0,212,240,0.25);
+}
 
 .hero-body {
   font-family: var(--font-sans);
@@ -301,7 +311,8 @@ h1.hero-title .accent { color: var(--accent); text-shadow: 0 0 40px rgba(0,212,2
 }
 
 .dot {
-  width: 5px; height: 5px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--green);
   box-shadow: 0 0 8px var(--green);
@@ -328,7 +339,7 @@ h1.hero-title .accent { color: var(--accent); text-shadow: 0 0 40px rgba(0,212,2
   border: 1px solid var(--border);
 }
 
-/* ===== LIVE OPS PANEL ===== */
+/* Live ops panel */
 .ops-panel {
   padding: 0 0 80px;
   position: relative;
@@ -362,14 +373,25 @@ h1.hero-title .accent { color: var(--accent); text-shadow: 0 0 40px rgba(0,212,2
 }
 
 .live-dot {
-  width: 5px; height: 5px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--green);
   animation: blink 1.4s ease-in-out infinite;
 }
 
-.ops-node-id { font-size: 9px; letter-spacing: 1.2px; color: var(--text-tertiary); }
-.ops-clock { font-size: 9px; letter-spacing: 1px; color: var(--text-tertiary); font-family: var(--font-mono); }
+.ops-node-id {
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  color: var(--text-tertiary);
+}
+
+.ops-clock {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
 
 .ops-channels {
   display: grid;
@@ -418,7 +440,11 @@ h1.hero-title .accent { color: var(--accent); text-shadow: 0 0 40px rgba(0,212,2
 .ch-status.ok { color: var(--green); }
 .ch-status.watch { color: var(--amber); }
 
-.ch-bar { height: 2px; background: var(--bg-3); overflow: hidden; }
+.ch-bar {
+  height: 2px;
+  background: var(--bg-3);
+  overflow: hidden;
+}
 
 .ch-bar-fill {
   height: 100%;
@@ -426,7 +452,7 @@ h1.hero-title .accent { color: var(--accent); text-shadow: 0 0 40px rgba(0,212,2
   transition: width 1s ease;
 }
 
-.ch-bar-fill.ok   { background: linear-gradient(90deg, #005533, var(--green)); }
+.ch-bar-fill.ok { background: linear-gradient(90deg, #005533, var(--green)); }
 .ch-bar-fill.watch { background: linear-gradient(90deg, #7a4400, var(--amber)); }
 
 .ops-log {
@@ -448,7 +474,10 @@ h1.hero-title .accent { color: var(--accent); text-shadow: 0 0 40px rgba(0,212,2
   color: var(--text-tertiary);
 }
 
-.log-ts { color: var(--accent); font-weight: 600; }
+.log-ts {
+  color: var(--accent);
+  font-weight: 600;
+}
 
 .log-tag {
   font-size: 7px;
@@ -458,11 +487,11 @@ h1.hero-title .accent { color: var(--accent); text-shadow: 0 0 40px rgba(0,212,2
   font-weight: 700;
 }
 
-.log-tag.ok     { background: var(--green-bg); color: var(--green); }
+.log-tag.ok { background: var(--green-bg); color: var(--green); }
 .log-tag.detect { background: rgba(0,212,240,0.08); color: var(--accent); }
-.log-tag.watch  { background: rgba(245,166,35,0.1); color: var(--amber); }
+.log-tag.watch { background: rgba(245,166,35,0.1); color: var(--amber); }
 
-/* ===== SECTION BASE ===== */
+/* Section base */
 section {
   padding: 120px 0;
   border-top: 1px solid var(--border);
@@ -478,9 +507,27 @@ section {
   align-items: start;
 }
 
-.sec-tag { display: flex; flex-direction: column; gap: 6px; padding-top: 6px; }
-.sec-num  { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
-.sec-cat  { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-tertiary); }
+.sec-tag {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 6px;
+}
+
+.sec-num {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.sec-cat {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
 
 h2.sec-title {
   font-family: var(--font-sans);
@@ -501,7 +548,7 @@ h2.sec-title {
   max-width: 540px;
 }
 
-/* ===== 01 PLATFORM — CAPS GRID ===== */
+/* 01 Platform */
 .cap-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -519,11 +566,31 @@ h2.sec-title {
 
 .cap-item:hover { background: var(--bg-2); }
 
-.cap-num  { font-size: 9px; letter-spacing: 2px; color: var(--accent); font-weight: 700; margin-bottom: 18px; }
-.cap-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-primary); margin-bottom: 10px; }
-.cap-text  { font-family: var(--font-sans); font-size: 12px; color: var(--text-secondary); line-height: 1.72; }
+.cap-num {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 18px;
+}
 
-/* ===== 02 ARCHITECTURE ===== */
+.cap-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.cap-text {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.72;
+}
+
+/* 02 Architecture */
 .arch-flow {
   display: grid;
   grid-template-columns: 1fr 48px 1fr 48px 1fr;
@@ -546,9 +613,30 @@ h2.sec-title {
   box-shadow: 0 0 28px rgba(0,212,240,0.08);
 }
 
-.arch-tag   { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
-.arch-title { font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-primary); margin-bottom: 10px; }
-.arch-text  { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.65; }
+.arch-tag {
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.arch-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.arch-text {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
 
 .arch-arrow {
   display: flex;
@@ -559,8 +647,11 @@ h2.sec-title {
   opacity: 0.5;
 }
 
-/* ===== 03 DETECTION DOMAINS ===== */
-.domain-table { border: 1px solid var(--border); overflow: hidden; }
+/* 03 Detection */
+.domain-table {
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
 
 .domain-thead {
   display: grid;
@@ -589,9 +680,39 @@ h2.sec-title {
 .domain-row:last-child { border-bottom: none; }
 .domain-row:hover { background: rgba(0,212,240,0.03); }
 
-.d-idx  { padding: 18px; font-size: 9px; letter-spacing: 1px; color: var(--accent); font-weight: 600; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
-.d-name { padding: 18px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-primary); border-right: 1px solid var(--border); display: flex; align-items: center; }
-.d-sigs { padding: 16px 18px; border-right: 1px solid var(--border); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+.d-idx {
+  padding: 18px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-name {
+  padding: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+}
+
+.d-sigs {
+  padding: 16px 18px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
 
 .sig-tag {
   font-size: 8px;
@@ -604,13 +725,32 @@ h2.sec-title {
   font-weight: 600;
 }
 
-.d-cov   { padding: 18px; display: flex; align-items: center; }
-.cov-bar { width: 100%; }
-.cov-pct { font-size: 9px; font-weight: 700; color: var(--accent); margin-bottom: 5px; }
-.cov-track { height: 2px; background: var(--bg-3); }
-.cov-fill  { height: 100%; background: var(--accent); }
+.d-cov {
+  padding: 18px;
+  display: flex;
+  align-items: center;
+}
 
-/* ===== 04 VALIDATION ===== */
+.cov-bar { width: 100%; }
+
+.cov-pct {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+
+.cov-track {
+  height: 2px;
+  background: var(--bg-3);
+}
+
+.cov-fill {
+  height: 100%;
+  background: var(--accent);
+}
+
+/* 04 Validation */
 .metrics-top {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -627,7 +767,14 @@ h2.sec-title {
 }
 .m-block:hover { background: var(--bg-2); }
 
-.m-label { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-tertiary); font-weight: 700; margin-bottom: 12px; }
+.m-label {
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
 
 .m-value {
   font-size: 56px;
@@ -638,8 +785,18 @@ h2.sec-title {
   margin-bottom: 14px;
 }
 
-.m-unit { font-size: 28px; font-weight: 400; letter-spacing: 0; }
-.m-ctx  { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
+.m-unit {
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.m-ctx {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
 
 .metrics-detail {
   background: var(--bg-1);
@@ -670,10 +827,20 @@ h2.sec-title {
 }
 .d-row:last-child { border-bottom: none; }
 
-.d-key { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); }
-.d-val { font-size: 11px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.3px; }
+.d-key {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
 
-/* ===== 05 DEPLOYMENT ===== */
+.d-val {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+/* 05 Deployment */
 .deploy-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -707,11 +874,31 @@ h2.sec-title {
 }
 .dp-step:last-child { border-bottom: none; }
 
-.dp-n  { font-size: 9px; color: var(--accent); font-weight: 700; min-width: 20px; padding-top: 2px; }
-.dp-tl { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-primary); margin-bottom: 4px; }
-.dp-tx { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
+.dp-n {
+  font-size: 9px;
+  color: var(--accent);
+  font-weight: 700;
+  min-width: 20px;
+  padding-top: 2px;
+}
 
-/* ===== FOOTER ===== */
+.dp-tl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.dp-tx {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Footer */
 footer {
   padding: 80px 0 56px;
   border-top: 1px solid var(--border);
@@ -727,27 +914,183 @@ footer {
   align-items: start;
 }
 
-.ft-brand { font-size: 20px; font-weight: 700; letter-spacing: 4px; color: var(--accent); text-shadow: 0 0 24px rgba(0,212,240,0.3); margin-bottom: 14px; }
-.ft-desc  { font-family: var(--font-sans); font-size: 11px; color: var(--text-tertiary); line-height: 1.75; max-width: 280px; font-weight: 300; }
-.ft-col-h { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-tertiary); font-weight: 700; margin-bottom: 18px; }
-.ft-links { list-style: none; display: flex; flex-direction: column; gap: 11px; }
-.ft-links a { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+.ft-brand {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-shadow: 0 0 24px rgba(0,212,240,0.3);
+  margin-bottom: 14px;
+}
+
+.ft-desc {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  line-height: 1.75;
+  max-width: 280px;
+  font-weight: 300;
+}
+
+.ft-col-h {
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.ft-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.ft-links a {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
 .ft-links a:hover { color: var(--accent); }
+
+/* Contact */
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.contact-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-line {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.contact-line span {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+
+.contact-line a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-line a:hover { color: var(--accent); }
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 700;
+}
+
+.form-input,
+.form-textarea {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 18px rgba(0,212,240,0.15);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contact-submit {
+  align-self: flex-start;
+  padding: 12px 32px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: var(--accent);
+  color: var(--bg-0);
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: var(--font-mono);
+}
+
+.contact-submit:hover {
+  background: var(--accent-bright);
+  box-shadow: 0 0 28px rgba(0,212,240,0.4);
+}
 
 .footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 20px;
+  margin-top: 40px;
   border-top: 1px solid var(--border);
 }
 
-.ft-copy  { font-size: 9px; letter-spacing: 0.5px; color: var(--text-tertiary); }
-.ft-legal { display: flex; gap: 20px; }
-.ft-legal a { font-size: 9px; color: var(--text-tertiary); text-decoration: none; transition: color 0.2s; }
+.ft-copy {
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: var(--text-tertiary);
+}
+
+.ft-legal {
+  display: flex;
+  gap: 20px;
+}
+
+.ft-legal a {
+  font-size: 9px;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
 .ft-legal a:hover { color: var(--accent); }
 
-/* ===== RESPONSIVE ===== */
+/* Responsive */
 @media (max-width: 1200px) {
   .container { padding: 0 40px; }
   h1.hero-title { font-size: 54px; }
@@ -768,8 +1111,9 @@ footer {
   .domain-thead { display: none; }
   .domain-row { grid-template-columns: 40px 1fr; }
   .d-sigs { display: none; }
-  .d-cov  { display: none; }
+  .d-cov { display: none; }
   .nav-links { display: none; }
+  .contact-wrap { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
@@ -783,6 +1127,7 @@ footer {
   .m-value { font-size: 44px; }
   .hero-actions { flex-direction: column; gap: 10px; }
   .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 14px; }
 }
 </style>
 </head>
@@ -793,7 +1138,6 @@ footer {
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
-<!-- NAVIGATION -->
 <nav id="nav">
   <div class="container">
     <div class="nav-inner">
@@ -810,7 +1154,6 @@ footer {
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero-section">
   <canvas class="hero-canvas" id="heroCanvas"></canvas>
   <div class="container">
@@ -822,7 +1165,7 @@ footer {
       </h1>
       <p class="hero-body">
         Neraium is the operational intelligence layer water infrastructure has never had.
-        Continuous structural deviation detection across multi-signal telemetry streams —
+        Continuous structural deviation detection across multi-signal telemetry streams,
         delivering actionable foresight to operators before failure becomes consequence.
       </p>
       <div class="hero-actions">
@@ -839,7 +1182,6 @@ footer {
   </div>
 </div>
 
-<!-- LIVE OPS PANEL -->
 <div class="ops-panel">
   <div class="container">
     <div class="ops-panel-inner">
@@ -882,29 +1224,28 @@ footer {
         <div class="log-item">
           <span class="log-ts" id="log-ts1">06:14:22</span>
           <span class="log-tag ok">Nominal</span>
-          <span>Pressure baseline recalibrated — Line A Zone 3</span>
+          <span>Pressure baseline recalibrated | Line A Zone 3</span>
         </div>
         <div class="log-item">
           <span class="log-ts">06:09:47</span>
           <span class="log-tag detect">Detection</span>
-          <span>Thermal drift +1.2°F over 4hr window — return loop</span>
+          <span>Thermal drift +1.2°F over 4hr window | return loop</span>
         </div>
         <div class="log-item">
           <span class="log-ts">05:51:03</span>
           <span class="log-tag ok">Nominal</span>
-          <span>Flow demand reconciliation complete — all zones</span>
+          <span>Flow demand reconciliation complete | all zones</span>
         </div>
         <div class="log-item">
           <span class="log-ts">05:33:11</span>
           <span class="log-tag watch">Watch</span>
-          <span>Sustained pressure variance above threshold — secondary loop</span>
+          <span>Sustained pressure variance above threshold | secondary loop</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 01 / PLATFORM -->
 <section id="platform">
   <div class="container">
     <div class="section-header">
@@ -914,7 +1255,7 @@ footer {
       </div>
       <div>
         <h2 class="sec-title">The Read-Only Intelligence Layer</h2>
-        <p class="sec-body">Neraium is not a sensor platform. It is not a SCADA upgrade. It is the intelligence layer operating above existing water infrastructure — ingesting telemetry, identifying structural deviation trajectories, and delivering operational foresight to licensed personnel before failure becomes consequence.</p>
+        <p class="sec-body">Neraium is not a sensor platform. It is not a SCADA upgrade. It is the intelligence layer operating above existing water infrastructure, ingesting telemetry, identifying structural deviation trajectories, and delivering operational foresight to licensed personnel before failure becomes consequence.</p>
       </div>
     </div>
     <div class="cap-grid">
@@ -926,7 +1267,7 @@ footer {
       <div class="cap-item">
         <div class="cap-num">CAP-002</div>
         <div class="cap-title">Operator Authority</div>
-        <div class="cap-text">All response decisions remain with licensed operators and building management systems. Neraium provides intelligence — never actuation. Fully compliant with utility, safety, and insurance regulations.</div>
+        <div class="cap-text">All response decisions remain with licensed operators and building management systems. Neraium provides intelligence, never actuation. Fully compliant with utility, safety, and insurance regulations.</div>
       </div>
       <div class="cap-item">
         <div class="cap-num">CAP-003</div>
@@ -952,7 +1293,6 @@ footer {
   </div>
 </section>
 
-<!-- 02 / ARCHITECTURE -->
 <section id="architecture">
   <div class="container">
     <div class="section-header">
@@ -962,7 +1302,7 @@ footer {
       </div>
       <div>
         <h2 class="sec-title">Three-Layer Intelligence Stack</h2>
-        <p class="sec-body">Neraium's architecture separates raw data ingestion, analytical processing, and operational alerting into discrete, independently redundant layers — ensuring clean separation between raw telemetry and actionable intelligence at every stage of the pipeline.</p>
+        <p class="sec-body">Neraium's architecture separates raw data ingestion, analytical processing, and operational alerting into discrete, independently redundant layers, ensuring clean separation between raw telemetry and actionable intelligence at every stage of the pipeline.</p>
       </div>
     </div>
     <div class="arch-flow">
@@ -981,13 +1321,12 @@ footer {
       <div class="arch-node">
         <div class="arch-tag">Layer 03</div>
         <div class="arch-title">Alert</div>
-        <div class="arch-text">Prioritized intelligence delivery to operations teams and integrated CMMS platforms. Contextual deviation reports with mean 183-hour lead time — structured for immediate operator action.</div>
+        <div class="arch-text">Prioritized intelligence delivery to operations teams and integrated CMMS platforms. Contextual deviation reports with mean 183-hour lead time, structured for immediate operator action.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 03 / DETECTION -->
 <section id="detection">
   <div class="container">
     <div class="section-header">
@@ -997,7 +1336,7 @@ footer {
       </div>
       <div>
         <h2 class="sec-title">Water Infrastructure Signal Domains</h2>
-        <p class="sec-body">Degradation never initiates in isolation. Neraium monitors correlated drift across every relevant sensing domain — identifying combined signal signatures that precede structural failure long before any single-parameter threshold is crossed.</p>
+        <p class="sec-body">Degradation never initiates in isolation. Neraium monitors correlated drift across every relevant sensing domain, identifying combined signal signatures that precede structural failure long before any single-parameter threshold is crossed.</p>
       </div>
     </div>
     <div class="domain-table">
@@ -1066,7 +1405,6 @@ footer {
   </div>
 </section>
 
-<!-- 04 / VALIDATION -->
 <section id="validation">
   <div class="container">
     <div class="section-header">
@@ -1093,7 +1431,7 @@ footer {
       <div class="m-block">
         <div class="m-label">Trajectories Analyzed</div>
         <div class="m-value"><span id="c-traj">0</span></div>
-        <div class="m-ctx">Infrastructure degradation events across pressure, flow, thermal, chemical, and structural domains from 2021–2025.</div>
+        <div class="m-ctx">Infrastructure degradation events across pressure, flow, thermal, chemical, and structural domains from 2021 to 2025.</div>
       </div>
     </div>
     <div class="metrics-detail">
@@ -1108,7 +1446,6 @@ footer {
   </div>
 </section>
 
-<!-- 05 / DEPLOYMENT -->
 <section id="deployment">
   <div class="container">
     <div class="section-header">
@@ -1153,180 +1490,3 @@ footer {
               <div class="dp-tx">Intelligence layer goes live. Operations team briefed on alert triage protocol. Ongoing model refinement and support included in all deployment tiers.</div>
             </div>
           </li>
-        </ul>
-      </div>
-      <div class="deploy-panel">
-        <div class="dp-title">Platform Compatibility</div>
-        <ul class="dp-steps">
-          <li class="dp-step">
-            <div class="dp-n">◆</div>
-            <div>
-              <div class="dp-tl">SCADA Systems</div>
-              <div class="dp-tx">Full integration with Ignition, FactoryTalk, WonderWare, and open-standard SCADA platforms. Read-only data access preserves operational system integrity.</div>
-            </div>
-          </li>
-          <li class="dp-step">
-            <div class="dp-n">◆</div>
-            <div>
-              <div class="dp-tl">Building Automation</div>
-              <div class="dp-tx">BACnet IP/MS-TP, LonWorks, KNX, and proprietary BAS platforms. Certified integration profiles for Johnson Controls, Siemens, and Honeywell environments.</div>
-            </div>
-          </li>
-          <li class="dp-step">
-            <div class="dp-n">◆</div>
-            <div>
-              <div class="dp-tl">IoT Sensor Networks</div>
-              <div class="dp-tx">MQTT, LoRaWAN, Zigbee, and cellular-connected arrays. Edge processing available for bandwidth-constrained or air-gapped deployment environments.</div>
-            </div>
-          </li>
-          <li class="dp-step">
-            <div class="dp-n">◆</div>
-            <div>
-              <div class="dp-tl">Facility Types</div>
-              <div class="dp-tx">Commercial towers, campuses, municipal distribution, industrial facilities, hospitality, and data center cooling systems. Air-gapped deployment available for high-security environments.</div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer id="contact">
-  <div class="container">
-    <div class="footer-top">
-      <div>
-        <div class="ft-brand">NERAIUM</div>
-        <div class="ft-desc">The intelligence standard for water infrastructure. Read-only operational intelligence delivering structural deviation detection before failure becomes consequence.</div>
-      </div>
-      <div>
-        <div class="ft-col-h">Platform</div>
-        <ul class="ft-links">
-          <li><a href="#platform">Capabilities</a></li>
-          <li><a href="#architecture">Architecture</a></li>
-          <li><a href="#detection">Detection Domains</a></li>
-          <li><a href="#validation">Validation Data</a></li>
-          <li><a href="#deployment">Deployment</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="ft-col-h">Engage</div>
-        <ul class="ft-links">
-          <li><a href="#">Schedule Briefing</a></li>
-          <li><a href="#">Technical Documentation</a></li>
-          <li><a href="#">Partnership Inquiries</a></li>
-          <li><a href="#">Pilot Program</a></li>
-          <li><a href="#">Investor Relations</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="ft-copy">© 2026 NERAIUM. All rights reserved. Infrastructure Intelligence Platform.</div>
-      <div class="ft-legal">
-        <a href="#">Privacy</a>
-        <a href="#">Security</a>
-        <a href="#">Terms</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script>
-// === Clock ===
-function tick() {
-  const t = new Date().toUTCString().match(/(\d{2}:\d{2}:\d{2})/);
-  if (t) document.getElementById('opsClock').textContent = t[1] + ' UTC';
-}
-tick(); setInterval(tick, 1000);
-
-// === Live Channel Simulation ===
-function jitter(base, range, dec) {
-  return (base + (Math.random() - 0.5) * range).toFixed(dec);
-}
-function updateChannels() {
-  document.getElementById('ch-psi').textContent  = jitter(72.4, 2.4, 1);
-  document.getElementById('ch-gpm').textContent  = jitter(148.2, 8.0, 1);
-  document.getElementById('ch-temp').textContent = jitter(61.8, 1.4, 1);
-  const dev = (Math.random() * 0.09).toFixed(3);
-  document.getElementById('ch-dev').textContent = dev;
-  document.getElementById('bar-dev').style.width = Math.min(dev * 600, 100) + '%';
-  const now = new Date();
-  document.getElementById('log-ts1').textContent = now.toTimeString().slice(0, 8);
-}
-setInterval(updateChannels, 3200);
-
-// === Metric Counters ===
-function counter(id, target, ms, dec) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const t0 = performance.now();
-  function frame(now) {
-    const p = Math.min((now - t0) / ms, 1);
-    const e = 1 - Math.pow(1 - p, 3);
-    el.textContent = (target * e).toFixed(dec);
-    if (p < 1) requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-}
-
-const valSec = document.getElementById('validation');
-let ran = false;
-new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting && !ran) {
-    ran = true;
-    counter('c-detect', 96.9, 1800, 1);
-    counter('c-lead',   183,  2000, 0);
-    counter('c-traj',   707,  2200, 0);
-  }
-}, { threshold: 0.25 }).observe(valSec);
-
-// === Hero Canvas Waveforms ===
-const canvas = document.getElementById('heroCanvas');
-const ctx = canvas.getContext('2d');
-
-function resize() {
-  canvas.width  = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-}
-resize();
-window.addEventListener('resize', resize);
-
-const waves = Array.from({ length: 8 }, (_, i) => ({
-  yRatio:    0.15 + (i / 7) * 0.7,
-  phase:     Math.random() * Math.PI * 2,
-  speed:     0.0025 + Math.random() * 0.003,
-  amp:       6 + Math.random() * 22,
-  freq:      0.006 + Math.random() * 0.007,
-  alpha:     0.04 + Math.random() * 0.1,
-}));
-
-let f = 0;
-function drawFrame() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  f++;
-  waves.forEach(w => {
-    ctx.beginPath();
-    ctx.strokeStyle = `rgba(0,212,240,${w.alpha})`;
-    ctx.lineWidth = 1;
-    for (let x = 0; x <= canvas.width; x += 2) {
-      const y = canvas.height * w.yRatio
-        + Math.sin(x * w.freq + f * w.speed + w.phase) * w.amp
-        + Math.sin(x * w.freq * 2.1 + f * w.speed * 0.6 + w.phase * 1.4) * w.amp * 0.35;
-      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-  });
-  requestAnimationFrame(drawFrame);
-}
-drawFrame();
-
-// === Nav opacity on scroll ===
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').style.background =
-    window.scrollY > 60 ? 'rgba(5,7,9,0.96)' : 'rgba(5,7,9,0.88)';
-});
-</script>
-
-</body>
-</html>
