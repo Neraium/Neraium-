@@ -1,391 +1,895 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium | Systemic Infrastructure Intelligence</title>
-<meta name="description" content="Read-only systemic intelligence for water infrastructure. Continuous detection of sustained structural deviation before failure.">
-
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-
+<title>Neraium – Systemic Infrastructure Intelligence</title>
+<meta name="description" content="Neraium delivers systemic infrastructure intelligence for investors and operators. Learn how we analyze multi-signal telemetry to detect deviation trajectories, ensuring trustworthy insights and clear accountability.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+/* Root variables for colors, fonts, sizes */
 :root {
-  --bg-0: #050a15;
-  --bg-1: #0a0f1f;
-  --bg-2: #0f152d;
-  --text-0: #f0f6ff;
-  --text-1: rgba(240,246,255,0.85);
-  --text-2: rgba(240,246,255,0.55);
-  --text-3: rgba(240,246,255,0.32);
-  --water-primary: #00b8ff;
-  --water-secondary: #00d4ff;
-  --water-accent: #0099ff;
-  --accent-dim: rgba(0,184,255,0.15);
-  --border: rgba(0,184,255,0.25);
-  --border-strong: rgba(0,184,255,0.4);
-  --max: 1320px;
-  --serif: 'Merriweather', serif;
-  --mono: 'IBM Plex Mono', monospace;
+  --blue-dark: #091a33;
+  --blue-mid: #132d50;
+  --blue-light: #274d82;
+  --text-primary: #f2f5fb;
+  --text-secondary: #90a3c0;
+  --text-muted: #5a7394;
+  --accent: #00b4ff;
+  --accent-light: #3fc2ff;
+  --accent-hover: #56d1ff;
+  --border: rgba(255,255,255,0.08);
+  --border-light: rgba(255,255,255,0.15);
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
+/* Reset and base styles */
 *,
 *::before,
 *::after {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
-html { scroll-behavior:smooth; }
-
 body {
-  font-family:var(--serif);
-  background:linear-gradient(135deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%);
-  color:var(--text-0);
-  line-height:1.65;
-  overflow-x:hidden;
-  position:relative;
-  -webkit-font-smoothing:antialiased;
+  font-family: var(--font-sans);
+  background-color: var(--blue-dark);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
-
-body::before {
-  content:'';
-  position:fixed;
-  inset:0;
-  background-image:
-    radial-gradient(circle at 15% 30%, rgba(0,184,255,0.12) 0%, transparent 35%),
-    radial-gradient(circle at 85% 70%, rgba(0,184,255,0.08) 0%, transparent 45%);
-  pointer-events:none;
-  z-index:0;
-}
-
-body::after {
-  content:'';
-  position:fixed;
-  inset:0;
-  background-image:
-    linear-gradient(0deg, rgba(0,184,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,184,255,0.04) 1px, transparent 1px);
-  background-size:70px 70px;
-  pointer-events:none;
-  z-index:0;
-}
-
+/* Utility classes */
 .container {
-  width:100%;
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 60px;
-  position:relative;
-  z-index:2;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+section {
+  padding: 120px 0;
+  border-top: 1px solid var(--border);
+}
+h1, h2, h3 {
+  font-weight: 700;
+}
+h1 {
+  font-size: 3.5rem;
+  letter-spacing: -1px;
+}
+h2 {
+  font-size: 2.2rem;
+}
+h3 {
+  font-size: 1.3rem;
 }
 
-/* HERO BRAND */
-
-.hero-brand {
-  padding:180px 0 140px;
-  border-bottom:1px solid var(--border);
-  text-align:center;
-  position:relative;
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(9, 26, 51, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0 48px;
+}
+.nav-brand {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  letter-spacing: 4px;
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 700;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav-links a:hover {
+  color: var(--accent);
+}
+.nav-cta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 1px solid var(--border-light);
+  padding: 10px 20px;
+  border-radius: 3px;
+  color: var(--accent);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover {
+  background: var(--accent);
+  color: var(--blue-dark);
+  box-shadow: 0 0 10px var(--accent-light);
 }
 
-.hero-brand::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:radial-gradient(ellipse 900px 700px at 50% 50%, rgba(0,184,255,0.15) 0%, transparent 60%);
-  pointer-events:none;
-}
-
-.brand-name {
-  font-size:clamp(100px,16vw,180px);
-  font-weight:900;
-  line-height:0.95;
-  background:linear-gradient(135deg,var(--water-primary),var(--water-secondary));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 50px rgba(0,184,255,0.7));
-  margin-bottom:32px;
-}
-
-.brand-subtitle {
-  font-size:clamp(14px,1.8vw,20px);
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color:var(--text-2);
-}
-
-/* HERO */
-
+/* Hero Section */
 .hero {
-  min-height:80vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:100px 0;
-  text-align:center;
-  position:relative;
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(0, 34, 90, 0.65) 0%,
+      rgba(9, 26, 51, 0.85) 45%,
+      rgba(9, 26, 51, 1) 100%
+    ),
+    url("hero.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: 0;
+}
+.hero .container {
+  position: relative;
+  z-index: 2;
+  text-align: left;
+}
+.hero h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin-bottom: 20px;
+}
+.hero h2 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+.hero p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin-bottom: 40px;
+}
+.hero .actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.btn-primary, .btn-secondary {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 12px 34px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.2s, border 0.2s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--blue-dark);
+  border: 1px solid var(--accent);
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
-.hero-title {
-  font-size:clamp(44px,8vw,72px);
-  font-weight:800;
-  margin-bottom:32px;
+/* Panel (grid style for research facts, capabilities, deployment) */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+.grid-3 > div {
+  background: var(--blue-mid);
+  padding: 40px 32px;
+  transition: background 0.3s;
+}
+.grid-3 > div:hover {
+  background: var(--blue-light);
+}
+.grid-3 small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.grid-3 h3 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+.grid-3 p {
+  font-size: 1rem;
+  color: var(--text-secondary);
 }
 
-.hero-title span {
-  background:linear-gradient(135deg,var(--water-primary),var(--water-secondary));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+/* System model arrows */
+.arch-flow {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr 60px 1fr;
+  align-items: stretch;
+}
+.arch-node {
+  background: var(--blue-mid);
+  border: 1px solid var(--border);
+  padding: 40px 32px;
+  transition: background 0.3s;
+}
+.arch-node:hover {
+  background: var(--blue-light);
+}
+.arch-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+.arch-title {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+.arch-text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.arch-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--accent);
+  opacity: 0.5;
 }
 
-.hero-subtitle {
-  font-size:clamp(16px,2vw,20px);
-  color:var(--text-1);
-  margin-bottom:56px;
-  max-width:800px;
-  margin-left:auto;
-  margin-right:auto;
+/* Evidence list style */
+.evidence-wrap {
+  border: 1px solid var(--border);
+  background: var(--blue-mid);
+}
+.evidence-row {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.evidence-row:last-child {
+  border-bottom: none;
+}
+.evidence-key {
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--accent);
+  border-right: 1px solid var(--border);
+  text-transform: uppercase;
+}
+.evidence-value {
+  padding: 24px;
+  font-size: 1rem;
+  color: var(--text-secondary);
 }
 
-/* BUTTONS */
-
-.cta {
-  padding:16px 48px;
-  border:2px solid var(--water-primary);
-  color:var(--water-primary);
-  text-decoration:none;
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  transition:0.3s;
-  display:inline-block;
-  margin:0 10px;
+/* Positioning table */
+.position-wrap {
+  border: 1px solid var(--border);
+  background: var(--blue-mid);
+}
+.position-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.position-row:last-child {
+  border-bottom: none;
+}
+.position-cell {
+  padding: 20px 24px;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border);
+}
+.position-cell:last-child {
+  border-right: none;
+}
+.position-header {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.position-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.position-correct {
+  color: #00e57e;
+  font-weight: 600;
+}
+.position-avoid {
+  color: #e06767;
+  opacity: 0.8;
 }
 
-.cta:hover {
-  background:var(--water-primary);
-  color:var(--bg-0);
-  box-shadow:0 0 50px rgba(0,184,255,0.5);
+/* Contact styles */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.contact-left h2 {
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+}
+.contact-left p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+.contact-info {
+  border: 1px solid var(--border);
+  background: var(--blue-mid);
+}
+.contact-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.contact-row:last-child {
+  border-bottom: none;
+}
+.contact-key {
+  padding: 16px 20px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  border-right: 1px solid var(--border);
+}
+.contact-value {
+  padding: 16px 20px;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+.contact-value a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-value a:hover {
+  color: var(--accent-hover);
 }
 
-/* SPEC SECTIONS */
-
-.spec-row {
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:90px;
-  padding:140px 0;
-  border-bottom:1px solid var(--border);
+/* Contact form */
+.form-wrap {
+  border: 1px solid var(--border);
+  background: var(--blue-mid);
+}
+.form-header {
+  background: rgba(0,34,90,0.2);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+form.contact-form {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+input, select, textarea {
+  background: var(--blue-dark);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-primary);
+  outline: none;
+  border-radius: 2px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 6px rgba(0,180,255,0.15);
+}
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.form-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.form-submit {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: var(--accent);
+  color: var(--blue-dark);
+  border: 1px solid var(--accent);
+  padding: 12px 32px;
+  transition: background 0.3s;
+}
+.form-submit:hover {
+  background: var(--accent-hover);
 }
 
-.spec-label .section-index {
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  color:var(--water-primary);
-  margin-bottom:20px;
+/* Footer */
+footer {
+  padding: 64px 0 48px;
+  border-top: 1px solid var(--border);
+  background: var(--blue-mid);
 }
-
-.spec-label h2 {
-  font-size:40px;
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 60px;
+  margin-bottom: 40px;
 }
-
-.spec-body p {
-  font-size:16px;
-  line-height:1.9;
-  color:var(--text-1);
-  margin-bottom:36px;
+.footer-column h3 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
 }
-
-/* SIGNAL GRID */
-
-.signal-grid {
-  border:1px solid var(--border-strong);
-  background:rgba(0,184,255,0.05);
-  margin-top:64px;
+.footer-column p, .footer-column a {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-decoration: none;
 }
-
-.signal-row {
-  display:grid;
-  grid-template-columns:100px 1fr 1.6fr;
-  border-bottom:1px solid var(--border);
+.footer-column a:hover {
+  color: var(--accent);
 }
-
-.signal-row:last-child { border-bottom:none; }
-
-.signal-index {
-  text-align:center;
-  padding:26px;
-  font-family:var(--mono);
-  color:var(--water-primary);
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
-
-.signal-name {
-  padding:26px;
-  font-family:var(--mono);
-  text-transform:uppercase;
+.footer-bottom span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
-
-.signal-desc {
-  padding:26px;
-  font-family:var(--mono);
-  font-size:11px;
-  color:var(--text-2);
-  text-align:right;
+.footer-bottom nav a {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-left: 20px;
 }
-
-/* METRICS */
-
-.metrics {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  margin-top:64px;
-  border:1px solid var(--border-strong);
-  background:rgba(0,184,255,0.05);
+.footer-bottom nav a:hover {
+  color: var(--accent);
 }
-
-.metric {
-  text-align:center;
-  padding:64px;
-  border-right:1px solid var(--border);
-}
-
-.metric:last-child { border-right:none; }
-
-.metric strong {
-  display:block;
-  font-size:56px;
-  background:linear-gradient(135deg,var(--water-primary),var(--water-secondary));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:18px;
-}
-
-.metric span {
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  color:var(--text-2);
-}
-
-/* FOOTER */
-
-.site-footer {
-  padding:88px 0;
-  border-top:1px solid var(--border);
-  text-align:center;
-}
-
-.site-footer p {
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  color:var(--text-3);
+/* Responsive adjustments */
+@media (max-width: 950px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+  .nav-links {
+    display: none; /* collapse nav on small screens */
+  }
 }
 </style>
 </head>
-
 <body>
 
-<section class="hero-brand">
-  <div class="container">
-    <h1 class="brand-name">Neraium</h1>
-    <p class="brand-subtitle">Systemic Infrastructure Intelligence for Water Systems</p>
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">NERAIUM</a>
+    <ul class="nav-links">
+      <li><a href="#platform">Platform</a></li>
+      <li><a href="#model">System Model</a></li>
+      <li><a href="#evidence">Evidence</a></li>
+      <li><a href="#deployment">Deployment</a></li>
+      <li><a href="#positioning">Positioning</a></li>
+      <li><a href="technical.html">Technical</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Contact</a>
   </div>
-</section>
+</nav>
 
-<section class="hero">
+<!-- Hero -->
+<div class="hero">
   <div class="container">
-    <h2 class="hero-title"><span>Detect</span> Sustained Structural Deviation</h2>
-    <p class="hero-subtitle">
-      Continuous multi-signal deviation detection across live water telemetry before failure.
-      Read-only. No control. Operator authority preserved.
+    <h1>Systemic Infrastructure Intelligence</h1>
+    <h2>A read‑only intelligence layer for critical physical infrastructure</h2>
+    <p>We ingest your existing telemetry, analyze multi-domain deviations, and deliver evidence‑grade insights—empowering investors and operators to act with clarity, foresight, and accountability.</p>
+    <div class="actions">
+      <a href="#platform" class="btn-primary">Learn More</a>
+      <a href="#contact" class="btn-secondary">Contact</a>
+    </div>
+  </div>
+</div>
+
+<!-- Research / Evidence panel -->
+<section id="research">
+  <div class="container">
+    <h2>Current Evidence Basis</h2>
+    <p style="color: var(--text-secondary); max-width:700px;">
+      Our current demonstration uses NASA's publicly available C‑MAPSS turbofan engine dataset—a canonical benchmark for degradation trajectory analysis. This dataset helps us test multi‑signal correlation logic and lead‑time estimation; however, it is not a substitute for field validation on water or building infrastructure.
     </p>
-    <a href="#contact" class="cta">Start Discussion →</a>
-    <a href="technical.html" class="cta">Technical Overview ↗</a>
-  </div>
-</section>
-
-<section class="spec">
-<div class="container">
-
-<div class="spec-row">
-  <div class="spec-label">
-    <span class="section-index">01</span>
-    <h2>Operational Boundary</h2>
-  </div>
-  <div class="spec-body">
-    <p>Neraium is a <strong>read-only infrastructure intelligence layer</strong>. It does not actuate, control, modify, or override systems.</p>
-    <p>All operational authority remains with licensed operators.</p>
-  </div>
-</div>
-
-<div class="spec-row">
-  <div class="spec-label">
-    <span class="section-index">02</span>
-    <h2>System Parameters</h2>
-  </div>
-  <div class="spec-body">
-    <p>Infrastructure degradation begins with correlated drift across pressure, flow, vibration, thermal, and chemical domains.</p>
-
-    <div class="signal-grid">
-      <div class="signal-row">
-        <div class="signal-index">01</div>
-        <div class="signal-name">Pressure Deviation</div>
-        <div class="signal-desc">line loss . surge behavior</div>
+    <div class="grid-3">
+      <div>
+        <small>Dataset</small>
+        <h3>NASA C‑MAPSS</h3>
+        <p>Run‑to‑failure simulations of turbofan engines used to test prognostics models. Suitable for evaluating multi‑signal deviation detection and algorithm development.</p>
       </div>
-      <div class="signal-row">
-        <div class="signal-index">02</div>
-        <div class="signal-name">Flow Irregularity</div>
-        <div class="signal-desc">leak signature . blockage onset</div>
+      <div>
+        <small>Scope</small>
+        <h3>Analytical Prototype</h3>
+        <p>Demonstrates telemetry ingestion, sustained drift detection, and baseline comparisons. Evidence basis is a proof of direction, not a production validation.</p>
       </div>
-      <div class="signal-row">
-        <div class="signal-index">03</div>
-        <div class="signal-name">Pump Degradation</div>
-        <div class="signal-desc">vibration drift . efficiency decay</div>
+      <div>
+        <small>Limitations</small>
+        <h3>Field Validation</h3>
+        <p>Current evidence does not reflect live water or building systems. The next step is to validate on domain‑specific telemetry from municipal, commercial, and industrial sites.</p>
       </div>
     </div>
   </div>
-</div>
-
-<div class="spec-row">
-  <div class="spec-label">
-    <span class="section-index">03</span>
-    <h2>Empirical Validation</h2>
-  </div>
-  <div class="spec-body">
-    <p>Validated across 707 degradation trajectories using NASA CMAPSS telemetry.</p>
-
-    <div class="metrics">
-      <div class="metric">
-        <strong>96.9%</strong>
-        <span>Detection Rate</span>
-      </div>
-      <div class="metric">
-        <strong>183</strong>
-        <span>Mean Lead Time</span>
-      </div>
-      <div class="metric">
-        <strong>100+ hrs</strong>
-        <span>Warning Window</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
 </section>
 
-<footer class="site-footer">
+<!-- Platform Section -->
+<section id="platform">
   <div class="container">
-    <p>© 2026 Neraium. All Rights Reserved.</p>
+    <h2>What Neraium Provides</h2>
+    <p style="color: var(--text-secondary); max-width: 700px;">
+      Neraium delivers systemic infrastructure intelligence for investors and operators seeking long‑term resilience and transparency. Our read‑only platform ingests existing signals, correlates multi-domain deviations, and generates evidence‑grade records for evaluation and investment analysis.
+    </p>
+    <div class="grid-3">
+      <div>
+        <small>CAP-01</small>
+        <h3>Read‑Only Ingestion</h3>
+        <p>Connect to existing telemetry streams—no new sensors or control links required. All data remains within the protected perimeter.</p>
+      </div>
+      <div>
+        <small>CAP-02</small>
+        <h3>Multi‑Signal Analysis</h3>
+        <p>Correlate pressure, flow, thermal, chemical, and structural signals to detect emergent degradation patterns invisible to single‑sensor monitoring.</p>
+      </div>
+      <div>
+        <small>CAP-03</small>
+        <h3>Evidence Discipline</h3>
+        <p>Preserve an immutable record of inputs, analytical states, and reviewed outputs—ensuring accountability for investment decisions and operational responses.</p>
+      </div>
+      <div>
+        <small>CAP-04</small>
+        <h3>Operator Authority</h3>
+        <p>Neraium never issues control commands. Licensed operators and investors retain full decision‑making authority while benefiting from clear insights.</p>
+      </div>
+      <div>
+        <small>CAP-05</small>
+        <h3>Investor Insights</h3>
+        <p>Identify long‑term structural risks and maintenance opportunities to inform capital planning, infrastructure acquisition, and strategic partnerships.</p>
+      </div>
+      <div>
+        <small>CAP-06</small>
+        <h3>Future Validation</h3>
+        <p>We are actively engaging infrastructure partners to validate algorithms in live environments—closing the loop between theory and field performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- System Model -->
+<section id="model">
+  <div class="container">
+    <h2>System Model</h2>
+    <p style="color: var(--text-secondary); max-width: 700px;">
+      Neraium is designed as a three‑layer pipeline, keeping ingestion, analysis, and review strictly separate for security and accountability. This model ensures clarity for investors and operators alike.
+    </p>
+    <div class="arch-flow">
+      <div class="arch-node">
+        <div class="arch-tag">Layer 01</div>
+        <div class="arch-title">Ingest</div>
+        <div class="arch-text">Normalize and time‑align your existing telemetry, preserving raw data lineage for auditors and investors.</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node">
+        <div class="arch-tag">Layer 02</div>
+        <div class="arch-title">Analyze</div>
+        <div class="arch-text">Run multi‑signal logic to detect persistent deviation, baseline drift, and composite scoring across all monitored domains.</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node">
+        <div class="arch-tag">Layer 03</div>
+        <div class="arch-title">Review</div>
+        <div class="arch-text">Deliver structured insights and permanent records for investors and operators to review. No autonomous control—human authority remains intact.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Evidence Section -->
+<section id="evidence">
+  <div class="container">
+    <h2>Evidence and Claims</h2>
+    <p style="color: var(--text-secondary); max-width: 700px;">
+      Our current claims are framed strictly by the evidence available. We avoid overstatement; investors and operators rely on what has been demonstrated, not speculation.
+    </p>
+    <div class="evidence-wrap">
+      <div class="evidence-row">
+        <div class="evidence-key">Dataset</div>
+        <div class="evidence-value">NASA C‑MAPSS, a public turbofan engine dataset for run‑to‑failure analysis.</div>
+      </div>
+      <div class="evidence-row">
+        <div class="evidence-key">Supported</div>
+        <div class="evidence-value">Validation of multi-signal deviation detection algorithms and baseline logic in a simulated environment.</div>
+      </div>
+      <div class="evidence-row">
+        <div class="evidence-key">Not Supported</div>
+        <div class="evidence-value">Demonstrated performance in water infrastructure, building systems, or real operational workflows.</div>
+      </div>
+      <div class="evidence-row">
+        <div class="evidence-key">Investor Note</div>
+        <div class="evidence-value">Current results provide a preview of analytical direction; they are not final proof of field readiness. Investment and pilot engagement will accelerate live validation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Deployment Section -->
+<section id="deployment">
+  <div class="container">
+    <h2>Planned Deployment</h2>
+    <p style="color: var(--text-secondary); max-width: 700px;">
+      Our deployment model maintains system boundaries and read‑only integrity, making it compatible with existing infrastructure while ensuring investor confidence.
+    </p>
+    <div class="grid-3">
+      <div>
+        <small>PLAN-01</small>
+        <h3>Integrate Existing Telemetry</h3>
+        <p>We connect to building automation, SCADA systems, and IoT sensors—no proprietary hardware or system modifications required.</p>
+      </div>
+      <div>
+        <small>PLAN-02</small>
+        <h3>Preserve Autonomy</h3>
+        <p>Observation and evidence generation only. Operators remain in control; investors see clear, auditable insights without interfering in operations.</p>
+      </div>
+      <div>
+        <small>PLAN-03</small>
+        <h3>Validate in Real Environments</h3>
+        <p>We partner with commercial, municipal, and industrial facilities to validate algorithms on domain‑specific data, delivering actionable results and investor transparency.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Positioning Section -->
+<section id="positioning">
+  <div class="container">
+    <h2>Positioning & Messaging</h2>
+    <p style="color: var(--text-secondary); max-width: 700px;">
+      Clear, honest framing strengthens investor trust and aligns operator expectations. Below is how we describe Neraium—and what to avoid.
+    </p>
+    <div class="position-wrap">
+      <div class="position-row position-header">
+        <div class="position-cell position-header"></div>
+        <div class="position-cell position-header">Correct</div>
+        <div class="position-cell position-header">Avoid</div>
+      </div>
+      <div class="position-row">
+        <div class="position-cell position-label">Role</div>
+        <div class="position-cell position-correct">Read‑only intelligence for investors & operators</div>
+        <div class="position-cell position-avoid">Autonomous control system</div>
+      </div>
+      <div class="position-row">
+        <div class="position-cell position-label">Evidence</div>
+        <div class="position-cell position-correct">Prototype validated on benchmark data</div>
+        <div class="position-cell position-avoid">Proven leak detection in water systems</div>
+      </div>
+      <div class="position-row">
+        <div class="position-cell position-label">Records</div>
+        <div class="position-cell position-correct">Evidence‑grade records for investment and audit</div>
+        <div class="position-cell position-avoid">Automated compliance reporting</div>
+      </div>
+      <div class="position-row">
+        <div class="position-cell position-label">Authority</div>
+        <div class="position-cell position-correct">Operators retain full authority</div>
+        <div class="position-cell position-avoid">Automated intervention & remediation</div>
+      </div>
+      <div class="position-row">
+        <div class="position-cell position-label">Stage</div>
+        <div class="position-cell position-correct">Algorithm demonstration & pilot engagement</div>
+        <div class="position-cell position-avoid">Full production deployment</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <h2>Get in Touch</h2>
+        <p>We welcome investor questions, pilot inquiries, and partnership opportunities. Contact us directly and we'll respond promptly.</p>
+        <div class="contact-info">
+          <div class="contact-row">
+            <div class="contact-key">Name</div>
+            <div class="contact-value">Craig Curtis</div>
+          </div>
+          <div class="contact-row">
+            <div the="contact-key">Role</div>
+            <div class="contact-value">Founder &amp; CEO</div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-key">Email</div>
+            <div class="contact-value"><a href="mailto:craig@neraium.com">craig@neraium.com</a></div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-key">Phone</div>
+            <div class="contact-value"><a href="tel:+16028337441">+1&nbsp;602&nbsp;833&nbsp;7441</a></div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-key">LinkedIn</div>
+            <div class="contact-value"><a href="https://linkedin.com/company/neraium" target="_blank">linkedin.com/company/neraium</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-wrap">
+        <div class="form-header">Submit an Inquiry</div>
+        <form class="contact-form" action="https://formspree.io/f/xzdalpzy" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input id="name" name="name" type="text" required>
+            </div>
+            <div class="form-group">
+              <label for="organization">Organization</label>
+              <input id="organization" name="organization" type="text">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input id="email" name="email" type="email" required>
+            </div>
+            <div class="form-group">
+              <label for="role">Role/Title</label>
+              <input id="role" name="role" type="text">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inquiry_type">Inquiry Type</label>
+            <select id="inquiry_type" name="inquiry_type">
+              <option value="" disabled selected>Select purpose</option>
+              <option value="investor">Investor Information</option>
+              <option value="pilot">Pilot Program</option>
+              <option value="partnership">Partnership</option>
+              <option value="general">General Inquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <div class="form-footer">
+            <div class="form-note">Fields marked * are required. We respond within 24 hours.</div>
+            <button type="submit" class="form-submit">Send Inquiry</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-column">
+        <h3>Neraium</h3>
+        <p>Read-only systemic intelligence for investors and operators seeking long-term infrastructure resilience.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Sections</h3>
+        <a href="#platform">Platform</a><br>
+        <a href="#model">System Model</a><br>
+        <a href="#evidence">Evidence</a><br>
+        <a href="#deployment">Deployment</a><br>
+        <a href="#positioning">Positioning</a>
+      </div>
+      <div class="footer-column">
+        <h3>Resources</h3>
+        <a href="technical.html">Technical Overview</a><br>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <a href="mailto:craig@neraium.com">craig@neraium.com</a><br>
+        <a href="https://linkedin.com/company/neraium" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Neraium. All rights reserved.</span>
+      <nav>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="technical.html">Technical</a>
+      </nav>
+    </div>
   </div>
 </footer>
-
 </body>
 </html>
