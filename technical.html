@@ -3,229 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium | Technical Specification</title>
-<meta name="description" content="System boundary, analytical methodology, and benchmark validation for Neraium infrastructure intelligence.">
+<title>NERAIUM | Technical Specification</title>
+<meta name="description" content="Technical methodology and empirical validation for multivariate drift detection.">
 
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg-0:#050b16;
-  --bg-1:#0b1424;
-  --surface:#111c2e;
-  --border:rgba(255,255,255,0.06);
-  --text:#f2f6ff;
-  --muted:#8ea0c2;
-  --accent:#4a8cff;
+  --bg-0:#04070c;
+  --bg-1:#070d18;
+  --bg-2:#0d1424;
+  --bg-3:#0a101c;
+  --text:#eaf1ff;
+  --text-muted:rgba(234,241,255,0.65);
+  --accent:#00c8e8;
+  --border:rgba(0,200,232,0.12);
   --mono:'IBM Plex Mono', monospace;
-  --sans:'Inter', sans-serif;
+  --container:1200px;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-
-html{
-  scroll-behavior:smooth;
-}
-
 body{
-  font-family:var(--sans);
+  font-family:var(--mono);
   background:var(--bg-0);
   color:var(--text);
-  line-height:1.7;
-  overflow-x:hidden;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
-
+a{text-decoration:none;color:inherit}
 .container{
-  max-width:1100px;
+  width:100%;
+  max-width:var(--container);
   margin:0 auto;
   padding:0 40px;
 }
 
 /* NAV */
-
 nav{
   position:fixed;
   top:0;
   left:0;
   right:0;
-  background:rgba(5,11,22,0.96);
+  background:rgba(4,7,12,0.92);
+  backdrop-filter:blur(10px);
   border-bottom:1px solid var(--border);
   z-index:100;
 }
-
 .nav-inner{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  height:74px;
+  height:70px;
 }
-
 .brand{
-  font-family:var(--mono);
-  font-size:14px;
+  font-weight:600;
   letter-spacing:3px;
-  color:var(--accent);
-  text-decoration:none;
+  font-size:14px;
 }
-
 .nav-links{
   list-style:none;
   display:flex;
   gap:32px;
 }
-
 .nav-links a{
-  font-family:var(--mono);
-  font-size:11px;
+  font-size:12px;
   letter-spacing:2px;
   text-transform:uppercase;
-  color:var(--muted);
-  text-decoration:none;
+  color:var(--text-muted);
+  transition:color 0.2s ease;
 }
+.nav-links a:hover{color:var(--text)}
 
-.nav-links a:hover{
-  color:var(--text);
+/* HERO */
+.hero{
+  padding:220px 0 140px;
+  background:linear-gradient(to bottom,#070d18,#04070c);
 }
-
-/* HEADER */
-
-header{
-  padding:220px 0 160px;
-  border-bottom:1px solid var(--border);
+.hero h1{
+  font-size:72px;
+  letter-spacing:-2px;
 }
-
-.header-label{
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:18px;
-}
-
-header h1{
-  font-size:42px;
-  font-weight:700;
-  margin-bottom:28px;
-}
-
-header p{
-  max-width:720px;
-  font-size:18px;
-  color:var(--muted);
+.hero p{
+  margin-top:20px;
+  max-width:750px;
+  color:var(--text-muted);
 }
 
 /* SECTIONS */
-
 section{
-  padding:140px 0;
-  border-bottom:1px solid var(--border);
+  padding:110px 0;
+  border-top:1px solid var(--border);
+}
+section:nth-child(even){
+  background:var(--bg-1);
 }
 
-.section-number{
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:18px;
-}
-
-.section-title{
-  font-size:34px;
-  font-weight:700;
-  margin-bottom:20px;
-}
-
-.section-body{
-  max-width:720px;
-  color:var(--muted);
-  margin-bottom:60px;
-  font-size:16px;
+h2{
+  font-size:28px;
+  margin-bottom:25px;
 }
 
 /* GRID */
-
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:1px;
-  background:var(--border);
+  grid-template-columns:repeat(2,1fr);
+  gap:60px;
+  margin-top:40px;
+}
+.card{
+  padding:40px;
   border:1px solid var(--border);
+  background:rgba(0,0,0,0.35);
 }
-
-.block{
-  background:var(--surface);
-  padding:48px;
+.card h3{
+  font-size:15px;
+  margin-bottom:15px;
 }
-
-.block h3{
-  font-size:20px;
-  margin-bottom:14px;
-}
-
-.block p{
-  font-size:16px;
-  color:var(--muted);
-}
-
-/* STATS */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  margin-bottom:60px;
-}
-
-.stat{
-  background:var(--surface);
-  padding:44px;
-}
-
-.stat-label{
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:14px;
-}
-
-.stat-value{
-  font-size:30px;
-  font-weight:700;
+.card p{
+  color:var(--text-muted);
 }
 
 /* IMAGE */
-
-.evidence-image{
-  border:1px solid var(--border);
-  background:var(--surface);
-  padding:30px;
-  margin-bottom:60px;
+.image-block{
+  margin-top:60px;
+  text-align:center;
 }
-
-.evidence-image img{
+.image-block img{
   width:100%;
-  display:block;
+  max-width:1000px;
+  border:1px solid var(--border);
+}
+.image-caption{
+  margin-top:15px;
+  font-size:12px;
+  color:var(--text-muted);
 }
 
-/* FOOTER */
-
-footer{
-  padding:100px 0;
+/* SYSTEM BOUNDARY */
+.boundary-wrapper{
+  margin-top:50px;
+  border:1px solid var(--border);
+}
+.boundary-layer{
+  padding:50px;
+}
+.boundary-layer h3{
+  font-size:13px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:25px;
+}
+.boundary-item{
+  font-size:18px;
+  margin-bottom:18px;
+  color:var(--text-muted);
+}
+.boundary-divider{
+  padding:18px;
   text-align:center;
   border-top:1px solid var(--border);
-  color:var(--muted);
+  border-bottom:1px solid var(--border);
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent);
+  background:var(--bg-3);
+}
+
+/* CONTACT */
+.contact{
+  padding:80px 0;
+  text-align:center;
+  border-top:1px solid var(--border);
+  color:var(--text-muted);
 }
 
 /* MOBILE */
-
 @media(max-width:900px){
-  header h1{font-size:32px}
+  .hero h1{font-size:40px}
   .grid{grid-template-columns:1fr}
 }
 </style>
@@ -238,110 +194,103 @@ footer{
     <a href="index.html" class="brand">NERAIUM</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="#boundary">Boundary</a></li>
-      <li><a href="#methodology">Methodology</a></li>
-      <li><a href="#validation">Validation</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
     </ul>
   </div>
 </nav>
 
-<header>
+<section class="hero">
   <div class="container">
-    <div class="header-label">Technical Specification</div>
-    <h1>System Boundary and Analytical Framework</h1>
+    <h1>Technical Specification</h1>
     <p>
-      Neraium functions as a read only infrastructure intelligence layer.
-      It ingests telemetry, performs multivariate deviation modeling,
-      and generates structured analytical outputs.
-      The platform does not execute control actions or modify operational systems.
+      Statistical methodology and empirical validation for multivariate structural deviation detection.
     </p>
   </div>
-</header>
+</section>
 
-<section id="boundary">
+<section>
   <div class="container">
-    <div class="section-number">01 System Boundary</div>
-    <div class="section-title">Operational Scope</div>
-    <div class="section-body">
-      The platform evaluates telemetry without issuing commands.
-      Authority remains fully with existing operational control systems.
-    </div>
+    <h2>Methodology</h2>
 
     <div class="grid">
-      <div class="block">
-        <h3>Read Only Telemetry</h3>
-        <p>Signals are received passively and processed analytically.</p>
+      <div class="card">
+        <h3>Baseline Construction</h3>
+        <p>
+          30 cycle baseline window. Mean vector and covariance matrix computed per engine.
+          Covariance stability validated prior to drift computation.
+        </p>
       </div>
-      <div class="block">
-        <h3>No Actuation</h3>
-        <p>No downstream control authority or system modification capability.</p>
-      </div>
-      <div class="block">
-        <h3>Structured Evidence</h3>
-        <p>Analytical state preserved for governance and review processes.</p>
+
+      <div class="card">
+        <h3>Drift Detection</h3>
+        <p>
+          Mahalanobis distance applied to standardized sensor channels.
+          7 cycle smoothing.
+          2 hit logic.
+          4 sigma threshold.
+        </p>
       </div>
     </div>
+
   </div>
 </section>
 
-<section id="methodology">
+<section>
   <div class="container">
-    <div class="section-number">02 Methodology</div>
-    <div class="section-title">Benchmark Analytical Model</div>
-    <div class="section-body">
-      Validation utilized 30 cycle baseline modeling,
-      Mahalanobis multivariate drift computation,
-      7 cycle smoothing,
-      2 hit admission logic,
-      and 4 sigma threshold determination.
+    <h2>Empirical Validation</h2>
+
+    <p style="max-width:850px;color:var(--text-muted)">
+      NASA CMAPSS FD001 through FD004 degradation trajectories.
+      707 engines total.
+      96.9 percent detection coverage.
+      Median 183 cycle lead time.
+      Zero baseline window admissions.
+    </p>
+
+    <div class="image-block">
+      <img src="IMG_9010.png" alt="Multivariate Drift Detection Validation">
+      <div class="image-caption">
+        FD004 engine 190 example. Admission at cycle 36. Failure at cycle 243. Lead 207 cycles.
+      </div>
     </div>
+
   </div>
 </section>
 
-<section id="validation">
+<section>
   <div class="container">
-    <div class="section-number">03 Empirical Validation</div>
-    <div class="section-title">NASA C MAPSS Benchmark Results</div>
+    <h2>System Boundary Model</h2>
 
-    <div class="section-body">
-      Evaluation conducted across FD001 through FD004 subsets.
-      Benchmark dataset environment only.
-    </div>
+    <div class="boundary-wrapper">
 
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-label">Engines Evaluated</div>
-        <div class="stat-value">707</div>
+      <div class="boundary-layer">
+        <h3>Neraium</h3>
+        <div class="boundary-item">Read only ingestion</div>
+        <div class="boundary-item">Multivariate deviation classification</div>
+        <div class="boundary-item">Structured analytical records</div>
       </div>
-      <div class="stat">
-        <div class="stat-label">Detection Coverage</div>
-        <div class="stat-value">96.9 Percent</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">Median Lead Time</div>
-        <div class="stat-value">183 Cycles</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">Baseline Admissions</div>
-        <div class="stat-value">0</div>
-      </div>
-    </div>
 
-    <div class="evidence-image">
-      <img src="IMG_9010.png" alt="Drift detection visualization">
-    </div>
+      <div class="boundary-divider">Read Only Interface</div>
 
-    <div class="section-body">
-      Example admission at cycle 36 with failure at cycle 243,
-      yielding a 207 cycle lead interval within the benchmark dataset.
+      <div class="boundary-layer">
+        <h3>Operational Systems</h3>
+        <div class="boundary-item">No actuation capability</div>
+        <div class="boundary-item">Existing control authority retained</div>
+        <div class="boundary-item">Operator review and response</div>
+      </div>
+
     </div>
 
   </div>
 </section>
 
-<footer>
-  © 2026 Neraium. All rights reserved.
-</footer>
+<div class="contact">
+  Craig Curtis<br>
+  Founder and CEO<br>
+  Neraium<br><br>
+  602 833 7441<br>
+  Craig@neraium.com
+</div>
 
 </body>
 </html>
