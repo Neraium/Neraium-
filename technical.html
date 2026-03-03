@@ -4,45 +4,61 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neraium | Technical Specification</title>
-<meta name="description" content="System boundary, analytical workflow, and empirical validation basis for Neraium infrastructure intelligence.">
+<meta name="description" content="System boundary, methodology, and empirical validation basis for Neraium infrastructure intelligence.">
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#0b111c;
-  --surface:#121a2b;
-  --border:rgba(255,255,255,.06);
-  --text:#f4f7fb;
-  --muted:#8c99b3;
-  --accent:#4da3ff;
+  --bg-0:#050b16;
+  --bg-1:#0b1424;
+  --surface:#111c2e;
+  --border:rgba(255,255,255,0.06);
+  --text:#f2f6ff;
+  --muted:#8ea0c2;
+  --accent:#3f82ff;
   --mono:'IBM Plex Mono', monospace;
   --sans:'Inter', sans-serif;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65}
-.container{max-width:1000px;margin:0 auto;padding:0 28px}
+
+body{
+  font-family:var(--sans);
+  background:var(--bg-0);
+  color:var(--text);
+  line-height:1.6;
+}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 40px;
+}
 
 /* NAV */
 
 nav{
-  position:fixed;top:0;left:0;right:0;
-  background:rgba(11,17,28,.96);
-  backdrop-filter:blur(8px);
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background:rgba(5,11,22,0.95);
   border-bottom:1px solid var(--border);
   z-index:100;
 }
+
 .nav-inner{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  height:64px;
+  height:70px;
 }
+
 .brand{
   font-family:var(--mono);
-  letter-spacing:3px;
   font-size:14px;
+  letter-spacing:3px;
   color:var(--accent);
   text-decoration:none;
 }
@@ -50,50 +66,56 @@ nav{
 /* HEADER */
 
 header{
-  padding:180px 0 120px;
+  padding:200px 0 140px;
   border-bottom:1px solid var(--border);
 }
+
 .header-label{
   font-family:var(--mono);
-  font-size:10px;
+  font-size:11px;
   letter-spacing:3px;
   text-transform:uppercase;
   color:var(--accent);
-  margin-bottom:16px;
+  margin-bottom:18px;
 }
+
 header h1{
   font-size:42px;
   font-weight:600;
-  margin-bottom:20px;
+  margin-bottom:24px;
 }
+
 header p{
-  max-width:650px;
+  max-width:700px;
   color:var(--muted);
 }
 
 /* SECTIONS */
 
 section{
-  padding:110px 0;
+  padding:120px 0;
   border-bottom:1px solid var(--border);
 }
+
 .section-number{
   font-family:var(--mono);
-  font-size:10px;
+  font-size:11px;
   letter-spacing:3px;
   text-transform:uppercase;
   color:var(--accent);
-  margin-bottom:14px;
+  margin-bottom:18px;
 }
+
 .section-title{
-  font-size:28px;
+  font-size:30px;
   font-weight:600;
-  margin-bottom:16px;
+  margin-bottom:18px;
 }
+
 .section-body{
-  max-width:650px;
+  max-width:700px;
   color:var(--muted);
-  margin-bottom:40px;
+  margin-bottom:60px;
 }
 
 /* GRID */
@@ -105,16 +127,19 @@ section{
   background:var(--border);
   border:1px solid var(--border);
 }
+
 .block{
   background:var(--surface);
-  padding:36px;
+  padding:40px;
 }
+
 .block h3{
-  font-size:17px;
-  margin-bottom:10px;
+  font-size:18px;
+  margin-bottom:12px;
 }
+
 .block p{
-  font-size:14px;
+  font-size:15px;
   color:var(--muted);
 }
 
@@ -122,26 +147,29 @@ section{
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:1px;
   background:var(--border);
   border:1px solid var(--border);
-  margin-bottom:40px;
+  margin-bottom:60px;
 }
+
 .stat{
   background:var(--surface);
-  padding:30px;
+  padding:36px;
 }
+
 .stat-label{
   font-family:var(--mono);
-  font-size:10px;
+  font-size:11px;
   letter-spacing:2px;
   text-transform:uppercase;
   color:var(--muted);
-  margin-bottom:8px;
+  margin-bottom:12px;
 }
+
 .stat-value{
-  font-size:20px;
+  font-size:26px;
   font-weight:600;
 }
 
@@ -150,9 +178,10 @@ section{
 .evidence-image{
   border:1px solid var(--border);
   background:var(--surface);
-  padding:20px;
-  margin-top:20px;
+  padding:24px;
+  margin-bottom:40px;
 }
+
 .evidence-image img{
   width:100%;
   display:block;
@@ -161,14 +190,15 @@ section{
 /* FOOTER */
 
 footer{
-  padding:70px 0;
+  padding:80px 0;
   text-align:center;
   color:var(--muted);
+  border-top:1px solid var(--border);
 }
 
 /* MOBILE */
 
-@media(max-width:800px){
+@media(max-width:900px){
   header h1{font-size:32px}
 }
 </style>
@@ -185,38 +215,38 @@ footer{
 <header>
   <div class="container">
     <div class="header-label">Technical Specification</div>
-    <h1>System Boundary, Methodology, and Empirical Validation</h1>
+    <h1>System Boundary, Analytical Framework, and Empirical Validation</h1>
     <p>
-      Neraium operates as a read-only infrastructure intelligence layer.
-      It ingests telemetry, performs multivariate drift analysis,
-      and produces structured outputs for operator review.
-      The system does not execute control actions or automated remediation.
+      Neraium operates as a read only infrastructure intelligence layer.
+      It ingests telemetry, performs multivariate deviation modeling,
+      and produces structured analytical records.
+      The platform does not execute control actions or modify system state.
     </p>
   </div>
 </header>
 
 <section>
   <div class="container">
-    <div class="section-number">01 — System Boundary</div>
+    <div class="section-number">01 System Boundary</div>
     <div class="section-title">Operational Scope</div>
     <div class="section-body">
-      The platform receives telemetry and produces analytical outputs.
+      The platform receives native telemetry and produces analytical outputs.
       It does not manage equipment, alter control states,
-      or perform automated intervention.
+      or perform automated remediation.
     </div>
 
     <div class="grid">
       <div class="block">
-        <h3>Read-Only Telemetry Ingestion</h3>
-        <p>Receives operational signals without issuing commands downstream.</p>
+        <h3>Read Only Telemetry Ingestion</h3>
+        <p>Signals are received passively without issuing downstream commands.</p>
       </div>
       <div class="block">
-        <h3>Multivariate Drift Detection</h3>
-        <p>Mahalanobis-based deviation modeling across correlated parameters.</p>
+        <h3>Multivariate Drift Modeling</h3>
+        <p>Deviation is computed across correlated parameters relative to established baselines.</p>
       </div>
       <div class="block">
         <h3>Structured Evidence Output</h3>
-        <p>Preserves analytical state for review and governance documentation.</p>
+        <p>Analytical state is preserved for operator review and governance documentation.</p>
       </div>
     </div>
   </div>
@@ -224,36 +254,36 @@ footer{
 
 <section>
   <div class="container">
-    <div class="section-number">02 — Methodology</div>
+    <div class="section-number">02 Methodology</div>
     <div class="section-title">Benchmark Analytical Framework</div>
     <div class="section-body">
-      Validation performed using 30-cycle baseline modeling,
+      Validation utilized 30 cycle baseline modeling,
       Mahalanobis multivariate drift computation,
-      7-cycle smoothing, 2-hit admission logic,
-      and a 4σ threshold.
+      7 cycle smoothing,
+      2 hit admission logic,
+      and 4 sigma threshold determination.
     </div>
   </div>
 </section>
 
 <section>
   <div class="container">
-    <div class="section-number">03 — Empirical Validation</div>
-    <div class="section-title">NASA C-MAPSS Benchmark Results</div>
+    <div class="section-number">03 Empirical Validation</div>
+    <div class="section-title">NASA C MAPSS Benchmark Results</div>
 
     <div class="section-body">
-      Evaluation conducted across FD001–FD004 subsets.
-      This represents a benchmark degradation dataset environment
-      and does not constitute live water infrastructure validation.
+      Evaluation conducted across FD001 through FD004 subsets.
+      This represents a benchmark degradation dataset environment and does not reflect live water infrastructure deployment.
     </div>
 
     <div class="stats">
       <div class="stat">
         <div class="stat-label">Engines Evaluated</div>
-        <div class="stat-value">707 (FD001–FD004)</div>
+        <div class="stat-value">707</div>
       </div>
       <div class="stat">
         <div class="stat-label">Detection Coverage</div>
-        <div class="stat-value">96.9%</div>
+        <div class="stat-value">96.9 Percent</div>
       </div>
       <div class="stat">
         <div class="stat-label">Median Lead Time</div>
@@ -266,14 +296,13 @@ footer{
     </div>
 
     <div class="evidence-image">
-      <img src="IMG_9010.png" alt="Empirical Multivariate Drift Detection Visualization">
+      <img src="IMG_9010.png" alt="Multivariate Drift Detection Visualization">
     </div>
 
-    <div class="section-body" style="margin-top:40px;">
-      Example illustrated: admission at cycle 36,
-      failure at cycle 243,
-      yielding a 207-cycle lead interval within the benchmark environment.
-      Stress-tested under baseline variation and telemetry degradation.
+    <div class="section-body">
+      Example illustrated admission at cycle 36 with failure at cycle 243,
+      yielding a 207 cycle lead interval within the benchmark dataset.
+      Stress tested under baseline variation and telemetry degradation conditions.
     </div>
 
   </div>
