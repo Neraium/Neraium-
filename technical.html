@@ -3,294 +3,458 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NERAIUM | Technical Specification</title>
-<meta name="description" content="Technical methodology and empirical validation for multivariate drift detection.">
-
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<title>Neraium Technical Overview – Investor & Operator Insights</title>
+<meta name="description" content="Dive deeper into Neraium’s architecture, algorithms, and validation plans. For operators, engineers, and investors seeking technical detail and accountability.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg-0:#04070c;
-  --bg-1:#070d18;
-  --bg-2:#0d1424;
-  --bg-3:#0a101c;
-  --text:#eaf1ff;
-  --text-muted:rgba(234,241,255,0.65);
-  --accent:#00c8e8;
-  --border:rgba(0,200,232,0.12);
-  --mono:'IBM Plex Mono', monospace;
-  --container:1200px;
+/* Inherit root variables and base styles from index for consistency */
+:root {
+  --blue-dark: #091a33;
+  --blue-mid: #132d50;
+  --blue-light: #274d82;
+  --text-primary: #f2f5fb;
+  --text-secondary: #90a3c0;
+  --text-muted: #5a7394;
+  --accent: #00b4ff;
+  --accent-hover: #56d1ff;
+  --border: rgba(255,255,255,0.08);
+  --border-light: rgba(255,255,255,0.15);
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: var(--font-sans);
+  background-color: var(--blue-dark);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+section {
+  padding: 100px 0;
+  border-top: 1px solid var(--border);
+}
+h1, h2, h3 {
+  font-weight: 700;
+}
+h1 {
+  font-size: 3.2rem;
+  letter-spacing: -1px;
+}
+h2 {
+  font-size: 2.1rem;
+}
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(9, 26, 51, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0 48px;
+}
+.nav-brand {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  letter-spacing: 4px;
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 700;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+.nav-links a:hover {
+  color: var(--accent);
+}
+.nav-cta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 1px solid var(--border-light);
+  padding: 10px 20px;
+  border-radius: 3px;
+  color: var(--accent);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-cta:hover {
+  background: var(--accent);
+  color: var(--blue-dark);
+  box-shadow: 0 0 10px var(--accent);
+}
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(0, 34, 90, 0.65) 0%,
+      rgba(9, 26, 51, 0.85) 45%,
+      rgba(9, 26, 51, 1) 100%
+    ),
+    url("IMG_9010.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: 0;
+}
+.hero .container {
+  position: relative;
+  z-index: 2;
+  text-align: left;
+}
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 18px;
+}
+.hero h2 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+.hero p {
+  font-size: 1.0rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin-bottom: 40px;
+}
+.hero .actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.btn-primary, .btn-secondary {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 12px 30px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--blue-dark);
+  border: 1px solid var(--accent);
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+/* Content grids */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+.grid-2 > div {
+  background: var(--blue-mid);
+  padding: 40px 32px;
+  transition: background 0.3s;
+}
+.grid-2 > div:hover {
+  background: var(--blue-light);
+}
+.grid-2 small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.grid-2 h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+.grid-2 p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+/* Architecture diagram */
+.tech-arch {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr 60px 1fr;
+  align-items: stretch;
+}
+.tech-node {
+  background: var(--blue-mid);
+  border: 1px solid var(--border);
+  padding: 40px 32px;
+  transition: background 0.3s;
+}
+.tech-node:hover {
+  background: var(--blue-light);
+}
+.tech-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+.tech-title {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+.tech-text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+.tech-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--accent);
+  opacity: 0.4;
+}
+/* Contact summary box */
+.contact-box {
+  border: 1px solid var(--border);
+  background: var(--blue-mid);
+  padding: 40px;
+}
+.contact-box h3 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+.contact-box p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 30px;
+}
+.contact-box a {
+  color: var(--accent);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  letter-spacing: 2px;
+}
+.contact-box a:hover {
+  color: var(--accent-hover);
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:var(--mono);
-  background:var(--bg-0);
-  color:var(--text);
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-}
-a{text-decoration:none;color:inherit}
-.container{
-  width:100%;
-  max-width:var(--container);
-  margin:0 auto;
-  padding:0 40px;
-}
-
-/* NAV */
-nav{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  background:rgba(4,7,12,0.92);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--border);
-  z-index:100;
-}
-.nav-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  height:70px;
-}
-.brand{
-  font-weight:600;
-  letter-spacing:3px;
-  font-size:14px;
-}
-.nav-links{
-  list-style:none;
-  display:flex;
-  gap:32px;
-}
-.nav-links a{
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--text-muted);
-  transition:color 0.2s ease;
-}
-.nav-links a:hover{color:var(--text)}
-
-/* HERO */
-.hero{
-  padding:220px 0 140px;
-  background:linear-gradient(to bottom,#070d18,#04070c);
-}
-.hero h1{
-  font-size:72px;
-  letter-spacing:-2px;
-}
-.hero p{
-  margin-top:20px;
-  max-width:750px;
-  color:var(--text-muted);
-}
-
-/* SECTIONS */
-section{
-  padding:110px 0;
-  border-top:1px solid var(--border);
-}
-section:nth-child(even){
-  background:var(--bg-1);
-}
-
-h2{
-  font-size:28px;
-  margin-bottom:25px;
-}
-
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:60px;
-  margin-top:40px;
-}
-.card{
-  padding:40px;
-  border:1px solid var(--border);
-  background:rgba(0,0,0,0.35);
-}
-.card h3{
-  font-size:15px;
-  margin-bottom:15px;
-}
-.card p{
-  color:var(--text-muted);
-}
-
-/* IMAGE */
-.image-block{
-  margin-top:60px;
-  text-align:center;
-}
-.image-block img{
-  width:100%;
-  max-width:1000px;
-  border:1px solid var(--border);
-}
-.image-caption{
-  margin-top:15px;
-  font-size:12px;
-  color:var(--text-muted);
-}
-
-/* SYSTEM BOUNDARY */
-.boundary-wrapper{
-  margin-top:50px;
-  border:1px solid var(--border);
-}
-.boundary-layer{
-  padding:50px;
-}
-.boundary-layer h3{
-  font-size:13px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:25px;
-}
-.boundary-item{
-  font-size:18px;
-  margin-bottom:18px;
-  color:var(--text-muted);
-}
-.boundary-divider{
-  padding:18px;
-  text-align:center;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--accent);
-  background:var(--bg-3);
-}
-
-/* CONTACT */
-.contact{
-  padding:80px 0;
-  text-align:center;
-  border-top:1px solid var(--border);
-  color:var(--text-muted);
-}
-
-/* MOBILE */
-@media(max-width:900px){
-  .hero h1{font-size:40px}
-  .grid{grid-template-columns:1fr}
+@media (max-width: 850px) {
+  .nav-links {
+    display: none;
+  }
 }
 </style>
 </head>
-
 <body>
-
+<!-- Navigation -->
 <nav>
-  <div class="container nav-inner">
-    <a href="index.html" class="brand">NERAIUM</a>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">NERAIUM</a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#operators">Operators</a></li>
+      <li><a href="#investors">Investors</a></li>
+      <li><a href="#validation">Validation</a></li>
     </ul>
+    <a href="#contact" class="nav-cta">Contact</a>
   </div>
 </nav>
 
-<section class="hero">
+<!-- Hero -->
+<div class="hero">
   <div class="container">
-    <h1>Technical Specification</h1>
-    <p>
-      Statistical methodology and empirical validation for multivariate structural deviation detection.
-    </p>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>Methodology</h2>
-
-    <div class="grid">
-      <div class="card">
-        <h3>Baseline Construction</h3>
-        <p>
-          30 cycle baseline window. Mean vector and covariance matrix computed per engine.
-          Covariance stability validated prior to drift computation.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Drift Detection</h3>
-        <p>
-          Mahalanobis distance applied to standardized sensor channels.
-          7 cycle smoothing.
-          2 hit logic.
-          4 sigma threshold.
-        </p>
-      </div>
+    <h1>Technical Overview</h1>
+    <h2>Transparent algorithms for investors, operators & engineers</h2>
+    <p>Neraium’s technical foundation brings clarity to the complexities of multi-signal telemetry analysis. Our layered architecture, engineered for security and accountability, supports both operator safety and investor confidence.</p>
+    <div class="actions">
+      <a href="#architecture" class="btn-primary">Explore Architecture</a>
+      <a href="#contact" class="btn-secondary">Contact Us</a>
     </div>
-
   </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>Empirical Validation</h2>
-
-    <p style="max-width:850px;color:var(--text-muted)">
-      NASA CMAPSS FD001 through FD004 degradation trajectories.
-      707 engines total.
-      96.9 percent detection coverage.
-      Median 183 cycle lead time.
-      Zero baseline window admissions.
-    </p>
-
-    <div class="image-block">
-      <img src="IMG_9010.png" alt="Multivariate Drift Detection Validation">
-      <div class="image-caption">
-        FD004 engine 190 example. Admission at cycle 36. Failure at cycle 243. Lead 207 cycles.
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>System Boundary Model</h2>
-
-    <div class="boundary-wrapper">
-
-      <div class="boundary-layer">
-        <h3>Neraium</h3>
-        <div class="boundary-item">Read only ingestion</div>
-        <div class="boundary-item">Multivariate deviation classification</div>
-        <div class="boundary-item">Structured analytical records</div>
-      </div>
-
-      <div class="boundary-divider">Read Only Interface</div>
-
-      <div class="boundary-layer">
-        <h3>Operational Systems</h3>
-        <div class="boundary-item">No actuation capability</div>
-        <div class="boundary-item">Existing control authority retained</div>
-        <div class="boundary-item">Operator review and response</div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<div class="contact">
-  Craig Curtis<br>
-  Founder and CEO<br>
-  Neraium<br><br>
-  602 833 7441<br>
-  Craig@neraium.com
 </div>
+
+<!-- Overview -->
+<section id="overview">
+  <div class="container">
+    <h2>What Makes Neraium Different</h2>
+    <p style="color: var(--text-secondary); max-width: 700px;">
+      Neraium is built for transparency. We design our system to accommodate both technical operators and investor stakeholders who need to understand how insights are generated, why baseline drift matters, and where decisions originate.
+    </p>
+    <div class="grid-2">
+      <div>
+        <small>Operators</small>
+        <h3>Human Authority</h3>
+        <p>Operators maintain full control. Our system surfaces anomalies and drift—never commands—so decisions remain in human hands.</p>
+      </div>
+      <div>
+        <small>Investors</small>
+        <h3>Evidence & Accountability</h3>
+        <p>Investors gain visibility into infrastructure health, risk trajectories, and long-term maintenance needs through evidence‑grade records.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section id="architecture">
+  <div class="container">
+    <h2>Layered Architecture</h2>
+    <p style="color: var(--text-secondary); max-width: 700px;">
+      Our technical architecture decouples ingestion, analysis, and review to preserve system boundaries and ensure evidence integrity. Each layer has a clear purpose and audit trail.
+    </p>
+    <div class="tech-arch">
+      <div class="tech-node">
+        <div class="tech-tag">Layer 01</div>
+        <div class="tech-title">Ingest</div>
+        <div class="tech-text">Protocol adapters handle data from BAS, SCADA, and IoT sensors. Signals are normalized and validated to ensure downstream integrity.</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-tag">Layer 02</div>
+        <div class="tech-title">Analyze</div>
+        <div class="tech-text">Our multi-signal engine correlates and scores deviation trajectories across domains. Operators and investors can trace results back to raw inputs.</div>
+      </div>
+      <div class="tech-arrow">→</div>
+      <div class="tech-node">
+        <div class="tech-tag">Layer 03</div>
+        <div class="tech-title">Review</div>
+        <div class="tech-text">Insights and records are preserved immutably, enabling operators to act and investors to evaluate with confidence.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Operators -->
+<section id="operators">
+  <div class="container">
+    <h2>For Operators & Engineers</h2>
+    <p style="color: var(--text-secondary); max-width:700px;">
+      Neraium helps operators detect drift, plan maintenance, and respond promptly—without relinquishing control. We provide clear interfaces, lead‑time estimates, and domain‑specific signal breakdowns to support your decisions.
+    </p>
+    <div class="grid-2">
+      <div>
+        <small>Lead Time</small>
+        <h3>Advance Notification</h3>
+        <p>Our deviation scores open early warning windows so you can plan interventions before failures occur.</p>
+      </div>
+      <div>
+        <small>Traceability</small>
+        <h3>Drill‑Down Insights</h3>
+        <p>Trace every insight back to original signals. Operators can validate and investigate root causes via our evidence framework.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Investors -->
+<section id="investors">
+  <div class="container">
+    <h2>For Investors & Stakeholders</h2>
+    <p style="color: var(--text-secondary); max-width:700px;">
+      With Neraium, investors gain long-term clarity into asset performance. Our evidence-grade reports illuminate structural risks and maintenance needs across portfolios, enabling data-driven capital allocation.
+    </p>
+    <div class="grid-2">
+      <div>
+        <small>Visibility</small>
+        <h3>Portfolio Health</h3>
+        <p>Monitor infrastructure across multiple assets, identify patterns of degradation, and plan upgrades or interventions with confidence.</p>
+      </div>
+      <div>
+        <small>Accountability</small>
+        <h3>Transparent Records</h3>
+        <p>Immutable event logs and deviation histories ensure accountability, support due diligence, and build trust with stakeholders.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Validation & Next Steps -->
+<section id="validation">
+  <div class="container">
+    <h2>Validation & Future Work</h2>
+    <p style="color: var(--text-secondary); max-width:700px;">
+      Our next phase involves pilot deployments and field validation on critical infrastructure. We invite investors and operators to participate in pilot programs and contribute to shaping the future of systemic intelligence.
+    </p>
+    <div class="grid-2">
+      <div>
+        <small>Pilot Programs</small>
+        <h3>Engage with Us</h3>
+        <p>Join our pilot program to test Neraium on your infrastructure. Participate in algorithm refinement and obtain early access to insights.</p>
+      </div>
+      <div>
+        <small>Research Partnerships</small>
+        <h3>Collaborate</h3>
+        <p>Academic and industry researchers can collaborate with Neraium to extend our approach to new domains and validate predictive models.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Box -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box">
+      <h3>Contact Craig Curtis</h3>
+      <p>For technical deep dives, pilot participation, and investment discussions, please reach out directly:</p>
+      <p><a href="mailto:craig@neraium.com">craig@neraium.com</a></p>
+      <p><a href="tel:+16028337441">+1&nbsp;602&nbsp;833&nbsp;7441</a></p>
+      <p><a href="https://linkedin.com/company/neraium" target="_blank">LinkedIn</a></p>
+    </div>
+  </div>
+</section>
 
 </body>
 </html>
