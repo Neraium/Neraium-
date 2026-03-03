@@ -84,10 +84,10 @@ nav{
 
 .hero{
   position:relative;
-  min-height:82vh;
+  min-height:100vh;
   display:flex;
   align-items:center;
-  padding:calc(var(--nav-h) + 60px) 0 80px;
+  padding:calc(var(--nav-h) + 80px) 0 100px;
   overflow:hidden;
 }
 
@@ -95,35 +95,44 @@ nav{
   position:absolute;
   inset:0;
   z-index:0;
+  overflow:hidden;
 }
 
+/* Subtle dark overlay, not blue heavy */
 .hero-bg:before{
   content:"";
   position:absolute;
   inset:0;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(8,16,28,0.55) 0%,
-      rgba(5,10,20,0.75) 55%,
-      rgba(2,4,8,0.95) 100%
-    );
+  background:linear-gradient(
+    180deg,
+    rgba(6,12,22,0.45) 0%,
+    rgba(5,10,18,0.65) 55%,
+    rgba(2,4,8,0.90) 100%
+  );
   z-index:2;
 }
 
+/* Bigger image, shows towers, scroll depth */
 .hero-bg:after{
   content:"";
   position:absolute;
-  inset:0;
+  inset:-10% 0 -10% 0;
   background-image:url("hero.png");
-  background-size:108%;
-  background-position:center top;
+  background-size:115%;
+  background-position:center 5%;
   background-repeat:no-repeat;
-  opacity:0.8;
-  filter:brightness(1.2) contrast(1.05);
+  opacity:0.85;
+  filter:brightness(1.25) contrast(1.05);
   z-index:1;
+  transform:translateY(0);
 }
 
+/* Subtle scroll depth on desktop */
+@media(min-width:900px){
+  .hero-bg:after{
+    background-attachment:fixed;
+  }
+}
 .hero-inner{
   position:relative;
   z-index:3;
