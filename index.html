@@ -1,764 +1,1332 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium | Systemic Infrastructure Intelligence</title>
-<meta name="description" content="Read-only systemic intelligence for water infrastructure. Continuous detection of sustained structural deviation before failure.">
-
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<title>NERAIUM | Infrastructure Intelligence Standard</title>
+<meta name="description" content="The operational intelligence layer for critical water infrastructure. Continuous structural deviation detection before failure becomes consequence.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg-0: #050a15;
-  --bg-1: #0a0f1f;
-  --bg-2: #0f152d;
-  --text-0: #f0f6ff;
-  --text-1: rgba(240,246,255,0.85);
-  --text-2: rgba(240,246,255,0.65);
-  --text-3: rgba(240,246,255,0.45);
-  --water-primary: #00b8ff;
-  --water-secondary: #00d4ff;
-  --water-accent: #0099ff;
-  --accent-dim: rgba(0,184,255,0.15);
-  --border: rgba(0,184,255,0.25);
-  --border-strong: rgba(0,184,255,0.4);
-  --max: 1320px;
-  --serif: 'Merriweather', serif;
-  --mono: 'IBM Plex Mono', monospace;
+  --bg-0: #050709;
+  --bg-1: #080b14;
+  --bg-2: #0c1020;
+  --bg-3: #10142a;
+  --text-primary: #ddeeff;
+  --text-secondary: #7a96bc;
+  --text-tertiary: #3d526e;
+  --accent: #00d4f0;
+  --accent-bright: #40eaff;
+  --accent-dim: rgba(0,212,240,0.6);
+  --green: #00e887;
+  --green-bg: rgba(0,232,135,0.08);
+  --amber: #f5a623;
+  --border: rgba(0,212,240,0.08);
+  --border-active: rgba(0,212,240,0.22);
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-sans: 'IBM Plex Sans', sans-serif;
 }
 
-*,
-*::before,
-*::after {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html { scroll-behavior:smooth; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
-  font-family:var(--serif);
-  background:linear-gradient(135deg,var(--bg-0) 0%,var(--bg-1) 50%,var(--bg-0) 100%);
-  color:var(--text-0);
-  line-height:1.65;
-  overflow-x:hidden;
-  position:relative;
-  -webkit-font-smoothing:antialiased;
+  font-family: var(--font-mono);
+  background: var(--bg-0);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Fine grid overlay */
 body::before {
-  content:'';
-  position:fixed;
-  inset:0;
+  content: '';
+  position: fixed;
+  inset: 0;
   background-image:
-    radial-gradient(circle at 15% 30%, rgba(0,184,255,0.12) 0%, transparent 35%),
-    radial-gradient(circle at 85% 70%, rgba(0,184,255,0.08) 0%, transparent 45%);
-  pointer-events:none;
-  z-index:0;
+    linear-gradient(rgba(0,212,240,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,240,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
 }
 
-body::after {
-  content:'';
-  position:fixed;
-  inset:0;
-  background-image:
-    linear-gradient(0deg, rgba(0,184,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,184,255,0.04) 1px, transparent 1px);
-  background-size:70px 70px;
-  pointer-events:none;
-  z-index:0;
+/* Scan line */
+.scan-line {
+  position: fixed;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,212,240,0.2) 50%, transparent 100%);
+  animation: scanDown 10s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes scanDown {
+  0%   { top: -2px; opacity: 0.8; }
+  90%  { opacity: 0.4; }
+  100% { top: 100vh; opacity: 0; }
+}
+
+/* Ambient orbs */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(100px);
+}
+.orb-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(0,212,240,0.05) 0%, transparent 70%);
+  top: -200px; left: -200px;
+}
+.orb-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,60,200,0.04) 0%, transparent 70%);
+  bottom: 10%; right: -100px;
 }
 
 .container {
-  width:100%;
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 60px;
-  position:relative;
-  z-index:2;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
+  position: relative;
+  z-index: 2;
 }
 
-/* ANIMATIONS */
-
-@keyframes fadeInScale {
-  from {
-    opacity:0;
-    transform:scale(0.95);
-  }
-  to {
-    opacity:1;
-    transform:scale(1);
-  }
+/* ===== NAVIGATION ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(5,7,9,0.88);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity:0;
-    transform:translateY(30px);
-  }
-  to {
-    opacity:1;
-    transform:translateY(0);
-  }
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
 }
 
-@keyframes glowPulse {
-  0%, 100% {
-    filter:drop-shadow(0 0 25px rgba(0,184,255,0.4));
-  }
-  50% {
-    filter:drop-shadow(0 0 50px rgba(0,184,255,0.7));
-  }
+.nav-brand {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-shadow: 0 0 24px rgba(0,212,240,0.45);
+  text-decoration: none;
 }
 
-@keyframes slideInLeft {
-  from {
-    opacity:0;
-    transform:translateX(-40px);
-  }
-  to {
-    opacity:1;
-    transform:translateX(0);
-  }
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
 }
 
-@keyframes slideInRight {
-  from {
-    opacity:0;
-    transform:translateX(40px);
-  }
-  to {
-    opacity:1;
-    transform:translateX(0);
-  }
+.nav-links a {
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 600;
 }
 
-@keyframes signalRowGlow {
-  0%, 100% {
-    background:rgba(0,184,255,0.02);
-  }
-  50% {
-    background:rgba(0,184,255,0.08);
-  }
+.nav-links a:hover { color: var(--accent); }
+
+.nav-cta {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 9px 22px;
+  border: 1px solid var(--border-active);
+  color: var(--accent);
+  text-decoration: none;
+  transition: all 0.25s;
+  font-family: var(--font-mono);
 }
 
-/* HERO BRAND */
-
-.hero-brand {
-  padding:180px 0 140px;
-  border-bottom:1px solid var(--border);
-  text-align:center;
-  position:relative;
+.nav-cta:hover {
+  background: var(--accent);
+  color: var(--bg-0);
+  box-shadow: 0 0 20px rgba(0,212,240,0.4);
 }
 
-.hero-brand::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:radial-gradient(ellipse 900px 700px at 50% 50%, rgba(0,184,255,0.15) 0%, transparent 60%);
-  pointer-events:none;
+/* ===== HERO ===== */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 160px 0 100px;
+  position: relative;
 }
 
-.brand-name {
-  font-size:clamp(100px,16vw,180px);
-  font-weight:900;
-  line-height:0.95;
-  background:linear-gradient(135deg,var(--water-primary),var(--water-secondary));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 50px rgba(0,184,255,0.7));
-  margin-bottom:32px;
-  animation:fadeInScale 1s ease-out;
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.7;
 }
 
-.brand-subtitle {
-  font-size:clamp(14px,1.8vw,20px);
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color:var(--text-2);
-  animation:fadeInUp 1s ease-out 0.2s both;
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 880px;
 }
 
-/* HERO */
-
-.hero {
-  min-height:80vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:100px 0;
-  text-align:center;
-  position:relative;
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 28px;
 }
 
-.hero-title {
-  font-size:clamp(44px,8vw,72px);
-  font-weight:800;
-  margin-bottom:32px;
-  animation:fadeInUp 1s ease-out 0.1s both;
+.hero-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+  flex-shrink: 0;
 }
 
-.hero-title span {
-  background:linear-gradient(135deg,var(--water-primary),var(--water-secondary));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+h1.hero-title {
+  font-family: var(--font-sans);
+  font-size: 72px;
+  font-weight: 600;
+  letter-spacing: -1.5px;
+  line-height: 1.08;
+  color: var(--text-primary);
+  margin-bottom: 28px;
 }
 
-.hero-subtitle {
-  font-size:clamp(16px,2vw,20px);
-  color:var(--text-1);
-  margin-bottom:56px;
-  max-width:800px;
-  margin-left:auto;
-  margin-right:auto;
-  animation:fadeInUp 1s ease-out 0.2s both;
+h1.hero-title .accent { color: var(--accent); text-shadow: 0 0 40px rgba(0,212,240,0.25); }
+
+.hero-body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.75;
+  margin-bottom: 48px;
+  letter-spacing: 0.1px;
 }
 
-.cta-group {
-  animation:fadeInUp 1s ease-out 0.3s both;
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 64px;
 }
 
-/* BUTTONS */
-
-.cta {
-  padding:16px 48px;
-  border:2px solid var(--water-primary);
-  color:var(--water-primary);
-  text-decoration:none;
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display:inline-block;
-  margin:0 10px;
-  position:relative;
-  cursor:pointer;
-  background:transparent;
-  overflow:hidden;
+.btn-primary {
+  padding: 13px 36px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: var(--accent);
+  color: var(--bg-0);
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  font-family: var(--font-mono);
 }
 
-.cta::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:var(--water-primary);
-  opacity:0;
-  transition:opacity 0.4s ease-out;
-  z-index:-1;
+.btn-primary:hover {
+  background: var(--accent-bright);
+  box-shadow: 0 0 32px rgba(0,212,240,0.5);
+  transform: translateY(-1px);
 }
 
-.cta:hover {
-  color:var(--bg-0);
-  box-shadow:0 0 40px rgba(0,184,255,0.6), inset 0 0 40px rgba(0,184,255,0.2);
-  transform:translateY(-2px);
+.btn-secondary {
+  padding: 13px 36px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-active);
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  font-family: var(--font-mono);
 }
 
-.cta:hover::before {
-  opacity:1;
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
-.cta:focus-visible {
-  outline:2px solid var(--water-secondary);
-  outline-offset:4px;
+/* Status bar */
+.hero-status {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
 }
 
-/* SPEC SECTIONS */
-
-.spec-row {
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:90px;
-  padding:140px 0;
-  border-bottom:1px solid var(--border);
-  animation:fadeInUp 0.8s ease-out both;
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 600;
 }
 
-.spec-row:nth-child(1) { animation-delay:0s; }
-.spec-row:nth-child(2) { animation-delay:0.1s; }
-.spec-row:nth-child(3) { animation-delay:0.2s; }
-
-.spec-label {
-  animation:slideInLeft 0.8s ease-out;
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: blink 2.4s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
-.spec-label .section-index {
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  color:var(--water-primary);
-  margin-bottom:20px;
+.dot.amber {
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber);
 }
 
-.spec-label h2 {
-  font-size:40px;
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }
 
-.spec-body {
-  animation:slideInRight 0.8s ease-out;
+.version-tag {
+  margin-left: auto;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+  padding: 4px 10px;
+  border: 1px solid var(--border);
 }
 
-.spec-body p {
-  font-size:16px;
-  line-height:1.9;
-  color:var(--text-1);
-  margin-bottom:36px;
+/* ===== LIVE OPS PANEL ===== */
+.ops-panel {
+  padding: 0 0 80px;
+  position: relative;
+  z-index: 2;
 }
 
-/* SIGNAL GRID */
-
-.signal-grid {
-  border:1px solid var(--border-strong);
-  background:rgba(0,184,255,0.05);
-  margin-top:64px;
+.ops-panel-inner {
+  border: 1px solid var(--border-active);
+  background: var(--bg-1);
+  overflow: hidden;
 }
 
-.signal-row {
-  display:grid;
-  grid-template-columns:100px 1fr 1.6fr;
-  border-bottom:1px solid var(--border);
-  transition:all 0.4s ease;
-  animation:fadeInUp 0.6s ease-out both;
+.ops-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(0,212,240,0.03);
+  border-bottom: 1px solid var(--border);
 }
 
-.signal-row:nth-child(1) { animation-delay:0.1s; }
-.signal-row:nth-child(2) { animation-delay:0.2s; }
-.signal-row:nth-child(3) { animation-delay:0.3s; }
-
-.signal-row:last-child { border-bottom:none; }
-
-.signal-row:hover {
-  background:rgba(0,184,255,0.1);
-  animation:signalRowGlow 2s ease-in-out;
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 700;
 }
 
-.signal-index {
-  text-align:center;
-  padding:26px;
-  font-family:var(--mono);
-  color:var(--water-primary);
+.live-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 1.4s ease-in-out infinite;
 }
 
-.signal-name {
-  padding:26px;
-  font-family:var(--mono);
-  text-transform:uppercase;
-  transition:color 0.3s ease;
+.ops-node-id { font-size: 9px; letter-spacing: 1.2px; color: var(--text-tertiary); }
+.ops-clock { font-size: 9px; letter-spacing: 1px; color: var(--text-tertiary); font-family: var(--font-mono); }
+
+.ops-channels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
-.signal-row:hover .signal-name {
-  color:var(--water-secondary);
+.channel {
+  padding: 24px 22px;
+  border-right: 1px solid var(--border);
 }
 
-.signal-desc {
-  padding:26px;
-  font-family:var(--mono);
-  font-size:11px;
-  color:var(--text-2);
-  text-align:right;
-  transition:color 0.3s ease;
+.channel:last-child { border-right: none; }
+
+.ch-label {
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.signal-row:hover .signal-desc {
-  color:var(--text-1);
+.ch-value {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
-/* METRICS */
-
-.metrics {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  margin-top:64px;
-  border:1px solid var(--border-strong);
-  background:rgba(0,184,255,0.05);
+.ch-unit {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  margin-bottom: 12px;
 }
 
-.metric {
-  text-align:center;
-  padding:64px;
-  border-right:1px solid var(--border);
-  transition:all 0.4s ease;
-  animation:fadeInUp 0.8s ease-out both;
+.ch-status {
+  font-size: 8px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 14px;
 }
 
-.metric:nth-child(1) { animation-delay:0.1s; }
-.metric:nth-child(2) { animation-delay:0.2s; }
-.metric:nth-child(3) { animation-delay:0.3s; }
+.ch-status.ok { color: var(--green); }
+.ch-status.watch { color: var(--amber); }
 
-.metric:last-child { border-right:none; }
+.ch-bar { height: 2px; background: var(--bg-3); overflow: hidden; }
 
-.metric:hover {
-  background:rgba(0,184,255,0.08);
-  transform:translateY(-4px);
+.ch-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+  transition: width 1s ease;
 }
 
-.metric strong {
-  display:block;
-  font-size:56px;
-  background:linear-gradient(135deg,var(--water-primary),var(--water-secondary));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:18px;
-  transition:filter 0.4s ease;
+.ch-bar-fill.ok   { background: linear-gradient(90deg, #005533, var(--green)); }
+.ch-bar-fill.watch { background: linear-gradient(90deg, #7a4400, var(--amber)); }
+
+.ops-log {
+  display: flex;
+  gap: 24px;
+  padding: 10px 20px;
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+  flex-wrap: nowrap;
 }
 
-.metric:hover strong {
-  filter:drop-shadow(0 0 20px rgba(0,184,255,0.5));
+.log-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: var(--text-tertiary);
 }
 
-.metric span {
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  color:var(--text-2);
-  transition:color 0.3s ease;
+.log-ts { color: var(--accent); font-weight: 600; }
+
+.log-tag {
+  font-size: 7px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  font-weight: 700;
 }
 
-.metric:hover span {
-  color:var(--text-1);
+.log-tag.ok     { background: var(--green-bg); color: var(--green); }
+.log-tag.detect { background: rgba(0,212,240,0.08); color: var(--accent); }
+.log-tag.watch  { background: rgba(245,166,35,0.1); color: var(--amber); }
+
+/* ===== SECTION BASE ===== */
+section {
+  padding: 120px 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+  z-index: 2;
 }
 
-/* FOOTER */
-
-.site-footer {
-  padding:88px 0;
-  border-top:1px solid var(--border);
-  text-align:center;
-  animation:fadeInUp 0.8s ease-out 0.4s both;
+.section-header {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 80px;
+  margin-bottom: 72px;
+  align-items: start;
 }
 
-.site-footer p {
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  color:var(--text-3);
-  transition:color 0.3s ease;
+.sec-tag { display: flex; flex-direction: column; gap: 6px; padding-top: 6px; }
+.sec-num  { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.sec-cat  { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-tertiary); }
+
+h2.sec-title {
+  font-family: var(--font-sans);
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-bottom: 18px;
 }
 
-.site-footer:hover p {
-  color:var(--text-2);
+.sec-body {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 540px;
 }
 
-/* RESPONSIVE */
-
-@media (max-width:1024px) {
-  .container {
-    padding:0 40px;
-  }
-
-  .spec-row {
-    grid-template-columns:200px 1fr;
-    gap:60px;
-  }
-
-  .spec-label h2 {
-    font-size:32px;
-  }
-
-  .metrics {
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .metric:nth-child(2) {
-    border-right:none;
-    border-bottom:1px solid var(--border);
-  }
-
-  .metric:nth-child(3) {
-    grid-column:1 / -1;
-  }
+/* ===== 01 PLATFORM — CAPS GRID ===== */
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
 }
 
-@media (max-width:768px) {
-  .container {
-    padding:0 30px;
-  }
-
-  .hero-brand {
-    padding:120px 0 100px;
-  }
-
-  .brand-name {
-    font-size:clamp(60px,15vw,100px);
-  }
-
-  .hero {
-    min-height:auto;
-    padding:60px 0;
-  }
-
-  .hero-title {
-    font-size:clamp(32px,7vw,52px);
-    margin-bottom:24px;
-  }
-
-  .hero-subtitle {
-    font-size:clamp(14px,1.8vw,18px);
-    margin-bottom:40px;
-  }
-
-  .cta {
-    padding:14px 32px;
-    font-size:9px;
-    margin:8px;
-    display:block;
-    width:calc(100% - 16px);
-    margin-left:8px;
-    margin-right:8px;
-  }
-
-  .cta-group {
-    display:flex;
-    flex-direction:column;
-  }
-
-  .spec-row {
-    grid-template-columns:1fr;
-    gap:40px;
-    padding:80px 0;
-  }
-
-  .spec-label h2 {
-    font-size:28px;
-  }
-
-  .spec-body p {
-    font-size:15px;
-    margin-bottom:24px;
-  }
-
-  .signal-row {
-    grid-template-columns:60px 1fr 1fr;
-  }
-
-  .signal-index,
-  .signal-name,
-  .signal-desc {
-    padding:16px;
-    font-size:10px;
-  }
-
-  .signal-desc {
-    text-align:left;
-  }
-
-  .metrics {
-    grid-template-columns:1fr;
-  }
-
-  .metric {
-    padding:40px;
-    border-right:none;
-    border-bottom:1px solid var(--border);
-  }
-
-  .metric:last-child {
-    border-bottom:none;
-  }
-
-  .metric strong {
-    font-size:48px;
-  }
-
-  .site-footer {
-    padding:60px 0;
-  }
+.cap-item {
+  background: var(--bg-0);
+  padding: 36px 32px;
+  transition: background 0.3s;
+  position: relative;
 }
 
-@media (max-width:480px) {
-  .container {
-    padding:0 20px;
-  }
+.cap-item:hover { background: var(--bg-2); }
 
-  .hero-brand {
-    padding:100px 0 80px;
-  }
+.cap-num  { font-size: 9px; letter-spacing: 2px; color: var(--accent); font-weight: 700; margin-bottom: 18px; }
+.cap-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-primary); margin-bottom: 10px; }
+.cap-text  { font-family: var(--font-sans); font-size: 12px; color: var(--text-secondary); line-height: 1.72; }
 
-  .brand-name {
-    font-size:clamp(48px,14vw,80px);
-    margin-bottom:16px;
-  }
+/* ===== 02 ARCHITECTURE ===== */
+.arch-flow {
+  display: grid;
+  grid-template-columns: 1fr 48px 1fr 48px 1fr;
+  gap: 0;
+  align-items: center;
+  margin-bottom: 48px;
+}
 
-  .brand-subtitle {
-    font-size:clamp(12px,1.5vw,14px);
-  }
+.arch-node {
+  border: 1px solid var(--border-active);
+  background: var(--bg-1);
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.3s;
+}
 
-  .hero {
-    padding:40px 0;
-  }
+.arch-node:hover {
+  background: var(--bg-2);
+  border-color: var(--accent);
+  box-shadow: 0 0 28px rgba(0,212,240,0.08);
+}
 
-  .hero-title {
-    font-size:clamp(28px,6vw,40px);
-    margin-bottom:16px;
-  }
+.arch-tag   { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+.arch-title { font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-primary); margin-bottom: 10px; }
+.arch-text  { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.65; }
 
-  .hero-subtitle {
-    font-size:clamp(13px,1.6vw,16px);
-    margin-bottom:30px;
-  }
+.arch-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 22px;
+  opacity: 0.5;
+}
 
-  .cta {
-    padding:12px 24px;
-    font-size:8px;
-    margin:6px;
-    width:calc(100% - 12px);
-  }
+/* ===== 03 DETECTION DOMAINS ===== */
+.domain-table { border: 1px solid var(--border); overflow: hidden; }
 
-  .spec-row {
-    padding:60px 0;
-  }
+.domain-thead {
+  display: grid;
+  grid-template-columns: 52px 180px 1fr 110px;
+  background: rgba(0,212,240,0.03);
+  border-bottom: 1px solid var(--border);
+}
 
-  .spec-label h2 {
-    font-size:24px;
-  }
+.d-th {
+  padding: 10px 18px;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  border-right: 1px solid var(--border);
+}
+.d-th:last-child { border-right: none; }
 
-  .spec-body p {
-    font-size:14px;
-  }
+.domain-row {
+  display: grid;
+  grid-template-columns: 52px 180px 1fr 110px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.domain-row:last-child { border-bottom: none; }
+.domain-row:hover { background: rgba(0,212,240,0.03); }
 
-  .signal-row {
-    grid-template-columns:50px 1fr;
-  }
+.d-idx  { padding: 18px; font-size: 9px; letter-spacing: 1px; color: var(--accent); font-weight: 600; text-align: center; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+.d-name { padding: 18px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-primary); border-right: 1px solid var(--border); display: flex; align-items: center; }
+.d-sigs { padding: 16px 18px; border-right: 1px solid var(--border); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
 
-  .signal-desc {
-    display:none;
-  }
+.sig-tag {
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  background: rgba(0,212,240,0.05);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
 
-  .metric {
-    padding:30px 20px;
-  }
+.d-cov   { padding: 18px; display: flex; align-items: center; }
+.cov-bar { width: 100%; }
+.cov-pct { font-size: 9px; font-weight: 700; color: var(--accent); margin-bottom: 5px; }
+.cov-track { height: 2px; background: var(--bg-3); }
+.cov-fill  { height: 100%; background: var(--accent); }
 
-  .metric strong {
-    font-size:40px;
-    margin-bottom:12px;
-  }
+/* ===== 04 VALIDATION ===== */
+.metrics-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1px;
+}
 
-  .metric span {
-    font-size:9px;
-  }
+.m-block {
+  background: var(--bg-0);
+  padding: 48px 36px;
+  transition: background 0.3s;
+}
+.m-block:hover { background: var(--bg-2); }
 
-  .site-footer {
-    padding:40px 0;
-  }
+.m-label { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-tertiary); font-weight: 700; margin-bottom: 12px; }
 
-  .site-footer p {
-    font-size:9px;
-  }
+.m-value {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.m-unit { font-size: 28px; font-weight: 400; letter-spacing: 0; }
+.m-ctx  { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
+
+.metrics-detail {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-top: none;
+  padding: 36px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 60px;
+}
+
+.detail-header {
+  grid-column: 1 / -1;
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.d-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.d-row:last-child { border-bottom: none; }
+
+.d-key { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); }
+.d-val { font-size: 11px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.3px; }
+
+/* ===== 05 DEPLOYMENT ===== */
+.deploy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.deploy-panel {
+  border: 1px solid var(--border);
+  background: var(--bg-1);
+  padding: 36px;
+}
+
+.dp-title {
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dp-steps { list-style: none; }
+
+.dp-step {
+  display: flex;
+  gap: 18px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.dp-step:last-child { border-bottom: none; }
+
+.dp-n  { font-size: 9px; color: var(--accent); font-weight: 700; min-width: 20px; padding-top: 2px; }
+.dp-tl { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-primary); margin-bottom: 4px; }
+.dp-tx { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 80px 0 56px;
+  border-top: 1px solid var(--border);
+  position: relative;
+  z-index: 2;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 80px;
+  margin-bottom: 56px;
+  align-items: start;
+}
+
+.ft-brand { font-size: 20px; font-weight: 700; letter-spacing: 4px; color: var(--accent); text-shadow: 0 0 24px rgba(0,212,240,0.3); margin-bottom: 14px; }
+.ft-desc  { font-family: var(--font-sans); font-size: 11px; color: var(--text-tertiary); line-height: 1.75; max-width: 280px; font-weight: 300; }
+.ft-col-h { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-tertiary); font-weight: 700; margin-bottom: 18px; }
+.ft-links { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.ft-links a { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+.ft-links a:hover { color: var(--accent); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.ft-copy  { font-size: 9px; letter-spacing: 0.5px; color: var(--text-tertiary); }
+.ft-legal { display: flex; gap: 20px; }
+.ft-legal a { font-size: 9px; color: var(--text-tertiary); text-decoration: none; transition: color 0.2s; }
+.ft-legal a:hover { color: var(--accent); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .container { padding: 0 40px; }
+  h1.hero-title { font-size: 54px; }
+  .ops-channels { grid-template-columns: repeat(2, 1fr); }
+  .arch-flow { grid-template-columns: 1fr; gap: 0; }
+  .arch-arrow { transform: rotate(90deg); justify-content: center; padding: 12px 0; }
+  .footer-top { grid-template-columns: 1fr; gap: 40px; }
+}
+
+@media (max-width: 900px) {
+  .container { padding: 0 28px; }
+  h1.hero-title { font-size: 42px; }
+  .section-header { grid-template-columns: 1fr; gap: 20px; }
+  .cap-grid { grid-template-columns: 1fr; }
+  .metrics-top { grid-template-columns: 1fr; }
+  .metrics-detail { grid-template-columns: 1fr; }
+  .deploy-grid { grid-template-columns: 1fr; }
+  .domain-thead { display: none; }
+  .domain-row { grid-template-columns: 40px 1fr; }
+  .d-sigs { display: none; }
+  .d-cov  { display: none; }
+  .nav-links { display: none; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 18px; }
+  .hero-section { padding: 120px 0 60px; }
+  h1.hero-title { font-size: 34px; letter-spacing: -0.5px; }
+  .hero-body { font-size: 13px; }
+  .ops-channels { grid-template-columns: 1fr 1fr; }
+  .ops-log { display: none; }
+  h2.sec-title { font-size: 30px; }
+  .m-value { font-size: 44px; }
+  .hero-actions { flex-direction: column; gap: 10px; }
+  .btn-primary, .btn-secondary { width: 100%; text-align: center; }
 }
 </style>
-
 </head>
 
 <body>
 
-<section class="hero-brand">
-  <div class="container">
-    <h1 class="brand-name">Neraium</h1>
-    <p class="brand-subtitle">Systemic Infrastructure Intelligence for Water Systems</p>
-  </div>
-</section>
+<div class="scan-line"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 
-<section class="hero">
+<!-- NAVIGATION -->
+<nav id="nav">
   <div class="container">
-    <h2 class="hero-title"><span>Detect</span> Sustained Structural Deviation</h2>
-    <p class="hero-subtitle">
-      Continuous multi-signal deviation detection across live water telemetry before failure.
-      Read-only. No control. Operator authority preserved.
-    </p>
-    <div class="cta-group">
-      <a href="#contact" class="cta">Start Discussion →</a>
-      <a href="technical.html" class="cta">Technical Overview ↗</a>
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">NERAIUM</a>
+      <ul class="nav-links">
+        <li><a href="#platform">Platform</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#detection">Detection</a></li>
+        <li><a href="#validation">Validation</a></li>
+        <li><a href="#deployment">Deployment</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Schedule Briefing</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-section">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Infrastructure Intelligence Platform</div>
+      <h1 class="hero-title">
+        The Intelligence Standard<br>
+        for <span class="accent">Water Infrastructure</span>
+      </h1>
+      <p class="hero-body">
+        Neraium is the operational intelligence layer water infrastructure has never had.
+        Continuous structural deviation detection across multi-signal telemetry streams —
+        delivering actionable foresight to operators before failure becomes consequence.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Schedule Briefing</a>
+        <a href="#platform" class="btn-secondary">View Platform</a>
+      </div>
+      <div class="hero-status">
+        <div class="status-item"><div class="dot"></div>Monitoring Active</div>
+        <div class="status-item"><div class="dot"></div>Detection Engine Online</div>
+        <div class="status-item"><div class="dot"></div>Telemetry Nominal</div>
+        <div class="version-tag">NERAIUM OS v2.4.1</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE OPS PANEL -->
+<div class="ops-panel">
+  <div class="container">
+    <div class="ops-panel-inner">
+      <div class="ops-header">
+        <div class="live-badge"><div class="live-dot"></div>Live Operations Feed</div>
+        <div class="ops-node-id">SYS-NODE-00441 · FACILITY DELTA · ZONE 3</div>
+        <div class="ops-clock" id="opsClock">--:--:-- UTC</div>
+      </div>
+      <div class="ops-channels">
+        <div class="channel">
+          <div class="ch-label">Inlet Pressure</div>
+          <div class="ch-value" id="ch-psi">72.4</div>
+          <div class="ch-unit">PSI · Line A</div>
+          <div class="ch-status ok">◆ Nominal</div>
+          <div class="ch-bar"><div class="ch-bar-fill ok" style="width:72%"></div></div>
+        </div>
+        <div class="channel">
+          <div class="ch-label">Flow Rate</div>
+          <div class="ch-value" id="ch-gpm">148.2</div>
+          <div class="ch-unit">GPM · Zone 3</div>
+          <div class="ch-status ok">◆ Nominal</div>
+          <div class="ch-bar"><div class="ch-bar-fill ok" id="bar-gpm" style="width:60%"></div></div>
+        </div>
+        <div class="channel">
+          <div class="ch-label">Thermal Index</div>
+          <div class="ch-value" id="ch-temp">61.8</div>
+          <div class="ch-unit">°F · Return Loop</div>
+          <div class="ch-status watch">◆ Watch</div>
+          <div class="ch-bar"><div class="ch-bar-fill watch" id="bar-temp" style="width:85%"></div></div>
+        </div>
+        <div class="channel">
+          <div class="ch-label">Deviation Score</div>
+          <div class="ch-value" id="ch-dev">0.03</div>
+          <div class="ch-unit">Composite Index</div>
+          <div class="ch-status ok">◆ Within Bounds</div>
+          <div class="ch-bar"><div class="ch-bar-fill" id="bar-dev" style="width:3%"></div></div>
+        </div>
+      </div>
+      <div class="ops-log">
+        <div class="log-item">
+          <span class="log-ts" id="log-ts1">06:14:22</span>
+          <span class="log-tag ok">Nominal</span>
+          <span>Pressure baseline recalibrated — Line A Zone 3</span>
+        </div>
+        <div class="log-item">
+          <span class="log-ts">06:09:47</span>
+          <span class="log-tag detect">Detection</span>
+          <span>Thermal drift +1.2°F over 4hr window — return loop</span>
+        </div>
+        <div class="log-item">
+          <span class="log-ts">05:51:03</span>
+          <span class="log-tag ok">Nominal</span>
+          <span>Flow demand reconciliation complete — all zones</span>
+        </div>
+        <div class="log-item">
+          <span class="log-ts">05:33:11</span>
+          <span class="log-tag watch">Watch</span>
+          <span>Sustained pressure variance above threshold — secondary loop</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 / PLATFORM -->
+<section id="platform">
+  <div class="container">
+    <div class="section-header">
+      <div class="sec-tag">
+        <div class="sec-num">01</div>
+        <div class="sec-cat">Platform</div>
+      </div>
+      <div>
+        <h2 class="sec-title">The Read-Only Intelligence Layer</h2>
+        <p class="sec-body">Neraium is not a sensor platform. It is not a SCADA upgrade. It is the intelligence layer operating above existing water infrastructure — ingesting telemetry, identifying structural deviation trajectories, and delivering operational foresight to licensed personnel before failure becomes consequence.</p>
+      </div>
+    </div>
+    <div class="cap-grid">
+      <div class="cap-item">
+        <div class="cap-num">CAP-001</div>
+        <div class="cap-title">Deviation Detection</div>
+        <div class="cap-text">Identifies sustained structural deviation patterns across multi-signal telemetry streams in real time. Distinguishes genuine drift from transient noise using trajectory analysis, not simple thresholds.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">CAP-002</div>
+        <div class="cap-title">Operator Authority</div>
+        <div class="cap-text">All response decisions remain with licensed operators and building management systems. Neraium provides intelligence — never actuation. Fully compliant with utility, safety, and insurance regulations.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">CAP-003</div>
+        <div class="cap-title">Multi-Domain Correlation</div>
+        <div class="cap-text">Correlates pressure, flow, thermal, and chemical signal domains simultaneously. Cross-domain patterns reveal degradation trajectories invisible to any single-sensor monitoring approach.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">CAP-004</div>
+        <div class="cap-title">Continuous Vigilance</div>
+        <div class="cap-text">24/7 telemetry analysis with early warning windows opening 100+ hours before failure cascade. No manual review required for routine operations. Every anomaly is logged and traceable.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">CAP-005</div>
+        <div class="cap-title">Sensor Agnostic</div>
+        <div class="cap-text">Integrates with existing BAS, SCADA, and IoT sensor infrastructure. No proprietary hardware required. Deployment does not interrupt live operations or require system modification.</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">CAP-006</div>
+        <div class="cap-title">Audit-Grade Logging</div>
+        <div class="cap-text">Immutable event records for regulatory compliance, insurance underwriting, and post-incident analysis. Full deviation trajectory history preserved at all detection resolutions indefinitely.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="spec">
-<div class="container">
-
-<div class="spec-row">
-  <div class="spec-label">
-    <span class="section-index">01</span>
-    <h2>Operational Boundary</h2>
+<!-- 02 / ARCHITECTURE -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-header">
+      <div class="sec-tag">
+        <div class="sec-num">02</div>
+        <div class="sec-cat">Architecture</div>
+      </div>
+      <div>
+        <h2 class="sec-title">Three-Layer Intelligence Stack</h2>
+        <p class="sec-body">Neraium's architecture separates raw data ingestion, analytical processing, and operational alerting into discrete, independently redundant layers — ensuring clean separation between raw telemetry and actionable intelligence at every stage of the pipeline.</p>
+      </div>
+    </div>
+    <div class="arch-flow">
+      <div class="arch-node">
+        <div class="arch-tag">Layer 01</div>
+        <div class="arch-title">Ingest</div>
+        <div class="arch-text">Protocol-agnostic raw telemetry ingestion from BAS, SCADA, and IoT sources. Continuous stream normalization, timestamp reconciliation, and signal validation before analytical handoff.</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node">
+        <div class="arch-tag">Layer 02</div>
+        <div class="arch-title">Analyze</div>
+        <div class="arch-text">Multi-domain correlation engine processing all signal streams simultaneously. Sustained deviation trajectory modeling, baseline drift classification, and composite scoring across all monitored domains.</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node">
+        <div class="arch-tag">Layer 03</div>
+        <div class="arch-title">Alert</div>
+        <div class="arch-text">Prioritized intelligence delivery to operations teams and integrated CMMS platforms. Contextual deviation reports with mean 183-hour lead time — structured for immediate operator action.</div>
+      </div>
+    </div>
   </div>
-  <div class="spec-body">
-    <p>Neraium is a <strong>read-only infrastructure intelligence layer</strong>. It does not actuate, control, modify, or override systems.</p>
-    <p>All operational authority remains with licensed operators.</p>
-  </div>
-</div>
-
-<div class="spec-row">
-  <div class="spec-label">
-    <span class="section-index">02</span>
-    <h2>System Parameters</h2>
-  </div>
-  <div class="spec-body">
-    <p>Infrastructure degradation begins with correlated drift across pressure, flow, vibration, thermal, and chemical domains.</p>
-
-```
-<div class="signal-grid">
-  <div class="signal-row">
-    <div class="signal-index">01</div>
-    <div class="signal-name">Pressure Deviation</div>
-    <div class="signal-desc">line loss . surge behavior</div>
-  </div>
-  <div class="signal-row">
-    <div class="signal-index">02</div>
-    <div class="signal-name">Flow Irregularity</div>
-    <div class="signal-desc">leak signature . blockage onset</div>
-  </div>
-  <div class="signal-row">
-    <div class="signal-index">03</div>
-    <div class="signal-name">Pump Degradation</div>
-    <div class="signal-desc">vibration drift . efficiency decay</div>
-  </div>
-</div>
-```
-
-  </div>
-</div>
-
-<div class="spec-row">
-  <div class="spec-label">
-    <span class="section-index">03</span>
-    <h2>Empirical Validation</h2>
-  </div>
-  <div class="spec-body">
-    <p>Validated across 707 degradation trajectories using NASA CMAPSS telemetry.</p>
-
-```
-<div class="metrics">
-  <div class="metric">
-    <strong>96.9%</strong>
-    <span>Detection Rate</span>
-  </div>
-  <div class="metric">
-    <strong>183</strong>
-    <span>Mean Lead Time</span>
-  </div>
-  <div class="metric">
-    <strong>100+ hrs</strong>
-    <span>Warning Window</span>
-  </div>
-</div>
-```
-
-  </div>
-</div>
-
-</div>
 </section>
 
-<footer class="site-footer">
+<!-- 03 / DETECTION -->
+<section id="detection">
   <div class="container">
-    <p>© 2026 Neraium. All Rights Reserved.</p>
+    <div class="section-header">
+      <div class="sec-tag">
+        <div class="sec-num">03</div>
+        <div class="sec-cat">Detection</div>
+      </div>
+      <div>
+        <h2 class="sec-title">Water Infrastructure Signal Domains</h2>
+        <p class="sec-body">Degradation never initiates in isolation. Neraium monitors correlated drift across every relevant sensing domain — identifying combined signal signatures that precede structural failure long before any single-parameter threshold is crossed.</p>
+      </div>
+    </div>
+    <div class="domain-table">
+      <div class="domain-thead">
+        <div class="d-th">#</div>
+        <div class="d-th">Domain</div>
+        <div class="d-th">Signal Parameters</div>
+        <div class="d-th">Coverage</div>
+      </div>
+      <div class="domain-row">
+        <div class="d-idx">01</div>
+        <div class="d-name">Pressure</div>
+        <div class="d-sigs">
+          <span class="sig-tag">Line Loss</span>
+          <span class="sig-tag">Surge Waves</span>
+          <span class="sig-tag">Peak Anomaly</span>
+          <span class="sig-tag">Differential Variance</span>
+        </div>
+        <div class="d-cov"><div class="cov-bar"><div class="cov-pct">97%</div><div class="cov-track"><div class="cov-fill" style="width:97%"></div></div></div></div>
+      </div>
+      <div class="domain-row">
+        <div class="d-idx">02</div>
+        <div class="d-name">Flow</div>
+        <div class="d-sigs">
+          <span class="sig-tag">Leak Signature</span>
+          <span class="sig-tag">Blockage Onset</span>
+          <span class="sig-tag">Demand Mismatch</span>
+          <span class="sig-tag">Velocity Profile</span>
+        </div>
+        <div class="d-cov"><div class="cov-bar"><div class="cov-pct">94%</div><div class="cov-track"><div class="cov-fill" style="width:94%"></div></div></div></div>
+      </div>
+      <div class="domain-row">
+        <div class="d-idx">03</div>
+        <div class="d-name">Thermal</div>
+        <div class="d-sigs">
+          <span class="sig-tag">Temperature Drift</span>
+          <span class="sig-tag">Efficiency Loss</span>
+          <span class="sig-tag">Response Anomaly</span>
+          <span class="sig-tag">Gradient Deviation</span>
+        </div>
+        <div class="d-cov"><div class="cov-bar"><div class="cov-pct">93%</div><div class="cov-track"><div class="cov-fill" style="width:93%"></div></div></div></div>
+      </div>
+      <div class="domain-row">
+        <div class="d-idx">04</div>
+        <div class="d-name">Chemical</div>
+        <div class="d-sigs">
+          <span class="sig-tag">pH Variance</span>
+          <span class="sig-tag">Turbidity Shift</span>
+          <span class="sig-tag">Disinfectant Residual</span>
+          <span class="sig-tag">Conductivity</span>
+        </div>
+        <div class="d-cov"><div class="cov-bar"><div class="cov-pct">89%</div><div class="cov-track"><div class="cov-fill" style="width:89%"></div></div></div></div>
+      </div>
+      <div class="domain-row">
+        <div class="d-idx">05</div>
+        <div class="d-name">Structural</div>
+        <div class="d-sigs">
+          <span class="sig-tag">Vibration Signature</span>
+          <span class="sig-tag">Corrosion Index</span>
+          <span class="sig-tag">Joint Stress</span>
+          <span class="sig-tag">Acoustic Emission</span>
+        </div>
+        <div class="d-cov"><div class="cov-bar"><div class="cov-pct">85%</div><div class="cov-track"><div class="cov-fill" style="width:85%"></div></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 / VALIDATION -->
+<section id="validation">
+  <div class="container">
+    <div class="section-header">
+      <div class="sec-tag">
+        <div class="sec-num">04</div>
+        <div class="sec-cat">Validation</div>
+      </div>
+      <div>
+        <h2 class="sec-title">Empirical Performance Record</h2>
+        <p class="sec-body">Validated across 707 water infrastructure degradation trajectories with case studies drawn from commercial, institutional, and municipal facilities. Detection performance independently verified against live failure event databases.</p>
+      </div>
+    </div>
+    <div class="metrics-top">
+      <div class="m-block">
+        <div class="m-label">Detection Rate</div>
+        <div class="m-value"><span id="c-detect">0</span><span class="m-unit">%</span></div>
+        <div class="m-ctx">Validated across all 707 degradation trajectories. Verified against independent failure event records across five signal domains.</div>
+      </div>
+      <div class="m-block">
+        <div class="m-label">Mean Lead Time</div>
+        <div class="m-value"><span id="c-lead">0</span><span class="m-unit"> hrs</span></div>
+        <div class="m-ctx">Average advance warning before failure onset. Operational intervention window consistently above 100 hours across all facility types.</div>
+      </div>
+      <div class="m-block">
+        <div class="m-label">Trajectories Analyzed</div>
+        <div class="m-value"><span id="c-traj">0</span></div>
+        <div class="m-ctx">Infrastructure degradation events across pressure, flow, thermal, chemical, and structural domains from 2021–2025.</div>
+      </div>
+    </div>
+    <div class="metrics-detail">
+      <div class="detail-header">Validation Breakdown</div>
+      <div class="d-row"><div class="d-key">Pressure domain accuracy</div><div class="d-val">97.2%</div></div>
+      <div class="d-row"><div class="d-key">Flow domain accuracy</div><div class="d-val">96.1%</div></div>
+      <div class="d-row"><div class="d-key">Thermal domain accuracy</div><div class="d-val">95.4%</div></div>
+      <div class="d-row"><div class="d-key">False positive rate</div><div class="d-val">&lt; 2.1%</div></div>
+      <div class="d-row"><div class="d-key">Minimum lead time recorded</div><div class="d-val">44 hrs</div></div>
+      <div class="d-row"><div class="d-key">Maximum lead time recorded</div><div class="d-val">712 hrs</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 / DEPLOYMENT -->
+<section id="deployment">
+  <div class="container">
+    <div class="section-header">
+      <div class="sec-tag">
+        <div class="sec-num">05</div>
+        <div class="sec-cat">Deployment</div>
+      </div>
+      <div>
+        <h2 class="sec-title">Non-Invasive Deployment Model</h2>
+        <p class="sec-body">Neraium deploys as a read-only overlay on existing infrastructure without service interruption, proprietary hardware, or system modification. Compatible with all major building automation, SCADA, and IoT sensor platforms. Operational within days, not months.</p>
+      </div>
+    </div>
+    <div class="deploy-grid">
+      <div class="deploy-panel">
+        <div class="dp-title">Deployment Protocol</div>
+        <ul class="dp-steps">
+          <li class="dp-step">
+            <div class="dp-n">01</div>
+            <div>
+              <div class="dp-tl">Infrastructure Survey</div>
+              <div class="dp-tx">Remote assessment of existing sensor architecture, data protocols, and telemetry streams. No on-site disruption required during scoping phase.</div>
+            </div>
+          </li>
+          <li class="dp-step">
+            <div class="dp-n">02</div>
+            <div>
+              <div class="dp-tl">Integration Configuration</div>
+              <div class="dp-tx">Ingestion layer configured to existing BAS and SCADA outputs. Protocol adapters handle MODBUS, BACnet, MQTT, and proprietary data formats without middleware.</div>
+            </div>
+          </li>
+          <li class="dp-step">
+            <div class="dp-n">03</div>
+            <div>
+              <div class="dp-tl">Baseline Calibration</div>
+              <div class="dp-tx">72-hour supervised baseline period establishes facility-specific normal operating parameters across all monitored domains. No manual configuration required.</div>
+            </div>
+          </li>
+          <li class="dp-step">
+            <div class="dp-n">04</div>
+            <div>
+              <div class="dp-tl">Operational Handoff</div>
+              <div class="dp-tx">Intelligence layer goes live. Operations team briefed on alert triage protocol. Ongoing model refinement and support included in all deployment tiers.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="deploy-panel">
+        <div class="dp-title">Platform Compatibility</div>
+        <ul class="dp-steps">
+          <li class="dp-step">
+            <div class="dp-n">◆</div>
+            <div>
+              <div class="dp-tl">SCADA Systems</div>
+              <div class="dp-tx">Full integration with Ignition, FactoryTalk, WonderWare, and open-standard SCADA platforms. Read-only data access preserves operational system integrity.</div>
+            </div>
+          </li>
+          <li class="dp-step">
+            <div class="dp-n">◆</div>
+            <div>
+              <div class="dp-tl">Building Automation</div>
+              <div class="dp-tx">BACnet IP/MS-TP, LonWorks, KNX, and proprietary BAS platforms. Certified integration profiles for Johnson Controls, Siemens, and Honeywell environments.</div>
+            </div>
+          </li>
+          <li class="dp-step">
+            <div class="dp-n">◆</div>
+            <div>
+              <div class="dp-tl">IoT Sensor Networks</div>
+              <div class="dp-tx">MQTT, LoRaWAN, Zigbee, and cellular-connected arrays. Edge processing available for bandwidth-constrained or air-gapped deployment environments.</div>
+            </div>
+          </li>
+          <li class="dp-step">
+            <div class="dp-n">◆</div>
+            <div>
+              <div class="dp-tl">Facility Types</div>
+              <div class="dp-tx">Commercial towers, campuses, municipal distribution, industrial facilities, hospitality, and data center cooling systems. Air-gapped deployment available for high-security environments.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="ft-brand">NERAIUM</div>
+        <div class="ft-desc">The intelligence standard for water infrastructure. Read-only operational intelligence delivering structural deviation detection before failure becomes consequence.</div>
+      </div>
+      <div>
+        <div class="ft-col-h">Platform</div>
+        <ul class="ft-links">
+          <li><a href="#platform">Capabilities</a></li>
+          <li><a href="#architecture">Architecture</a></li>
+          <li><a href="#detection">Detection Domains</a></li>
+          <li><a href="#validation">Validation Data</a></li>
+          <li><a href="#deployment">Deployment</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-h">Engage</div>
+        <ul class="ft-links">
+          <li><a href="#">Schedule Briefing</a></li>
+          <li><a href="#">Technical Documentation</a></li>
+          <li><a href="#">Partnership Inquiries</a></li>
+          <li><a href="#">Pilot Program</a></li>
+          <li><a href="#">Investor Relations</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="ft-copy">© 2026 NERAIUM. All rights reserved. Infrastructure Intelligence Platform.</div>
+      <div class="ft-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Security</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
   </div>
 </footer>
+
+<script>
+// === Clock ===
+function tick() {
+  const t = new Date().toUTCString().match(/(\d{2}:\d{2}:\d{2})/);
+  if (t) document.getElementById('opsClock').textContent = t[1] + ' UTC';
+}
+tick(); setInterval(tick, 1000);
+
+// === Live Channel Simulation ===
+function jitter(base, range, dec) {
+  return (base + (Math.random() - 0.5) * range).toFixed(dec);
+}
+function updateChannels() {
+  document.getElementById('ch-psi').textContent  = jitter(72.4, 2.4, 1);
+  document.getElementById('ch-gpm').textContent  = jitter(148.2, 8.0, 1);
+  document.getElementById('ch-temp').textContent = jitter(61.8, 1.4, 1);
+  const dev = (Math.random() * 0.09).toFixed(3);
+  document.getElementById('ch-dev').textContent = dev;
+  document.getElementById('bar-dev').style.width = Math.min(dev * 600, 100) + '%';
+  const now = new Date();
+  document.getElementById('log-ts1').textContent = now.toTimeString().slice(0, 8);
+}
+setInterval(updateChannels, 3200);
+
+// === Metric Counters ===
+function counter(id, target, ms, dec) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const t0 = performance.now();
+  function frame(now) {
+    const p = Math.min((now - t0) / ms, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = (target * e).toFixed(dec);
+    if (p < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+const valSec = document.getElementById('validation');
+let ran = false;
+new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting && !ran) {
+    ran = true;
+    counter('c-detect', 96.9, 1800, 1);
+    counter('c-lead',   183,  2000, 0);
+    counter('c-traj',   707,  2200, 0);
+  }
+}, { threshold: 0.25 }).observe(valSec);
+
+// === Hero Canvas Waveforms ===
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width  = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const waves = Array.from({ length: 8 }, (_, i) => ({
+  yRatio:    0.15 + (i / 7) * 0.7,
+  phase:     Math.random() * Math.PI * 2,
+  speed:     0.0025 + Math.random() * 0.003,
+  amp:       6 + Math.random() * 22,
+  freq:      0.006 + Math.random() * 0.007,
+  alpha:     0.04 + Math.random() * 0.1,
+}));
+
+let f = 0;
+function drawFrame() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  f++;
+  waves.forEach(w => {
+    ctx.beginPath();
+    ctx.strokeStyle = `rgba(0,212,240,${w.alpha})`;
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= canvas.width; x += 2) {
+      const y = canvas.height * w.yRatio
+        + Math.sin(x * w.freq + f * w.speed + w.phase) * w.amp
+        + Math.sin(x * w.freq * 2.1 + f * w.speed * 0.6 + w.phase * 1.4) * w.amp * 0.35;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  });
+  requestAnimationFrame(drawFrame);
+}
+drawFrame();
+
+// === Nav opacity on scroll ===
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').style.background =
+    window.scrollY > 60 ? 'rgba(5,7,9,0.96)' : 'rgba(5,7,9,0.88)';
+});
+</script>
 
 </body>
 </html>
