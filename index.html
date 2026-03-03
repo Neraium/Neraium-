@@ -108,23 +108,21 @@ nav{
   background-size:95%;
   background-position:center 0%;
   background-repeat:no-repeat;
-  opacity:0.65;
-  filter:brightness(1.0) contrast(1.02);
+  opacity:0.50;             /* lower opacity */
+  filter:brightness(0.9) contrast(1.02);
   z-index:1;
 }
 
-/* Subtle overlay */
 .hero-bg:before{
   content:"";
   position:absolute;
   inset:0;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(8,14,24,0.25) 0%,
-      rgba(5,10,18,0.45) 55%,
-      rgba(2,4,8,0.85) 100%
-    );
+  background:linear-gradient(
+    180deg,
+    rgba(6,10,18,0.45) 0%,
+    rgba(4,8,14,0.65) 55%,
+    rgba(2,4,8,0.92) 100%
+  );
   z-index:2;
 }
 
