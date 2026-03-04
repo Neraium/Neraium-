@@ -1,317 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Neraium | Governance</title>
-
+<title>Neraium Governance</title>
 <link rel="icon" href="favicon.ico">
 
 <style>
 
 body{
-margin:0;
-font-family:Inter, Arial, sans-serif;
-background:#050a15;
-color:#ffffff;
-line-height:1.7;
-}
-
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:26px 40px;
-border-bottom:1px solid rgba(255,255,255,0.08);
-}
-
-nav a{
+background:#050505;
 color:white;
-text-decoration:none;
-margin-left:28px;
-opacity:.75;
-font-size:15px;
-}
-
-nav a:hover{
-opacity:1;
-}
-
-.section{
-max-width:1000px;
-margin:auto;
+font-family:Inter;
 padding:100px 40px;
+max-width:900px;
+margin:auto;
 }
 
-h1{
-font-size:44px;
-margin-bottom:25px;
-}
-
-h2{
-margin-top:70px;
-font-size:28px;
-}
+h1{font-size:48px;margin-bottom:20px}
 
 p{
-opacity:.82;
-max-width:760px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
-margin-top:40px;
-}
-
-.card{
-background:#0c1326;
-padding:28px;
-border-radius:10px;
-border:1px solid rgba(255,255,255,0.06);
-}
-
-.card h3{
-margin-bottom:10px;
-}
-
-.statement{
-margin-top:50px;
-padding:32px;
-border-radius:10px;
-border:1px solid rgba(255,255,255,0.08);
-background:#0a1123;
-}
-
-.diagram{
-margin-top:60px;
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:14px;
-}
-
-.box{
-background:#0c1326;
-padding:18px 28px;
-border-radius:10px;
-border:1px solid rgba(255,255,255,0.08);
-font-size:15px;
-}
-
-.arrow{
-opacity:.6;
-}
-
-.gate{
-border:1px solid rgba(255,255,255,0.08);
-padding:18px;
-border-radius:10px;
-background:#0a1123;
-text-align:center;
-}
-
-.ananke{
-font-size:12px;
-opacity:.6;
-margin-bottom:10px;
-}
-
-.mnemosyne{
-border:1px solid rgba(255,255,255,0.08);
-padding:18px;
-border-radius:10px;
-background:#0a1123;
-text-align:center;
-}
-
-.evp{
-margin-top:10px;
-font-size:13px;
-opacity:.7;
-}
-
-footer{
-padding:40px;
-text-align:center;
-opacity:.5;
-font-size:13px;
-border-top:1px solid rgba(255,255,255,0.08);
+line-height:1.7;
+color:rgba(255,255,255,.7);
 }
 
 </style>
-
 </head>
 
 <body>
 
-<header>
-
-<h2>Neraium</h2>
-
-<nav>
-<a href="index.html">Home</a>
-<a href="platform.html">Platform</a>
-<a href="technical.html">Technical</a>
-</nav>
-
-</header>
-
-
-
-<section class="section">
-
-<h1>Governance</h1>
+<h1>Governance Architecture</h1>
 
 <p>
-Neraium is designed as a governance-aligned infrastructure intelligence system.
+Analytical outputs pass through Aletheia’s Gate operating under the authority of Ananke prior to institutional acknowledgement.
 </p>
 
 <p>
-The platform provides earlier visibility into infrastructure behavior while preserving strict operational boundaries and institutional accountability.
+Evidence Vault Protocol operates within Mnemosyne to ensure custody, traceability, and defensible infrastructure memory.
 </p>
-
-
-
-<h2>Operational Boundary</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Read Only Architecture</h3>
-<p>
-Neraium observes and analyzes telemetry but never modifies operational infrastructure systems.
-</p>
-</div>
-
-<div class="card">
-<h3>No System Control</h3>
-<p>
-The platform does not actuate pumps, valves, treatment processes, or control systems.
-</p>
-</div>
-
-<div class="card">
-<h3>Operator Authority</h3>
-<p>
-All operational decisions remain with licensed operators and infrastructure owners.
-</p>
-</div>
-
-</div>
-
-
-
-<h2>Evidence Discipline</h2>
-
-<p>
-Infrastructure intelligence must remain defensible. Neraium structures analytical outputs so they can be reviewed, validated, and preserved as structured operational evidence.
-</p>
-
-<p>
-The Evidence Vault Protocol ensures that admitted analytical outputs maintain traceability and contextual integrity throughout their lifecycle.
-</p>
-
-
-
-<h2>System Architecture</h2>
-
-<div class="diagram">
-
-<div class="box">Telemetry Sources</div>
-<div class="arrow">↓</div>
-
-<div class="box">Ingestion / Normalization</div>
-<div class="arrow">↓</div>
-
-<div class="box">Analysis Layer</div>
-<div class="arrow">↓</div>
-
-<div class="box">Analytical Output</div>
-<div class="arrow">↓</div>
-
-<div class="gate">
-
-<div class="ananke">Ananke</div>
-
-<div class="box">Aletheia’s Gate</div>
-
-</div>
-
-<div class="arrow">↓</div>
-
-<div class="mnemosyne">
-
-<div class="box">Mnemosyne</div>
-
-<div class="evp">Evidence Vault Protocol (EVP)</div>
-
-</div>
-
-<div class="arrow">↓</div>
-
-<div class="box">Human Review</div>
-
-</div>
-
-
-
-<h2>Governance Roles</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Neraium</h3>
-<p>
-Stewardship entity responsible for governance of the infrastructure intelligence system.
-</p>
-</div>
-
-<div class="card">
-<h3>Ananke</h3>
-<p>
-Doctrine authority that defines admissibility rules and operational boundaries.
-</p>
-</div>
-
-<div class="card">
-<h3>Mnemosyne</h3>
-<p>
-Custody layer responsible for preserving structured infrastructure evidence.
-</p>
-</div>
-
-</div>
-
-
-
-<div class="statement">
-
-<p>
-Neraium does not control infrastructure systems.
-</p>
-
-<p>
-The platform observes, analyzes, and records system behavior while operators retain full authority over operational decisions.
-</p>
-
-</div>
-
-
-
-</section>
-
-
-
-<footer>
-
-Neraium Infrastructure Intelligence Platform
-
-</footer>
 
 </body>
 </html>
