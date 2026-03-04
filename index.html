@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Neraium | Systemic Infrastructure Intelligence</title>
 
@@ -16,12 +16,12 @@
 :root{
 --bg:#040404;
 --text:#ffffff;
---sub:rgba(255,255,255,.72);
+--sub:rgba(255,255,255,.7);
 --border:rgba(255,255,255,.08);
---accent:#6fd2ff;
+--accent:#69d2ff;
 --max:1200px;
 --pad:24px;
---nav:70px;
+--nav:72px;
 --mono:'IBM Plex Mono', monospace;
 --sans:'Inter', sans-serif;
 }
@@ -48,29 +48,29 @@ top:0;
 left:0;
 right:0;
 height:var(--nav);
-backdrop-filter:blur(12px);
-background:rgba(0,0,0,.65);
+backdrop-filter:blur(14px);
+background:rgba(0,0,0,.75);
 border-bottom:1px solid var(--border);
 z-index:100;
 }
 
 .nav-inner{
-height:100%;
 display:flex;
 align-items:center;
 justify-content:space-between;
+height:100%;
 }
 
 .brand{
 font-family:var(--mono);
 letter-spacing:3px;
-font-size:12px;
+font-size:11px;
 text-transform:uppercase;
 }
 
 .links{
 display:flex;
-gap:18px;
+gap:22px;
 }
 
 .links a{
@@ -78,13 +78,11 @@ font-family:var(--mono);
 font-size:10px;
 letter-spacing:2px;
 text-decoration:none;
-color:rgba(255,255,255,.7);
+color:rgba(255,255,255,.65);
 text-transform:uppercase;
 }
 
-.links a:hover{
-color:var(--accent);
-}
+.links a:hover{color:var(--accent)}
 
 /* HERO */
 
@@ -94,17 +92,16 @@ display:flex;
 align-items:center;
 position:relative;
 padding-top:var(--nav);
-overflow:hidden;
 }
 
 .hero:before{
 content:"";
 position:absolute;
 inset:0;
-background-image:url("hero.png");
+background:url("hero.png");
 background-size:cover;
 background-position:center;
-filter:brightness(.88);
+filter:brightness(.85);
 }
 
 .hero-inner{
@@ -113,21 +110,19 @@ max-width:900px;
 }
 
 .hero h1{
-font-size:clamp(70px,10vw,120px);
+font-size:clamp(70px,9vw,110px);
 letter-spacing:-2px;
 font-weight:700;
-margin-bottom:10px;
-text-shadow:0 10px 30px rgba(0,0,0,.6);
+text-shadow:0 12px 40px rgba(0,0,0,.7);
 }
 
 .hero h2{
-font-size:clamp(22px,2.5vw,30px);
-font-weight:500;
+margin-top:12px;
+font-size:clamp(22px,2vw,28px);
 color:var(--sub);
-text-shadow:0 4px 15px rgba(0,0,0,.6);
 }
 
-/* SECTIONS */
+/* SECTION */
 
 section{
 padding:120px 0;
@@ -149,19 +144,17 @@ color:var(--sub);
 margin-top:50px;
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:25px;
+gap:30px;
 }
 
 .card{
-padding:26px;
-border:1px solid var(--border);
+padding:28px;
 border-radius:14px;
+border:1px solid var(--border);
 background:rgba(255,255,255,.03);
 }
 
-.card h3{
-margin-bottom:10px;
-}
+.card h3{margin-bottom:12px}
 
 .card p{
 color:var(--sub);
@@ -189,6 +182,8 @@ color:rgba(255,255,255,.6);
 <a href="platform.html">Platform</a>
 <a href="technical.html">Technical</a>
 <a href="governance.html">Governance</a>
+<a href="applications.html">Applications</a>
+<a href="contact.html">Contact</a>
 </div>
 
 </div>
@@ -198,10 +193,7 @@ color:rgba(255,255,255,.6);
 <div class="container hero-inner">
 
 <h1>NERAIUM</h1>
-
-<h2>
-Systemic Infrastructure Intelligence
-</h2>
+<h2>Systemic Infrastructure Intelligence</h2>
 
 </div>
 </header>
@@ -212,30 +204,24 @@ Systemic Infrastructure Intelligence
 <h2 class="section-title">Infrastructure Intelligence</h2>
 
 <p class="section-lead">
-Neraium ingests telemetry from critical physical systems and detects sustained structural deviation before failure occurs. The platform is strictly read-only. No control commands. No automation. No system modification.
+Neraium ingests telemetry from critical infrastructure and detects sustained structural deviation before failure occurs. The platform operates strictly in read-only mode and never issues control commands or modifies infrastructure.
 </p>
 
 <div class="grid">
 
 <div class="card">
 <h3>Detection</h3>
-<p>
-Structural deviation across industrial telemetry streams is detected before alarms or failure events.
-</p>
+<p>Identify deviation before alarms or operational failure.</p>
 </div>
 
 <div class="card">
-<h3>Intelligence</h3>
-<p>
-Outputs are reviewed through governance controls before institutional acknowledgement.
-</p>
+<h3>Governance</h3>
+<p>Outputs pass through deterministic governance before institutional acknowledgement.</p>
 </div>
 
 <div class="card">
 <h3>Authority</h3>
-<p>
-Operators retain full authority. Neraium never actuates or modifies infrastructure.
-</p>
+<p>Operators maintain full authority over infrastructure.</p>
 </div>
 
 </div>
@@ -244,9 +230,11 @@ Operators retain full authority. Neraium never actuates or modifies infrastructu
 </section>
 
 <footer>
+
 Craig Curtis<br>
 craig@neraium.com<br><br>
 © Neraium
+
 </footer>
 
 </body>
