@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Neraium</title>
+<title>Neraium Technical</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 
@@ -43,41 +43,32 @@ text-decoration:none;
 margin-left:22px;
 }
 
-.hero{
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-background-image:url("hero.png");
-background-size:cover;
-background-position:center;
+.page{
+padding-top:120px;
+max-width:900px;
+margin:auto;
+padding-left:30px;
+padding-right:30px;
 }
 
-.overlay{
-position:absolute;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,.65);
+h1{
+font-size:44px;
+margin-bottom:20px;
 }
 
-.hero-content{
-position:relative;
-max-width:700px;
-padding:40px;
+p{
+color:rgba(255,255,255,.7);
+line-height:1.6;
 }
 
-.hero h1{
-font-size:90px;
-margin:0;
+.image{
+margin-top:40px;
 }
 
-.hero h2{
-margin-top:10px;
-font-weight:400;
-color:rgba(255,255,255,.8);
+.image img{
+width:100%;
+border-radius:8px;
+border:1px solid rgba(255,255,255,.08);
 }
 
 </style>
@@ -88,24 +79,27 @@ color:rgba(255,255,255,.8);
 <nav>
 <div class="nav-inner">
 
-<a href="technical.html">TECHNICAL</a>
+<a href="index.html">HOME</a>
 
 </div>
 </nav>
 
-<section class="hero">
+<div class="page">
 
-<div class="overlay"></div>
+<h1>Technical Overview</h1>
 
-<div class="hero-content">
+<p>
+Neraium is a read only infrastructure intelligence layer that ingests telemetry
+from critical systems and detects sustained structural deviation before failure occurs.
+</p>
 
-<h1>Neraium</h1>
+<div class="image">
 
-<h2>Systemic Infrastructure Intelligence</h2>
+<img src="IMG_9010.png">
 
 </div>
 
-</section>
+</div>
 
 </body>
 </html>
