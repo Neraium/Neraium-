@@ -1,164 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium Platform</title>
+<section>
+    <div class="header-block">
+        <p class="mono-tag">Core Capabilities // NER-01</p>
+        <h1 style="font-size: 72px;">Integrated Resilience.</h1>
+    </div>
 
-<!-- Favicon / Icons -->
-<link rel="icon" href="favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="manifest" href="site.webmanifest">
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
-
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0 auto;
-  font-family: Inter, sans-serif;
-  background: #050505;
-  color: white;
-  position: relative;
-  overflow-x: hidden;
-  padding: 80px;
-  max-width: 900px;
-  min-height: 100vh;
-}
-
-/* Infrastructure grid */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: .4;
-  z-index: -1;
-}
-
-main {
-  position: relative;
-  z-index: 1;
-}
-
-h1 {
-  font-size: clamp(36px, 7vw, 50px);
-  margin-bottom: 30px;
-  line-height: 1.2;
-}
-
-p {
-  line-height: 1.7;
-  color: rgba(255,255,255,.7);
-  margin-bottom: 20px;
-  font-size: 16px;
-}
-
-p:last-of-type {
-  margin-bottom: 0;
-}
-
-/* Back link */
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: rgba(255,255,255,.6);
-  text-decoration: none;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 40px;
-  transition: color 0.3s ease;
-}
-
-.back-link:hover,
-.back-link:focus {
-  color: #69d2ff;
-  outline: none;
-}
-
-.back-link::before {
-  content: "← ";
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  body {
-    padding: 80px 24px 60px;
-  }
-  
-  h1 {
-    margin-bottom: 24px;
-  }
-  
-  p {
-    font-size: 15px;
-    margin-bottom: 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  body {
-    padding: 80px 20px 40px;
-  }
-  
-  h1 {
-    font-size: 32px;
-    margin-bottom: 20px;
-  }
-  
-  p {
-    line-height: 1.6;
-  }
-  
-  .back-link {
-    font-size: 11px;
-    margin-bottom: 32px;
-  }
-}
-</style>
-</head>
-<body>
-
-<a href="index.html" class="back-link">Back to Neraium</a>
-
-<main>
-  <h1>Platform</h1>
-
-  <p>
-    Neraium is a systemic infrastructure intelligence layer designed for high consequence physical systems. Telemetry streams are ingested from operational infrastructure without altering system behavior.
-  </p>
-
-  <p>
-    Detection models analyze sustained structural deviation across pump networks, thermal infrastructure, and cooling systems prior to operational alarms.
-  </p>
-
-  <p>
-    The system operates strictly in read-only mode. Neraium does not control equipment and does not modify operational systems.
-  </p>
-
-  <p>
-    By identifying deterioration patterns earlier than traditional monitoring systems, Neraium enables infrastructure operators to move from reactive maintenance toward proactive infrastructure management.
-  </p>
-</main>
-
-</body>
-</html>
+    <div class="dashboard-grid" style="margin-top: 60px;">
+        <div class="data-module">
+            <h3 class="mono-tag">Signal Ingestion</h3>
+            <p style="font-size: 24px; margin: 20px 0;">Neraium identifies sustained structural deviation across high-fidelity telemetry streams.</p>
+            <p class="text-dim">Our platform synthesizes millions of data points from BAS, SCADA, and IoT historians into a singular operational picture. We don't just alert on threshold breaches; we detect the mathematical drift that signals a system is losing its structural integrity.</p>
+        </div>
+        <div class="data-module" style="background: var(--accent-dim);">
+            <h3 class="mono-tag">System Status</h3>
+            <div style="margin-top: 40px;">
+                <p class="mono-tag" style="color: #fff;">Latency: 14ms</p>
+                <p class="mono-tag" style="color: #fff;">State: Read-Only</p>
+                <p class="mono-tag" style="color: #fff;">Uptime: 99.9999%</p>
+            </div>
+        </div>
+    </div>
+</section>
