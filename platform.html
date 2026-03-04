@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,100 +11,27 @@
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
 
-body{
-background:#050a15;
-color:white;
-line-height:1.6;
-}
+body{font-family:Inter;background:#050a15;color:white}
 
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:22px 80px;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
+nav{display:flex;justify-content:space-between;padding:20px 6vw;border-bottom:1px solid rgba(255,255,255,.05)}
 
-.logo{
-font-weight:700;
-font-size:22px;
-}
+nav ul{display:flex;gap:28px;list-style:none}
 
-nav ul{
-display:flex;
-list-style:none;
-gap:30px;
-}
+nav a{color:#cfd7ff;text-decoration:none}
 
-nav a{
-color:#cfd8ff;
-text-decoration:none;
-}
+.hero{padding:120px 6vw;max-width:1200px;margin:auto}
 
-nav a:hover{color:white}
+.hero h1{font-size:48px;margin-bottom:20px}
 
-.hero{
-padding:120px 80px;
-max-width:1200px;
-margin:auto;
-}
+.section{padding:90px 6vw;max-width:1200px;margin:auto}
 
-.hero h1{
-font-size:54px;
-margin-bottom:20px;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px;margin-top:40px}
 
-.hero p{
-color:#b4c0ff;
-max-width:700px;
-}
+.card{background:#0d1428;padding:30px;border-radius:12px;border:1px solid rgba(255,255,255,.05)}
 
-.section{
-padding:100px 80px;
-max-width:1200px;
-margin:auto;
-}
-
-.section h2{
-font-size:36px;
-margin-bottom:20px;
-}
-
-.section p{
-color:#c8d0ff;
-max-width:800px;
-}
-
-.grid{
-margin-top:60px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
-}
-
-.card{
-background:#0d1428;
-padding:35px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,.05);
-}
-
-.card h3{margin-bottom:12px}
-
-.card p{
-color:#a7b1e6;
-font-size:14px;
-}
-
-footer{
-padding:40px;
-text-align:center;
-color:#7c87b6;
-border-top:1px solid rgba(255,255,255,.05);
-margin-top:100px;
-}
+footer{text-align:center;padding:40px;color:#7c87b6;margin-top:100px}
 
 </style>
 </head>
@@ -113,7 +40,7 @@ margin-top:100px;
 
 <nav>
 
-<div class="logo">NERAIUM</div>
+<div>NERAIUM</div>
 
 <ul>
 <li><a href="index.html">Home</a></li>
@@ -129,67 +56,38 @@ margin-top:100px;
 <h1>The Neraium Platform</h1>
 
 <p>
-The Neraium platform transforms operational telemetry into systemic infrastructure intelligence.
-Instead of isolated monitoring tools, the platform analyzes entire telemetry environments to detect
-structural system behavior changes.
+The Neraium platform transforms operational telemetry into infrastructure intelligence.
 </p>
 
 </section>
 
 <section class="section">
 
-<h2>Platform Architecture</h2>
-
-<p>
-Neraium integrates telemetry ingestion, multivariate analysis, and governed intelligence outputs
-into a unified platform designed for infrastructure environments.
-</p>
+<h2>Platform Components</h2>
 
 <div class="grid">
 
 <div class="card">
 <h3>Telemetry Ingestion</h3>
-<p>
-Operational telemetry from pumps, exchangers, cooling loops and other infrastructure
-is ingested directly into the analysis environment.
-</p>
+<p>Operational telemetry streams are collected across infrastructure systems.</p>
 </div>
 
 <div class="card">
-<h3>Multivariate Detection</h3>
-<p>
-System drift is identified by analyzing patterns across multiple operational variables
-instead of single threshold alarms.
-</p>
+<h3>System Mapping</h3>
+<p>Infrastructure networks are analyzed as interconnected systems.</p>
 </div>
 
 <div class="card">
-<h3>Infrastructure Mapping</h3>
-<p>
-Systems are mapped as operational networks rather than isolated equipment.
-</p>
+<h3>Drift Detection</h3>
+<p>Multivariate analysis detects sustained deviation across variables.</p>
 </div>
 
 <div class="card">
-<h3>Intelligence Output</h3>
-<p>
-Operators receive early insight into system deterioration and efficiency loss.
-</p>
+<h3>Operational Intelligence</h3>
+<p>Operators gain early insight into infrastructure deterioration.</p>
 </div>
 
 </div>
-
-</section>
-
-<section class="section">
-
-<h2>Designed for Complex Systems</h2>
-
-<p>
-Infrastructure environments such as industrial plants, cooling systems, and
-water networks operate as interconnected systems. Neraium analyzes these
-environments as complete operational structures rather than individual assets.
-</p>
 
 </section>
 
