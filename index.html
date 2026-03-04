@@ -1,17 +1,31 @@
-<section style="min-height: 100vh; display: flex; align-items: flex-end; padding-bottom: 100px;">
-    <div style="width: 100%;">
-        <p class="mono" style="color: var(--accent);">[ SYSTEM STATUS: ACTIVE // READ-ONLY ]</p>
-        <h1 style="font-size: clamp(3rem, 10vw, 8rem); margin: 1rem 0; font-weight: 800; letter-spacing: -0.05em;">Sovereign <br>Infrastructure.</h1>
-        
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 4rem;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Neraium | Sovereign Infrastructure Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo mono"><span class="nav-dot"></span> NERAIUM</a>
+        <div class="nav-links">
+            <a href="platform.html">Platform</a>
+            <a href="technical.html">Technical</a>
+            <a href="governance.html">Governance</a>
+        </div>
+    </nav>
+    <section>
+        <p class="mono" style="color: var(--accent);">[ STATUS: ACTIVE // EPOCH 2026 ]</p>
+        <h1>Sovereign <br>Infrastructure.</h1>
+        <div class="grid-stack" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 4rem;">
             <div class="module">
-                <p style="font-size: 1.5rem; color: var(--text-main);">Neraium provides systemic intelligence for critical infrastructure assets. We detect the mathematical signatures of structural deviation before physical failure occurs.</p>
+                <p style="font-size: 1.5rem; line-height: 1.4;">Neraium provides systemic intelligence for critical infrastructure. We detect the mathematical signatures of structural deviation before physical failure occurs.</p>
             </div>
             <div class="module" style="background: var(--accent-dim);">
-                <p class="mono">Network Diode Status</p>
-                <p style="font-size: 2rem; font-weight: 700;">UNIDIRECTIONAL</p>
-                <p class="text-muted">No write-commands detected in current epoch.</p>
+                <p class="mono">Network Ingestion</p>
+                <p style="font-size: 2.5rem; font-weight: 800; margin: 1rem 0;">READ-ONLY</p>
+                <p class="mono" style="color: var(--text-muted);">Unidirectional Protocol</p>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</body>
+</html>
