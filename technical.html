@@ -5,25 +5,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Neraium Technical</title>
+<title>Neraium | Technical</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-font-family:Inter;
+font-family:Inter, sans-serif;
 background:#050505;
 color:white;
 }
+
+/* NAVBAR */
 
 nav{
 position:fixed;
 top:0;
 width:100%;
-background:rgba(0,0,0,.75);
+background:rgba(0,0,0,.85);
+backdrop-filter:blur(8px);
 border-bottom:1px solid rgba(255,255,255,.08);
+z-index:100;
 }
 
 .nav-inner{
@@ -31,19 +35,26 @@ max-width:1100px;
 margin:auto;
 display:flex;
 justify-content:flex-end;
-padding:20px;
+padding:18px 28px;
 }
 
 .nav-inner a{
 font-family:"IBM Plex Mono";
-font-size:11px;
-letter-spacing:.2em;
-color:rgba(255,255,255,.7);
+font-size:12px;
+letter-spacing:.18em;
 text-decoration:none;
-margin-left:22px;
+color:white;
+margin-left:28px;
+opacity:.85;
 }
 
-.page{
+.nav-inner a:hover{
+opacity:1;
+}
+
+/* HEADER */
+
+.header{
 padding-top:120px;
 max-width:900px;
 margin:auto;
@@ -51,15 +62,36 @@ padding-left:30px;
 padding-right:30px;
 }
 
-h1{
-font-size:44px;
-margin-bottom:20px;
+.header h1{
+font-size:48px;
+margin-bottom:12px;
 }
 
-p{
+.header p{
 color:rgba(255,255,255,.7);
-line-height:1.6;
+line-height:1.7;
 }
+
+/* SECTION */
+
+.section{
+max-width:900px;
+margin:auto;
+padding:70px 30px;
+border-top:1px solid rgba(255,255,255,.06);
+}
+
+.section h2{
+font-size:28px;
+margin-bottom:15px;
+}
+
+.section p{
+color:rgba(255,255,255,.7);
+line-height:1.7;
+}
+
+/* IMAGE */
 
 .image{
 margin-top:40px;
@@ -67,30 +99,65 @@ margin-top:40px;
 
 .image img{
 width:100%;
-border-radius:8px;
+border-radius:10px;
 border:1px solid rgba(255,255,255,.08);
 }
 
+/* FOOTER */
+
+footer{
+border-top:1px solid rgba(255,255,255,.08);
+padding:40px;
+text-align:center;
+font-size:12px;
+color:rgba(255,255,255,.4);
+}
+
 </style>
+
 </head>
 
 <body>
 
 <nav>
+
 <div class="nav-inner">
 
 <a href="index.html">HOME</a>
 
 </div>
+
 </nav>
 
-<div class="page">
+<div class="header">
 
-<h1>Technical Overview</h1>
+<h1>Neraium Technical Overview</h1>
 
 <p>
-Neraium is a read only infrastructure intelligence layer that ingests telemetry
-from critical systems and detects sustained structural deviation before failure occurs.
+Neraium is a read-only infrastructure intelligence layer designed for critical physical systems.
+The platform ingests telemetry and detects sustained structural deviation before failure occurs.
+</p>
+
+</div>
+
+<section class="section">
+
+<h2>System Boundary</h2>
+
+<p>
+Neraium does not control equipment and does not modify operational systems.
+Operators retain full authority over infrastructure environments.
+</p>
+
+</section>
+
+<section class="section">
+
+<h2>Deviation Detection</h2>
+
+<p>
+The platform analyzes multi-signal telemetry and identifies persistent drift patterns
+that precede failure or efficiency degradation.
 </p>
 
 <div class="image">
@@ -99,7 +166,13 @@ from critical systems and detects sustained structural deviation before failure 
 
 </div>
 
-</div>
+</section>
+
+<footer>
+
+© 2026 Neraium
+
+</footer>
 
 </body>
 </html>
