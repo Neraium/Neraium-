@@ -6,134 +6,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Neraium | Governance</title>
+<title>Neraium Governance</title>
+
+<link rel="icon" href="favicon.ico">
 
 <style>
 
 body{
 margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#050505;
+font-family:Arial;
+background:#050a15;
 color:white;
-line-height:1.7;
 }
 
-/* NAV BAR */
-
-nav{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:70px;
-background:rgba(5,5,5,0.85);
-border-bottom:1px solid rgba(255,255,255,0.08);
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:100;
-}
-
-.nav-inner{
-width:1000px;
+header{
 display:flex;
 justify-content:space-between;
-padding:0 20px;
-}
-
-.brand{
-font-size:12px;
-letter-spacing:3px;
-text-decoration:none;
-color:white;
-}
-
-.links a{
-margin-left:20px;
-font-size:11px;
-letter-spacing:2px;
-text-decoration:none;
-color:rgba(255,255,255,0.7);
-}
-
-.links a:hover{
-color:white;
-}
-
-/* HEADER */
-
-.hero{
-padding-top:120px;
-padding-bottom:60px;
+padding:25px 40px;
 border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:0 20px;
+nav a{
+color:white;
+text-decoration:none;
+margin-left:30px;
 }
-
-.hero h1{
-font-size:44px;
-margin-bottom:10px;
-}
-
-.hero p{
-color:rgba(255,255,255,0.75);
-}
-
-/* SECTION */
 
 .section{
-padding:70px 0;
-border-bottom:1px solid rgba(255,255,255,0.06);
-}
-
-.kicker{
-font-size:11px;
-letter-spacing:3px;
-color:rgba(255,255,255,0.5);
-}
-
-.section h2{
-font-size:28px;
-margin-top:10px;
-margin-bottom:10px;
-}
-
-/* GRID */
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:16px;
-margin-top:20px;
-}
-
-.card{
-background:rgba(255,255,255,0.04);
-border:1px solid rgba(255,255,255,0.1);
-border-radius:10px;
-padding:20px;
-}
-
-.card h3{
-margin-top:8px;
-margin-bottom:6px;
-}
-
-.card p{
-color:rgba(255,255,255,0.7);
-}
-
-/* FOOTER */
-
-footer{
-padding:40px;
-text-align:center;
-font-size:12px;
-color:rgba(255,255,255,0.4);
+padding:100px 40px;
+max-width:900px;
+margin:auto;
 }
 
 </style>
@@ -142,114 +44,40 @@ color:rgba(255,255,255,0.4);
 
 <body>
 
+<header>
+
+<h2>Neraium</h2>
+
 <nav>
-
-<div class="nav-inner">
-
-<a class="brand" href="index.html">NERAIUM</a>
-
-<div class="links">
-<a href="index.html">HOME</a>
-<a href="technical.html">TECHNICAL</a>
-</div>
-
-</div>
-
+<a href="index.html">Home</a>
+<a href="platform.html">Platform</a>
+<a href="technical.html">Technical</a>
 </nav>
-
-
-<header class="hero">
-
-<div class="container">
-
-<h1>Governance</h1>
-
-<p>
-Neraium operates as a read-only infrastructure intelligence layer.
-The system observes telemetry and produces analytical outputs without
-modifying operational infrastructure or issuing control commands.
-Operational authority remains fully with system operators.
-</p>
-
-</div>
 
 </header>
 
 
 <section class="section">
 
-<div class="container">
-
-<div class="kicker">PRINCIPLES</div>
-<h2>Core Governance Principles</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Observation Only</h3>
-<p>Neraium analyzes telemetry but does not control or modify infrastructure.</p>
-</div>
-
-<div class="card">
-<h3>No System Actuation</h3>
-<p>The platform does not issue commands to SCADA, BAS, PLC, or operational systems.</p>
-</div>
-
-<div class="card">
-<h3>Operator Authority</h3>
-<p>All operational decisions remain entirely with facility engineers and operators.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="section">
-
-<div class="container">
-
-<div class="kicker">RESPONSIBILITY</div>
-<h2>Operational Responsibility</h2>
+<h1>Governance</h1>
 
 <p>
-Neraium provides analytical intelligence derived from telemetry data.
-Operators review this information and determine operational responses.
-Existing control systems such as SCADA, BAS, and PLC infrastructure
-remain unchanged and outside the Neraium system boundary.
+Neraium operates as a read-only infrastructure intelligence layer.
 </p>
-
-</div>
-
-</section>
-
-
-<section class="section">
-
-<div class="container">
-
-<div class="kicker">EVIDENCE</div>
-<h2>Evidence Discipline</h2>
 
 <p>
-Neraium maintains strict separation between analytical capability
-and operational performance claims. Demonstrations validate the
-analytical methods of the system. Operational performance claims
-require validation using real telemetry within partner environments.
+The platform observes telemetry but never actuates physical systems.
 </p>
 
-</div>
+<p>
+Operational authority always remains with infrastructure owners and operators.
+</p>
+
+<p>
+This governance structure ensures safe infrastructure visibility without introducing operational control risk.
+</p>
 
 </section>
-
-
-<footer>
-
-© 2026 Neraium
-
-</footer>
 
 </body>
 </html>
