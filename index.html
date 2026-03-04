@@ -100,20 +100,16 @@ padding-top:70px;
 overflow:hidden;
 }
 
-/* BACKGROUND */
+/* HERO IMAGE */
 
 .hero-bg{
 position:absolute;
-top:-20%;
-left:-10%;
-width:120%;
-height:140%;
+inset:0;
 background:url("hero.png") center center / cover no-repeat;
 filter:brightness(.6);
-z-index:0;
 }
 
-/* SPOTLIGHT EFFECT */
+/* SPOTLIGHT */
 
 .spotlight{
 position:absolute;
@@ -123,7 +119,6 @@ background:radial-gradient(circle, rgba(80,120,255,.18), transparent 70%);
 top:50%;
 left:50%;
 transform:translate(-50%,-40%);
-z-index:1;
 pointer-events:none;
 }
 
@@ -144,7 +139,6 @@ transparent
 transform:rotate(8deg);
 animation:scanMove 14s linear infinite;
 pointer-events:none;
-z-index:2;
 }
 
 @keyframes scanMove{
@@ -155,27 +149,13 @@ z-index:2;
 
 }
 
-/* DARK OVERLAY */
-
-.hero::after{
-content:"";
-position:absolute;
-inset:0;
-background:linear-gradient(
-to bottom,
-rgba(0,0,0,.3),
-rgba(0,0,0,.9)
-);
-z-index:3;
-}
-
 /* HERO TEXT */
 
 .hero-content{
 position:relative;
-z-index:4;
 max-width:760px;
 padding:0 30px;
+z-index:2;
 }
 
 .hero h1{
@@ -198,6 +178,26 @@ line-height:1.7;
 color:rgba(255,255,255,.7);
 }
 
+/* PROOF STRIP */
+
+.proof{
+border-top:1px solid rgba(255,255,255,.05);
+border-bottom:1px solid rgba(255,255,255,.05);
+padding:28px 20px;
+background:#050505;
+}
+
+.proof-row{
+display:flex;
+justify-content:center;
+gap:60px;
+flex-wrap:wrap;
+font-size:12px;
+letter-spacing:.2em;
+text-transform:uppercase;
+color:rgba(255,255,255,.45);
+}
+
 /* SECTIONS */
 
 .section{
@@ -210,6 +210,8 @@ margin:auto;
 font-size:34px;
 margin-bottom:40px;
 }
+
+/* GRID */
 
 .grid{
 display:grid;
@@ -286,6 +288,10 @@ font-size:16px;
 padding:90px 25px;
 }
 
+.proof-row{
+gap:30px;
+}
+
 }
 
 </style>
@@ -311,7 +317,7 @@ padding:90px 25px;
 
 <section class="hero">
 
-<div class="hero-bg" id="heroBg"></div>
+<div class="hero-bg"></div>
 
 <div class="spotlight"></div>
 
@@ -325,10 +331,67 @@ padding:90px 25px;
 
 <p>
 Detect structural infrastructure deterioration before failure using existing telemetry.
-Read-only intelligence. No automation. No system control.
+Read only intelligence. No automation. No system control.
 </p>
 
 </div>
+
+</section>
+
+<section class="proof">
+
+<div class="proof-row">
+
+<span>Cooling Systems</span>
+<span>Industrial Water</span>
+<span>District Energy</span>
+<span>Data Centers</span>
+<span>Utilities</span>
+
+</div>
+
+</section>
+
+<section class="section" id="technical">
+
+<h3>Technical</h3>
+
+<div class="grid">
+
+<div class="card">
+<h4>Telemetry Ingestion</h4>
+<p>Neraium connects to existing monitoring infrastructure and ingests operational telemetry without modifying systems.</p>
+</div>
+
+<div class="card">
+<h4>Deterioration Detection</h4>
+<p>Structural deviation is detected before alarms trigger or equipment failure occurs.</p>
+</div>
+
+<div class="card">
+<h4>Operator Intelligence</h4>
+<p>Signals are delivered as reviewable intelligence with no automation or system control.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section" id="deployment">
+
+<h3>Deployment</h3>
+
+<p>
+Neraium deploys alongside existing infrastructure monitoring systems and operates strictly as a read only intelligence layer.
+</p>
+
+</section>
+
+<section class="cta" id="contact">
+
+<h3>Request a Pilot</h3>
+
+<a class="button" href="mailto:craig@neraium.com">Contact Neraium</a>
 
 </section>
 
