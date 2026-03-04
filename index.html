@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,153 +8,10 @@
 
 <title>Neraium | Infrastructure Intelligence</title>
 
+<link rel="stylesheet" href="style.css">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:Inter, sans-serif;
-background:#050a15;
-color:white;
-line-height:1.6;
-}
-
-/* NAV */
-
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 6vw;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.logo{
-font-weight:700;
-font-size:20px;
-letter-spacing:1px;
-}
-
-nav ul{
-display:flex;
-list-style:none;
-gap:28px;
-}
-
-nav a{
-color:#cfd7ff;
-text-decoration:none;
-font-size:14px;
-}
-
-nav a:hover{
-color:white;
-}
-
-@media(max-width:700px){
-nav{
-flex-direction:column;
-gap:10px;
-}
-}
-
-/* HERO */
-
-.hero{
-padding:120px 6vw;
-max-width:1200px;
-margin:auto;
-}
-
-.hero h1{
-font-size:clamp(36px,6vw,60px);
-margin-bottom:20px;
-}
-
-.hero p{
-color:#b4c0ff;
-font-size:18px;
-max-width:700px;
-}
-
-/* SECTIONS */
-
-.section{
-padding:90px 6vw;
-max-width:1200px;
-margin:auto;
-}
-
-.section h2{
-font-size:clamp(28px,4vw,40px);
-margin-bottom:20px;
-}
-
-.section p{
-color:#c8d0ff;
-max-width:800px;
-}
-
-/* GRID */
-
-.grid{
-margin-top:50px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:28px;
-}
-
-.card{
-background:#0d1428;
-padding:30px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,.05);
-}
-
-.card h3{
-margin-bottom:10px;
-font-size:18px;
-}
-
-.card p{
-color:#a7b1e6;
-font-size:14px;
-}
-
-/* CTA */
-
-.cta{
-text-align:center;
-padding:120px 6vw;
-}
-
-.button{
-display:inline-block;
-padding:14px 28px;
-background:#6d7cff;
-border-radius:6px;
-color:white;
-text-decoration:none;
-margin-top:20px;
-}
-
-/* FOOTER */
-
-footer{
-padding:40px 6vw;
-text-align:center;
-color:#7c87b6;
-border-top:1px solid rgba(255,255,255,.05);
-margin-top:100px;
-}
-
-</style>
 </head>
 
 <body>
@@ -177,7 +35,7 @@ margin-top:100px;
 
 <p>
 Neraium analyzes multivariate telemetry across infrastructure environments
-to detect structural deviation and deterioration before system failure occurs.
+to detect structural deviation before operational failure occurs.
 </p>
 
 </section>
@@ -187,21 +45,21 @@ to detect structural deviation and deterioration before system failure occurs.
 <h2>What Neraium Does</h2>
 
 <p>
-Traditional monitoring systems rely on thresholds and alarms. Neraium analyzes
-entire telemetry environments simultaneously, identifying system drift and
-structural deviation long before operational failures occur.
+Most monitoring systems rely on alarms and thresholds. Neraium evaluates
+entire telemetry environments simultaneously to identify structural drift
+weeks before operational failures occur.
 </p>
 
 <div class="grid">
 
 <div class="card">
 <h3>Multivariate Analysis</h3>
-<p>Relationships between operational variables reveal infrastructure behavior.</p>
+<p>Infrastructure behavior is detected through relationships between variables.</p>
 </div>
 
 <div class="card">
 <h3>Early Failure Detection</h3>
-<p>System deviation can be detected weeks before failure events.</p>
+<p>System deviation can be identified long before failure occurs.</p>
 </div>
 
 <div class="card">
@@ -210,8 +68,8 @@ structural deviation long before operational failures occur.
 </div>
 
 <div class="card">
-<h3>Read-Only Intelligence</h3>
-<p>The platform observes systems without controlling equipment.</p>
+<h3>Read Only Architecture</h3>
+<p>The platform observes infrastructure without controlling equipment.</p>
 </div>
 
 </div>
@@ -221,6 +79,8 @@ structural deviation long before operational failures occur.
 <section class="cta">
 
 <h2>Infrastructure Should Be Predictable</h2>
+
+<p>Operational telemetry can reveal failure patterns long before they occur.</p>
 
 <a class="button" href="platform.html">Explore Platform</a>
 
