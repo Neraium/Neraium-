@@ -8,7 +8,28 @@
 <link rel="icon" href="favicon.ico">
 
 <style>
+body{
+margin:0;
+font-family:Inter;
+background:#050505;
+color:white;
+position:relative;
+}
 
+/* infrastructure grid */
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background-image:
+linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+background-size:60px 60px;
+opacity:.4;
+z-index:0;
+}
 body{
 font-family:Inter;
 background:#050505;
