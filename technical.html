@@ -1,25 +1,25 @@
 <section>
-    <p class="mono-tag">Technical Architecture // NER-SPEC-A</p>
-    <h2 style="font-size: 56px;">Passive Sovereignty.</h2>
-    
-    <div class="grid" style="grid-template-columns: repeat(2, 1fr); margin-top: 80px;">
-        <div class="data-module">
-            <h4 class="mono-tag">01 / Unidirectional Ingestion</h4>
-            <p>The Neraium node utilizes a logical data diode. Data travels from the facility to our intelligence layer, but no return path exists at the protocol level. No write-access. No command injection risk.</p>
-        </div>
-        <div class="data-module">
-            <h4 class="mono-tag">02 / Protocol Compatibility</h4>
-            <ul class="text-dim" style="list-style: none; margin-top: 20px;">
-                <li>[+] BACnet/SC (Secure Connect)</li>
-                <li>[+] Modbus TCP / RTU</li>
-                <li>[+] OPC UA Unidirectional</li>
-                <li>[+] MQTT over Sparkplug B</li>
+    <p class="mono">Technical Specifications // NER-SPEC-04</p>
+    <h2 style="font-size: 3rem; margin: 1rem 0;">Hardware-Level Isolation.</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border);">
+        <div class="module">
+            <h3 class="mono">Ingestion Protocols</h3>
+            <ul style="list-style: none; margin-top: 1rem; color: var(--text-muted);">
+                <li>> BACnet/SC (Secure Connect) Native Integration</li>
+                <li>> Modbus TCP / RTU Registry Polling</li>
+                <li>> OPC UA Unidirectional Data Stream</li>
+                <li>> MQTT Sparkplug B normalization</li>
             </ul>
         </div>
-    </div>
-    
-    <div style="margin-top: 40px; padding: 40px; border: 1px dashed var(--border-bright);">
-        <h3 class="mono-tag">Edge Computing</h3>
-        <p>Telemetry is normalized at the edge. Heavy-lift deviation analysis occurs in situ, ensuring that only governed intelligence—not raw sensitive packets—crosses the institutional boundary.</p>
+        <div class="module">
+            <h3 class="mono">Security Constraints</h3>
+            <ul style="list-style: none; margin-top: 1rem; color: var(--text-muted);">
+                <li>> Physical Layer Unidirectionality</li>
+                <li>> Zero-Trust Edge Authentication</li>
+                <li>> AES-256-GCM Envelope Encryption</li>
+                <li>> Mutual TLS (mTLS) 1.3 Termination</li>
+            </ul>
+        </div>
     </div>
 </section>
