@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,7 +8,7 @@
 
 <title>Neraium | Systemic Infrastructure Intelligence</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -24,35 +25,34 @@ color:#fff;
 overflow-x:hidden;
 }
 
-/* ---------- NAV ---------- */
+/* NAV */
 
 nav{
 position:fixed;
 top:0;
 left:0;
 right:0;
-height:72px;
-background:rgba(0,0,0,.9);
-backdrop-filter:blur(10px);
+height:70px;
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 60px;
+padding:0 50px;
+background:rgba(0,0,0,.9);
 border-bottom:1px solid rgba(255,255,255,.06);
-z-index:1000;
+z-index:10;
 }
 
 .logo{
 display:flex;
 align-items:center;
-gap:14px;
+gap:12px;
 font-weight:600;
-letter-spacing:.12em;
+letter-spacing:.1em;
 }
 
 .logo-box{
-width:34px;
-height:34px;
+width:32px;
+height:32px;
 border-radius:8px;
 background:#fff;
 color:#000;
@@ -63,25 +63,24 @@ font-weight:700;
 }
 
 nav ul{
-list-style:none;
 display:flex;
-gap:42px;
+gap:36px;
+list-style:none;
 }
 
 nav a{
 text-decoration:none;
-color:rgba(255,255,255,.55);
+color:rgba(255,255,255,.6);
 font-size:12px;
 letter-spacing:.18em;
 text-transform:uppercase;
-transition:.25s;
 }
 
 nav a:hover{
 color:#fff;
 }
 
-/* ---------- HERO ---------- */
+/* HERO */
 
 .hero{
 height:100vh;
@@ -89,99 +88,79 @@ display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
+padding-top:70px;
 position:relative;
-padding-top:72px;
 overflow:hidden;
 }
 
-/* background image */
+/* BACKGROUND IMAGE */
 
 .hero::before{
 content:"";
 position:absolute;
-inset:0;
-background:url("hero.png") center 25% / 125% no-repeat;
-filter:brightness(.65);
+inset:-10%;
+background:url("hero.png") center 28% / 130% no-repeat;
+filter:brightness(.68);
+z-index:0;
+will-change:transform;
 }
 
-/* dark overlay */
+/* GLOW + GRADIENT */
 
 .hero::after{
 content:"";
 position:absolute;
 inset:0;
-background:linear-gradient(
+background:
+radial-gradient(circle at center,
+rgba(255,255,255,.08),
+rgba(0,0,0,0) 45%),
+linear-gradient(
 to bottom,
 rgba(0,0,0,.35),
-rgba(0,0,0,.8)
+rgba(0,0,0,.9)
 );
+z-index:1;
 }
 
-/* hero content */
+/* HERO CONTENT */
 
 .hero-content{
 position:relative;
 z-index:2;
+padding:0 30px;
 max-width:900px;
-padding:0 40px;
-animation:fadeUp 1.4s ease;
 }
 
-/* eyebrow */
+/* EYEBROW */
 
 .eyebrow{
 font-size:12px;
-letter-spacing:.4em;
+letter-spacing:.35em;
 text-transform:uppercase;
 color:rgba(255,255,255,.45);
-margin-bottom:22px;
-position:relative;
+margin-bottom:20px;
 }
 
-.eyebrow:before{
-content:"";
-display:block;
-width:60px;
-height:1px;
-background:rgba(255,255,255,.4);
-margin:0 auto 18px auto;
-}
-
-/* title */
+/* TITLE */
 
 .hero h1{
-font-size:clamp(64px,9vw,120px);
+font-size:clamp(64px,9vw,110px);
 font-weight:800;
 letter-spacing:-.03em;
-margin-bottom:18px;
+text-shadow:0 10px 30px rgba(0,0,0,.85);
 }
 
-/* subtitle */
+/* SUBTITLE */
 
 .hero h2{
-font-size:clamp(22px,3vw,34px);
+margin-top:16px;
+font-size:clamp(22px,3vw,32px);
 font-weight:400;
 color:rgba(255,255,255,.85);
-letter-spacing:.02em;
 }
 
-/* ---------- ANIMATION ---------- */
-
-@keyframes fadeUp{
-
-0%{
-opacity:0;
-transform:translateY(30px);
-}
-
-100%{
-opacity:1;
-transform:translateY(0);
-}
-
-}
-
-/* ---------- MOBILE ---------- */
+/* MOBILE */
 
 @media(max-width:768px){
 
@@ -189,16 +168,8 @@ nav{
 padding:0 25px;
 }
 
-nav ul{
-gap:22px;
-}
-
-.hero-content{
-padding:0 24px;
-}
-
 .hero::before{
-background:url("hero.png") center 25% / 160% no-repeat;
+background:url("hero.png") center 28% / 160% no-repeat;
 }
 
 }
@@ -236,6 +207,32 @@ NERAIUM
 </div>
 
 </section>
+
+<script>
+
+/* Subtle Parallax */
+
+const hero = document.querySelector(".hero");
+
+window.addEventListener("scroll", () => {
+
+const scroll = window.scrollY;
+
+hero.style.setProperty("--scroll", scroll);
+
+document.querySelector(".hero::before");
+
+});
+
+document.addEventListener("scroll", () => {
+
+const offset = window.scrollY * 0.15;
+
+document.querySelector(".hero").style.backgroundPositionY = `${offset}px`;
+
+});
+
+</script>
 
 </body>
 </html>
