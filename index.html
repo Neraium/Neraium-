@@ -18,18 +18,15 @@ padding:0;
 box-sizing:border-box;
 }
 
-html{
-scroll-behavior:smooth;
-}
-
 body{
 font-family:'Inter',sans-serif;
 background:#000;
 color:#fff;
 overflow-x:hidden;
+line-height:1.6;
 }
 
-/* NAV */
+/* NAVBAR */
 
 nav{
 position:fixed;
@@ -41,7 +38,7 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 padding:0 60px;
-background:rgba(0,0,0,.88);
+background:rgba(0,0,0,.9);
 backdrop-filter:blur(10px);
 border-bottom:1px solid rgba(255,255,255,.05);
 z-index:100;
@@ -56,8 +53,8 @@ letter-spacing:.1em;
 }
 
 .logo-box{
-width:32px;
-height:32px;
+width:34px;
+height:34px;
 border-radius:8px;
 background:#fff;
 color:#000;
@@ -69,17 +66,17 @@ font-weight:700;
 
 nav ul{
 display:flex;
-gap:42px;
+gap:26px;
 list-style:none;
 }
 
 nav a{
 text-decoration:none;
 color:rgba(255,255,255,.6);
-font-size:12px;
-letter-spacing:.18em;
+font-size:11px;
+letter-spacing:.14em;
 text-transform:uppercase;
-transition:.3s;
+transition:.25s;
 }
 
 nav a:hover{
@@ -108,37 +105,9 @@ left:-10%;
 width:120%;
 height:140%;
 background:url("hero.png") center 30% / cover no-repeat;
-filter:brightness(.75);
+filter:brightness(.7);
 z-index:0;
 }
-
-/* BLUE SCAN */
-
-.scan{
-position:absolute;
-top:-20%;
-left:-40%;
-width:60%;
-height:200%;
-background:linear-gradient(
-90deg,
-transparent,
-rgba(0,180,255,.12),
-transparent
-);
-transform:rotate(8deg);
-animation:scanMove 12s linear infinite;
-z-index:1;
-}
-
-@keyframes scanMove{
-
-0%{ left:-60%; }
-100%{ left:140%; }
-
-}
-
-/* overlay */
 
 .hero::after{
 content:"";
@@ -149,14 +118,12 @@ to bottom,
 rgba(0,0,0,.35),
 rgba(0,0,0,.92)
 );
-z-index:2;
+z-index:1;
 }
-
-/* HERO TEXT */
 
 .hero-content{
 position:relative;
-z-index:3;
+z-index:2;
 max-width:850px;
 padding:0 40px;
 }
@@ -165,26 +132,13 @@ padding:0 40px;
 font-size:clamp(72px,9vw,120px);
 font-weight:800;
 letter-spacing:-.03em;
-text-shadow:0 10px 40px rgba(0,0,0,.9);
 }
 
 .hero h2{
-margin-top:16px;
+margin-top:18px;
 font-size:clamp(22px,3vw,34px);
 font-weight:400;
 color:rgba(255,255,255,.85);
-}
-
-/* SYSTEM STATEMENT */
-
-.hero p{
-margin-top:28px;
-font-size:18px;
-line-height:1.7;
-color:rgba(255,255,255,.7);
-max-width:640px;
-margin-left:auto;
-margin-right:auto;
 }
 
 /* SECTION */
@@ -193,43 +147,113 @@ margin-right:auto;
 padding:140px 60px;
 max-width:1100px;
 margin:auto;
+position:relative;
 }
 
-.cards{
+.section:before{
+content:"";
+position:absolute;
+top:0;
+left:50%;
+width:600px;
+height:300px;
+transform:translateX(-50%);
+background:radial-gradient(circle, rgba(80,120,255,.08), transparent);
+z-index:-1;
+}
+
+.section h3{
+font-size:36px;
+margin-bottom:40px;
+}
+
+/* GRID */
+
+.grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:40px;
-margin-top:40px;
 }
+
+/* CARDS */
 
 .card{
-padding:40px;
 background:#070707;
-border:1px solid rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.06);
+padding:40px;
+transition:all .35s ease;
 }
 
-.card h3{
+.card:hover{
+transform:translateY(-8px);
+border-color:rgba(255,255,255,.18);
+box-shadow:0 20px 40px rgba(0,0,0,.4);
+}
+
+.card h4{
 margin-bottom:12px;
+font-size:18px;
 }
 
 .card p{
 color:rgba(255,255,255,.65);
-line-height:1.7;
 }
 
-/* CONTACT */
+/* CTA */
 
-.contact{
+.cta{
 text-align:center;
-padding:120px 60px;
+padding:160px 40px;
+background:linear-gradient(
+to bottom,
+rgba(0,0,0,.85),
+rgba(0,0,0,1)
+);
+}
+
+.cta h3{
+font-size:40px;
+margin-bottom:30px;
+}
+
+.button{
+display:inline-block;
+padding:18px 40px;
+background:#fff;
+color:#000;
+text-decoration:none;
+font-weight:600;
+border-radius:4px;
+transition:.25s;
+}
+
+.button:hover{
+transform:translateY(-3px);
 }
 
 /* MOBILE */
 
-@media(max-width:900px){
+@media(max-width:768px){
 
 nav{
 padding:0 25px;
+}
+
+nav ul{
+gap:16px;
+}
+
+nav a{
+font-size:10px;
+letter-spacing:.12em;
+}
+
+.hero h1{
+font-size:60px;
+}
+
+.hero h2{
+font-size:22px;
 }
 
 .section{
@@ -252,8 +276,8 @@ NERAIUM
 </div>
 
 <ul>
-<li><a href="#technical">Technical</a></li>
-<li><a href="#deployment">Deployment</a></li>
+<li><a href="#what">What</a></li>
+<li><a href="#how">How</a></li>
 <li><a href="#contact">Contact</a></li>
 </ul>
 
@@ -262,51 +286,71 @@ NERAIUM
 <section class="hero">
 
 <div class="hero-bg"></div>
-<div class="scan"></div>
 
 <div class="hero-content">
 
 <h1>Neraium</h1>
 <h2>Systemic Infrastructure Intelligence</h2>
 
-<p>
-Detect structural infrastructure deterioration before failure using existing telemetry.
-Read-only intelligence. No automation. No system control.
-</p>
-
 </div>
 
 </section>
 
-<section class="section" id="technical">
+<section class="section" id="what">
 
-<h2>Technical</h2>
+<h3>What Neraium Does</h3>
 
-<div class="cards">
+<div class="grid">
 
 <div class="card">
-<h3>Telemetry Ingestion</h3>
-<p>Connects to existing monitoring infrastructure and ingests live telemetry without modifying operational systems.</p>
+<h4>Telemetry Ingestion</h4>
+<p>Neraium connects to existing monitoring infrastructure and ingests operational telemetry without modifying systems.</p>
 </div>
 
 <div class="card">
-<h3>Deviation Detection</h3>
-<p>Detects sustained structural deterioration patterns before alarms or catastrophic failure.</p>
+<h4>Deterioration Detection</h4>
+<p>Structural deviation is detected before alarms trigger or equipment failure occurs.</p>
 </div>
 
 <div class="card">
-<h3>Reviewable Intelligence</h3>
-<p>Produces auditable signals suitable for operator and governance review.</p>
+<h4>Operator Intelligence</h4>
+<p>Signals are delivered as reviewable intelligence with no automation, control, or system modification.</p>
 </div>
 
 </div>
 
 </section>
 
-<section class="contact" id="contact">
+<section class="section" id="how">
 
-<h2>Contact</h2>
-<p>craig@neraium.com</p>
+<h3>How It Works</h3>
+
+<div class="grid">
+
+<div class="card">
+<h4>Telemetry Collection</h4>
+<p>Existing facility telemetry from pumps, towers, and exchangers is ingested continuously.</p>
+</div>
+
+<div class="card">
+<h4>Structural Analysis</h4>
+<p>Multivariate telemetry patterns reveal sustained system deterioration.</p>
+</div>
+
+<div class="card">
+<h4>Operator Review</h4>
+<p>Signals surface to operators before reactive maintenance or failure occurs.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="cta" id="contact">
+
+<h3>Request a Pilot</h3>
+
+<a class="button" href="mailto:craig@neraium.com">Contact Neraium</a>
 
 </section>
 
