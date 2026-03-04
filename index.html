@@ -34,6 +34,7 @@ justify-content:space-between;
 padding:0 40px;
 box-sizing:border-box;
 border-bottom:1px solid rgba(255,255,255,.08);
+z-index:100;
 }
 
 nav span{
@@ -60,9 +61,32 @@ height:100vh;
 display:flex;
 align-items:center;
 padding:0 80px;
+position:relative;
+overflow:hidden;
+}
+
+.hero:before{
+content:"";
+position:absolute;
+inset:0;
 background:url("hero.png");
 background-size:cover;
 background-position:center;
+filter:brightness(.75);
+}
+
+.hero:after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(to bottom,
+rgba(0,0,0,.2),
+rgba(0,0,0,.65));
+}
+
+.hero-inner{
+position:relative;
+z-index:2;
 }
 
 .hero h1{
@@ -135,7 +159,7 @@ color:rgba(255,255,255,.6);
 
 <div class="hero">
 
-<div>
+<div class="hero-inner">
 
 <h1>Neraium</h1>
 
@@ -173,6 +197,37 @@ Neraium ingests telemetry from critical infrastructure and detects sustained str
 </div>
 
 </section>
+
+
+<section>
+
+<h3>System Architecture</h3>
+
+<p>
+Neraium sits above operational infrastructure as a read-only intelligence layer. Analytical output passes through governance before institutional acknowledgement.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<h4>Telemetry Ingestion</h4>
+<p>BAS, SCADA, and historian signals are ingested without modifying infrastructure behavior.</p>
+</div>
+
+<div class="card">
+<h4>Deviation Detection</h4>
+<p>Signals are analyzed for sustained structural deviation across operational systems.</p>
+</div>
+
+<div class="card">
+<h4>Governance Gate</h4>
+<p>Analytical outputs pass through Aletheia’s Gate under Ananke governance before institutional acknowledgement.</p>
+</div>
+
+</div>
+
+</section>
+
 
 <footer>
 
