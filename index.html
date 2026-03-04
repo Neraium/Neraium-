@@ -1,883 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium | Systemic Infrastructure Intelligence</title>
-<meta name="description" content="Neraium is systemic infrastructure intelligence for critical physical systems. Read only. No actuation. Operator authority preserved.">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<title>Neraium | Systemic Infrastructure Intelligence</title>
+
+<link rel="icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 
 <style>
-:root{
-  --bg:#050505;
-  --panel:rgba(255,255,255,0.04);
-  --panel-2:rgba(255,255,255,0.055);
-  --text:rgba(255,255,255,0.92);
-  --sub:rgba(255,255,255,0.68);
-  --muted:rgba(255,255,255,0.50);
-  --border:rgba(255,255,255,0.10);
-  --border-2:rgba(255,255,255,0.14);
-  --accent:#58c8ff;
-  --accent-2:#9fe2ff;
-  --shadow:0 24px 90px rgba(0,0,0,0.45);
-  --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  --sans:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  --max:1180px;
-  --pad:24px;
-  --navh:72px;
-  --r:16px;
-  --r2:22px;
-}
 
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{
-  font-family:var(--sans);
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#050a15;
+color:white;
 }
 
-/* Subtle grid */
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-  background-size:64px 64px;
-  opacity:0.55;
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px 40px;
+border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-/* Layout */
-.container{
-  width:100%;
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 var(--pad);
-  position:relative;
-  z-index:1;
-}
-.section{
-  padding:96px 0;
-  border-top:1px solid rgba(255,255,255,0.07);
-  position:relative;
-  z-index:1;
-}
-.h-kicker{
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.55);
-}
-.h2{
-  margin-top:10px;
-  font-size:clamp(28px, 3vw, 42px);
-  letter-spacing:-0.02em;
-  line-height:1.1;
-}
-.lead{
-  margin-top:14px;
-  color:var(--sub);
-  max-width:820px;
-  line-height:1.75;
-  font-size:clamp(15px, 1.2vw, 17px);
+nav a{
+color:white;
+text-decoration:none;
+margin-left:30px;
+font-size:15px;
 }
 
-/* NAV */
-nav{
-  position:fixed;
-  top:0; left:0; right:0;
-  height:var(--navh);
-  z-index:100;
-  background:rgba(5,5,5,0.72);
-  backdrop-filter: blur(18px) saturate(140%);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-}
-.nav-inner{
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-}
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:18px;
-  list-style:none;
-}
-.nav-links a{
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.68);
-  text-decoration:none;
-  padding:10px 10px;
-  border-radius:12px;
-  border:1px solid transparent;
-  transition:background .2s, color .2s, border-color .2s;
-}
-.nav-links a:hover{
-  color:rgba(255,255,255,0.92);
-  background:rgba(255,255,255,0.045);
-  border-color:rgba(255,255,255,0.10);
-}
-.nav-cta{
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  text-decoration:none;
-  color:#050505;
-  background:linear-gradient(135deg, var(--accent), var(--accent-2));
-  padding:10px 14px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow:0 18px 45px rgba(88,200,255,0.20);
-  white-space:nowrap;
-}
-.nav-cta:hover{filter:brightness(1.03)}
-
-/* Mobile menu */
-.menu-btn{
-  display:none;
-  width:44px;height:44px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.10);
-  background:rgba(255,255,255,0.04);
-  color:rgba(255,255,255,0.88);
-  align-items:center;
-  justify-content:center;
-}
-.menu-btn svg{width:18px;height:18px}
-.mobile-panel{
-  display:none;
-  position:fixed;
-  top:var(--navh);
-  left:0; right:0;
-  background:rgba(5,5,5,0.92);
-  backdrop-filter: blur(18px) saturate(140%);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  z-index:99;
-}
-.mobile-links{
-  list-style:none;
-  display:grid;
-  gap:10px;
-  padding:16px 0 18px;
-}
-.mobile-links a{
-  display:block;
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  text-decoration:none;
-  color:rgba(255,255,255,0.78);
-  padding:12px 14px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.08);
-  background:rgba(255,255,255,0.04);
-}
-.mobile-links a:hover{
-  background:rgba(255,255,255,0.06);
-  border-color:rgba(255,255,255,0.12);
-}
-
-/* HERO */
 .hero{
-  position:relative;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  padding:calc(var(--navh) + 54px) 0 86px;
-  overflow:hidden;
+padding:120px 40px;
+text-align:center;
 }
-.hero:before{
-  content:"";
-  position:absolute;
-  inset:-6%;
-  background-image:url("hero.png");
-  background-size:cover;
-  background-position:50% 52%;
-  background-repeat:no-repeat;
-  filter:brightness(1.06) contrast(1.04) saturate(0.95);
-  transform:scale(1.02);
-  z-index:0;
-}
-.hero:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(900px 520px at 50% 40%, rgba(88,200,255,0.10), transparent 60%),
-    linear-gradient(180deg,
-      rgba(5,5,5,0.30) 0%,
-      rgba(5,5,5,0.52) 42%,
-      rgba(5,5,5,0.82) 100%
-    );
-  z-index:1;
-}
-.hero-inner{
-  position:relative;
-  z-index:2;
-  width:100%;
-}
-.hero-wrap{
-  max-width:860px;
-}
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 14px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,0.14);
-  background:rgba(0,0,0,0.35);
-  color:rgba(255,255,255,0.76);
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-}
-.badge .dot{
-  width:8px;height:8px;border-radius:50%;
-  background:rgba(88,200,255,1);
-  box-shadow:0 0 18px rgba(88,200,255,0.45);
-}
+
 .hero h1{
-  margin-top:18px;
-  font-size:clamp(54px, 9vw, 104px);
-  letter-spacing:-0.03em;
-  line-height:0.95;
-  font-weight:600;
-  text-shadow:0 10px 40px rgba(0,0,0,0.55);
+font-size:52px;
+margin-bottom:20px;
 }
-.hero h2{
-  margin-top:14px;
-  font-size:clamp(18px, 2.2vw, 26px);
-  font-weight:400;
-  color:rgba(255,255,255,0.78);
-  max-width:900px;
-}
+
 .hero p{
-  margin-top:18px;
-  max-width:760px;
-  color:rgba(255,255,255,0.72);
-  font-size:clamp(15px, 1.25vw, 17px);
-  line-height:1.8;
-}
-.hero-actions{
-  margin-top:26px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  text-decoration:none;
-  padding:13px 16px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.12);
-  background:rgba(0,0,0,0.28);
-  color:rgba(255,255,255,0.82);
-  transition:transform .2s, background .2s, border-color .2s, color .2s, filter .2s;
-  user-select:none;
-}
-.btn:hover{
-  transform:translateY(-1px);
-  border-color:rgba(255,255,255,0.18);
-  background:rgba(255,255,255,0.055);
-  color:rgba(255,255,255,0.90);
-}
-.btn.primary{
-  background:linear-gradient(135deg, var(--accent), var(--accent-2));
-  color:#050505;
-  border-color:rgba(255,255,255,0.14);
-  box-shadow:0 18px 48px rgba(88,200,255,0.18);
-}
-.btn.primary:hover{filter:brightness(1.03)}
-.hero-fade{
-  position:absolute;
-  left:0; right:0; bottom:0;
-  height:140px;
-  background:linear-gradient(to top, #050505 0%, rgba(5,5,5,0) 100%);
-  z-index:2;
+font-size:20px;
+opacity:.75;
+max-width:700px;
+margin:auto;
 }
 
-/* Cards */
-.grid{
-  margin-top:28px;
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0, 1fr));
-  gap:14px;
+.section{
+padding:90px 40px;
+max-width:1000px;
+margin:auto;
 }
+
 .card{
-  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.035));
-  border:1px solid rgba(255,255,255,0.10);
-  border-radius:var(--r);
-  padding:22px 20px;
-  box-shadow:var(--shadow);
-}
-.card small{
-  display:block;
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.55);
-  margin-bottom:10px;
-}
-.card h4{
-  margin:0 0 8px;
-  font-size:16px;
-  font-weight:600;
-  letter-spacing:-0.01em;
-  color:rgba(255,255,255,0.88);
-}
-.card p{
-  margin:0;
-  color:rgba(255,255,255,0.65);
-  font-size:14px;
-  line-height:1.75;
+background:#0c1326;
+padding:40px;
+border-radius:10px;
+margin-top:30px;
 }
 
-/* Boundary */
-.boundary{
-  margin-top:26px;
-  border-radius:var(--r2);
-  border:1px solid rgba(255,255,255,0.12);
-  background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
-  overflow:hidden;
-  box-shadow:var(--shadow);
-}
-.boundary-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-  padding:16px 18px;
-  background:rgba(255,255,255,0.04);
-  border-bottom:1px solid rgba(255,255,255,0.09);
-}
-.boundary-head .t{
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.60);
-}
-.boundary-head .n{
-  color:rgba(255,255,255,0.55);
-  font-size:13px;
-}
-.boundary-grid{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:1px;
-  background:rgba(255,255,255,0.10);
-}
-.boundary-col{
-  background:rgba(0,0,0,0.22);
-  padding:18px;
-  min-height:190px;
-}
-.boundary-col .tag{
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.55);
-}
-.boundary-col .big{
-  margin-top:12px;
-  font-size:18px;
-  font-weight:600;
-  color:rgba(255,255,255,0.88);
-}
-.boundary-col ul{
-  margin-top:12px;
-  padding-left:18px;
-  color:rgba(255,255,255,0.68);
-  font-size:14px;
-}
-.boundary-col li{margin:8px 0}
-
-/* Contact panel */
-.contact-wrap{
-  margin-top:26px;
-  display:grid;
-  grid-template-columns:1.1fr 1.4fr;
-  gap:14px;
-  align-items:start;
-}
-.panel{
-  background:linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.035));
-  border:1px solid rgba(255,255,255,0.10);
-  border-radius:var(--r2);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-}
-.panel-head{
-  padding:16px 18px;
-  background:rgba(255,255,255,0.04);
-  border-bottom:1px solid rgba(255,255,255,0.09);
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.60);
-}
-.panel-body{padding:18px}
-.kv{
-  display:grid;
-  grid-template-columns:120px 1fr;
-  border:1px solid rgba(255,255,255,0.10);
-  border-radius:14px;
-  overflow:hidden;
-  background:rgba(0,0,0,0.18);
-}
-.kv .k, .kv .v{
-  padding:12px 12px;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-}
-.kv .k{
-  border-right:1px solid rgba(255,255,255,0.08);
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.50);
-}
-.kv .v{
-  color:rgba(255,255,255,0.78);
-  font-size:14px;
-}
-.kv .row:last-child .k, .kv .row:last-child .v{border-bottom:none}
-.kv .v a{
-  color:rgba(159,226,255,0.92);
-  text-decoration:none;
-}
-.kv .v a:hover{text-decoration:underline}
-
-form{display:flex;flex-direction:column;gap:12px}
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-label{
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.50);
-}
-.field{display:flex;flex-direction:column;gap:7px}
-input, select, textarea{
-  width:100%;
-  background:rgba(0,0,0,0.26);
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:14px;
-  padding:12px 12px;
-  color:rgba(255,255,255,0.88);
-  outline:none;
-  font-size:15px;
-}
-textarea{min-height:140px; resize:vertical}
-input:focus, select:focus, textarea:focus{
-  border-color:rgba(159,226,255,0.42);
-  box-shadow:0 0 0 4px rgba(88,200,255,0.10);
-}
-.form-footer{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:6px;
-}
-.note{
-  font-size:12px;
-  color:rgba(255,255,255,0.50);
-}
-.submit{
-  cursor:pointer;
-  border:none;
-  border-radius:14px;
-  padding:12px 16px;
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  background:linear-gradient(135deg, var(--accent), var(--accent-2));
-  color:#050505;
-  box-shadow:0 18px 45px rgba(88,200,255,0.18);
-}
-.submit:hover{filter:brightness(1.03)}
-
-/* Footer */
 footer{
-  border-top:1px solid rgba(255,255,255,0.08);
-  padding:44px 0 40px;
-  color:rgba(255,255,255,0.45);
-  font-size:12px;
+padding:40px;
+text-align:center;
+opacity:.5;
 }
-.footer-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-  flex-wrap:wrap;
-}
-.footer-links a{
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.50);
-  text-decoration:none;
-  margin-left:14px;
-}
-.footer-links a:hover{color:rgba(255,255,255,0.78)}
 
-/* Responsive */
-@media (max-width: 980px){
-  .grid{grid-template-columns:1fr}
-  .boundary-grid{grid-template-columns:1fr}
-  .contact-wrap{grid-template-columns:1fr}
-}
-@media (max-width: 760px){
-  .nav-links{display:none}
-  .menu-btn{display:inline-flex}
-  .hero-actions .btn{width:100%}
-  .form-grid{grid-template-columns:1fr}
-}
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-}
 </style>
+
 </head>
 
 <body>
 
+<header>
+
+<h2>Neraium</h2>
+
 <nav>
-  <div class="container nav-inner">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <span style="width:10px; height:10px; border-radius:3px; background:rgba(159,226,255,0.95); box-shadow:0 0 18px rgba(88,200,255,0.35);"></span>
-      <span style="font-family:var(--mono); font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.70);">Neraium</span>
-    </div>
-
-    <ul class="nav-links" aria-label="Primary navigation">
-      <li><a href="#capabilities">Capabilities</a></li>
-      <li><a href="#boundary">System</a></li>
-      <li><a href="technical.html">Technical</a></li>
-      <li><a href="#contact">Get in touch</a></li>
-    </ul>
-
-    <a class="nav-cta" href="#contact">Get in touch</a>
-
-    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" id="menuBtn">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-      </svg>
-    </button>
-  </div>
+<a href="platform.html">Platform</a>
+<a href="technical.html">Technical</a>
+<a href="governance.html">Governance</a>
 </nav>
 
-<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
-  <div class="container">
-    <ul class="mobile-links">
-      <li><a href="#capabilities" data-close>Capabilities</a></li>
-      <li><a href="#boundary" data-close>System</a></li>
-      <li><a href="technical.html">Technical</a></li>
-      <li><a href="#contact" data-close>Get in touch</a></li>
-    </ul>
-  </div>
-</div>
-
-<header class="hero" id="top">
-  <div class="container hero-inner">
-    <div class="hero-wrap">
-      <div class="badge">
-        <span class="dot" aria-hidden="true"></span>
-        <span>Read only. No actuation. Operator authority preserved.</span>
-      </div>
-
-      <h1>Neraium</h1>
-      <h2>Systemic Infrastructure Intelligence</h2>
-
-      <p>
-        Neraium ingests existing telemetry, detects sustained structural deviation, and produces reviewable intelligence before failure occurs.
-        Built for critical physical systems where accountability and operational authority matter.
-      </p>
-
-      <div class="hero-actions">
-        <a class="btn primary" href="#capabilities">Explore capabilities</a>
-        <a class="btn" href="technical.html">Technical</a>
-        <a class="btn" href="#contact">Get in touch</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="hero-fade" aria-hidden="true"></div>
 </header>
 
-<section class="section" id="capabilities">
-  <div class="container">
-    <div class="h-kicker">Capabilities</div>
-    <div class="h2">Built for critical systems</div>
-    <div class="lead">
-      The platform is designed to integrate cleanly with existing environments and deliver earlier signal without changing how systems are controlled.
-    </div>
 
-    <div class="grid">
-      <div class="card">
-        <small>01</small>
-        <h4>Telemetry ingestion</h4>
-        <p>Connect to BAS, SCADA, historians, and existing telemetry without adding control paths or modifying infrastructure.</p>
-      </div>
-      <div class="card">
-        <small>02</small>
-        <h4>Deviation detection</h4>
-        <p>Identify persistent deterioration patterns that emerge before alarms, downtime, and reactive work orders.</p>
-      </div>
-      <div class="card">
-        <small>03</small>
-        <h4>Reviewable intelligence</h4>
-        <p>Outputs are structured for operator review with traceability and clear separation between observation and response.</p>
-      </div>
-    </div>
+<section class="hero">
 
-    <div class="grid" style="margin-top:14px;">
-      <div class="card">
-        <small>04</small>
-        <h4>Non actuating boundary</h4>
-        <p>Neraium issues no commands. No automation. No system modification. Decisions stay with licensed operators.</p>
-      </div>
-      <div class="card">
-        <small>05</small>
-        <h4>Infrastructure diligence</h4>
-        <p>Supports disciplined evaluation of risk and deterioration exposure for owners, operators, and technical stakeholders.</p>
-      </div>
-      <div class="card">
-        <small>06</small>
-        <h4>Deployment simplicity</h4>
-        <p>Designed for conservative environments with minimal operational disruption and clear integration boundaries.</p>
-      </div>
-    </div>
-  </div>
+<h1>Systemic Infrastructure Intelligence</h1>
+
+<p>
+Neraium provides read-only infrastructure intelligence for high-consequence water systems.
+</p>
+
 </section>
 
-<section class="section" id="boundary">
-  <div class="container">
-    <div class="h-kicker">System boundary</div>
-    <div class="h2">Explicit separation of intelligence and control</div>
-    <div class="lead">
-      Neraium observes and records. Operational systems execute. Control authority remains with the operator.
-    </div>
 
-    <div class="boundary">
-      <div class="boundary-head">
-        <div class="t">Boundary definition</div>
-        <div class="n">Observation, analysis, and response remain separate</div>
-      </div>
+<section class="section">
 
-      <div class="boundary-grid">
-        <div class="boundary-col">
-          <div class="tag">NERAIUM</div>
-          <div class="big">Read only intelligence</div>
-          <ul>
-            <li>Ingest telemetry copies and logs</li>
-            <li>Analyze deviation trajectories</li>
-            <li>Produce reviewable outputs</li>
-            <li>No actuation capability</li>
-          </ul>
-        </div>
+<h2>What Neraium Does</h2>
 
-        <div class="boundary-col">
-          <div class="tag">OPERATIONAL SYSTEMS</div>
-          <div class="big">Existing controls and plant</div>
-          <ul>
-            <li>SCADA, BAS, BMS, PLC networks</li>
-            <li>Existing sensors and telemetry sources</li>
-            <li>Maintenance workflows and SOPs</li>
-            <li>Responsibility remains local</li>
-          </ul>
-        </div>
+<div class="card">
 
-        <div class="boundary-col">
-          <div class="tag">CONTROL AUTHORITY</div>
-          <div class="big">Human decision and response</div>
-          <ul>
-            <li>Operator review and response</li>
-            <li>Engineering approvals and escalation</li>
-            <li>Change management remains local</li>
-            <li>Neraium does not modify systems</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+<p>
+Neraium ingests telemetry from pumps, cooling systems, heat exchangers, and treatment infrastructure.
+</p>
+
+<p>
+The platform identifies sustained structural deviation across sensor streams before failure occurs.
+</p>
+
+<p>
+Neraium never controls equipment.  
+The system is strictly read-only and designed for infrastructure observability.
+</p>
+
+</div>
+
 </section>
 
-<section class="section" id="contact">
-  <div class="container">
-    <div class="h-kicker">Get in touch</div>
-    <div class="h2">Let’s discuss your telemetry environment</div>
-    <div class="lead">
-      For pilot discussions, partnerships, or technical diligence, reach out directly or send an inquiry.
-    </div>
-
-    <div class="contact-wrap">
-      <div class="panel">
-        <div class="panel-head">Direct</div>
-        <div class="panel-body">
-          <div class="kv" role="list">
-            <div class="row" role="listitem" style="display:contents">
-              <div class="k">Name</div><div class="v">Craig Curtis</div>
-            </div>
-            <div class="row" role="listitem" style="display:contents">
-              <div class="k">Role</div><div class="v">Founder</div>
-            </div>
-            <div class="row" role="listitem" style="display:contents">
-              <div class="k">Email</div><div class="v"><a href="mailto:craig@neraium.com">craig@neraium.com</a></div>
-            </div>
-            <div class="row" role="listitem" style="display:contents">
-              <div class="k">Phone</div><div class="v"><a href="tel:+16028337441">+1 602 833 7441</a></div>
-            </div>
-            <div class="row" role="listitem" style="display:contents">
-              <div class="k">LinkedIn</div><div class="v"><a href="https://linkedin.com/company/neraium" target="_blank" rel="noopener">linkedin.com/company/neraium</a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">Inquiry</div>
-        <div class="panel-body">
-          <form action="https://formspree.io/f/xzdalpzy" method="POST">
-            <div class="form-grid">
-              <div class="field">
-                <label for="name">Full name</label>
-                <input id="name" name="name" type="text" required>
-              </div>
-              <div class="field">
-                <label for="org">Organization</label>
-                <input id="org" name="organization" type="text">
-              </div>
-            </div>
-
-            <div class="form-grid">
-              <div class="field">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" required>
-              </div>
-              <div class="field">
-                <label for="role">Role</label>
-                <input id="role" name="role" type="text">
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="type">Inquiry type</label>
-              <select id="type" name="inquiry_type">
-                <option value="" disabled selected>Select</option>
-                <option value="pilot">Pilot</option>
-                <option value="partnership">Partnership</option>
-                <option value="technical">Technical diligence</option>
-                <option value="general">General</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="msg">Message</label>
-              <textarea id="msg" name="message" required></textarea>
-            </div>
-
-            <div class="form-footer">
-              <div class="note">We respond within 24 hours.</div>
-              <button class="submit" type="submit">Send</button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 <footer>
-  <div class="container">
-    <div class="footer-row">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span style="width:10px; height:10px; border-radius:3px; background:rgba(159,226,255,0.95);"></span>
-        <span style="font-family:var(--mono); font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.55);">Neraium</span>
-      </div>
 
-      <div class="footer-links">
-        <a href="#capabilities">Capabilities</a>
-        <a href="#boundary">System</a>
-        <a href="technical.html">Technical</a>
-        <a href="#contact">Get in touch</a>
-      </div>
+Neraium Infrastructure Intelligence Platform
 
-      <div>© 2026 Neraium</div>
-    </div>
-  </div>
 </footer>
-
-<script>
-(function(){
-  const btn = document.getElementById('menuBtn');
-  const panel = document.getElementById('mobilePanel');
-
-  function closeMenu(){
-    if(!panel || !btn) return;
-    panel.style.display = 'none';
-    panel.setAttribute('aria-hidden','true');
-    btn.setAttribute('aria-expanded','false');
-  }
-  function openMenu(){
-    if(!panel || !btn) return;
-    panel.style.display = 'block';
-    panel.setAttribute('aria-hidden','false');
-    btn.setAttribute('aria-expanded','true');
-  }
-
-  btn && btn.addEventListener('click', () => {
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    expanded ? closeMenu() : openMenu();
-  });
-
-  panel && panel.addEventListener('click', (e) => {
-    const t = e.target;
-    if(t && t.matches('[data-close]')) closeMenu();
-  });
-
-  window.addEventListener('resize', () => {
-    if(window.innerWidth > 760) closeMenu();
-  });
-
-  closeMenu();
-})();
-</script>
 
 </body>
 </html>
