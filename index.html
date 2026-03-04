@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -24,14 +24,14 @@ color:white;
 line-height:1.6;
 }
 
-/* NAVIGATION */
+/* NAV */
 
 nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 6vw;
-border-bottom:1px solid rgba(255,255,255,.06);
+padding:20px 6vw;
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .logo{
@@ -56,41 +56,33 @@ nav a:hover{
 color:white;
 }
 
-/* MOBILE NAV */
-
 @media(max-width:700px){
-
 nav{
 flex-direction:column;
-gap:12px;
+gap:10px;
 }
-
-nav ul{
-gap:18px;
-}
-
 }
 
 /* HERO */
 
 .hero{
-padding:120px 6vw 110px;
+padding:120px 6vw;
 max-width:1200px;
 margin:auto;
 }
 
 .hero h1{
-font-size:clamp(34px,6vw,60px);
+font-size:clamp(36px,6vw,60px);
 margin-bottom:20px;
 }
 
 .hero p{
-font-size:clamp(16px,2vw,20px);
 color:#b4c0ff;
+font-size:18px;
 max-width:700px;
 }
 
-/* SECTION */
+/* SECTIONS */
 
 .section{
 padding:90px 6vw;
@@ -99,7 +91,7 @@ margin:auto;
 }
 
 .section h2{
-font-size:clamp(26px,4vw,38px);
+font-size:clamp(28px,4vw,40px);
 margin-bottom:20px;
 }
 
@@ -138,17 +130,7 @@ font-size:14px;
 
 .cta{
 text-align:center;
-padding:110px 6vw;
-}
-
-.cta h2{
-font-size:clamp(28px,4vw,40px);
-margin-bottom:10px;
-}
-
-.cta p{
-color:#aab4ff;
-margin-bottom:25px;
+padding:120px 6vw;
 }
 
 .button{
@@ -158,7 +140,7 @@ background:#6d7cff;
 border-radius:6px;
 color:white;
 text-decoration:none;
-font-weight:500;
+margin-top:20px;
 }
 
 /* FOOTER */
@@ -168,150 +150,10 @@ padding:40px 6vw;
 text-align:center;
 color:#7c87b6;
 border-top:1px solid rgba(255,255,255,.05);
-margin-top:90px;
-}
-
-</style>
-body{
-background:#050a15;
-color:white;
-line-height:1.6;
-}
-
-/* NAV */
-
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:22px 80px;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.logo{
-font-weight:700;
-font-size:22px;
-letter-spacing:1px;
-}
-
-nav ul{
-display:flex;
-list-style:none;
-gap:30px;
-}
-
-nav a{
-color:#cfd8ff;
-text-decoration:none;
-font-size:15px;
-}
-
-nav a:hover{
-color:white;
-}
-
-/* HERO */
-
-.hero{
-padding:120px 80px 140px;
-max-width:1200px;
-margin:auto;
-}
-
-.hero h1{
-font-size:60px;
-font-weight:700;
-margin-bottom:25px;
-}
-
-.hero p{
-font-size:20px;
-color:#b4c0ff;
-max-width:700px;
-}
-
-/* SECTION */
-
-.section{
-padding:100px 80px;
-max-width:1200px;
-margin:auto;
-}
-
-.section h2{
-font-size:38px;
-margin-bottom:20px;
-}
-
-.section p{
-color:#c8d0ff;
-max-width:850px;
-}
-
-/* GRID */
-
-.grid{
-margin-top:60px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
-}
-
-.card{
-background:#0d1428;
-padding:35px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,.05);
-}
-
-.card h3{
-margin-bottom:12px;
-}
-
-.card p{
-color:#a7b1e6;
-font-size:14px;
-}
-
-/* CTA */
-
-.cta{
-text-align:center;
-padding:120px 20px;
-}
-
-.cta h2{
-font-size:36px;
-margin-bottom:15px;
-}
-
-.cta p{
-color:#aab4ff;
-margin-bottom:25px;
-}
-
-.button{
-display:inline-block;
-padding:14px 30px;
-background:#6d7cff;
-border-radius:6px;
-color:white;
-text-decoration:none;
-font-weight:500;
-}
-
-/* FOOTER */
-
-footer{
-padding:40px;
-text-align:center;
-color:#7c87b6;
-border-top:1px solid rgba(255,255,255,.05);
 margin-top:100px;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -334,9 +176,8 @@ margin-top:100px;
 <h1>Infrastructure Intelligence</h1>
 
 <p>
-Neraium provides systemic intelligence for complex infrastructure environments.
-We analyze multivariate telemetry from operational systems to detect structural
-deviation and deterioration before failure occurs.
+Neraium analyzes multivariate telemetry across infrastructure environments
+to detect structural deviation and deterioration before system failure occurs.
 </p>
 
 </section>
@@ -346,86 +187,31 @@ deviation and deterioration before failure occurs.
 <h2>What Neraium Does</h2>
 
 <p>
-Most infrastructure monitoring systems focus on alarms and thresholds. Neraium
-analyzes entire telemetry environments simultaneously, identifying structural
-drift and system behavior changes long before operational failure occurs.
+Traditional monitoring systems rely on thresholds and alarms. Neraium analyzes
+entire telemetry environments simultaneously, identifying system drift and
+structural deviation long before operational failures occur.
 </p>
 
 <div class="grid">
 
 <div class="card">
 <h3>Multivariate Analysis</h3>
-<p>
-Instead of single metrics or thresholds, Neraium evaluates entire telemetry
-environments across pumps, exchangers, cooling loops and other infrastructure.
-</p>
+<p>Relationships between operational variables reveal infrastructure behavior.</p>
 </div>
 
 <div class="card">
-<h3>Early Structural Detection</h3>
-<p>
-The platform identifies sustained deviation patterns weeks or months before
-traditional monitoring tools detect failures.
-</p>
+<h3>Early Failure Detection</h3>
+<p>System deviation can be detected weeks before failure events.</p>
 </div>
 
 <div class="card">
-<h3>Operational Intelligence</h3>
-<p>
-Operators gain visibility into system behavior, degradation patterns and
-efficiency losses across complex infrastructure networks.
-</p>
+<h3>Operational Visibility</h3>
+<p>Operators gain insight into system health across complex environments.</p>
 </div>
 
 <div class="card">
-<h3>Read Only Architecture</h3>
-<p>
-Neraium provides intelligence without controlling equipment. It observes and
-analyzes systems while leaving operational control unchanged.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<h2>Where It Is Used</h2>
-
-<p>
-Neraium is designed for environments where infrastructure failure carries
-significant operational or financial impact.
-</p>
-
-<div class="grid">
-
-<div class="card">
-<h3>Industrial Manufacturing</h3>
-<p>
-Process cooling loops, pumping systems and production infrastructure.
-</p>
-</div>
-
-<div class="card">
-<h3>Data Centers</h3>
-<p>
-Cooling infrastructure, chilled water systems and heat rejection systems.
-</p>
-</div>
-
-<div class="card">
-<h3>Hospitality</h3>
-<p>
-Large resort and hospitality water infrastructure environments.
-</p>
-</div>
-
-<div class="card">
-<h3>Municipal Infrastructure</h3>
-<p>
-Water treatment systems, pumping stations and infrastructure networks.
-</p>
+<h3>Read-Only Intelligence</h3>
+<p>The platform observes systems without controlling equipment.</p>
 </div>
 
 </div>
@@ -435,10 +221,6 @@ Water treatment systems, pumping stations and infrastructure networks.
 <section class="cta">
 
 <h2>Infrastructure Should Be Predictable</h2>
-
-<p>
-Neraium transforms operational telemetry into early infrastructure intelligence.
-</p>
 
 <a class="button" href="platform.html">Explore Platform</a>
 
