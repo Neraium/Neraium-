@@ -7,23 +7,27 @@
 
 <title>Neraium</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-font-family:Inter;
+font-family:Inter, sans-serif;
 background:#050505;
 color:white;
 }
+
+/* NAVBAR */
 
 nav{
 position:fixed;
 top:0;
 width:100%;
-background:rgba(0,0,0,.75);
+background:rgba(0,0,0,.85);
+backdrop-filter:blur(8px);
 border-bottom:1px solid rgba(255,255,255,.08);
+z-index:100;
 }
 
 .nav-inner{
@@ -31,17 +35,24 @@ max-width:1100px;
 margin:auto;
 display:flex;
 justify-content:flex-end;
-padding:20px;
+padding:18px 28px;
 }
 
 .nav-inner a{
 font-family:"IBM Plex Mono";
-font-size:11px;
-letter-spacing:.2em;
-color:rgba(255,255,255,.7);
+font-size:12px;
+letter-spacing:.18em;
 text-decoration:none;
-margin-left:22px;
+color:white;
+margin-left:28px;
+opacity:.85;
 }
+
+.nav-inner a:hover{
+opacity:1;
+}
+
+/* HERO */
 
 .hero{
 height:100vh;
@@ -52,6 +63,7 @@ text-align:center;
 background-image:url("hero.png");
 background-size:cover;
 background-position:center;
+position:relative;
 }
 
 .overlay{
@@ -72,6 +84,7 @@ padding:40px;
 .hero h1{
 font-size:90px;
 margin:0;
+letter-spacing:-.02em;
 }
 
 .hero h2{
@@ -80,17 +93,51 @@ font-weight:400;
 color:rgba(255,255,255,.8);
 }
 
+/* CONTACT */
+
+.contact{
+padding:120px 30px;
+max-width:900px;
+margin:auto;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.06);
+}
+
+.contact h3{
+font-size:30px;
+margin-bottom:12px;
+}
+
+.contact p{
+color:rgba(255,255,255,.7);
+line-height:1.7;
+}
+
+/* FOOTER */
+
+footer{
+border-top:1px solid rgba(255,255,255,.08);
+padding:40px;
+text-align:center;
+font-size:12px;
+color:rgba(255,255,255,.4);
+}
+
 </style>
+
 </head>
 
 <body>
 
 <nav>
+
 <div class="nav-inner">
 
 <a href="technical.html">TECHNICAL</a>
+<a href="#contact">CONTACT</a>
 
 </div>
+
 </nav>
 
 <section class="hero">
@@ -100,12 +147,29 @@ color:rgba(255,255,255,.8);
 <div class="hero-content">
 
 <h1>Neraium</h1>
-
 <h2>Systemic Infrastructure Intelligence</h2>
 
 </div>
 
 </section>
+
+<section id="contact" class="contact">
+
+<h3>Contact</h3>
+
+<p>
+Craig Curtis<br>
+Founder<br><br>
+craig@neraium.com
+</p>
+
+</section>
+
+<footer>
+
+© 2026 Neraium
+
+</footer>
 
 </body>
 </html>
