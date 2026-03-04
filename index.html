@@ -23,7 +23,6 @@ font-family:'Inter',sans-serif;
 background:#000;
 color:#fff;
 overflow-x:hidden;
-line-height:1.6;
 }
 
 /* NAVBAR */
@@ -37,19 +36,19 @@ height:70px;
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 60px;
-background:rgba(0,0,0,.9);
+padding:0 50px;
+background:rgba(0,0,0,.92);
 backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,.05);
+border-bottom:1px solid rgba(255,255,255,.06);
 z-index:100;
 }
 
-.logo{
+/* LEFT SIDE */
+
+.nav-left{
 display:flex;
 align-items:center;
-gap:12px;
-font-weight:600;
-letter-spacing:.1em;
+gap:14px;
 }
 
 .logo-box{
@@ -62,19 +61,28 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-weight:700;
+font-size:15px;
 }
+
+.logo-text{
+font-weight:600;
+letter-spacing:.12em;
+font-size:14px;
+}
+
+/* RIGHT SIDE */
 
 nav ul{
 display:flex;
-gap:26px;
+gap:32px;
 list-style:none;
 }
 
 nav a{
 text-decoration:none;
-color:rgba(255,255,255,.6);
+color:rgba(255,255,255,.65);
 font-size:11px;
-letter-spacing:.14em;
+letter-spacing:.16em;
 text-transform:uppercase;
 transition:.25s;
 }
@@ -93,21 +101,18 @@ justify-content:center;
 text-align:center;
 position:relative;
 padding-top:70px;
-overflow:hidden;
 }
 
-/* BACKGROUND */
+/* HERO IMAGE */
 
 .hero-bg{
 position:absolute;
-top:-20%;
-left:-10%;
-width:120%;
-height:140%;
-background:url("hero.png") center 30% / cover no-repeat;
-filter:brightness(.7);
-z-index:0;
+inset:0;
+background:url("hero.png") center center / cover no-repeat;
+filter:brightness(.6);
 }
+
+/* DARK OVERLAY */
 
 .hero::after{
 content:"";
@@ -115,55 +120,50 @@ position:absolute;
 inset:0;
 background:linear-gradient(
 to bottom,
-rgba(0,0,0,.35),
-rgba(0,0,0,.92)
+rgba(0,0,0,.3),
+rgba(0,0,0,.9)
 );
-z-index:1;
 }
+
+/* HERO CONTENT */
 
 .hero-content{
 position:relative;
 z-index:2;
-max-width:850px;
-padding:0 40px;
+max-width:760px;
+padding:0 30px;
 }
 
 .hero h1{
-font-size:clamp(72px,9vw,120px);
+font-size:clamp(64px,8vw,110px);
 font-weight:800;
 letter-spacing:-.03em;
+margin-bottom:12px;
 }
 
 .hero h2{
-margin-top:18px;
-font-size:clamp(22px,3vw,34px);
+font-size:28px;
 font-weight:400;
 color:rgba(255,255,255,.85);
+margin-bottom:30px;
 }
 
-/* SECTION */
+.hero p{
+font-size:18px;
+line-height:1.7;
+color:rgba(255,255,255,.7);
+}
+
+/* SECTIONS */
 
 .section{
-padding:140px 60px;
+padding:120px 60px;
 max-width:1100px;
 margin:auto;
-position:relative;
-}
-
-.section:before{
-content:"";
-position:absolute;
-top:0;
-left:50%;
-width:600px;
-height:300px;
-transform:translateX(-50%);
-background:radial-gradient(circle, rgba(80,120,255,.08), transparent);
-z-index:-1;
 }
 
 .section h3{
-font-size:36px;
+font-size:34px;
 margin-bottom:40px;
 }
 
@@ -175,24 +175,20 @@ grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:40px;
 }
 
-/* CARDS */
-
 .card{
 background:#070707;
 border:1px solid rgba(255,255,255,.06);
 padding:40px;
-transition:all .35s ease;
+transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-8px);
-border-color:rgba(255,255,255,.18);
-box-shadow:0 20px 40px rgba(0,0,0,.4);
+transform:translateY(-6px);
+border-color:rgba(255,255,255,.2);
 }
 
 .card h4{
 margin-bottom:12px;
-font-size:18px;
 }
 
 .card p{
@@ -203,32 +199,17 @@ color:rgba(255,255,255,.65);
 
 .cta{
 text-align:center;
-padding:160px 40px;
-background:linear-gradient(
-to bottom,
-rgba(0,0,0,.85),
-rgba(0,0,0,1)
-);
-}
-
-.cta h3{
-font-size:40px;
-margin-bottom:30px;
+padding:140px 40px;
 }
 
 .button{
 display:inline-block;
-padding:18px 40px;
+padding:16px 34px;
 background:#fff;
 color:#000;
 text-decoration:none;
 font-weight:600;
 border-radius:4px;
-transition:.25s;
-}
-
-.button:hover{
-transform:translateY(-3px);
 }
 
 /* MOBILE */
@@ -236,28 +217,31 @@ transform:translateY(-3px);
 @media(max-width:768px){
 
 nav{
-padding:0 25px;
+padding:0 20px;
 }
 
 nav ul{
-gap:16px;
+gap:18px;
 }
 
 nav a{
 font-size:10px;
-letter-spacing:.12em;
 }
 
 .hero h1{
-font-size:60px;
+font-size:54px;
 }
 
 .hero h2{
 font-size:22px;
 }
 
+.hero p{
+font-size:16px;
+}
+
 .section{
-padding:100px 25px;
+padding:90px 25px;
 }
 
 }
@@ -270,14 +254,14 @@ padding:100px 25px;
 
 <nav>
 
-<div class="logo">
+<div class="nav-left">
 <div class="logo-box">N</div>
-NERAIUM
+<div class="logo-text">NERAIUM</div>
 </div>
 
 <ul>
-<li><a href="#what">What</a></li>
-<li><a href="#how">How</a></li>
+<li><a href="#technical">Technical</a></li>
+<li><a href="#deployment">Deployment</a></li>
 <li><a href="#contact">Contact</a></li>
 </ul>
 
@@ -290,15 +274,21 @@ NERAIUM
 <div class="hero-content">
 
 <h1>Neraium</h1>
+
 <h2>Systemic Infrastructure Intelligence</h2>
+
+<p>
+Detect structural infrastructure deterioration before failure using existing telemetry.
+Read-only intelligence. No automation. No system control.
+</p>
 
 </div>
 
 </section>
 
-<section class="section" id="what">
+<section class="section" id="technical">
 
-<h3>What Neraium Does</h3>
+<h3>Technical</h3>
 
 <div class="grid">
 
@@ -321,28 +311,14 @@ NERAIUM
 
 </section>
 
-<section class="section" id="how">
+<section class="section" id="deployment">
 
-<h3>How It Works</h3>
+<h3>Deployment</h3>
 
-<div class="grid">
-
-<div class="card">
-<h4>Telemetry Collection</h4>
-<p>Existing facility telemetry from pumps, towers, and exchangers is ingested continuously.</p>
-</div>
-
-<div class="card">
-<h4>Structural Analysis</h4>
-<p>Multivariate telemetry patterns reveal sustained system deterioration.</p>
-</div>
-
-<div class="card">
-<h4>Operator Review</h4>
-<p>Signals surface to operators before reactive maintenance or failure occurs.</p>
-</div>
-
-</div>
+<p>
+Neraium deploys alongside existing infrastructure monitoring systems. 
+No control authority is introduced. The system operates strictly as a read-only intelligence layer.
+</p>
 
 </section>
 
