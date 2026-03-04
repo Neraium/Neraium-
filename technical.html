@@ -1,167 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neraium | Technical</title>
+<meta name="description" content="Technical overview of Neraium. Read only infrastructure intelligence, deviation detection, and reviewable outputs.">
 
-<title>Neraium Technical</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --bg:#050505;
+  --text:rgba(255,255,255,0.92);
+  --sub:rgba(255,255,255,0.70);
+  --muted:rgba(255,255,255,0.50);
+  --border:rgba(255,255,255,0.10);
+  --panel:rgba(255,255,255,0.045);
+  --accent:#58c8ff;
+  --accent2:#9fe2ff;
+  --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --sans:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --max:1100px;
+  --pad:24px;
+  --navh:72px;
+  --r:18px;
+  --shadow:0 24px 90px rgba(0,0,0,0.45);
+}
 
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-margin:0;
-font-family:Inter, sans-serif;
-background:#050505;
-color:white;
-line-height:1.6;
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Subtle grid */
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size:64px 64px;
+  opacity:0.55;
+}
+
+.container{
+  width:100%;
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 var(--pad);
+  position:relative;
+  z-index:1;
 }
 
 /* NAV */
-
 nav{
-position:fixed;
-top:0;
-width:100%;
-background:rgba(5,5,5,.75);
-backdrop-filter:blur(12px);
-border-bottom:1px solid rgba(255,255,255,.08);
-z-index:100;
+  position:fixed;
+  top:0; left:0; right:0;
+  height:var(--navh);
+  z-index:100;
+  background:rgba(5,5,5,0.72);
+  backdrop-filter: blur(18px) saturate(140%);
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
-
 .nav-inner{
-max-width:1100px;
-margin:auto;
-display:flex;
-justify-content:flex-end;
-padding:18px 30px;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+}
+.brand .m{
+  width:10px; height:10px;
+  border-radius:3px;
+  background:rgba(159,226,255,0.95);
+  box-shadow:0 0 18px rgba(88,200,255,0.35);
+}
+.brand .t{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.68);
+}
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  list-style:none;
+}
+.nav-links a{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.62);
+  text-decoration:none;
+  padding:10px 10px;
+  border-radius:12px;
+  border:1px solid transparent;
+  transition:background .2s, color .2s, border-color .2s;
+}
+.nav-links a:hover{
+  color:rgba(255,255,255,0.90);
+  background:rgba(255,255,255,0.045);
+  border-color:rgba(255,255,255,0.10);
 }
 
-.nav-inner a{
-font-family:"IBM Plex Mono";
-font-size:11px;
-letter-spacing:.18em;
-text-decoration:none;
-color:white;
-margin-left:28px;
-opacity:.85;
+/* Hero */
+.hero{
+  padding-top:calc(var(--navh) + 64px);
+  padding-bottom:46px;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.hero h1{
+  font-size:clamp(34px, 3.8vw, 54px);
+  letter-spacing:-0.02em;
+  line-height:1.08;
+  font-weight:650;
+}
+.hero p{
+  margin-top:14px;
+  max-width:860px;
+  color:var(--sub);
+  font-size:16px;
+  line-height:1.8;
+}
+.hero .meta{
+  margin-top:16px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.pill{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.04);
+  color:rgba(255,255,255,0.62);
 }
 
-.nav-inner a:hover{
-opacity:1;
-}
-
-/* HEADER */
-
-.header{
-padding-top:120px;
-max-width:900px;
-margin:auto;
-padding-left:30px;
-padding-right:30px;
-}
-
-.header h1{
-font-size:48px;
-margin-bottom:10px;
-}
-
-.header p{
-color:rgba(255,255,255,.7);
-}
-
-/* SECTION */
-
+/* Sections */
 .section{
-max-width:900px;
-margin:auto;
-padding:80px 30px;
-border-top:1px solid rgba(255,255,255,.06);
+  padding:86px 0;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.kicker{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.55);
+}
+.h2{
+  margin-top:10px;
+  font-size:clamp(24px, 2.6vw, 34px);
+  letter-spacing:-0.02em;
+  line-height:1.15;
+}
+.lead{
+  margin-top:14px;
+  color:var(--sub);
+  max-width:900px;
+  line-height:1.8;
+  font-size:15px;
 }
 
-.section h2{
-font-size:28px;
-margin-bottom:15px;
+/* Grid and cards */
+.grid{
+  margin-top:22px;
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:14px;
+}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.035));
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:var(--r);
+  padding:20px 18px;
+  box-shadow:var(--shadow);
+}
+.card small{
+  display:block;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.55);
+  margin-bottom:10px;
+}
+.card h3{
+  margin:0 0 8px;
+  font-size:16px;
+  font-weight:600;
+  color:rgba(255,255,255,0.88);
+}
+.card p{
+  margin:0;
+  color:rgba(255,255,255,0.65);
+  font-size:14px;
+  line-height:1.75;
 }
 
-/* IMAGE */
-
-.image{
-margin-top:40px;
+/* Image panel */
+.image-panel{
+  margin-top:18px;
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:var(--r);
+  background:rgba(255,255,255,0.03);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.image-panel .cap{
+  padding:14px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.55);
+}
+.image-panel img{
+  width:100%;
+  display:block;
 }
 
-.image img{
-width:100%;
-border-radius:10px;
-border:1px solid rgba(255,255,255,.08);
+/* Table like block */
+.block{
+  margin-top:18px;
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:var(--r);
+  background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.row{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.row:last-child{border-bottom:none}
+.k{
+  padding:14px 16px;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.55);
+  background:rgba(255,255,255,0.035);
+  border-right:1px solid rgba(255,255,255,0.08);
+}
+.v{
+  padding:14px 16px;
+  color:rgba(255,255,255,0.70);
+  font-size:14px;
+  line-height:1.75;
 }
 
-/* FOOTER */
-
+/* Footer */
 footer{
-border-top:1px solid rgba(255,255,255,.08);
-padding:40px;
-text-align:center;
-font-size:12px;
-color:rgba(255,255,255,.4);
+  padding:44px 0 40px;
+  color:rgba(255,255,255,0.45);
+  font-size:12px;
 }
+.footer-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.footer-row a{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.50);
+  text-decoration:none;
+}
+.footer-row a:hover{color:rgba(255,255,255,0.78)}
 
+/* Responsive */
+@media (max-width: 980px){
+  .grid{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr}
+  .k{border-right:none}
+}
 </style>
-
 </head>
 
 <body>
 
 <nav>
-<div class="nav-inner">
-<a href="index.html">HOME</a>
-</div>
+  <div class="container nav-inner">
+    <a class="brand" href="index.html" aria-label="Back to home">
+      <span class="m" aria-hidden="true"></span>
+      <span class="t">Neraium</span>
+    </a>
+
+    <ul class="nav-links" aria-label="Technical navigation">
+      <li><a href="#boundary">Boundary</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#evidence">Evidence</a></li>
+      <li><a href="#deployment">Deployment</a></li>
+    </ul>
+  </div>
 </nav>
 
-<div class="header">
+<header class="hero">
+  <div class="container">
+    <div class="kicker">Technical</div>
+    <h1>Read only infrastructure intelligence for deviation detection</h1>
+    <p>
+      This page describes the system boundary, analytical method, and evidence discipline. Neraium is strictly non actuating and does not modify operational systems.
+      Outputs are designed for operator review and technical diligence.
+    </p>
 
-<h1>Neraium Technical Overview</h1>
+    <div class="meta">
+      <span class="pill">Read only</span>
+      <span class="pill">Non actuating</span>
+      <span class="pill">Operator authority preserved</span>
+      <span class="pill">Telemetry first</span>
+    </div>
+  </div>
+</header>
 
-<p>
-Neraium is a read only infrastructure intelligence platform that
-analyzes telemetry signals to identify sustained structural deviation
-before system failure occurs.
-</p>
+<section class="section" id="boundary">
+  <div class="container">
+    <div class="kicker">Boundary</div>
+    <div class="h2">System boundary and non actuation property</div>
+    <div class="lead">
+      Neraium ingests telemetry and produces reviewable intelligence. It does not issue commands, trigger automated interventions, or modify system configuration.
+      Control authority and responsibility remain with the operator.
+    </div>
 
-</div>
-
-<section class="section">
-
-<h2>System Boundary</h2>
-
-<p>
-Neraium does not control equipment, automate infrastructure systems,
-or modify operational environments. The platform operates strictly as
-an observational intelligence layer.
-</p>
-
+    <div class="grid">
+      <div class="card">
+        <small>01</small>
+        <h3>Observation only</h3>
+        <p>Telemetry is consumed as an input stream. Neraium does not write back into control networks.</p>
+      </div>
+      <div class="card">
+        <small>02</small>
+        <h3>No automated action</h3>
+        <p>No automated maintenance actions. No setpoint changes. No valves, pumps, or actuators controlled by Neraium.</p>
+      </div>
+      <div class="card">
+        <small>03</small>
+        <h3>Operator retains authority</h3>
+        <p>Operators and engineers evaluate outputs and decide how to respond within established procedures and approvals.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="section">
+<section class="section" id="method">
+  <div class="container">
+    <div class="kicker">Method</div>
+    <div class="h2">Deviation detection on multi signal telemetry</div>
+    <div class="lead">
+      The core method identifies sustained structural deviation in a telemetry environment. Signals are evaluated as a system rather than as isolated readings.
+      Outputs emphasize persistence, trajectory, and operator reviewability.
+    </div>
 
-<h2>Deviation Detection</h2>
+    <div class="grid">
+      <div class="card">
+        <small>Step A</small>
+        <h3>Baseline window</h3>
+        <p>Select a stability window to characterize normal operating behavior for the monitored system.</p>
+      </div>
+      <div class="card">
+        <small>Step B</small>
+        <h3>Distance and persistence</h3>
+        <p>Compute deviation from baseline and require persistence over time to reduce noise admissions.</p>
+      </div>
+      <div class="card">
+        <small>Step C</small>
+        <h3>Admission thresholding</h3>
+        <p>Admit deterioration signals only when evidence exceeds defined thresholds and stability checks.</p>
+      </div>
+    </div>
 
-<p>
-Multi signal telemetry streams are analyzed to identify persistent
-patterns of deterioration and system drift that emerge prior to
-operational alarms.
-</p>
+    <div class="image-panel">
+      <div class="cap">Reference image</div>
+      <img src="IMG_9010.png" alt="Technical reference image">
+    </div>
+  </div>
+</section>
 
-<div class="image">
-<img src="IMG_9010.png">
-</div>
+<section class="section" id="evidence">
+  <div class="container">
+    <div class="kicker">Evidence</div>
+    <div class="h2">Evidence discipline and claim boundaries</div>
+    <div class="lead">
+      Claims must remain bounded to evidence. Benchmarks validate analytical mechanics, not field performance. Field validation requires domain telemetry and operating constraints.
+    </div>
 
+    <div class="block">
+      <div class="row">
+        <div class="k">Today</div>
+        <div class="v">Analytical method demonstration on benchmark environments and controlled telemetry sets.</div>
+      </div>
+      <div class="row">
+        <div class="k">Not claimed</div>
+        <div class="v">No claim of field performance in a specific facility without domain telemetry validation.</div>
+      </div>
+      <div class="row">
+        <div class="k">Required</div>
+        <div class="v">Partner telemetry access, baseline definition, and operating context to calibrate and validate signals.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="deployment">
+  <div class="container">
+    <div class="kicker">Deployment</div>
+    <div class="h2">Deployment model designed for conservative environments</div>
+    <div class="lead">
+      Deployment prioritizes minimal disruption and clear boundaries. Neraium is designed to integrate without introducing control paths or changing operational responsibility.
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <small>01</small>
+        <h3>Connect to telemetry sources</h3>
+        <p>BAS, SCADA, historians, and existing sensors. Integration is read only.</p>
+      </div>
+      <div class="card">
+        <small>02</small>
+        <h3>Operate within boundaries</h3>
+        <p>No write access to control networks. No automated interventions. Outputs delivered for review.</p>
+      </div>
+      <div class="card">
+        <small>03</small>
+        <h3>Validate with operators</h3>
+        <p>Operators confirm whether admissions correspond to real deterioration, improving calibration and reliability.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
-© 2026 Neraium
+  <div class="container">
+    <div class="footer-row">
+      <div>© 2026 Neraium</div>
+      <div>
+        <a href="index.html">Home</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 </body>
