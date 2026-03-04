@@ -7,8 +7,6 @@
 
 <title>Neraium | Systemic Infrastructure Intelligence</title>
 
-<meta name="description" content="Neraium is systemic infrastructure intelligence for critical physical systems. Read only. No actuation. Operator authority preserved.">
-
 <link rel="icon" href="favicon.ico">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -16,18 +14,16 @@
 <style>
 
 :root{
---bg:#050505;
---panel:rgba(255,255,255,0.04);
---text:rgba(255,255,255,0.92);
---sub:rgba(255,255,255,0.70);
---border:rgba(255,255,255,0.10);
---accent:#58c8ff;
---accent2:#9fe2ff;
---mono:'IBM Plex Mono', monospace;
---sans:Inter, system-ui, sans-serif;
---max:1180px;
+--bg:#040404;
+--text:#ffffff;
+--sub:rgba(255,255,255,.72);
+--border:rgba(255,255,255,.08);
+--accent:#6fd2ff;
+--max:1200px;
 --pad:24px;
---navh:72px;
+--nav:70px;
+--mono:'IBM Plex Mono', monospace;
+--sans:'Inter', sans-serif;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -36,249 +32,147 @@ body{
 font-family:var(--sans);
 background:var(--bg);
 color:var(--text);
-overflow-x:hidden;
 }
-
-/* subtle grid */
-
-body:before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-background-image:
-linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-background-size:64px 64px;
-opacity:.55;
-}
-
-/* container */
 
 .container{
-width:100%;
 max-width:var(--max);
 margin:auto;
 padding:0 var(--pad);
 }
 
-/* nav */
+/* NAV */
 
 nav{
 position:fixed;
 top:0;
 left:0;
 right:0;
-height:var(--navh);
-background:rgba(5,5,5,0.72);
-backdrop-filter:blur(18px);
-border-bottom:1px solid rgba(255,255,255,0.08);
+height:var(--nav);
+backdrop-filter:blur(12px);
+background:rgba(0,0,0,.65);
+border-bottom:1px solid var(--border);
 z-index:100;
 }
 
 .nav-inner{
+height:100%;
 display:flex;
 align-items:center;
 justify-content:space-between;
-height:100%;
 }
 
-.nav-links{
+.brand{
+font-family:var(--mono);
+letter-spacing:3px;
+font-size:12px;
+text-transform:uppercase;
+}
+
+.links{
 display:flex;
-gap:20px;
-list-style:none;
+gap:18px;
 }
 
-.nav-links a{
+.links a{
 font-family:var(--mono);
 font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:rgba(255,255,255,.68);
+letter-spacing:2px;
 text-decoration:none;
+color:rgba(255,255,255,.7);
+text-transform:uppercase;
 }
 
-.nav-cta{
-font-family:var(--mono);
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-text-decoration:none;
-color:#050505;
-background:linear-gradient(135deg,var(--accent),var(--accent2));
-padding:10px 14px;
-border-radius:12px;
+.links a:hover{
+color:var(--accent);
 }
 
-/* hero */
+/* HERO */
 
 .hero{
-position:relative;
-min-height:100vh;
+height:100vh;
 display:flex;
 align-items:center;
-padding:calc(var(--navh) + 54px) 0 86px;
+position:relative;
+padding-top:var(--nav);
 overflow:hidden;
 }
 
 .hero:before{
 content:"";
 position:absolute;
-inset:-6%;
+inset:0;
 background-image:url("hero.png");
 background-size:cover;
-background-position:50% 52%;
-background-repeat:no-repeat;
-
-filter:brightness(1.0) contrast(1.04) saturate(0.95);
-
-transform:scale(1.02);
-z-index:0;
-}
-
-/* readability overlay */
-
-.hero:after{
-content:"";
-position:absolute;
-inset:0;
-background:
-radial-gradient(900px 520px at 50% 40%, rgba(88,200,255,0.08), transparent 60%),
-linear-gradient(180deg,
-rgba(5,5,5,0.40) 0%,
-rgba(5,5,5,0.62) 42%,
-rgba(5,5,5,0.88) 100%
-);
-z-index:1;
+background-position:center;
+filter:brightness(.88);
 }
 
 .hero-inner{
 position:relative;
-z-index:2;
-max-width:860px;
+max-width:900px;
 }
-
-/* badge */
-
-.badge{
-display:inline-flex;
-align-items:center;
-gap:10px;
-padding:10px 14px;
-border-radius:999px;
-border:1px solid rgba(255,255,255,0.14);
-background:rgba(0,0,0,0.35);
-font-family:var(--mono);
-font-size:10px;
-letter-spacing:.22em;
-text-transform:uppercase;
-}
-
-/* hero text */
 
 .hero h1{
-margin-top:18px;
-font-size:clamp(54px,9vw,104px);
-letter-spacing:-.03em;
-line-height:.95;
+font-size:clamp(70px,10vw,120px);
+letter-spacing:-2px;
+font-weight:700;
+margin-bottom:10px;
+text-shadow:0 10px 30px rgba(0,0,0,.6);
 }
 
 .hero h2{
-margin-top:14px;
-font-size:clamp(18px,2.2vw,26px);
-font-weight:400;
-color:rgba(255,255,255,0.80);
-}
-
-.hero p{
-margin-top:18px;
-max-width:760px;
-color:rgba(255,255,255,0.78);
-font-size:17px;
-line-height:1.8;
-}
-
-/* buttons */
-
-.hero-actions{
-margin-top:26px;
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-}
-
-.btn{
-display:inline-flex;
-align-items:center;
-justify-content:center;
-font-family:var(--mono);
-font-size:11px;
-letter-spacing:.22em;
-text-transform:uppercase;
-text-decoration:none;
-padding:13px 16px;
-border-radius:14px;
-border:1px solid rgba(255,255,255,0.12);
-background:rgba(0,0,0,0.28);
-color:white;
-}
-
-.btn.primary{
-background:linear-gradient(135deg,var(--accent),var(--accent2));
-color:#050505;
-}
-
-/* sections */
-
-.section{
-padding:96px 0;
-border-top:1px solid rgba(255,255,255,0.07);
-}
-
-.h-kicker{
-font-family:var(--mono);
-font-size:11px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:rgba(255,255,255,.55);
-}
-
-.h2{
-margin-top:10px;
-font-size:40px;
-}
-
-.lead{
-margin-top:14px;
+font-size:clamp(22px,2.5vw,30px);
+font-weight:500;
 color:var(--sub);
-max-width:820px;
-line-height:1.75;
+text-shadow:0 4px 15px rgba(0,0,0,.6);
+}
+
+/* SECTIONS */
+
+section{
+padding:120px 0;
+border-top:1px solid var(--border);
+}
+
+.section-title{
+font-size:36px;
+margin-bottom:20px;
+}
+
+.section-lead{
+max-width:760px;
+line-height:1.7;
+color:var(--sub);
 }
 
 .grid{
-margin-top:28px;
+margin-top:50px;
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:14px;
+gap:25px;
 }
 
 .card{
-background:rgba(255,255,255,0.04);
-border:1px solid rgba(255,255,255,0.10);
-border-radius:16px;
-padding:22px;
+padding:26px;
+border:1px solid var(--border);
+border-radius:14px;
+background:rgba(255,255,255,.03);
 }
 
-.card h4{
-margin-bottom:8px;
+.card h3{
+margin-bottom:10px;
+}
+
+.card p{
+color:var(--sub);
+line-height:1.6;
 }
 
 footer{
-border-top:1px solid rgba(255,255,255,0.08);
-padding:40px;
+padding:120px 0;
+border-top:1px solid var(--border);
 text-align:center;
-opacity:.5;
-font-size:13px;
+color:rgba(255,255,255,.6);
 }
 
 </style>
@@ -289,90 +183,70 @@ font-size:13px;
 <nav>
 <div class="container nav-inner">
 
-<div style="display:flex;align-items:center;gap:10px;">
-<span style="width:10px;height:10px;border-radius:3px;background:#9fe2ff;"></span>
-<span style="font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;">Neraium</span>
+<div class="brand">NERAIUM</div>
+
+<div class="links">
+<a href="platform.html">Platform</a>
+<a href="technical.html">Technical</a>
+<a href="governance.html">Governance</a>
 </div>
-
-<ul class="nav-links">
-<li><a href="#capabilities">Capabilities</a></li>
-<li><a href="technical.html">Technical</a></li>
-<li><a href="governance.html">Governance</a></li>
-</ul>
-
-<a class="nav-cta" href="#contact">Explore</a>
 
 </div>
 </nav>
 
 <header class="hero">
-
 <div class="container hero-inner">
 
-<div class="badge">
-Read only. No actuation. Operator authority preserved.
-</div>
+<h1>NERAIUM</h1>
 
-<h1>Neraium</h1>
-
-<h2>Systemic Infrastructure Intelligence</h2>
-
-<p>
-Neraium ingests existing telemetry, detects sustained structural deviation,
-and produces reviewable intelligence before failure occurs. Built for critical
-physical systems where accountability and operational authority matter.
-</p>
-
-<div class="hero-actions">
-<a class="btn primary" href="#capabilities">Explore Platform</a>
-<a class="btn" href="technical.html">Technical</a>
-<a class="btn" href="governance.html">Governance</a>
-</div>
+<h2>
+Systemic Infrastructure Intelligence
+</h2>
 
 </div>
-
 </header>
 
-<section class="section" id="capabilities">
-
+<section>
 <div class="container">
 
-<div class="h-kicker">Capabilities</div>
+<h2 class="section-title">Infrastructure Intelligence</h2>
 
-<div class="h2">Built for critical systems</div>
-
-<div class="lead">
-The platform integrates with existing environments and delivers earlier signal
-without changing how systems are controlled.
-</div>
+<p class="section-lead">
+Neraium ingests telemetry from critical physical systems and detects sustained structural deviation before failure occurs. The platform is strictly read-only. No control commands. No automation. No system modification.
+</p>
 
 <div class="grid">
 
 <div class="card">
-<h4>Telemetry ingestion</h4>
-<p>Connect to BAS, SCADA, historians, and telemetry streams.</p>
+<h3>Detection</h3>
+<p>
+Structural deviation across industrial telemetry streams is detected before alarms or failure events.
+</p>
 </div>
 
 <div class="card">
-<h4>Deviation detection</h4>
-<p>Identify deterioration patterns before alarms and downtime.</p>
+<h3>Intelligence</h3>
+<p>
+Outputs are reviewed through governance controls before institutional acknowledgement.
+</p>
 </div>
 
 <div class="card">
-<h4>Reviewable intelligence</h4>
-<p>Outputs structured for operator review and traceability.</p>
+<h3>Authority</h3>
+<p>
+Operators retain full authority. Neraium never actuates or modifies infrastructure.
+</p>
 </div>
 
 </div>
 
 </div>
-
 </section>
 
 <footer>
-
-© 2026 Neraium
-
+Craig Curtis<br>
+craig@neraium.com<br><br>
+© Neraium
 </footer>
 
 </body>
