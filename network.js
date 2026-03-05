@@ -1,18 +1,18 @@
-const canvas = document.querySelector(".network")
-const ctx = canvas.getContext("2d")
+const canvas=document.querySelector(".network")
+const ctx=canvas.getContext("2d")
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
-let particles = []
+let particles=[]
 
 for(let i=0;i<80;i++){
 
 particles.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-vx:(Math.random()-.5)*0.5,
-vy:(Math.random()-.5)*0.5
+vx:(Math.random()-.5)*0.6,
+vy:(Math.random()-.5)*0.6
 })
 
 }
@@ -31,12 +31,13 @@ if(p.y<0||p.y>canvas.height)p.vy*=-1
 
 ctx.beginPath()
 ctx.arc(p.x,p.y,2,0,Math.PI*2)
-ctx.fillStyle="#6d7cff"
+ctx.fillStyle="#7d8cff"
 ctx.fill()
 
 })
 
 for(let i=0;i<particles.length;i++){
+
 for(let j=i+1;j<particles.length;j++){
 
 let dx=particles[i].x-particles[j].x
@@ -48,12 +49,13 @@ if(dist<120){
 ctx.beginPath()
 ctx.moveTo(particles[i].x,particles[i].y)
 ctx.lineTo(particles[j].x,particles[j].y)
-ctx.strokeStyle="rgba(109,124,255,.2)"
+ctx.strokeStyle="rgba(125,140,255,.15)"
 ctx.stroke()
 
 }
 
 }
+
 }
 
 requestAnimationFrame(animate)
