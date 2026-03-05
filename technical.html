@@ -6,12 +6,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Neraium | Technical Architecture</title>
+<title>Neraium Technical Architecture</title>
 
 <link rel="stylesheet" href="style.css">
-<script defer src="script.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -30,33 +27,35 @@
 
 </nav>
 
+
+
 <section class="hero">
+
+<canvas class="network"></canvas>
 
 <h1>Technical Architecture</h1>
 
 <p>
-The Neraium system processes telemetry environments using multivariate statistical
-analysis designed to detect structural infrastructure deviation before operational failure.
+Telemetry environments are processed using multivariate analysis to detect
+structural deviation.
 </p>
 
 </section>
+
+
 
 <section class="section reveal">
 
 <h2>Telemetry Processing</h2>
 
 <p>
-Infrastructure systems generate continuous streams of telemetry data from sensors,
-control systems, and operational monitoring platforms. Neraium ingests this telemetry
-and evaluates the relationships between operational variables across entire system environments.
-</p>
-
-<p>
-Rather than analyzing individual signals in isolation, the system analyzes telemetry
-as an interconnected operational environment.
+Infrastructure systems generate continuous telemetry streams from sensors
+and operational monitoring systems.
 </p>
 
 </section>
+
+
 
 <section class="section reveal">
 
@@ -66,157 +65,40 @@ as an interconnected operational environment.
 
 <div class="card">
 <h3>Data Ingestion</h3>
-<p>
-Operational telemetry is collected from sensors, control systems,
-and infrastructure monitoring platforms.
-</p>
+<p>Operational telemetry streams are collected.</p>
 </div>
 
 <div class="card">
-<h3>Signal Normalization</h3>
-<p>
-Telemetry streams are normalized to enable consistent analysis
-across heterogeneous operational systems.
-</p>
+<h3>Signal Processing</h3>
+<p>Telemetry signals normalized and processed.</p>
 </div>
 
 <div class="card">
-<h3>Multivariate Modeling</h3>
-<p>
-Statistical models analyze relationships between variables to
-identify structural system drift.
-</p>
+<h3>Statistical Modeling</h3>
+<p>Multivariate relationships evaluated.</p>
 </div>
 
 <div class="card">
-<h3>Deviation Detection</h3>
-<p>
-Sustained deviation patterns are detected across telemetry
-environments before failure events occur.
-</p>
+<h3>Drift Detection</h3>
+<p>Sustained deviation patterns detected.</p>
 </div>
 
 </div>
 
 </section>
 
-<section class="section reveal">
 
-<h2>Detection Methodology</h2>
-
-<p>
-Traditional monitoring systems rely on threshold alarms that trigger
-only when a variable exceeds a predefined limit. This approach fails
-to detect gradual deterioration patterns across multiple variables.
-</p>
-
-<p>
-Neraium evaluates telemetry relationships across entire infrastructure
-environments to identify emerging system drift that would otherwise
-remain invisible to conventional monitoring tools.
-</p>
-
-</section>
-
-<section class="section reveal">
-
-<h2>System Architecture</h2>
-
-<div class="diagram">
-
-<div class="diagram-grid">
-
-<div class="node">Telemetry Sources</div>
-
-<div class="node">Data Pipeline</div>
-
-<div class="node">Signal Processing</div>
-
-<div class="node">Multivariate Modeling</div>
-
-<div class="node">Drift Detection</div>
-
-<div class="node">Operational Signals</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="section reveal">
-
-<h2>Telemetry Signal Visualization</h2>
-
-<p>
-Operational telemetry environments exhibit characteristic signal
-patterns as systems deteriorate. The platform continuously evaluates
-these patterns to detect emerging system deviation.
-</p>
-
-<div class="telemetry">
-
-<div class="wave"></div>
-
-</div>
-
-</section>
-
-<section class="section reveal">
-
-<h2>Operational Outcomes</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Earlier Failure Detection</h3>
-<p>
-Structural deviation patterns can appear weeks before failure events.
-</p>
-</div>
-
-<div class="card">
-<h3>Improved System Visibility</h3>
-<p>
-Operators gain insight into system behavior across operational networks.
-</p>
-</div>
-
-<div class="card">
-<h3>Predictive Maintenance</h3>
-<p>
-Maintenance activities can be scheduled before operational disruption occurs.
-</p>
-</div>
-
-<div class="card">
-<h3>Operational Intelligence</h3>
-<p>
-Telemetry environments become a predictive infrastructure resource.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="cta">
-
-<h2>Understanding Infrastructure Behavior</h2>
-
-<p>
-Operational telemetry can reveal system deterioration long before failure occurs.
-</p>
-
-<a class="button" href="platform.html">Explore the Platform</a>
-
-</section>
 
 <footer>
 
 © 2026 Neraium
 
 </footer>
+
+
+
+<script src="script.js"></script>
+<script src="network.js"></script>
 
 </body>
 </html>
