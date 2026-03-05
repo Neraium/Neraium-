@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,27 +8,7 @@
 
 <title>Neraium Technical Architecture</title>
 
-<style>
-
-body{font-family:Inter;background:#050a15;color:white;margin:0}
-
-nav{display:flex;justify-content:space-between;padding:20px 6vw;border-bottom:1px solid rgba(255,255,255,.05)}
-
-nav ul{display:flex;gap:28px;list-style:none}
-
-nav a{color:#cfd7ff;text-decoration:none}
-
-.hero{padding:120px 6vw;max-width:1200px;margin:auto}
-
-.section{padding:90px 6vw;max-width:1200px;margin:auto}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px;margin-top:40px}
-
-.card{background:#0d1428;padding:30px;border-radius:12px}
-
-footer{text-align:center;padding:40px;color:#7c87b6;margin-top:100px}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -35,7 +16,7 @@ footer{text-align:center;padding:40px;color:#7c87b6;margin-top:100px}
 
 <nav>
 
-<div>NERAIUM</div>
+<div class="logo">NERAIUM</div>
 
 <ul>
 <li><a href="index.html">Home</a></li>
@@ -51,34 +32,128 @@ footer{text-align:center;padding:40px;color:#7c87b6;margin-top:100px}
 <h1>Technical Architecture</h1>
 
 <p>
-The Neraium analysis engine processes telemetry streams using statistical
-and multivariate analysis techniques.
+The Neraium system processes telemetry streams using statistical and multivariate
+analysis techniques designed to identify sustained infrastructure deviation.
 </p>
 
 </section>
 
+
+
 <section class="section">
+
+<h2>Telemetry Processing</h2>
+
+<p>
+Infrastructure systems generate continuous streams of telemetry data
+from sensors, operational control systems, and monitoring platforms.
+</p>
+
+<p>
+Neraium ingests these telemetry streams and processes them through
+a structured analysis pipeline designed to evaluate relationships
+between operational variables.
+</p>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>Analysis Pipeline</h2>
 
 <div class="grid">
 
 <div class="card">
-<h3>Data Pipelines</h3>
-<p>Telemetry is ingested through structured data pipelines.</p>
+
+<h3>Data Ingestion</h3>
+
+<p>
+Telemetry data is collected from operational infrastructure environments.
+</p>
+
 </div>
 
 <div class="card">
-<h3>Telemetry Storage</h3>
-<p>Historical telemetry allows long term pattern analysis.</p>
+
+<h3>Data Normalization</h3>
+
+<p>
+Telemetry signals are normalized to allow consistent multivariate analysis.
+</p>
+
 </div>
 
 <div class="card">
-<h3>Drift Detection Models</h3>
-<p>Statistical models detect structural deviation.</p>
+
+<h3>Statistical Modeling</h3>
+
+<p>
+Multivariate models evaluate system behavior across multiple variables.
+</p>
+
 </div>
 
 <div class="card">
-<h3>Analysis Engine</h3>
-<p>The system continuously analyzes infrastructure behavior.</p>
+
+<h3>Drift Detection</h3>
+
+<p>
+Sustained structural deviation patterns are identified within telemetry environments.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>Detection Methodology</h2>
+
+<p>
+Traditional monitoring systems rely on threshold alarms that trigger only
+after a variable exceeds a predefined limit. This approach fails to detect
+structural changes occurring across multiple variables simultaneously.
+</p>
+
+<p>
+Neraium evaluates telemetry environments using multivariate analysis,
+identifying patterns that indicate emerging system deterioration.
+</p>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>System Output</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Deviation Signals</h3>
+<p>Operators receive early warning signals indicating structural drift.</p>
+</div>
+
+<div class="card">
+<h3>Operational Context</h3>
+<p>Deviation patterns are interpreted within system context.</p>
+</div>
+
+<div class="card">
+<h3>Infrastructure Insight</h3>
+<p>Telemetry becomes a predictive operational resource.</p>
+</div>
+
+<div class="card">
+<h3>Failure Prevention</h3>
+<p>Early detection allows proactive maintenance decisions.</p>
 </div>
 
 </div>
