@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -8,8 +9,6 @@
 <title>Neraium | Systemic Infrastructure Intelligence</title>
 
 <link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -32,64 +31,22 @@
 <h1>Systemic Infrastructure Intelligence</h1>
 
 <p>
-Neraium analyzes multivariate telemetry across operational environments to
-detect structural infrastructure deviation before failure occurs.
-</p>
-
-<p>
-Infrastructure systems behave as interconnected networks rather than isolated
-assets. By analyzing telemetry relationships across these networks the
-platform identifies deterioration patterns traditional monitoring cannot see.
+Neraium analyzes multivariate telemetry across operational environments
+to detect structural infrastructure deviation before failure occurs.
 </p>
 
 </section>
-
-
 
 <section class="section reveal">
 
 <h2>The Problem</h2>
 
 <p>
-Most infrastructure monitoring systems rely on reactive alarms.
-By the time a threshold alert occurs deterioration is already underway.
+Infrastructure monitoring systems rely on threshold alarms that
+trigger after deterioration has already begun.
 </p>
 
 </section>
-
-
-
-<section class="section reveal">
-
-<h2>Platform Capabilities</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Multivariate Detection</h3>
-<p>Relationships between operational signals reveal system behavior.</p>
-</div>
-
-<div class="card">
-<h3>Early Failure Signals</h3>
-<p>Deterioration patterns appear weeks before disruption.</p>
-</div>
-
-<div class="card">
-<h3>Operational Visibility</h3>
-<p>Infrastructure operators gain system level insight.</p>
-</div>
-
-<div class="card">
-<h3>Read Only Architecture</h3>
-<p>The platform observes systems without controlling equipment.</p>
-</div>
-
-</div>
-
-</section>
-
-
 
 <section class="section reveal">
 
@@ -112,38 +69,28 @@ By the time a threshold alert occurs deterioration is already underway.
 
 </section>
 
-
-
 <section class="section reveal">
 
-<h2>Telemetry Visualization</h2>
+<h2>Telemetry Signal Analysis</h2>
 
-<div class="telemetry">
+<p>
+Infrastructure telemetry signals are continuously evaluated
+to detect structural system drift.
+</p>
 
-<div class="wave"></div>
-
-</div>
-
-</section>
-
-
-
-<section class="cta">
-
-<h2>Infrastructure Should Be Predictable</h2>
-
-<a class="button" href="platform.html">Explore the Platform</a>
+<canvas id="telemetryChart" width="1000" height="300"></canvas>
 
 </section>
-
-
 
 <footer>
+
 © 2026 Neraium
+
 </footer>
 
 <script src="script.js"></script>
 <script src="network.js"></script>
+<script src="telemetry.js"></script>
 
 </body>
 </html>
