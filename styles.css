@@ -636,3 +636,62 @@ pointer-events:none;
 position:relative;
 z-index:2;
 }
+/* --- Mobile polish --- */
+
+@media (max-width: 768px) {
+
+.nav-inner{
+flex-direction:column;
+align-items:flex-start;
+gap:12px;
+padding:14px 0;
+}
+
+.nav-links{
+width:100%;
+display:flex;
+flex-wrap:wrap;
+gap:14px;
+font-size:.95rem;
+}
+
+.hero{
+padding:64px 0 72px;
+}
+
+.hero-grid{
+gap:36px;
+}
+
+.hero-copy h1{
+font-size:2.4rem;
+line-height:1.1;
+}
+
+.lead{
+font-size:1rem;
+}
+
+.hero-actions{
+flex-direction:column;
+gap:12px;
+}
+
+.btn{
+width:100%;
+}
+
+.chart-panel{
+margin-top:10px;
+}
+
+.stats-grid{
+grid-template-columns:1fr;
+gap:16px;
+}
+
+.section{
+padding:72px 0;
+}
+
+}
