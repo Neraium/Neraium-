@@ -68,9 +68,9 @@ if (canvas) {
 
     drawGrid();
 
-    drawSignal("#3b6cff", 0.8, 30);
-    drawSignal("#2f5fff", 1.2, 25);
-    drawSignal("#1f3fa8", 1.6, 18);
+    drawSignal("#3b6cff", 0.8, 30);  // Sensor A
+    drawSignal("#45d7ff", 1.2, 25);  // Sensor B
+    drawSignal("#7d8cff", 1.6, 18);  // Sensor C
 
     drawDrift();
 
