@@ -24,12 +24,12 @@
 
   <main>
     <section class="hero">
-      <div class="container hero-inner">
+      <div class="container">
         <div class="eyebrow">Platform</div>
         <h1>From telemetry ingestion to defensible operational intelligence</h1>
         <p class="lead">
-          The Neraium platform is designed to ingest live infrastructure telemetry, normalize it into a usable
-          system model, evaluate drift, and record admissible interpretations without interfering with operations.
+          The Neraium platform ingests live infrastructure telemetry, normalizes it into a usable system model,
+          evaluates drift, and records admissible interpretations without interfering with operations.
         </p>
         <div class="hero-actions">
           <a href="#flow" class="btn btn-primary">Explore Flow</a>
@@ -44,36 +44,35 @@
           <div class="eyebrow">Operational Flow</div>
           <h2>Five layers of system interpretation</h2>
           <p>
-            Each layer narrows ambiguity before the next stage begins. The goal is not just detection, but reliable
-            interpretation under operational constraints.
+            Each stage narrows ambiguity before the next begins. The goal is not just detection, but reliable,
+            reviewable interpretation under operational constraints.
           </p>
         </div>
 
-        <div class="flow">
-          <div class="flow-step">
-            <span>01</span>
+        <div class="grid-3">
+          <div class="card">
             <h3>Telemetry Ingestion</h3>
-            <p class="body">Signals enter from sensors, historians, SCADA exports, and operational data feeds.</p>
+            <p>Signals enter from sensors, historians, SCADA exports, and operational data feeds.</p>
           </div>
-          <div class="flow-step">
-            <span>02</span>
-            <h3>Normalization</h3>
-            <p class="body">Timestamps are aligned, signal formats are standardized, and streams are prepared for analysis.</p>
+          <div class="card">
+            <h3>Signal Normalization</h3>
+            <p>Timestamps are aligned, values are standardized, and streams are prepared for system-level analysis.</p>
           </div>
-          <div class="flow-step">
-            <span>03</span>
-            <h3>Drift Analysis</h3>
-            <p class="body">The system evaluates multivariate behavior to detect structural deviation across correlated signals.</p>
+          <div class="card">
+            <h3>Multivariate Drift Analysis</h3>
+            <p>The platform evaluates structural system change across correlated signals, not isolated alarms alone.</p>
           </div>
-          <div class="flow-step">
-            <span>04</span>
+          <div class="card">
             <h3>Interpretation Constraints</h3>
-            <p class="body">Candidate signals are filtered through deterministic rules before an interpretation is admitted.</p>
+            <p>Candidate deviations are filtered through deterministic rules before an interpretation is admitted.</p>
           </div>
-          <div class="flow-step">
-            <span>05</span>
+          <div class="card">
             <h3>Evidence Recording</h3>
-            <p class="body">Admitted, suppressed, or voided outcomes are recorded with context for later review.</p>
+            <p>Admitted, suppressed, or voided outcomes are preserved with context for later review.</p>
+          </div>
+          <div class="card">
+            <h3>Operator Output</h3>
+            <p>Only interpretable, reviewable intelligence is surfaced to the human decision point.</p>
           </div>
         </div>
       </div>
@@ -85,27 +84,27 @@
           <div class="eyebrow">Architecture</div>
           <h2>Built for operational clarity</h2>
           <p>
-            The platform is intentionally modular and read-only. Each layer exists to help operators move from raw
-            telemetry to interpretable system understanding without crossing into control.
+            The platform is modular by design. Each layer strengthens reliability by isolating ingestion,
+            interpretation, and evidence generation into clear functional boundaries.
           </p>
         </div>
 
         <div class="grid-4">
           <div class="card">
             <h3>Signal Intake</h3>
-            <p>Integrates heterogeneous telemetry without forcing operators to replace existing control environments.</p>
+            <p>Integrates heterogeneous telemetry without requiring replacement of the systems already in operation.</p>
           </div>
           <div class="card">
             <h3>Preparation Layer</h3>
-            <p>Separates ingestion noise from meaningful signal behavior so the system model starts from coherent data.</p>
+            <p>Separates ingestion noise from meaningful signal behavior so the analysis model starts from coherent data.</p>
           </div>
           <div class="card">
             <h3>Interpretation Layer</h3>
-            <p>Evaluates how the system is changing, not just whether a single threshold has been crossed.</p>
+            <p>Evaluates how the system is changing, not just whether one reading moved beyond a static threshold.</p>
           </div>
           <div class="card">
             <h3>Evidence Layer</h3>
-            <p>Preserves what was detected, how it was filtered, and why it was surfaced for operator review.</p>
+            <p>Preserves what was detected, how it was filtered, and why it was surfaced for later operator review.</p>
           </div>
         </div>
       </div>
@@ -122,36 +121,34 @@
           </p>
         </div>
 
-        <div class="panel architecture-panel">
-          <div class="architecture-grid">
-            <div class="mini-list">
-              <div class="mini-item">
-                <strong>Input boundary</strong>
-                <span>Infrastructure telemetry enters from existing systems and remains separate from control logic.</span>
-              </div>
-              <div class="mini-item">
-                <strong>Analysis boundary</strong>
-                <span>Signals are normalized, modeled, and evaluated in an independent read-only interpretation layer.</span>
-              </div>
-              <div class="mini-item">
-                <strong>Output boundary</strong>
-                <span>Only operational intelligence and preserved evidence are surfaced to human operators.</span>
-              </div>
+        <div class="grid-2">
+          <div class="feature-list">
+            <div class="feature-item">
+              <strong>Input boundary</strong>
+              <span>Infrastructure telemetry enters from existing systems and remains separate from control logic.</span>
             </div>
+            <div class="feature-item">
+              <strong>Analysis boundary</strong>
+              <span>Signals are normalized, modeled, and evaluated inside an independent read-only interpretation layer.</span>
+            </div>
+            <div class="feature-item">
+              <strong>Output boundary</strong>
+              <span>Only operational intelligence and preserved evidence are surfaced to human operators.</span>
+            </div>
+          </div>
 
-            <div class="mini-list">
-              <div class="mini-item">
-                <strong>No actuation</strong>
-                <span>The platform does not issue commands, change setpoints, or intervene in control environments.</span>
-              </div>
-              <div class="mini-item">
-                <strong>Human decision point</strong>
-                <span>Interpretations support operators. They do not replace operator authority.</span>
-              </div>
-              <div class="mini-item">
-                <strong>Audit-ready structure</strong>
-                <span>Every surfaced outcome remains explainable through its preserved evaluation trail.</span>
-              </div>
+          <div class="feature-list">
+            <div class="feature-item">
+              <strong>No actuation</strong>
+              <span>The platform does not issue commands, modify setpoints, or intervene in operational control systems.</span>
+            </div>
+            <div class="feature-item">
+              <strong>Human decision point</strong>
+              <span>Interpretations support operators. They do not replace operator authority.</span>
+            </div>
+            <div class="feature-item">
+              <strong>Audit-ready structure</strong>
+              <span>Every surfaced outcome remains explainable through its preserved evaluation trail.</span>
             </div>
           </div>
         </div>
@@ -162,10 +159,10 @@
       <div class="container">
         <div class="panel">
           <div class="eyebrow">Next Step</div>
-          <h2>See how the platform becomes technical discipline</h2>
+          <h2>See how platform architecture becomes technical rigor</h2>
           <p>
-            Explore the statistical foundations, interpretation constraints, and evidence logic that give the platform
-            its operating rigor.
+            Explore the statistical foundations, interpretation constraints, and evidence logic that give the
+            platform its operational discipline.
           </p>
           <a href="technical.html" class="btn btn-primary">Go to Technical</a>
         </div>
