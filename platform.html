@@ -1,124 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Neraium | Platform</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<nav class="nav">
-  <div class="container nav-inner">
-    <a href="index.html" class="brand">Nera<span>ium</span></a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="platform.html" class="active">Platform</a>
-      <a href="governance.html">Governance</a>
-      <a href="analysis.html">Analysis</a>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">Nera<span>ium</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="platform.html" class="active">Platform</a>
+        <a href="governance.html">Governance</a>
+        <a href="analysis.html">Analysis</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<main>
-  <section class="hero page-hero">
-    <div class="container">
-      <div class="eyebrow">Platform</div>
-      <h1>Infrastructure telemetry becomes operational intelligence</h1>
-      <p class="lead">
-        The Neraium platform ingests live telemetry, normalizes signal behaviour, evaluates multivariate drift,
-        and records admissible interpretations without interfering with operations.
-      </p>
-    </div>
-  </section>
-
-  <section class="proof-bar">
-    <div class="container proof-grid">
-      <div class="proof-item"><span class="proof-label">Input</span><strong>Live telemetry</strong></div>
-      <div class="proof-item"><span class="proof-label">Model</span><strong>System-level analysis</strong></div>
-      <div class="proof-item"><span class="proof-label">Boundary</span><strong>Read-only</strong></div>
-      <div class="proof-item"><span class="proof-label">Output</span><strong>Operational evidence</strong></div>
-    </div>
-  </section>
-
-  <section class="section band">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Operational Flow</div>
-        <h2>Five layers of system interpretation</h2>
-        <p>
-          Each stage narrows ambiguity before the next begins. The goal is not just detection, but reliable,
-          reviewable interpretation under operational constraints.
+  <main>
+    <section class="hero page-hero">
+      <div class="container">
+        <div class="eyebrow">Platform</div>
+        <h1>Infrastructure telemetry becomes operational intelligence</h1>
+        <p class="lead">
+          Neraium ingests operational data, evaluates evolving system behaviour, and returns usable outputs without altering control systems.
         </p>
       </div>
-      <div class="architecture-flow">
-        <div class="flow-step"><span>01</span><strong>Telemetry Ingestion</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step"><span>02</span><strong>Signal Normalization</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step"><span>03</span><strong>Drift Analysis</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step"><span>04</span><strong>Interpretation Constraints</strong></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step"><span>05</span><strong>Evidence Recording</strong></div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">System Layers</div>
-        <h2>Built for operational clarity</h2>
-        <p>
-          The platform is modular by design. Each layer strengthens reliability by isolating ingestion,
-          interpretation and evidence generation into clear functional boundaries.
-        </p>
-      </div>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Signal Intake</h3>
-          <p>Integrates heterogeneous telemetry without replacing systems already in operation.</p>
+    <section class="proof-bar">
+      <div class="container proof-grid">
+        <div class="proof-item">
+          <span class="proof-label">Input</span>
+          <strong>Telemetry</strong>
         </div>
-        <div class="card">
-          <h3>Preparation Layer</h3>
-          <p>Removes misalignment and formatting inconsistencies so analysis starts with coherent data.</p>
+        <div class="proof-item">
+          <span class="proof-label">Processing</span>
+          <strong>Private backend</strong>
         </div>
-        <div class="card">
-          <h3>Interpretation Layer</h3>
-          <p>Evaluates how the system changes, not just whether one reading crosses a threshold.</p>
+        <div class="proof-item">
+          <span class="proof-label">Boundary</span>
+          <strong>Read-only</strong>
         </div>
-        <div class="card">
-          <h3>Evidence Layer</h3>
-          <p>Preserves what was detected, how it was filtered and why it was surfaced for later review.</p>
+        <div class="proof-item">
+          <span class="proof-label">Output</span>
+          <strong>Actionable lead time</strong>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="cta">
-    <div class="container">
-      <div class="panel">
-        <h2>See how platform architecture becomes governance discipline</h2>
-        <p>
-          Explore the principles and boundaries that keep Neraium read‑only, auditable and in support of operator authority.
-        </p>
-        <a href="governance.html" class="btn btn-primary">Go to Governance</a>
-      </div>
-    </div>
-  </section>
-</main>
+    <section class="section band">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Operational Flow</div>
+          <h2>From uploaded telemetry to usable warning output</h2>
+          <p>
+            The platform is built to accept varied data, infer structure when possible, process it privately, and return intelligible results.
+          </p>
+        </div>
 
-<footer class="footer">
-  <div class="container footer-inner">
-    <div class="brand">Nera<span>ium</span></div>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="platform.html">Platform</a>
-      <a href="governance.html">Governance</a>
-      <a href="analysis.html">Analysis</a>
+        <div class="architecture-flow">
+          <div class="flow-step"><span>01</span><strong>Upload</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><span>02</span><strong>Schema Detection</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><span>03</span><strong>Private Scoring</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><span>04</span><strong>Lead-Time Output</strong></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><span>05</span><strong>Evidence Record</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Design Principles</div>
+          <h2>Built for flexibility and operational trust</h2>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Universal intake</h3>
+            <p>Supports varied CSV schemas, timestamps, entities, and failure labels.</p>
+          </div>
+          <div class="card">
+            <h3>Private logic</h3>
+            <p>Core scoring stays on your server and is never exposed to end users.</p>
+          </div>
+          <div class="card">
+            <h3>Operator clarity</h3>
+            <p>Results focus on usable signals, detected schema, and estimated lead time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="panel cta-panel">
+          <h2>Run the analysis experience</h2>
+          <p>
+            See how uploaded data moves through Neraium’s secure workflow and returns lead-time insight.
+          </p>
+          <a href="analysis.html" class="btn btn-primary">Open Analysis</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand">Nera<span>ium</span></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="platform.html">Platform</a>
+        <a href="governance.html">Governance</a>
+        <a href="analysis.html">Analysis</a>
+      </div>
+      <div class="footer-copy">© 2026 Neraium</div>
     </div>
-    <div class="footer-copy">© 2026 Neraium</div>
-  </div>
-</footer>
+  </footer>
 </body>
 </html>
