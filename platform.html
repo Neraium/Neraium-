@@ -1,114 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Neraium Platform</title>
-
-<link rel="stylesheet" href="styles.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neraium | Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">Nera<span>ium</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="platform.html" class="active">Platform</a>
+        <a href="technical.html">Technical</a>
+        <a href="governance.html">Governance</a>
+        <a href="index.html#contact" class="btn btn-primary">Request Pilot</a>
+      </div>
+    </div>
+  </nav>
 
-<nav class="nav">
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="eyebrow">Platform</div>
+        <h1>From telemetry ingestion to defensible operational intelligence</h1>
+        <p class="lead">
+          The Neraium platform is designed to ingest live infrastructure telemetry, normalize it into a usable
+          system model, evaluate drift, and record admissible interpretations without interfering with operations.
+        </p>
+        <div class="hero-actions">
+          <a href="#flow" class="btn btn-primary">Explore Flow</a>
+          <a href="technical.html" class="btn btn-secondary">Technical Detail</a>
+        </div>
+      </div>
+    </section>
 
-<div class="container nav-inner">
+    <section class="section band" id="flow">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Operational Flow</div>
+          <h2>Five layers of system interpretation</h2>
+          <p>
+            Each layer narrows ambiguity before the next stage begins. The goal is not just detection, but reliable
+            interpretation under operational constraints.
+          </p>
+        </div>
 
-<div class="brand">Nera<span>ium</span></div>
+        <div class="flow">
+          <div class="flow-step">
+            <span>01</span>
+            <h3>Telemetry Ingestion</h3>
+            <p class="body">Signals enter from sensors, historians, SCADA exports, and operational data feeds.</p>
+          </div>
+          <div class="flow-step">
+            <span>02</span>
+            <h3>Normalization</h3>
+            <p class="body">Timestamps are aligned, signal formats are standardized, and streams are prepared for analysis.</p>
+          </div>
+          <div class="flow-step">
+            <span>03</span>
+            <h3>Drift Analysis</h3>
+            <p class="body">The system evaluates multivariate behavior to detect structural deviation across correlated signals.</p>
+          </div>
+          <div class="flow-step">
+            <span>04</span>
+            <h3>Interpretation Constraints</h3>
+            <p class="body">Candidate signals are filtered through deterministic rules before an interpretation is admitted.</p>
+          </div>
+          <div class="flow-step">
+            <span>05</span>
+            <h3>Evidence Recording</h3>
+            <p class="body">Admitted, suppressed, or voided outcomes are recorded with context for later review.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="platform.html" class="active">Platform</a>
-<a href="technical.html">Technical</a>
-<a href="governance.html">Governance</a>
-</div>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Architecture</div>
+          <h2>Built for operational clarity</h2>
+          <p>
+            The platform is intentionally modular and read-only. Each layer exists to help operators move from raw
+            telemetry to interpretable system understanding without crossing into control.
+          </p>
+        </div>
 
-</div>
+        <div class="grid-4">
+          <div class="card">
+            <h3>Signal Intake</h3>
+            <p>Integrates heterogeneous telemetry without forcing operators to replace existing control environments.</p>
+          </div>
+          <div class="card">
+            <h3>Preparation Layer</h3>
+            <p>Separates ingestion noise from meaningful signal behavior so the system model starts from coherent data.</p>
+          </div>
+          <div class="card">
+            <h3>Interpretation Layer</h3>
+            <p>Evaluates how the system is changing, not just whether a single threshold has been crossed.</p>
+          </div>
+          <div class="card">
+            <h3>Evidence Layer</h3>
+            <p>Preserves what was detected, how it was filtered, and why it was surfaced for operator review.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</nav>
+    <section class="section band">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Boundary Model</div>
+          <h2>Architecture at a glance</h2>
+          <p>
+            Neraium creates an intelligence layer around infrastructure operations. It observes, analyzes, and records,
+            while existing systems and operators retain control authority.
+          </p>
+        </div>
 
+        <div class="panel architecture-panel">
+          <div class="architecture-grid">
+            <div class="mini-list">
+              <div class="mini-item">
+                <strong>Input boundary</strong>
+                <span>Infrastructure telemetry enters from existing systems and remains separate from control logic.</span>
+              </div>
+              <div class="mini-item">
+                <strong>Analysis boundary</strong>
+                <span>Signals are normalized, modeled, and evaluated in an independent read-only interpretation layer.</span>
+              </div>
+              <div class="mini-item">
+                <strong>Output boundary</strong>
+                <span>Only operational intelligence and preserved evidence are surfaced to human operators.</span>
+              </div>
+            </div>
 
-<section class="hero">
+            <div class="mini-list">
+              <div class="mini-item">
+                <strong>No actuation</strong>
+                <span>The platform does not issue commands, change setpoints, or intervene in control environments.</span>
+              </div>
+              <div class="mini-item">
+                <strong>Human decision point</strong>
+                <span>Interpretations support operators. They do not replace operator authority.</span>
+              </div>
+              <div class="mini-item">
+                <strong>Audit-ready structure</strong>
+                <span>Every surfaced outcome remains explainable through its preserved evaluation trail.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="container">
+    <section class="cta">
+      <div class="container">
+        <div class="panel">
+          <div class="eyebrow">Next Step</div>
+          <h2>See how the platform becomes technical discipline</h2>
+          <p>
+            Explore the statistical foundations, interpretation constraints, and evidence logic that give the platform
+            its operating rigor.
+          </p>
+          <a href="technical.html" class="btn btn-primary">Go to Technical</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<div class="eyebrow">Platform</div>
-
-<h1>System Architecture</h1>
-
-<p class="lead">
-From telemetry ingestion to defensible operational intelligence.
-</p>
-
-</div>
-
-</section>
-
-
-<section class="section">
-
-<div class="container">
-
-<h2>Operational Flow</h2>
-
-<div class="architecture">
-
-<div>
-<h3>Telemetry Ingestion</h3>
-<p>Sensors, historians, and SCADA feeds.</p>
-</div>
-
-<div>
-<h3>Normalization</h3>
-<p>Timestamp alignment and signal preparation.</p>
-</div>
-
-<div>
-<h3>Drift Detection</h3>
-<p>Multivariate system behavior analysis.</p>
-</div>
-
-<div>
-<h3>Interpretation</h3>
-<p>Constraint-based evaluation of signals.</p>
-</div>
-
-<div>
-<h3>Evidence</h3>
-<p>Immutable operational records.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<footer class="footer">
-
-<div class="container footer-inner">
-
-<div>Neraium</div>
-
-<div class="footer-links">
-<a href="index.html">Home</a>
-<a href="platform.html">Platform</a>
-<a href="technical.html">Technical</a>
-<a href="governance.html">Governance</a>
-</div>
-
-<div>© 2026 Neraium</div>
-
-</div>
-
-</footer>
-
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand">Nera<span>ium</span></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="platform.html">Platform</a>
+        <a href="technical.html">Technical</a>
+        <a href="governance.html">Governance</a>
+      </div>
+      <div class="footer-copy">© 2026 Neraium. All rights reserved.</div>
+    </div>
+  </footer>
 </body>
 </html>
