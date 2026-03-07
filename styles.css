@@ -225,14 +225,14 @@ h3 {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent), #b7c7ff);
-  color: #081018;
-  box-shadow: 0 12px 34px rgba(125, 162, 255, 0.24);
+  background: linear-gradient(135deg, #6f8fff, #9eb3ff);
+  color: #071019;
+  box-shadow: 0 8px 22px rgba(111, 143, 255, 0.22);
 }
 
 .btn-secondary {
   border-color: var(--border);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.015);
   color: var(--text);
 }
 
