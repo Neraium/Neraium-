@@ -1,163 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neraium | Data Analysis</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neraium Analysis</title>
+<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+
 <nav class="nav">
-  <div class="container nav-inner">
-    <a href="index.html" class="brand">Nera<span>ium</span></a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="platform.html">Platform</a>
-      <a href="governance.html">Governance</a>
-      <a href="analysis.html" class="active">Analysis</a>
-    </div>
-  </div>
+<div class="nav-inner container">
+
+<a class="brand" href="index.html">Nera<span>ium</span></a>
+
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="platform.html">Platform</a>
+<a href="governance.html">Governance</a>
+</div>
+
+</div>
 </nav>
 
-<main>
-  <section class="hero page-hero">
-    <div class="container">
-      <div class="eyebrow">Analysis</div>
-      <h1>Upload your data for lead‑time insights</h1>
-      <p class="lead">
-        Select any CSV file and Neraium will encrypt it in your browser, model the telemetry using covariance‑based geometry and Mahalanobis distance, and calculate a lead time.
-      </p>
-    </div>
-  </section>
+<section class="hero">
+<div class="container">
 
-  <section class="section">
-    <div class="container">
-      <div class="panel">
-        <h2>Upload CSV</h2>
-        <input type="file" id="fileInput" accept=".csv" />
-        <div id="uploadStatus" class="muted" style="margin-top:12px;"></div>
-        <div id="analysisOutput" style="margin-top:24px;"></div>
-      </div>
-    </div>
-  </section>
-</main>
+<h1>Upload telemetry data</h1>
+
+<p class="lead">
+Upload CSV telemetry data for infrastructure analysis.
+</p>
+
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+
+<div class="upload-box">
+
+<input type="file" id="file">
+
+<div class="progress">
+<div class="progress-bar" id="progress"></div>
+</div>
+
+<div id="status"></div>
+
+</div>
+
+</div>
+</section>
 
 <footer class="footer">
-  <div class="container footer-inner">
-    <div class="brand">Nera<span>ium</span></div>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="platform.html">Platform</a>
-      <a href="governance.html">Governance</a>
-      <a href="analysis.html">Analysis</a>
-    </div>
-    <div class="footer-copy">© 2026 Neraium</div>
-  </div>
+© Neraium
 </footer>
 
 <script>
-async function generateKey() {
-  return await crypto.subtle.generateKey({ name:'AES-GCM', length:256 }, true, ['encrypt']);
-}
-async function encryptData(key, data) {
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  const enc = await crypto.subtle.encrypt({ name:'AES-GCM', iv }, key, data);
-  return { iv, ciphertext: new Uint8Array(enc) };
-}
-function parseCSV(text) {
-  const rows = text.trim().split(/[\r\n]+/).map(row => row.split(','));
-  const header = rows.shift();
-  const data = rows.map(r => r.map(Number));
-  return { header, data };
-}
-function meanVector(matrix) {
-  const n = matrix.length;
-  const m = matrix[0].length;
-  const means = Array(m).fill(0);
-  for (let row of matrix) {
-    row.forEach((v,i) => means[i] += v);
-  }
-  return means.map(x => x / n);
-}
-function covarianceMatrix(matrix, means) {
-  const n = matrix.length;
-  const m = matrix[0].length;
-  const cov = Array.from({ length:m }, () => Array(m).fill(0));
-  for (let row of matrix) {
-    row.forEach((valI,i) => {
-      row.forEach((valJ,j) => {
-        cov[i][j] += (valI - means[i]) * (valJ - means[j]);
-      });
-    });
-  }
-  return cov.map(row => row.map(c => c / (n - 1)));
-}
-function invertMatrix(m) {
-  const n = m.length;
-  const inv = m.map((row,i) => row.map((val,j) => (i===j ? 1 : 0)));
-  const a = m.map(row => row.slice());
-  for (let i=0; i<n; i++) {
-    let pivot = a[i][i];
-    if (!pivot) throw new Error('Matrix is singular');
-    for (let j=0; j<n; j++) {
-      a[i][j] /= pivot;
-      inv[i][j] /= pivot;
-    }
-    for (let k=0; k<n; k++) {
-      if (k === i) continue;
-      let factor = a[k][i];
-      for (let j=0; j<n; j++) {
-        a[k][j] -= factor * a[i][j];
-        inv[k][j] -= factor * inv[i][j];
-      }
-    }
-  }
-  return inv;
-}
-function mahalanobis(row, means, invCov) {
-  const diff = row.map((v,i) => v - means[i]);
-  let sum = 0;
-  for (let i=0; i<diff.length; i++) {
-    let rowSum = 0;
-    for (let j=0; j<diff.length; j++) {
-      rowSum += invCov[i][j] * diff[j];
-    }
-    sum += diff[i] * rowSum;
-  }
-  return Math.sqrt(sum);
-}
-function computeLeadTime(distances) {
-  const sorted = [...distances].sort((a,b) => a-b);
-  const threshold = sorted[Math.floor(sorted.length * 0.95)];
-  const leadIndex = distances.findIndex(d => d > threshold);
-  return leadIndex >= 0 ? leadIndex : distances.length;
+
+const fileInput = document.getElementById("file")
+const bar = document.getElementById("progress")
+const status = document.getElementById("status")
+
+fileInput.addEventListener("change", () => {
+
+const file = fileInput.files[0]
+
+const xhr = new XMLHttpRequest()
+
+xhr.upload.onprogress = function(e){
+
+if(e.lengthComputable){
+
+const percent = (e.loaded / e.total) * 100
+bar.style.width = percent + "%"
+
 }
 
-document.getElementById('fileInput').addEventListener('change', async function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  document.getElementById('uploadStatus').textContent = 'Encrypting and analysing...';
-  const text = await file.text();
-  const key = await generateKey();
-  const enc = await encryptData(key, new TextEncoder().encode(text));
-  const { header, data } = parseCSV(text);
-  const means = meanVector(data);
-  const cov = covarianceMatrix(data, means);
-  const invCov = invertMatrix(cov);
-  const distances = data.map(row => mahalanobis(row, means, invCov));
-  const leadTime = computeLeadTime(distances);
-  const sorted = [...distances].sort((a,b) => a - b);
-  const thresh = sorted[Math.floor(sorted.length * 0.95)];
-  const out = document.getElementById('analysisOutput');
-  out.innerHTML = `
-    <h3>Analysis Result</h3>
-    <p><strong>Encrypted file size:</strong> ${enc.ciphertext.length} bytes</p>
-    <p><strong>95th percentile Mahalanobis distance:</strong> ${thresh.toFixed(3)}</p>
-    <p><strong>Estimated lead time:</strong> ${leadTime} row(s) until threshold exceeded.</p>
-    <p>Columns detected: ${header.map(h => '<code>'+h.trim()+'</code>').join(', ')}</p>
-  `;
-  document.getElementById('uploadStatus').textContent = 'Encryption and analysis complete.';
-});
+}
+
+xhr.onload = function(){
+
+status.innerHTML = "Analysis complete"
+
+}
+
+const form = new FormData()
+form.append("file", file)
+
+xhr.open("POST","https://api.neraium.com/analyze")
+xhr.send(form)
+
+})
+
 </script>
+
 </body>
 </html>
