@@ -1,902 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium | Systemic Infrastructure Intelligence</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    :root {
-      --bg: #0a0c10;
-      --bg-2: #10151c;
-      --bg-3: #151b24;
-      --card: #111722;
-      --border: #202938;
-      --text: #e8edf2;
-      --muted: #91a0b3;
-      --accent: #00d4ff;
-      --accent-2: #4b7cff;
-      --warn: #ff9b3d;
-      --max: 1200px;
-      --radius: 14px;
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
-    }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    html {
-      scroll-behavior: smooth;
-    }
+<title>Neraium</title>
 
-    body {
-      background:
-        radial-gradient(circle at top, rgba(0, 212, 255, 0.08), transparent 30%),
-        var(--bg);
-      color: var(--text);
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6;
-    }
+<link rel="stylesheet" href="styles.css">
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    img,
-    canvas,
-    svg {
-      display: block;
-      max-width: 100%;
-    }
-
-    .container {
-      width: min(var(--max), calc(100% - 40px));
-      margin: 0 auto;
-    }
-
-    .section {
-      padding: 96px 0;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    h1,
-    h2,
-    h3 {
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-    }
-
-    h1 {
-      font-size: clamp(2.6rem, 6vw, 4.6rem);
-      font-weight: 800;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 750;
-    }
-
-    h3 {
-      font-size: 1.05rem;
-      font-weight: 650;
-    }
-
-    p.lead {
-      font-size: clamp(1.05rem, 2vw, 1.2rem);
-      color: var(--muted);
-      max-width: 640px;
-    }
-
-    p.body {
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
-
-    /* Nav */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(10, 12, 16, 0.82);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .nav-inner {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 14px 0;
-    }
-
-    .brand {
-      font-size: 1.15rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      white-space: nowrap;
-    }
-
-    .brand span {
-      color: var(--accent);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--text);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 46px;
-      padding: 0 20px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 650;
-      font-size: 0.95rem;
-      transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #75e7ff);
-      color: #071017;
-      box-shadow: 0 10px 30px rgba(0, 212, 255, 0.18);
-    }
-
-    .btn-secondary {
-      border-color: var(--border);
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    /* Hero */
-    .hero {
-      padding: 72px 0 84px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 44px;
-      align-items: center;
-    }
-
-    .hero-copy .eyebrow {
-      margin-bottom: 14px;
-    }
-
-    .hero-copy h1 {
-      margin-bottom: 22px;
-      max-width: 760px;
-    }
-
-    .hero-copy .lead {
-      margin-bottom: 28px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 28px;
-    }
-
-    .hero-points {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 10px;
-    }
-
-    .mini-stat {
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 12px;
-      padding: 14px;
-    }
-
-    .mini-stat strong {
-      display: block;
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-
-    .mini-stat span {
-      color: var(--muted);
-      font-size: 0.86rem;
-    }
-
-    .panel {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .chart-panel {
-      padding: 22px;
-    }
-
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .panel-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .panel-live {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    #telemetryChart {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
-        var(--bg-3);
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 0.86rem;
-    }
-
-    .legend-line {
-      width: 16px;
-      height: 2px;
-      border-radius: 999px;
-    }
-
-    .legend-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--warn);
-    }
-
-    /* Sections */
-    .section-head {
-      margin-bottom: 40px;
-    }
-
-    .section-head h2 {
-      margin-bottom: 14px;
-    }
-
-    .section-head p {
-      max-width: 720px;
-      color: var(--muted);
-    }
-
-    .band {
-      background: var(--bg-2);
-      border-top: 1px solid rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 28px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(0, 212, 255, 0.2);
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .problem-compare {
-      display: grid;
-      gap: 14px;
-      align-content: center;
-    }
-
-    .compare-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-left: 4px solid #ff6a6a;
-      border-radius: 14px;
-      padding: 18px 20px;
-    }
-
-    .compare-card.good {
-      border-left-color: var(--accent);
-    }
-
-    .compare-card strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.95rem;
-    }
-
-    .compare-card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .architecture-flow {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-      align-items: center;
-    }
-
-    .flow-step {
-      text-align: center;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px 14px;
-      min-height: 110px;
-      display: grid;
-      align-content: center;
-      gap: 8px;
-    }
-
-    .flow-step span {
-      color: var(--accent);
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    .flow-arrow {
-      text-align: center;
-      color: var(--muted);
-      font-size: 1.25rem;
-    }
-
-    .application-grid .card {
-      padding: 20px;
-    }
-
-    .cta {
-      text-align: center;
-      padding: 96px 0;
-    }
-
-    .cta .panel {
-      padding: 42px 28px;
-      background:
-        radial-gradient(circle at top, rgba(0,212,255,0.08), transparent 40%),
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-    }
-
-    .cta h2 {
-      margin-bottom: 14px;
-    }
-
-    .cta p {
-      max-width: 720px;
-      margin: 0 auto 26px;
-      color: var(--muted);
-    }
-
-    .footer {
-      border-top: 1px solid rgba(255,255,255,0.04);
-      padding: 28px 0 40px;
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .footer-copy {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    /* Mobile */
-    @media (max-width: 980px) {
-      .hero-grid,
-      .grid-2,
-      .grid-3 {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-points {
-        grid-template-columns: 1fr;
-      }
-
-      .architecture-flow {
-        grid-template-columns: 1fr;
-      }
-
-      .flow-arrow {
-        transform: rotate(90deg);
-      }
-    }
-
-    @media (max-width: 720px) {
-      .nav-inner {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .nav-links {
-        width: 100%;
-        gap: 14px;
-      }
-
-      .nav-links .btn-nav {
-        margin-top: 4px;
-      }
-
-      .hero {
-        padding-top: 44px;
-      }
-
-      .hero-actions {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .section {
-        padding: 76px 0;
-      }
-
-      .chart-panel {
-        padding: 18px;
-      }
-
-      .cta .panel {
-        padding: 34px 20px;
-      }
-    }
-  </style>
 </head>
+
 <body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="brand">Nera<span>ium</span></a>
-      <div class="nav-links">
-        <a href="index.html" class="active">Home</a>
-        <a href="platform.html">Platform</a>
-        <a href="technical.html">Technical</a>
-        <a href="governance.html">Governance</a>
-        <a href="#contact" class="btn btn-nav">Request Pilot</a>
-      </div>
-    </div>
-  </nav>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow">Infrastructure Intelligence</div>
-          <h1>Systemic infrastructure intelligence for complex operational environments</h1>
-          <p class="lead">
-            Neraium is a read-only intelligence layer that detects structural deviation before failure occurs,
-            turning live telemetry into explainable, defensible operational insight.
-          </p>
+<nav class="nav">
 
-          <div class="hero-actions">
-            <a href="#contact" class="btn btn-primary">Request Pilot</a>
-            <a href="#architecture" class="btn btn-secondary">View Architecture</a>
-          </div>
+<div class="container nav-inner">
 
-          <div class="hero-points">
-            <div class="mini-stat">
-              <strong>Read-only</strong>
-              <span>No control actions. No system actuation.</span>
-            </div>
-            <div class="mini-stat">
-              <strong>Early drift detection</strong>
-              <span>Finds subtle multivariate change before alarms fire.</span>
-            </div>
-            <div class="mini-stat">
-              <strong>Defensible records</strong>
-              <span>Produces auditable evidence trails for review.</span>
-            </div>
-          </div>
-        </div>
+<div class="brand">Nera<span>ium</span></div>
 
-        <div class="panel chart-panel">
-          <div class="panel-header">
-            <div class="panel-title">Live Telemetry</div>
-            <div class="panel-live">Example system view</div>
-          </div>
+<div class="nav-links">
+<a href="index.html" class="active">Home</a>
+<a href="platform.html">Platform</a>
+<a href="technical.html">Technical</a>
+<a href="governance.html">Governance</a>
+<a href="#contact" class="btn btn-primary">Request Pilot</a>
+</div>
 
-          <canvas id="telemetryChart" width="480" height="220"></canvas>
+</div>
+</nav>
 
-          <div class="legend">
-            <div class="legend-item">
-              <span class="legend-line" style="background:#7d8cff;"></span>
-              <span>Sensor A</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-line" style="background:#3fd0ff;"></span>
-              <span>Sensor B</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-line" style="background:#ff6b6b;"></span>
-              <span>Sensor C</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot"></span>
-              <span>Deviation marker</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="section band">
-      <div class="container grid-2">
-        <div>
-          <div class="section-head">
-            <div class="eyebrow">The Problem</div>
-            <h2>Why reactive systems fail</h2>
-            <p>
-              Infrastructure failures are rarely sudden. They emerge from long, subtle periods of multivariate drift
-              that threshold-based systems and opaque predictive models often miss.
-            </p>
-          </div>
-        </div>
+<section class="hero">
 
-        <div class="problem-compare">
-          <div class="compare-card">
-            <strong>Reactive systems</strong>
-            <p>Thresholds trigger late, sensors are evaluated in isolation, and operators are left without meaningful system context.</p>
-          </div>
-          <div class="compare-card good">
-            <strong>Neraium</strong>
-            <p>Structural deviation is surfaced early, system behaviour becomes explainable, and decisions are supported by defensible records.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="container hero-grid">
 
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Capabilities</div>
-          <h2>What the platform does</h2>
-          <p>
-            Neraium combines multivariate analysis with deterministic interpretation controls to convert telemetry into
-            trustworthy operational intelligence.
-          </p>
-        </div>
+<div class="hero-copy">
 
-        <div class="grid-3">
-          <div class="card">
-            <h3>Early Signal Detection</h3>
-            <p>Identifies subtle multivariate drift before traditional alarms or static thresholds would indicate a problem.</p>
-          </div>
-          <div class="card">
-            <h3>Operational Intelligence</h3>
-            <p>Turns raw telemetry into explainable system behaviour that operators can understand and act on confidently.</p>
-          </div>
-          <div class="card">
-            <h3>Evidence Discipline</h3>
-            <p>Creates auditable records that preserve what was detected, how it was evaluated, and why it was surfaced.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="eyebrow">Systemic Infrastructure Intelligence</div>
 
-    <section class="section band" id="architecture">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Architecture</div>
-          <h2>How the system works</h2>
-          <p>
-            From ingestion through evidence creation, the platform is designed to observe, interpret, and document
-            without interfering with operational control systems.
-          </p>
-        </div>
+<h1>
+Operational understanding for complex water systems
+</h1>
 
-        <div class="architecture-flow">
-          <div class="flow-step">
-            <span>01</span>
-            <strong>Telemetry Ingestion</strong>
-          </div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-step">
-            <span>02</span>
-            <strong>Multivariate Analysis</strong>
-          </div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-step">
-            <span>03</span>
-            <strong>Deviation Detection</strong>
-          </div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-step">
-            <span>04</span>
-            <strong>Admissibility Gate</strong>
-          </div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-step">
-            <span>05</span>
-            <strong>Evidence Record</strong>
-          </div>
-        </div>
-      </div>
-    </section>
+<p class="lead">
+Neraium transforms infrastructure telemetry into interpretable system intelligence.
+Detect structural drift, understand system behavior, and maintain defensible operational records.
+</p>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Technical Foundation</div>
-          <h2>Built on structured system interpretation</h2>
-          <p>
-            Neraium evaluates system behaviour through multivariate geometry, deterministic gating, and evidence-first
-            logging. It is designed to refuse weak interpretations rather than invent certainty.
-          </p>
-        </div>
+<div class="hero-actions">
+<a href="#contact" class="btn btn-primary">Request Pilot</a>
+<a href="platform.html" class="btn btn-secondary">View Platform</a>
+</div>
 
-        <div class="grid-3">
-          <div class="card">
-            <h3>Signal Geometry Layer</h3>
-            <p>Models telemetry as a multivariate system, enabling structural drift detection without depending on failure-history datasets.</p>
-          </div>
-          <div class="card">
-            <h3>Aletheia’s Gate</h3>
-            <p>Applies rule-based constraints such as persistence, physical legitimacy, and multi-sensor agreement before surfacing an interpretation.</p>
-          </div>
-          <div class="card">
-            <h3>Evidence Vault</h3>
-            <p>Records whether a signal was admitted, suppressed, or voided, preserving a permanent trail for post-event review.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+</div>
 
-    <section class="section band">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Applications</div>
-          <h2>Where the system operates</h2>
-          <p>
-            The platform is designed for complex operational environments where subtle system drift has real-world
-            consequences.
-          </p>
-        </div>
 
-        <div class="grid-3 application-grid">
-          <div class="card">
-            <h3>Hospitality</h3>
-            <p>Pools, water systems, cooling loops</p>
-          </div>
-          <div class="card">
-            <h3>Industrial</h3>
-            <p>Process lines, manufacturing environments, CNC operations</p>
-          </div>
-          <div class="card">
-            <h3>Data Centers</h3>
-            <p>Cooling infrastructure and environmental control systems</p>
-          </div>
-          <div class="card">
-            <h3>Municipal</h3>
-            <p>Water distribution and wastewater treatment environments</p>
-          </div>
-          <div class="card">
-            <h3>Healthcare</h3>
-            <p>Sterile water systems and critical cooling loops</p>
-          </div>
-          <div class="card">
-            <h3>Energy</h3>
-            <p>Thermal systems and fluid transport operations</p>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="panel chart-panel">
 
-    <section class="cta" id="contact">
-      <div class="container">
-        <div class="panel">
-          <div class="eyebrow">Get Started</div>
-          <h2>Ready to discuss a pilot?</h2>
-          <p>
-            We work with operations teams to scope, deploy, and evaluate telemetry environments where early deviation
-            detection and defensible interpretation matter.
-          </p>
-          <a href="mailto:info@neraium.com" class="btn btn-primary">Contact Us</a>
-        </div>
-      </div>
-    </section>
-  </main>
+<canvas id="telemetryChart" width="520" height="260"></canvas>
 
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="brand">Nera<span>ium</span></div>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="platform.html">Platform</a>
-        <a href="technical.html">Technical</a>
-        <a href="governance.html">Governance</a>
-      </div>
-      <div class="footer-copy">© 2026 Neraium. All rights reserved.</div>
-    </div>
-  </footer>
+</div>
 
-  <script>
-    const canvas = document.getElementById("telemetryChart");
+</div>
 
-    if (canvas) {
-      const ctx = canvas.getContext("2d");
-      let time = 0;
+</section>
 
-      function drawGrid() {
-        ctx.save();
-        ctx.strokeStyle = "rgba(255,255,255,0.05)";
-        ctx.lineWidth = 1;
 
-        for (let x = 0; x < canvas.width; x += 48) {
-          ctx.beginPath();
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, canvas.height);
-          ctx.stroke();
-        }
 
-        for (let y = 0; y < canvas.height; y += 44) {
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(canvas.width, y);
-          ctx.stroke();
-        }
+<section class="section">
 
-        ctx.restore();
-      }
+<div class="container">
 
-      function drawSignal(color, offset) {
-        ctx.beginPath();
+<h2>Capabilities</h2>
 
-        for (let x = 0; x < canvas.width; x++) {
-          const y =
-            canvas.height / 2 +
-            Math.sin(x * 0.01 + time * offset) * 34 +
-            Math.sin(x * 0.03 + time) * 14;
+<div class="capabilities">
 
-          if (x === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
+<div>
+<h3>System Understanding</h3>
+<p>
+Signals across pumps, pressure, flow, and treatment systems are unified into a single operational picture.
+</p>
+</div>
 
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
+<div>
+<h3>Early Drift Detection</h3>
+<p>
+Multivariate analysis identifies structural deviation before alarms or failures occur.
+</p>
+</div>
 
-      function drawMarker() {
-        const x = canvas.width * 0.68;
-        const y =
-          canvas.height / 2 +
-          Math.sin(x * 0.01 + time * 1.2) * 34 +
-          Math.sin(x * 0.03 + time) * 14;
+<div>
+<h3>Evidence Discipline</h3>
+<p>
+Operational interpretations are recorded as defensible system evidence.
+</p>
+</div>
 
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = "#ff9b3d";
-        ctx.fill();
+</div>
 
-        ctx.strokeStyle = "rgba(255,155,61,0.35)";
-        ctx.beginPath();
-        ctx.moveTo(x, 14);
-        ctx.lineTo(x, canvas.height - 14);
-        ctx.stroke();
+</div>
 
-        ctx.restore();
-      }
+</section>
 
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawGrid();
-        drawSignal("#7d8cff", 0.8);
-        drawSignal("#3fd0ff", 1.2);
-        drawSignal("#ff6b6b", 1.6);
-        drawMarker();
-        time += 0.03;
-        requestAnimationFrame(draw);
-      }
 
-      draw();
-    }
-  </script>
+
+<section class="section" id="architecture">
+
+<div class="container">
+
+<h2>System Architecture</h2>
+
+<div class="architecture">
+
+<div>Telemetry Ingestion</div>
+<div>Signal Normalization</div>
+<div>Multivariate Drift Analysis</div>
+<div>Interpretation Constraints</div>
+<div>Evidence Recording</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<footer class="footer">
+
+<div class="container footer-inner">
+
+<div>Neraium</div>
+
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a href="platform.html">Platform</a>
+<a href="technical.html">Technical</a>
+<a href="governance.html">Governance</a>
+</div>
+
+<div>© 2026 Neraium</div>
+
+</div>
+
+</footer>
+
 </body>
 </html>
