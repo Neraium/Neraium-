@@ -330,56 +330,29 @@ h3 {
 }
 
 .panel {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.01));
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: 14px;
   box-shadow: var(--shadow);
-}
-
-.grid-2,
-.grid-3,
-.grid-4,
-.stats-grid,
-.diagram-grid {
-  display: grid;
-  gap: 22px;
-}
-
-.grid-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.grid-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.grid-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.stats-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .card {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.015));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008));
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
-  transition: transform 0.2s ease, border-color 0.2s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top left, rgba(125, 162, 255, 0.15), transparent 60%);
+  background: radial-gradient(circle at top left, rgba(111, 143, 255, 0.08), transparent 58%);
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.18s ease;
 }
 
 .card:hover::before {
@@ -387,8 +360,8 @@ h3 {
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(125, 162, 255, 0.35);
+  transform: translateY(-2px);
+  border-color: rgba(111, 143, 255, 0.32);
 }
 
 .card h3 {
