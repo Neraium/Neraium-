@@ -7,179 +7,151 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="brand">Nera<span>ium</span></a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="platform.html">Platform</a>
-        <a href="governance.html">Governance</a>
-        <a href="analysis.html" class="active">Analysis</a>
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">Nera<span>ium</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="platform.html">Platform</a>
+      <a href="governance.html">Governance</a>
+      <a href="analysis.html" class="active">Analysis</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero page-hero">
+    <div class="container">
+      <div class="eyebrow">Analysis</div>
+      <h1>Upload your data for lead‑time insights</h1>
+      <p class="lead">
+        Select any CSV file and Neraium will encrypt it, model your telemetry using covariance‑based geometry,
+        and calculate lead time using Mahalanobis distance.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="panel">
+        <h2>Upload CSV</h2>
+        <input type="file" id="fileInput" accept=".csv">
+        <div id="uploadStatus" class="muted" style="margin-top:12px;"></div>
+        <div id="analysisOutput" style="margin-top:24px;"></div>
       </div>
     </div>
-  </nav>
+  </section>
+</main>
 
-  <main>
-    <section class="hero page-hero">
-      <div class="container">
-        <div class="eyebrow">Analysis</div>
-        <h1>Upload your data for lead‑time insights</h1>
-        <p class="lead">
-          Select any CSV file and Neraium will encrypt it, model your telemetry using covariance‑based geometry,
-          and calculate lead time using Mahalanobis distance.
-        </p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="panel">
-          <h2>Upload CSV</h2>
-          <input type="file" id="fileInput" accept=".csv" />
-          <div id="uploadStatus" class="muted" style="margin-top:12px;"></div>
-          <div id="analysisOutput" style="margin-top:24px;"></div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="brand">Nera<span>ium</span></div>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="platform.html">Platform</a>
-        <a href="governance.html">Governance</a>
-        <a href="analysis.html">Analysis</a>
-      </div>
-      <div class="footer-copy">© 2026 Neraium</div>
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="brand">Nera<span>ium</span></div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="platform.html">Platform</a>
+      <a href="governance.html">Governance</a>
+      <a href="analysis.html">Analysis</a>
     </div>
-  </footer>
+    <div class="footer-copy">© 2026 Neraium</div>
+  </div>
+</footer>
 
-  <script>
-    // Web Crypto helpers: generate key and encrypt data using AES‑GCM
-    async function generateKey() {
-      return await crypto.subtle.generateKey({ name: 'AES‑GCM', length: 256 }, true, ['encrypt']);
-    }
-    async function encryptData(key, data) {
-      const iv = crypto.getRandomValues(new Uint8Array(12));
-      const enc = await crypto.subtle.encrypt({ name: 'AES‑GCM', iv }, key, data);
-      return { iv, ciphertext: new Uint8Array(enc) };
-    }
-
-    // Parse CSV into numeric matrix (assumes header row and numeric values)
-    function parseCSV(text) {
-      const rows = text.trim().split(/[\r\n]+/).map(row => row.split(','));
-      const header = rows.shift();
-      const data = rows.map(r => r.map(Number));
-      return { header, data };
-    }
-
-    // Compute mean vector
-    function meanVector(matrix) {
-      const nRows = matrix.length;
-      const nCols = matrix[0].length;
-      const means = Array(nCols).fill(0);
-      for (let row of matrix) {
-        row.forEach((val, i) => { means[i] += val; });
-      }
-      return means.map(m => m / nRows);
-    }
-
-    // Compute covariance matrix
-    function covarianceMatrix(matrix, means) {
-      const nRows = matrix.length;
-      const nCols = matrix[0].length;
-      const cov = Array.from({ length: nCols }, () => Array(nCols).fill(0));
-      for (let row of matrix) {
-        row.forEach((valI, i) => {
-          row.forEach((valJ, j) => {
-            cov[i][j] += (valI - means[i]) * (valJ - means[j]);
-          });
+<script>
+  async function generateKey() {
+    return await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt']);
+  }
+  async function encryptData(key, data) {
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const enc = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, data);
+    return { iv, ciphertext: new Uint8Array(enc) };
+  }
+  function parseCSV(text) {
+    const rows = text.trim().split(/[\r\n]+/).map(row => row.split(','));
+    const header = rows.shift();
+    const data = rows.map(r => r.map(Number));
+    return { header, data };
+  }
+  function meanVector(matrix) {
+    const nRows = matrix.length;
+    const nCols = matrix[0].length;
+    const means = Array(nCols).fill(0);
+    for (let row of matrix) { row.forEach((val, i) => { means[i] += val; }); }
+    return means.map(m => m / nRows);
+  }
+  function covarianceMatrix(matrix, means) {
+    const nRows = matrix.length;
+    const nCols = matrix[0].length;
+    const cov = Array.from({ length: nCols }, () => Array(nCols).fill(0));
+    for (let row of matrix) {
+      row.forEach((valI, i) => {
+        row.forEach((valJ, j) => {
+          cov[i][j] += (valI - means[i]) * (valJ - means[j]);
         });
-      }
-      return cov.map(row => row.map(c => c / (nRows - 1)));
+      });
     }
-
-    // Invert a matrix (2D array) using Gaussian elimination (simple; for small dimensionality)
-    function invertMatrix(m) {
-      const n = m.length;
-      const inv = m.map((row, i) => row.map((val, j) => (i === j ? 1 : 0)));
-      // Clone original
-      const a = m.map(row => row.slice());
-      for (let i = 0; i < n; i++) {
-        let pivot = a[i][i];
-        if (!pivot) throw new Error('Matrix is singular');
+    return cov.map(row => row.map(c => c / (nRows - 1)));
+  }
+  function invertMatrix(m) {
+    const n = m.length;
+    const inv = m.map((row, i) => row.map((val, j) => (i === j ? 1 : 0)));
+    const a = m.map(row => row.slice());
+    for (let i = 0; i < n; i++) {
+      let pivot = a[i][i];
+      if (!pivot) throw new Error('Matrix is singular');
+      for (let j = 0; j < n; j++) { a[i][j] /= pivot; inv[i][j] /= pivot; }
+      for (let k = 0; k < n; k++) {
+        if (k === i) continue;
+        let factor = a[k][i];
         for (let j = 0; j < n; j++) {
-          a[i][j] /= pivot;
-          inv[i][j] /= pivot;
-        }
-        for (let k = 0; k < n; k++) {
-          if (k === i) continue;
-          let factor = a[k][i];
-          for (let j = 0; j < n; j++) {
-            a[k][j] -= factor * a[i][j];
-            inv[k][j] -= factor * inv[i][j];
-          }
+          a[k][j] -= factor * a[i][j];
+          inv[k][j] -= factor * inv[i][j];
         }
       }
-      return inv;
     }
-
-    // Compute Mahalanobis distance for a vector given mean and inverse covariance
-    function mahalanobis(vector, means, invCov) {
-      const diff = vector.map((v, i) => v - means[i]);
-      // diff^T * invCov * diff
-      let sum = 0;
-      for (let i = 0; i < diff.length; i++) {
-        let rowSum = 0;
-        for (let j = 0; j < diff.length; j++) {
-          rowSum += invCov[i][j] * diff[j];
-        }
-        sum += diff[i] * rowSum;
+    return inv;
+  }
+  function mahalanobis(vector, means, invCov) {
+    const diff = vector.map((v, i) => v - means[i]);
+    let sum = 0;
+    for (let i = 0; i < diff.length; i++) {
+      let rowSum = 0;
+      for (let j = 0; j < diff.length; j++) {
+        rowSum += invCov[i][j] * diff[j];
       }
-      return Math.sqrt(sum);
+      sum += diff[i] * rowSum;
     }
-
-    // Compute lead time: number of rows until distance exceeds threshold (e.g., 95th percentile)
-    function computeLeadTime(distances) {
-      const sorted = [...distances].sort((a, b) => a - b);
-      const threshold = sorted[Math.floor(sorted.length * 0.95)];
-      const leadIndex = distances.findIndex(d => d > threshold);
-      return leadIndex >= 0 ? leadIndex : distances.length;
-    }
-
-    document.getElementById('fileInput').addEventListener('change', async function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      document.getElementById('uploadStatus').textContent = 'Uploading and processing...';
-
-      // Read file as text
-      const text = await file.text();
-      // Encrypt file text
-      const key = await generateKey();
-      const enc = await encryptData(key, new TextEncoder().encode(text));
-      // Parse CSV
-      const { header, data } = parseCSV(text);
-      // Compute stats
-      const means = meanVector(data);
-      const cov = covarianceMatrix(data, means);
-      const invCov = invertMatrix(cov);
-      const distances = data.map(row => mahalanobis(row, means, invCov));
-      const leadTime = computeLeadTime(distances);
-
-      // Display results
-      const out = document.getElementById('analysisOutput');
-      out.innerHTML = `
-        <h3>Encryption Complete</h3>
-        <p><strong>Encrypted file size:</strong> ${enc.ciphertext.length} bytes</p>
-        <h3>Lead Time Result</h3>
-        <p><strong>95% Drift Threshold</strong> (Mahalanobis): ${distances[Math.floor(distances.length * 0.95)].toFixed(3)}</p>
-        <p><strong>Estimated lead time:</strong> ${leadTime} row(s) until drift threshold is exceeded.</p>
-        <p>Columns detected: ${header.map(h => `<code>${h.trim()}</code>`).join(', ')}</p>
-      `;
-      document.getElementById('uploadStatus').textContent = 'Upload and analysis complete.';
-    });
-  </script>
+    return Math.sqrt(sum);
+  }
+  function computeLeadTime(distances) {
+    const sorted = [...distances].sort((a, b) => a - b);
+    const threshold = sorted[Math.floor(sorted.length * 0.95)];
+    const leadIndex = distances.findIndex(d => d > threshold);
+    return leadIndex >= 0 ? leadIndex : distances.length;
+  }
+  document.getElementById('fileInput').addEventListener('change', async function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    document.getElementById('uploadStatus').textContent = 'Encrypting and analysing...';
+    const text = await file.text();
+    const key = await generateKey();
+    const enc = await encryptData(key, new TextEncoder().encode(text));
+    const { header, data } = parseCSV(text);
+    const means = meanVector(data);
+    const cov = covarianceMatrix(data, means);
+    const invCov = invertMatrix(cov);
+    const distances = data.map(row => mahalanobis(row, means, invCov));
+    const leadTime = computeLeadTime(distances);
+    const threshold = distances.sort((a, b) => a - b)[Math.floor(distances.length * 0.95)];
+    const out = document.getElementById('analysisOutput');
+    out.innerHTML = `
+      <h3>Analysis Result</h3>
+      <p><strong>Encrypted file size:</strong> ${enc.ciphertext.length} bytes</p>
+      <p><strong>95th percentile distance:</strong> ${threshold.toFixed(3)}</p>
+      <p><strong>Estimated lead time:</strong> ${leadTime} row(s) until drift threshold is exceeded.</p>
+      <p>Columns detected: ${header.map(h => '<code>' + h.trim() + '</code>').join(', ')}</p>
+    `;
+    document.getElementById('uploadStatus').textContent = 'Encryption and analysis complete.';
+  });
+</script>
 </body>
 </html>
