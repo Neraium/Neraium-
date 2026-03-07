@@ -828,3 +828,38 @@ color:var(--muted);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+/* premium nav spacing */
+
+.nav-inner{
+max-width:1240px;
+margin:0 auto;
+padding:0 20px;
+}
+
+.nav-links{
+gap:26px;
+}
+
+.nav-links a{
+position:relative;
+font-weight:500;
+}
+
+.nav-links a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-6px;
+width:0%;
+height:2px;
+background:var(--accent);
+transition:width .25s ease;
+}
+
+.nav-links a:hover::after{
+width:100%;
+}
+
+.nav-links a.active::after{
+width:100%;
+}
