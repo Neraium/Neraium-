@@ -1,101 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Neraium | Technical</title>
-
-<link rel="stylesheet" href="styles.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neraium | Technical</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">Nera<span>ium</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="platform.html">Platform</a>
+        <a href="technical.html" class="active">Technical</a>
+        <a href="governance.html">Governance</a>
+      </div>
+    </div>
+  </nav>
 
-<nav class="nav">
-<div class="container nav-inner">
+  <main>
+    <section class="hero page-hero">
+      <div class="container">
+        <div class="eyebrow">Technical</div>
+        <h1>Statistical foundations for system interpretation</h1>
+        <p class="lead">
+          Neraium analyzes infrastructure behavior through multivariate statistical modeling
+          and deterministic interpretation rules.
+        </p>
+      </div>
+    </section>
 
-<a href="index.html" class="brand">Nera<span>ium</span></a>
+    <section class="proof-bar">
+      <div class="container proof-grid">
+        <div class="proof-item">
+          <span class="proof-label">Method</span>
+          <strong>Multivariate</strong>
+        </div>
+        <div class="proof-item">
+          <span class="proof-label">Signal Model</span>
+          <strong>Covariance-aware</strong>
+        </div>
+        <div class="proof-item">
+          <span class="proof-label">Constraints</span>
+          <strong>Deterministic</strong>
+        </div>
+        <div class="proof-item">
+          <span class="proof-label">Reviewability</span>
+          <strong>Evidence preserved</strong>
+        </div>
+      </div>
+    </section>
 
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="platform.html">Platform</a>
-<a href="technical.html" class="active">Technical</a>
-<a href="governance.html">Governance</a>
-</div>
+    <section class="section band">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Core Methods</div>
+          <h2>How the platform models behavior</h2>
+          <p>
+            Neraium does not depend on isolated thresholding or purely black-box forecasting.
+            It models system structure directly through relationships between variables.
+          </p>
+        </div>
 
-</div>
-</nav>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Mahalanobis Distance</h3>
+            <p>Measures deviation in multivariate system space rather than evaluating each variable independently.</p>
+          </div>
+          <div class="card">
+            <h3>Covariance Modeling</h3>
+            <p>Captures relationships between system variables so structural drift can be detected across correlated signals.</p>
+          </div>
+          <div class="card">
+            <h3>Adaptive Baselines</h3>
+            <p>Expected system structure evolves with valid behavior, preserving operational relevance over time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Interpretation</div>
+          <h2>Constraining statistical output</h2>
+          <p>
+            Statistical output alone is not operational intelligence. Interpretations must satisfy physical plausibility,
+            system consistency, and operator review.
+          </p>
+        </div>
 
-<main>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Physical Validity</h3>
+            <p>Signals must remain physically plausible within the infrastructure environment.</p>
+          </div>
+          <div class="card">
+            <h3>Multi-Sensor Agreement</h3>
+            <p>Correlated telemetry must support the interpretation before it is admitted into the intelligence layer.</p>
+          </div>
+          <div class="card">
+            <h3>Operator Review</h3>
+            <p>Surfaced interpretations support operators rather than replacing them. Human judgment remains final.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="hero">
+    <section class="cta">
+      <div class="container">
+        <div class="panel">
+          <h2>Understand the governance model</h2>
+          <p>
+            The platform operates as a read-only infrastructure intelligence layer designed to preserve operational authority.
+          </p>
+          <a href="governance.html" class="btn btn-primary">View Governance</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<div class="container">
-
-<div class="eyebrow">Technical</div>
-
-<h1>Statistical foundations for system interpretation</h1>
-
-<p class="lead">
-Neraium analyzes infrastructure behavior through multivariate statistical modeling
-and deterministic interpretation rules.
-</p>
-
-</div>
-
-</section>
-
-
-
-<section class="section band">
-
-<div class="container grid-3">
-
-<div class="card">
-<h3>Mahalanobis Distance</h3>
-<p>Measures deviation in multivariate system space.</p>
-</div>
-
-<div class="card">
-<h3>Covariance Modeling</h3>
-<p>Captures relationships between system variables.</p>
-</div>
-
-<div class="card">
-<h3>Adaptive Baselines</h3>
-<p>Expected system structure evolves with valid behavior.</p>
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-
-<footer class="footer">
-
-<div class="container footer-inner">
-
-<div class="brand">Nera<span>ium</span></div>
-
-<div class="footer-links">
-<a href="index.html">Home</a>
-<a href="platform.html">Platform</a>
-<a href="technical.html">Technical</a>
-<a href="governance.html">Governance</a>
-</div>
-
-<div class="footer-copy">© 2026 Neraium</div>
-
-</div>
-
-</footer>
-
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand">Nera<span>ium</span></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="platform.html">Platform</a>
+        <a href="technical.html">Technical</a>
+        <a href="governance.html">Governance</a>
+      </div>
+      <div class="footer-copy">© 2026 Neraium</div>
+    </div>
+  </footer>
 </body>
 </html>
