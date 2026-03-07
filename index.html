@@ -3,18 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neraium</title>
+
+<title>Neraium | Systemic Infrastructure Intelligence</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="styles.css">
+
 </head>
 
 <body>
 
 <nav class="nav">
 <div class="container nav-inner">
+
 <a href="index.html" class="brand">Nera<span>ium</span></a>
 
 <div class="nav-links">
@@ -27,27 +30,93 @@
 </nav>
 
 <section class="hero">
+
 <div class="container">
 
-<div class="eyebrow">Systemic Infrastructure Intelligence</div>
+<div class="eyebrow">
+Systemic Infrastructure Intelligence
+</div>
 
 <h1>
-Operational intelligence for complex water systems
+Operational visibility for complex water infrastructure
 </h1>
 
 <p class="lead">
-Neraium converts infrastructure telemetry into systemic intelligence.
-Detect drift earlier, improve operator visibility, and preserve defensible records.
+Neraium transforms operational telemetry into systemic intelligence.
+Identify infrastructure drift early, understand system behavior, and preserve defensible operational records.
 </p>
 
-<div class="hero-links">
-<a href="platform.html">View Platform</a>
-</div>
+<canvas id="telemetryChart" width="800" height="260"></canvas>
 
 </div>
+
 </section>
 
+
+<section class="section">
+
+<div class="container">
+
+<div class="panel">
+
+<h2>Infrastructure Telemetry</h2>
+
+<p>
+Aggregate operational signals across pumps, treatment systems, distribution networks,
+and environmental telemetry streams to build a unified system model.
+</p>
+
+</div>
+
+<div class="panel">
+
+<h2>System Drift Detection</h2>
+
+<p>
+Detect subtle infrastructure deviations long before alarms or failures occur
+by modeling behavior across the entire operational environment.
+</p>
+
+</div>
+
+<div class="panel">
+
+<h2>Operational Intelligence</h2>
+
+<p>
+Convert infrastructure telemetry into actionable insight
+for operators, engineers, and regulators.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="container">
+
+<div class="panel">
+
+<h2>System Architecture</h2>
+
+<p>
+Neraium operates as a read-only infrastructure intelligence layer
+that integrates with existing operational environments without modifying control systems.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
 <footer class="footer">
+
 <div class="container footer-inner">
 
 <div class="brand">Nera<span>ium</span></div>
@@ -58,10 +127,69 @@ Detect drift earlier, improve operator visibility, and preserve defensible recor
 <a href="governance.html">Governance</a>
 </div>
 
-<div>© 2026 Neraium</div>
+<div>
+© 2026 Neraium
+</div>
 
 </div>
+
 </footer>
+
+
+<script>
+
+const canvas=document.getElementById("telemetryChart")
+
+if(canvas){
+
+const ctx=canvas.getContext("2d")
+
+let time=0
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+drawSignal("#1e7cff",0.8)
+drawSignal("#4ea3ff",1.2)
+drawSignal("#7ec2ff",1.6)
+
+time+=0.03
+
+requestAnimationFrame(draw)
+
+}
+
+function drawSignal(color,offset){
+
+ctx.beginPath()
+
+for(let x=0;x<canvas.width;x++){
+
+let y=
+canvas.height/2+
+Math.sin(x*0.01+time*offset)*40+
+Math.sin(x*0.03+time)*15
+
+if(x===0){
+ctx.moveTo(x,y)
+}else{
+ctx.lineTo(x,y)
+}
+
+}
+
+ctx.strokeStyle=color
+ctx.lineWidth=2
+ctx.stroke()
+
+}
+
+draw()
+
+}
+
+</script>
 
 </body>
 </html>
