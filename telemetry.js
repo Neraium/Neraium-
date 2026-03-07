@@ -3,455 +3,510 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium Technical - Under the Hood</title>
-  <!-- Import Inter font for consistent typography -->
+  <title>Neraium | Technical</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   />
   <style>
-    /* Base reset and colour variables */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     :root {
       --bg: #0a0c10;
-      --bg2: #0f1319;
-      --accent: #00d4ff;
-      --accent2: #0066ff;
+      --bg-2: #10151c;
+      --bg-3: #151b24;
+      --card: #111722;
+      --border: #202938;
       --text: #e8edf2;
-      --muted: #8892a0;
-      --border: #1e2530;
-      --card: #111620;
+      --muted: #91a0b3;
+      --accent: #00d4ff;
+      --accent-2: #4b7cff;
+      --max: 1200px;
+      --radius: 14px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
     }
-    html {
-      scroll-behaviour: smooth;
-    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top, rgba(0, 212, 255, 0.08), transparent 30%),
+        var(--bg);
       color: var(--text);
-      font-family: 'Inter', -apple-system, sans-serif;
-      font-size: 16px;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
     }
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-    /* Navigation bar */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: rgba(10, 12, 16, 0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: 1200px;
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
       margin: 0 auto;
-      padding: 0 32px;
-      height: 64px;
+    }
+
+    .section { padding: 96px 0; }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 800; }
+    h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 750; }
+    h3 { font-size: 1.05rem; font-weight: 650; }
+
+    p.lead {
+      font-size: clamp(1.02rem, 2vw, 1.16rem);
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    p.body {
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 12, 16, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .nav-inner {
+      min-height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
+      padding: 14px 0;
     }
-    .nav-logo {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
+
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
     }
-    .nav-logo span {
-      color: var(--accent);
-    }
+
+    .brand span { color: var(--accent); }
+
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 36px;
-      font-size: 14px;
+      gap: 22px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
+
     .nav-links a {
       color: var(--muted);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover {
-      color: var(--text);
-    }
-    .btn-nav {
-      background: var(--accent);
-      color: #0a0c10 !important;
-      font-weight: 600;
-      font-size: 13px;
-      padding: 9px 20px;
-      border-radius: 6px;
-    }
-    /* Button styles */
-    .btn-primary {
-      display: inline-block;
-      background: var(--accent);
-      color: #0a0c10;
-      font-weight: 600;
-      font-size: 14px;
-      padding: 13px 28px;
-      border-radius: 6px;
-      border: none;
-      transition: opacity 0.2s;
-      cursor: pointer;
-    }
-    .btn-primary:hover {
-      opacity: 0.85;
-    }
-    .btn-ghost {
-      display: inline-block;
-      background: transparent;
-      color: var(--text);
-      font-size: 14px;
+      font-size: 0.95rem;
       font-weight: 500;
-      padding: 13px 28px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      transition: border-color 0.2s, color 0.2s;
+      transition: color 0.2s ease;
     }
-    .btn-ghost:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
     }
-    /* Layout helpers */
-    section {
-      padding: 100px 32px;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .section-title {
-      font-size: 36px;
-      font-weight: 700;
-      letter-spacing: -1px;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-    .section-sub {
-      font-size: 17px;
-      color: var(--muted);
-      max-width: 640px;
-      line-height: 1.7;
-    }
-    /* Hero section */
-    .hero {
-      padding: 150px 32px 120px;
-      min-height: 90vh;
-      display: flex;
+
+    .btn {
+      display: inline-flex;
       align-items: center;
-      border-bottom: 1px solid var(--border);
-      background: radial-gradient(
-        ellipse 70% 60% at 60% 50%,
-        rgba(0, 212, 255, 0.06) 0%,
-        transparent 70%
-      );
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 650;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
     }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #75e7ff);
+      color: #071017;
+      box-shadow: 0 10px 30px rgba(0,212,255,0.18);
+    }
+
+    .btn-secondary {
+      border-color: var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .hero {
+      padding: 72px 0 76px;
+    }
+
     .hero-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 32px;
       align-items: center;
     }
-    /* Card and grid style */
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .code-panel {
+      padding: 22px;
+    }
+
+    pre {
+      overflow-x: auto;
+      border-radius: 14px;
+      background: var(--bg-3);
+      border: 1px solid rgba(255,255,255,0.04);
+      padding: 18px;
+      color: #c7d6e6;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .section-head {
+      margin-bottom: 40px;
+    }
+
+    .section-head h2 {
+      margin-bottom: 14px;
+    }
+
+    .section-head p {
+      max-width: 760px;
+      color: var(--muted);
+    }
+
+    .band {
+      background: var(--bg-2);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 22px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: var(--radius);
       padding: 24px;
-      transition: border-color 0.2s;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
+
     .card:hover {
-      border-color: rgba(0, 212, 255, 0.4);
+      transform: translateY(-2px);
+      border-color: rgba(0,212,255,0.2);
     }
+
     .card h3 {
-      font-size: 16px;
-      font-weight: 600;
       margin-bottom: 10px;
     }
+
     .card p {
-      font-size: 14px;
       color: var(--muted);
-      line-height: 1.65;
+      font-size: 0.95rem;
     }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
+
+    .cta {
+      text-align: center;
+      padding: 96px 0;
     }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
+
+    .cta .panel {
+      padding: 42px 28px;
+      background:
+        radial-gradient(circle at top, rgba(0,212,255,0.08), transparent 40%),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
     }
-    @media (max-width: 768px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      nav .nav-links {
-        gap: 24px;
-      }
+
+    .cta h2 {
+      margin-bottom: 14px;
     }
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 32px;
+
+    .cta p {
+      max-width: 720px;
+      margin: 0 auto 26px;
+      color: var(--muted);
     }
+
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding: 28px 0 40px;
+    }
+
     .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 20px;
       flex-wrap: wrap;
     }
-    .footer-logo {
-      font-size: 16px;
-      font-weight: 700;
-    }
-    .footer-logo span {
-      color: var(--accent);
-    }
+
     .footer-links {
       display: flex;
-      gap: 24px;
-      font-size: 13px;
-    }
-    .footer-links a {
+      gap: 18px;
+      flex-wrap: wrap;
       color: var(--muted);
-      transition: color 0.2s;
+      font-size: 0.92rem;
     }
-    .footer-links a:hover {
-      color: var(--text);
-    }
+
     .footer-copy {
-      font-size: 13px;
       color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        gap: 14px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .section {
+        padding: 76px 0;
+      }
+
+      .code-panel,
+      .cta .panel {
+        padding: 22px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Navigation bar -->
-  <nav>
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Nera<span>ium</span></a>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">Nera<span>ium</span></a>
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="platform.html">Platform</a>
-        <a href="technical.html" style="color: var(--text);">Technical</a>
+        <a href="technical.html" class="active">Technical</a>
         <a href="governance.html">Governance</a>
-        <a href="index.html#contact" class="btn-nav">Request Pilot</a>
+        <a href="index.html#contact" class="btn btn-primary">Request Pilot</a>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <header class="hero" id="technical-overview">
-    <div class="container hero-grid">
-      <div>
-        <div class="section-label">Technical</div>
-        <h1
-          style="font-size: 52px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 24px;"
-        >
-          Under the Hood
-        </h1>
-        <p
-          style="font-size: 18px; color: var(--muted); line-height: 1.75; margin-bottom: 36px; max-width: 480px;"
-        >
-          Explore how Neraium blends multivariate statistics with deterministic governance to produce reliable
-          infrastructure intelligence. This page dives into the technical foundations that power our platform.
-        </p>
-        <div style="display: flex; gap: 16px;">
-          <a href="#geometry" class="btn-primary">Signal Geometry</a>
-          <a href="#gate" class="btn-ghost">Interpretation Rules</a>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Technical</div>
+          <h1>Under the hood of structured infrastructure interpretation</h1>
+          <p class="lead">
+            Neraium combines multivariate statistical geometry, deterministic interpretation rules,
+            and evidence-first output design to surface meaningful system deviation without relying on opaque prediction alone.
+          </p>
+          <div class="hero-actions">
+            <a href="#geometry" class="btn btn-primary">Signal Geometry</a>
+            <a href="#gate" class="btn btn-secondary">Interpretation Rules</a>
+          </div>
         </div>
-      </div>
-      <!-- Illustrative code block or graphic placeholder -->
-      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px;">
-        <div
-          style="font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: var(--accent); text-transform: uppercase; margin-bottom: 16px;"
-        >
-          Sample Algorithm
-        </div>
-        <!-- Small code-like block to illustrate drift calculation (pseudo-code) -->
-        <pre style="font-size: 12px; color: var(--muted); background: var(--bg2); padding: 12px; border-radius: 6px; overflow-x: auto;">
-// Compute Mahalanobis distance
+
+        <div class="panel code-panel">
+<pre>// Compute multivariate deviation
 let diff = sensorVector - meanVector;
 let invCov = invert(covarianceMatrix);
 let distance = Math.sqrt(diff^T * invCov * diff);
 
-// Evaluate against drift threshold
+// Apply interpretation constraints
 if (distance > threshold) {
-  // Check interpretation constraints
-  if (passesPersistence & passesCorrelation & withinPhysicalLimits) {
+  if (passesPersistence &&
+      passesCorrelation &&
+      withinPhysicalLimits) {
     admit();
   } else {
     suppress();
   }
 } else {
   voidResult();
-}
-        </pre>
+}</pre>
+        </div>
       </div>
-    </div>
-  </header>
+    </section>
 
-  <!-- Statistical Geometry Section -->
-  <section id="geometry" style="background: var(--bg2);">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 48px;">
-        <div class="section-label">Statistics</div>
-        <h2 class="section-title">Multivariate Geometry</h2>
-        <p class="section-sub" style="margin: 0 auto; max-width: 700px;">
-          Neraium models system behaviour using covariance matrices and Mahalanobis distance, enabling it to detect subtle drift in multivariate sensor data without relying on prior failure examples. By examining the shape of the sensor space rather than individual thresholds, the platform recognises when the entire system begins to deform.
-        </p>
-      </div>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Covariance Modelling</h3>
+    <section class="section band" id="geometry">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Statistics</div>
+          <h2>Multivariate geometry</h2>
           <p>
-            Continuous streams of telemetry are transformed into covariance structures that describe how sensors co‑vary. This enables detection of shifts in the underlying geometry of the system.
+            Neraium evaluates the shape of the system, not just single signals in isolation. It uses covariance-aware
+            methods to determine when a system’s overall behaviour has structurally shifted.
           </p>
         </div>
-        <div class="card">
-          <h3>Mahalanobis Distance</h3>
-          <p>
-            Distances are computed in the multivariate space, taking correlations into account. Deviations beyond a normalised threshold signal the onset of system drift.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Baseline Adaptation</h3>
-          <p>
-            Baselines are refreshed using recent operational windows, allowing the model to remain sensitive to long-term changes while filtering out transient noise.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Interpretation Governance Section -->
-  <section id="gate" style="background: var(--bg);">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 48px;">
-        <div class="section-label">Governance</div>
-        <h2 class="section-title">Deterministic Constraints</h2>
-        <p class="section-sub" style="margin: 0 auto; max-width: 700px;">
-          Detection alone is not enough. Neraium evaluates every candidate deviation against a set of non‑negotiable rules to decide whether an interpretation should be admitted or suppressed. These rules codify engineering doctrine so that signals remain defensible.
-        </p>
-      </div>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Physical Boundaries</h3>
-          <p>
-            Deviations must respect known physical limits; out-of-bounds signals are treated as instrumentation errors.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Temporal Persistence</h3>
-          <p>
-            Signals must persist over a meaningful time horizon to be considered, eliminating transient noise and single-point anomalies.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Multi‑Sensor Correlation</h3>
-          <p>
-            Deviations require corroboration across multiple sensors; uncorrelated excursions are suppressed until they satisfy correlation thresholds.
-          </p>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Covariance Modeling</h3>
+            <p>Telemetry is transformed into relationships between signals so the platform understands how system variables move together.</p>
+          </div>
+          <div class="card">
+            <h3>Mahalanobis Distance</h3>
+            <p>Deviation is measured in a multivariate space that accounts for correlation, not just absolute magnitude.</p>
+          </div>
+          <div class="card">
+            <h3>Adaptive Baselines</h3>
+            <p>Recent operational windows refresh the baseline so the system remains useful in dynamic environments without ignoring drift.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Evidence Logging Section -->
-  <section style="background: var(--bg2);">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 48px;">
-        <div class="section-label">Evidence</div>
-        <h2 class="section-title">Auditable Records</h2>
-        <p class="section-sub" style="margin: 0 auto; max-width: 700px;">
-          Every decision within Neraium is captured through the Evidence Vault, creating a verifiable chain of custody. Whether a deviation is admitted, suppressed or voided, the system logs the divergence, applied criteria and final disposition for later review.
-        </p>
-      </div>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Secure Ledger</h3>
+    <section class="section" id="gate">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Governance Logic</div>
+          <h2>Deterministic interpretation constraints</h2>
           <p>
-            Records are stored in an append‑only ledger with cryptographic integrity guarantees, ensuring tamper‑evident audit trails.
+            Detection alone is insufficient. Neraium forces candidate signals through strict admissibility rules
+            before any interpretation is surfaced to an operator.
           </p>
         </div>
-        <div class="card">
-          <h3>Contextual Data</h3>
-          <p>
-            The system captures baseline parameters, drift magnitude, evaluation time and decision criteria to provide full context for each entry.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Traceability</h3>
-          <p>
-            Operators and regulators can trace back through the chain to understand why and when specific interpretations were made.
-          </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Physical Boundaries</h3>
+            <p>Signals must stay within the realm of physically valid interpretation or they are treated as instrumentation or data-quality issues.</p>
+          </div>
+          <div class="card">
+            <h3>Temporal Persistence</h3>
+            <p>Short-lived excursions are filtered out so only meaningful deviations with persistence move forward.</p>
+          </div>
+          <div class="card">
+            <h3>Multi-Sensor Agreement</h3>
+            <p>Interpretations require corroboration across related signals, reducing false positives caused by isolated anomalies.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Edge Deployment Section -->
-  <section style="background: var(--bg);">
-    <div class="container">
-      <div class="grid-2" style="gap: 48px; align-items: flex-start;">
-        <div>
-          <div class="section-label">Deployment</div>
-          <h2 class="section-title">Edge Processing</h2>
-          <p class="section-sub">
-            Neraium runs at the edge, ingesting and analysing telemetry locally without continuous cloud connectivity. This ensures continuous operation during network outages and preserves sensitive data within your infrastructure.
+    <section class="section band">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Evidence</div>
+          <h2>Auditable records by default</h2>
+          <p>
+            Every interpretation decision is logged with context, constraints, and outcome so later reviewers can understand
+            not just what happened, but why it was surfaced or suppressed.
           </p>
         </div>
-        <div>
-          <div class="section-label">Role</div>
-          <h2 class="section-title">Non‑Intrusive Operation</h2>
-          <p class="section-sub">
-            The platform is strictly read-only. It never issues commands or modifies control loops. It simply interprets behaviour and produces guidance that operators can decide to act upon.
-          </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Secure Ledger</h3>
+            <p>Evaluation outcomes are stored in an append-only structure designed for traceability and review.</p>
+          </div>
+          <div class="card">
+            <h3>Context Preservation</h3>
+            <p>Baseline state, drift magnitude, timestamps, and interpretation logic are kept together in one defensible record.</p>
+          </div>
+          <div class="card">
+            <h3>Post-Event Traceability</h3>
+            <p>Operators, auditors, and investigators can reconstruct the exact reasoning path behind surfaced intelligence.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA Section -->
-  <section style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.06) 0%, rgba(0, 102, 255, 0.06) 100%); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-    <div class="container" style="text-align: center;">
-      <div class="section-label">Next Steps</div>
-      <h2 class="section-title" style="margin: 0 auto 16px;">Ready to dive deeper?</h2>
-      <p
-        style="font-size: 17px; color: var(--muted); margin-bottom: 36px; max-width: 700px; margin-left: auto; margin-right: auto;"
-      >
-        Reach out to discuss how Neraium can integrate with your infrastructure and provide actionable insights grounded in sound engineering. We work with teams to scope, deploy and evaluate pilot installations.
-      </p>
-      <a href="contact.html" class="btn-primary" style="font-size: 15px; padding: 15px 36px;">Contact Us</a>
-    </div>
-  </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Deployment</div>
+          <h2>Built for edge operation</h2>
+          <p>
+            Neraium runs as a non-intrusive read-only layer, close to the operational environment, so insight remains available
+            even when cloud connectivity is limited or unavailable.
+          </p>
+        </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">Nera<span>ium</span></div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Edge Processing</h3>
+            <p>Telemetry is processed locally to reduce dependency on constant upstream connectivity and preserve operational continuity.</p>
+          </div>
+          <div class="card">
+            <h3>Non-Intrusive Role</h3>
+            <p>The platform does not issue commands or alter system behavior. It interprets and documents, leaving authority with operators.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="panel">
+          <div class="eyebrow">Next Step</div>
+          <h2>See how technical logic meets governance</h2>
+          <p>
+            Explore the operating boundaries and governance framework that keep Neraium disciplined, auditable, and strictly read-only.
+          </p>
+          <a href="governance.html" class="btn btn-primary">Go to Governance</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand">Nera<span>ium</span></div>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="platform.html">Platform</a>
