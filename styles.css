@@ -268,38 +268,34 @@ h3{
 
 /* proof bar */
 
-.proof-bar{
-  border-top:1px solid rgba(255,255,255,.04);
-  border-bottom:1px solid rgba(255,255,255,.04);
-  background:rgba(255,255,255,.015);
+.proof-bar {
+  padding: 28px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.proof-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
+.proof-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-.proof-item{
-  padding:20px 18px;
-  border-right:1px solid rgba(255,255,255,.04);
+.proof-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  gap: 10px;
 }
 
-.proof-item:last-child{
-  border-right:0;
+.proof-label {
+  font-size: 15px;
+  color: #9aa6c2;
 }
 
-.proof-label{
-  display:block;
-  font-size:.72rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:8px;
-}
-
-.proof-item strong{
-  font-size:.98rem;
-  font-weight:650;
+.proof-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e8edf7;
 }
 
 /* grids */
