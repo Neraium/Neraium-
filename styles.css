@@ -395,16 +395,14 @@ h3 {
 
 .chart-panel {
   padding: 26px;
-  border-radius: 20px;
+  border-radius: 14px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
-    #0f151d;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
+    #0c1219;
+  border: 1px solid rgba(151, 170, 190, 0.14);
   box-shadow:
-    0 40px 100px rgba(0, 0, 0, 0.55),
-    inset 0 0 30px rgba(125, 162, 255, 0.06);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+    0 28px 70px rgba(0, 0, 0, 0.52),
+    inset 0 0 18px rgba(111, 143, 255, 0.045);
 }
 
 .panel-header {
