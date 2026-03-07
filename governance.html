@@ -1,136 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Neraium Governance</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neraium Governance — Clear Boundaries</title>
+  <!-- Import Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* Base reset and custom variables */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --bg: #0a0c10;
+      --bg2: #0f1319;
+      --bg3: #141920;
+      --accent: #00d4ff;
+      --accent2: #0066ff;
+      --text: #e8edf2;
+      --muted: #8892a0;
+      --border: #1e2530;
+      --card: #111620;
+    }
+    html {
+      scroll-behaviour: smooth;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 12, 16, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      font-size: 14px;
+    }
+    .nav-links a {
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--text);
+    }
+    .btn-nav {
+      background: var(--accent);
+      color: #0a0c10 !important;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 9px 20px;
+      border-radius: 6px;
+    }
+    /* Shared button styles */
+    .btn-primary {
+      display: inline-block;
+      background: var(--accent);
+      color: #0a0c10;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 13px 28px;
+      border-radius: 6px;
+      border: none;
+      transition: opacity 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      opacity: 0.85;
+    }
+    .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 13px 28px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    /* Layout helpers */
+    section {
+      padding: 100px 32px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+    /* Hero section with network canvas */
+    .hero {
+      position: relative;
+      padding: 160px 32px 140px;
+      min-height: 80vh;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .hero canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+    }
+    /* Grid for cards */
+    .grid-governance {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(0, 212, 255, 0.4);
+    }
+    .card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    /* Diagram grid */
+    .diagram-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      justify-items: center;
+      margin-top: 32px;
+    }
+    .node {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      position: relative;
+    }
+    /* CTA section */
+    .cta {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.06) 0%, rgba(0, 102, 255, 0.06) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 100px 32px;
+    }
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 32px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer a {
+      color: var(--muted);
+      margin: 0 8px;
+      transition: color 0.2s;
+      font-size: 13px;
+    }
+    footer a:hover {
+      color: var(--text);
+    }
+  </style>
 </head>
-
 <body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Nera<span>ium</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="platform.html">Platform</a>
+        <a href="technical.html">Technical</a>
+        <a href="governance.html" style="color: var(--text);">Governance</a>
+        <a href="contact.html" class="btn-nav">Request Pilot</a>
+      </div>
+    </div>
+  </nav>
 
-<nav>
+  <!-- Hero Section -->
+  <header class="hero">
+    <!-- Dynamic network canvas to be controlled via network.js -->
+    <canvas id="networkCanvas"></canvas>
+    <div class="container hero-content">
+      <div class="section-label">Governance</div>
+      <h1 class="section-title" style="margin-bottom: 16px;">Governance</h1>
+      <p class="section-sub" style="margin: 0 auto 32px;">
+        Neraium operates as a read‑only infrastructure intelligence layer that provides system visibility without modifying operational control.
+      </p>
+      <a href="#principles" class="btn-primary" style="font-size: 15px; padding: 14px 32px;">Learn More</a>
+    </div>
+  </header>
 
-<div class="logo">NERAIUM</div>
+  <!-- Operational Principles Section -->
+  <section id="principles" style="background: var(--bg2);">
+    <div class="container">
+      <div class="section-label">Principles</div>
+      <h2 class="section-title" style="margin: 0 auto 12px;">Operational Principles</h2>
+      <p class="section-sub" style="margin: 0 auto 40px; max-width: 600px;">
+        The governance model defines the non‑negotiable guardrails that keep Neraium strictly read‑only and auditable, ensuring that operational control remains untouched.
+      </p>
+      <div class="grid-governance">
+        <div class="card">
+          <h3>Read‑Only Architecture</h3>
+          <p>The platform observes infrastructure systems without exerting any control over them.</p>
+        </div>
+        <div class="card">
+          <h3>Operational Independence</h3>
+          <p>Existing control systems remain unchanged and independent of the analysis layer.</p>
+        </div>
+        <div class="card">
+          <h3>Infrastructure Transparency</h3>
+          <p>Operational environments become measurable and explainable through telemetry.</p>
+        </div>
+        <div class="card">
+          <h3>Accountability</h3>
+          <p>Operational intelligence remains auditable and defensible, producing evidence records for review.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="platform.html">Platform</a></li>
-<li><a href="technical.html">Technical</a></li>
-<li><a href="governance.html">Governance</a></li>
-</ul>
+  <!-- System Boundaries Section -->
+  <section style="background: var(--bg);">
+    <div class="container">
+      <div class="section-label">Boundaries</div>
+      <h2 class="section-title" style="margin: 0 auto 12px;">System Boundaries</h2>
+      <p class="section-sub" style="margin: 0 auto; max-width: 700px;">
+        The platform operates outside of operational control environments. Infrastructure authority remains fully within existing systems and human operators, ensuring that decision‑making stays in the hands of those who manage the infrastructure.
+      </p>
+    </div>
+  </section>
 
-</nav>
+  <!-- Governance Architecture Section -->
+  <section style="background: var(--bg2);">
+    <div class="container">
+      <div class="section-label">Architecture</div>
+      <h2 class="section-title" style="margin: 0 auto 12px;">Governance Architecture</h2>
+      <p class="section-sub" style="margin: 0 auto 32px; max-width: 600px;">
+        The governance architecture illustrates how telemetry flows through Neraium without interfering in control loops. Each node represents a logical boundary between systems, ensuring transparency and accountability.
+      </p>
+      <div class="diagram-grid">
+        <div class="node">Infrastructure Systems</div>
+        <div class="node">Telemetry Signals</div>
+        <div class="node">Neraium Analysis Layer</div>
+        <div class="node">Operational Intelligence</div>
+        <div class="node">Human Decision Making</div>
+      </div>
+    </div>
+  </section>
 
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container" style="text-align: center;">
+      <div class="section-label">Get Started</div>
+      <h2 class="section-title" style="margin: 0 auto 16px;">Infrastructure Intelligence With Clear Boundaries</h2>
+      <p class="section-sub" style="margin: 0 auto 36px; max-width: 680px;">
+        Explore how Neraium delivers insight without ever touching operational controls. Our governance framework ensures that interpretations remain transparent and defensible.
+      </p>
+      <a href="platform.html" class="btn-primary" style="font-size: 15px; padding: 15px 36px;">Explore the Platform</a>
+    </div>
+  </section>
 
+  <!-- Footer -->
+  <footer>
+    © 2026 Neraium. All rights reserved.
+    <br />
+    <a href="index.html">Home</a>
+    <a href="platform.html">Platform</a>
+    <a href="technical.html">Technical</a>
+    <a href="governance.html">Governance</a>
+    <a href="contact.html">Contact</a>
+  </footer>
 
-<section class="hero">
-
-<canvas class="network"></canvas>
-
-<h1>Governance</h1>
-
-<p>
-Neraium operates as a read only infrastructure intelligence layer
-that provides system visibility without modifying operational control.
-</p>
-
-</section>
-
-
-
-<section class="section reveal">
-
-<h2>Operational Principles</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Read Only Architecture</h3>
-<p>The platform observes infrastructure systems without control.</p>
-</div>
-
-<div class="card">
-<h3>Operational Independence</h3>
-<p>Existing control systems remain unchanged.</p>
-</div>
-
-<div class="card">
-<h3>Infrastructure Transparency</h3>
-<p>Operational environments become measurable.</p>
-</div>
-
-<div class="card">
-<h3>Accountability</h3>
-<p>Operational intelligence remains auditable.</p>
-</div>
-
-</div>
-
-</section>
-
-
-
-<section class="section reveal">
-
-<h2>System Boundaries</h2>
-
-<p>
-The platform operates outside operational control environments.
-Infrastructure authority remains fully within existing systems.
-</p>
-
-</section>
-
-
-
-<section class="section reveal">
-
-<h2>Governance Architecture</h2>
-
-<div class="diagram">
-
-<div class="diagram-grid">
-
-<div class="node">Infrastructure Systems</div>
-<div class="node">Telemetry Signals</div>
-<div class="node">Neraium Analysis Layer</div>
-<div class="node">Operational Intelligence</div>
-<div class="node">Human Decision Making</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<section class="cta">
-
-<h2>Infrastructure Intelligence With Clear Boundaries</h2>
-
-<a class="button" href="platform.html">Explore the Platform</a>
-
-</section>
-
-
-
-<footer>
-
-© 2026 Neraium
-
-</footer>
-
-<script src="script.js"></script>
-<script src="network.js"></script>
-
+  <!-- External scripts for network animation and interactivity (if available) -->
+  <script src="network.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
