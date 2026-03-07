@@ -458,12 +458,11 @@ h3 {
 }
 
 .legend-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   display: inline-block;
-  box-shadow: 0 0 8px currentColor;
-  background: var(--highlight);
+  box-shadow: none;
 }
 
 .compare-stack {
