@@ -21,9 +21,9 @@ nodes.push({
 x:Math.random()*mapCanvas.width,
 y:Math.random()*mapCanvas.height,
 vx:(Math.random()-.5)*0.3,
-vy:(Math.random()-.5)*0.3
+vy:(Math.random()-.5)*0.3,
+alert: Math.random() < 0.08
 });
-
 }
 
 function draw(){
