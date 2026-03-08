@@ -12,7 +12,7 @@
     <div class="container site-header__inner">
       <a href="index.html" class="brand">Neraium</a>
       <nav class="nav" aria-label="Primary">
-        <a class="active" href="index.html">Home</a>
+        <a class="is-active" href="index.html">Home</a>
         <a href="platform.html">Platform</a>
         <a href="technical.html">Technical</a>
         <a href="governance.html">Governance</a>
@@ -26,11 +26,11 @@
       <div class="container hero__grid">
         <div>
           <div class="eyebrow">Systemic Infrastructure Intelligence</div>
-          <h1 class="hero__title">Operational visibility for complex water infrastructure</h1>
-          <p class="hero__copy">
+          <h1 class="hero-title">Operational visibility for complex infrastructure systems</h1>
+          <p class="hero-copy">
             Neraium converts infrastructure telemetry into systemic intelligence.
-            Detect infrastructure drift earlier, understand system behaviour,
-            and maintain defensible operational records.
+            Detect emerging system drift earlier, understand operational behaviour,
+            and maintain defensible records for critical environments.
           </p>
 
           <div class="button-row">
@@ -39,50 +39,50 @@
           </div>
 
           <div class="feature-list">
-            <article class="feature-card">
+            <article class="feature-item">
               <h3>Read only architecture</h3>
-              <p>No actuation. No control logic. No system interference.</p>
+              <p>Deploy alongside existing monitoring systems without interfering with operations.</p>
             </article>
 
-            <article class="feature-card">
+            <article class="feature-item">
               <h3>Early drift detection</h3>
-              <p>Identify emerging deviation before failure conditions escalate.</p>
+              <p>Identify structural deviation before failure conditions become obvious in conventional alarms.</p>
             </article>
 
-            <article class="feature-card">
-              <h3>Defensible records</h3>
-              <p>Operational intelligence remains reviewable and explainable.</p>
+            <article class="feature-item">
+              <h3>Defensible interpretation</h3>
+              <p>Preserve a clear evidentiary chain for engineering review, compliance, and post incident analysis.</p>
             </article>
           </div>
         </div>
 
         <div class="hero__visual" aria-hidden="true">
-          <div class="glow-orb"></div>
+          <div class="glow"></div>
 
-          <div class="telemetry-panel">
-            <div class="telemetry-panel__header">
-              <div class="telemetry-label">Live Telemetry</div>
-              <div class="telemetry-meta">Example system view</div>
+          <div class="preview">
+            <div class="preview__header">
+              <div class="preview__label">Live Telemetry</div>
+              <div class="preview__meta">Example system view</div>
             </div>
 
-            <div class="telemetry-panel__body">
-              <div class="chart-box">
-                <div class="chart-title">System drift profile</div>
-                <div class="mini-grid">
-                  <svg class="line" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <div class="preview__body">
+              <div class="chart">
+                <div class="chart__title">System drift profile</div>
+                <div class="chart__grid">
+                  <svg class="chart__line" viewBox="0 0 100 100" preserveAspectRatio="none">
                     <polyline
-                      points="0,70 8,68 16,69 24,64 32,66 40,60 48,61 56,55 64,57 72,48 80,42 88,30 96,22 100,18"
+                      points="0,72 8,70 16,71 24,66 32,67 40,61 48,63 56,58 64,56 72,48 80,42 88,31 96,24 100,20"
                       fill="none"
-                      stroke="rgba(125,216,255,0.95)"
+                      stroke="rgba(143,220,255,0.96)"
                       stroke-width="2.2"
                       vector-effect="non-scaling-stroke"
                       stroke-linecap="round"
                       stroke-linejoin="round"
                     />
                     <polyline
-                      points="0,80 8,78 16,79 24,77 32,76 40,74 48,75 56,72 64,73 72,71 80,72 88,69 96,70 100,68"
+                      points="0,80 8,79 16,78 24,77 32,76 40,75 48,74 56,73 64,72 72,71 80,71 88,70 96,69 100,68"
                       fill="none"
-                      stroke="rgba(68,183,255,0.55)"
+                      stroke="rgba(74,184,255,0.5)"
                       stroke-width="1.8"
                       vector-effect="non-scaling-stroke"
                       stroke-linecap="round"
@@ -92,18 +92,18 @@
                 </div>
               </div>
 
-              <div class="status-grid">
-                <div class="status-card">
-                  <div class="status-card__label">Mode</div>
-                  <div class="status-card__value">Read only</div>
+              <div class="metric-grid">
+                <div class="metric">
+                  <div class="metric__label">Mode</div>
+                  <div class="metric__value">Read only</div>
                 </div>
-                <div class="status-card">
-                  <div class="status-card__label">State</div>
-                  <div class="status-card__value">Drift emerging</div>
+                <div class="metric">
+                  <div class="metric__label">State</div>
+                  <div class="metric__value">Drift emerging</div>
                 </div>
-                <div class="status-card">
-                  <div class="status-card__label">Record</div>
-                  <div class="status-card__value">Verifiable</div>
+                <div class="metric">
+                  <div class="metric__label">Record</div>
+                  <div class="metric__value">Verifiable</div>
                 </div>
               </div>
             </div>
