@@ -1,225 +1,101 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium | Systemic Infrastructure Intelligence</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Neraium | Resilient Intelligence Infrastructure</title>
+  <meta name="description" content="Neraium builds resilient intelligence infrastructure for telemetry, analysis, and governance at scale." />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="brand">Nera<span>ium</span></a>
-
-      <div class="nav-links">
-        <a href="index.html" class="active">Home</a>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">N</span>
+        <span class="brand-text">Neraium</span>
+      </a>
+      <nav class="nav">
         <a href="platform.html">Platform</a>
         <a href="technical.html">Technical</a>
         <a href="governance.html">Governance</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </div>
-  </nav>
+        <a href="contact.html" class="button ghost">Contact</a>
+      </nav>
+    </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-shell">
+    <main>
+      <section class="hero">
         <div class="hero-copy">
-          <div class="eyebrow">Systemic Infrastructure Intelligence</div>
-
-          <h1>Operational visibility for complex water infrastructure</h1>
-
-          <p class="lead">
-            Neraium converts infrastructure telemetry into systemic intelligence.
-            Detect infrastructure drift earlier, understand system behaviour, and
-            maintain defensible operational records.
+          <p class="eyebrow">Resilient intelligence infrastructure</p>
+          <h1>Operational awareness for complex systems.</h1>
+          <p class="lede">
+            Neraium unifies telemetry ingestion, system mapping, anomaly analysis,
+            and governance controls into one deployment-ready platform.
           </p>
-
           <div class="hero-actions">
-            <a class="btn btn-primary" href="platform.html">View Platform</a>
-            <a class="btn btn-secondary" href="contact.html">Contact</a>
+            <a class="button" href="platform.html">Explore the platform</a>
+            <a class="button ghost" href="neraium-analyzer/index.html">Open analyzer</a>
           </div>
-
-          <div class="feature-stack">
-            <div class="feature-card">
-              <strong>Read-only architecture</strong>
-              <span>No actuation. No control logic. No system interference.</span>
-            </div>
-
-            <div class="feature-card">
-              <strong>Early drift detection</strong>
-              <span>Identify emerging deviation before failure conditions escalate.</span>
-            </div>
-
-            <div class="feature-card">
-              <strong>Defensible records</strong>
-              <span>Operational intelligence remains reviewable and explainable.</span>
-            </div>
-          </div>
+          <ul class="stats">
+            <li><strong>99.96%</strong><span>pipeline availability target</span></li>
+            <li><strong>&lt;150ms</strong><span>median event routing latency</span></li>
+            <li><strong>4 layers</strong><span>platform-to-governance architecture</span></li>
+          </ul>
         </div>
-
-        <div class="hero-visual panel chart-panel">
-          <div class="panel-header">
-            <div class="panel-title">Live Telemetry</div>
-            <div class="panel-meta">Example system view</div>
-          </div>
-
-          <canvas id="telemetryChart" width="680" height="320"></canvas>
-
-          <div class="legend">
-            <div class="legend-item">
-              <span class="legend-line line-a"></span>
-              <span>Signal A</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-line line-b"></span>
-              <span>Signal B</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-line line-c"></span>
-              <span>Signal C</span>
-            </div>
-          </div>
+        <div class="hero-visual card">
+          <img src="hero.png" alt="Abstract Neraium network illustration" />
+          <div class="pulse-grid" id="networkPulse"></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section band">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Platform capabilities</div>
-          <h2>From telemetry to operational understanding</h2>
+      <section class="section grid-3">
+        <article class="card feature">
+          <h2>Network intelligence</h2>
+          <p>Model assets, dependencies, and flows across a live operational graph.</p>
+        </article>
+        <article class="card feature">
+          <h2>Telemetry spine</h2>
+          <p>Stream, normalize, and preserve event integrity from source to decision.</p>
+        </article>
+        <article class="card feature">
+          <h2>Governance layer</h2>
+          <p>Apply policy-aware controls, approvals, and auditability without friction.</p>
+        </article>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">What the stack does</p>
+          <h2>Designed for operators, analysts, and decision-makers.</h2>
           <p>
-            Neraium helps infrastructure teams move from fragmented signals to a coherent
-            system view, making it easier to interpret drift, understand behaviour, and
-            support long-term infrastructure stewardship.
+            The Neraium stack turns fragmented infrastructure signals into a coherent
+            operating picture. Teams can detect weak signals earlier, understand system
+            relationships faster, and move from observation to action with traceable logic.
           </p>
         </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <h3>Infrastructure Telemetry</h3>
-            <p>Aggregate distributed signals across treatment, pumping, reservoirs, pressure zones, and environmental sensors.</p>
-          </div>
-
-          <div class="card">
-            <h3>System Drift Detection</h3>
-            <p>Identify structural deviation before instability, service failures, or infrastructure degradation fully surface.</p>
-          </div>
-
-          <div class="card">
-            <h3>Operational Intelligence</h3>
-            <p>Convert infrastructure telemetry into interpretable system insight for operators, engineers, and decision-makers.</p>
-          </div>
+        <div class="card checklist">
+          <div>Unified event intake across heterogeneous systems</div>
+          <div>Interactive topology and dependency mapping</div>
+          <div>Embedded anomaly scoring and drift analysis</div>
+          <div>Human-readable governance and review workflows</div>
         </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© 2026 Neraium</span>
+      <div>
+        <a href="technical.html">Architecture</a>
+        <a href="governance.html">Trust</a>
+        <a href="contact.html">Get in touch</a>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">System architecture</div>
-          <h2>A read-only intelligence layer for critical environments</h2>
-          <p>
-            Neraium is designed to observe infrastructure systems without replacing
-            control systems, changing setpoints, or assuming decision authority.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <h3>Observation layer</h3>
-            <p>Ingest telemetry from existing systems and create a structured infrastructure view.</p>
-          </div>
-
-          <div class="card">
-            <h3>Interpretation layer</h3>
-            <p>Model relationships across signals to surface meaningful infrastructure behaviour.</p>
-          </div>
-
-          <div class="card">
-            <h3>Human decision point</h3>
-            <p>Keep intelligence subordinate to operators, preserving existing authority structures.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="brand">Nera<span>ium</span></div>
-
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="platform.html">Platform</a>
-        <a href="technical.html">Technical</a>
-        <a href="governance.html">Governance</a>
-        <a href="contact.html">Contact</a>
-      </div>
-
-      <div class="footer-copy">© 2026 Neraium</div>
-    </div>
-  </footer>
-
-  <script>
-    const canvas = document.getElementById("telemetryChart");
-
-    if (canvas) {
-      const ctx = canvas.getContext("2d");
-      let time = 0;
-
-      function drawGrid() {
-        ctx.strokeStyle = "rgba(255,255,255,0.05)";
-        ctx.lineWidth = 1;
-
-        for (let x = 0; x < canvas.width; x += 60) {
-          ctx.beginPath();
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, canvas.height);
-          ctx.stroke();
-        }
-
-        for (let y = 0; y < canvas.height; y += 40) {
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(canvas.width, y);
-          ctx.stroke();
-        }
-      }
-
-      function drawSignal(color, offset, amplitude) {
-        ctx.beginPath();
-
-        for (let x = 0; x < canvas.width; x++) {
-          const y =
-            canvas.height / 2 +
-            Math.sin(x * 0.012 + time * offset) * amplitude +
-            Math.sin(x * 0.03 + time) * 10;
-
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawGrid();
-        drawSignal("#2ea8ff", 0.85, 28);
-        drawSignal("#7cc7ff", 1.2, 22);
-        drawSignal("#d7eeff", 1.5, 16);
-        time += 0.03;
-        requestAnimationFrame(draw);
-      }
-
-      draw();
-    }
-  </script>
+    </footer>
+  </div>
+  <script src="network.js"></script>
 </body>
 </html>
