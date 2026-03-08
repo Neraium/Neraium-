@@ -6,16 +6,16 @@
   <title>Neraium | Home</title>
   <meta
     name="description"
-    content="Neraium converts infrastructure telemetry into systemic intelligence."
+    content="Neraium turns infrastructure telemetry into clear, defensible operational intelligence."
   />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="container site-header-inner">
+    <div class="container header-inner">
       <a href="index.html" class="brand">Neraium</a>
 
-      <nav class="nav" aria-label="Primary">
+      <nav class="nav" aria-label="Primary navigation">
         <a class="active" href="index.html">Home</a>
         <a href="platform.html">Platform</a>
         <a href="technical.html">Technical</a>
@@ -28,46 +28,44 @@
   <main>
     <section class="hero section">
       <div class="container hero-grid">
-        <div class="hero-content">
-          <div class="eyebrow">Systemic Infrastructure Intelligence</div>
+        <div class="hero-copy-block">
+          <p class="eyebrow">Systemic Infrastructure Intelligence</p>
 
           <h1>Operational visibility for complex water infrastructure</h1>
 
-          <p class="hero-copy">
-            Neraium converts infrastructure telemetry into systemic intelligence.
-            Detect infrastructure drift earlier, understand system behaviour,
-            and maintain defensible operational records.
+          <p class="lead">
+            Neraium turns infrastructure telemetry into systemic intelligence.
+            Detect drift earlier, understand system behavior, and maintain
+            defensible operational records.
           </p>
 
-          <div class="hero-actions">
+          <div class="actions">
             <a class="button button-primary" href="platform.html">View Platform</a>
             <a class="button button-secondary" href="contact.html">Contact</a>
           </div>
 
-          <div class="feature-stack">
-            <article class="feature-card">
+          <div class="card-stack">
+            <article class="glass-card">
               <h3>Read only architecture</h3>
               <p>
-                No actuation. No control logic. No system interference. Neraium
-                operates alongside existing monitoring environments as an
-                interpretation layer.
+                No actuation. No control logic. No interference with existing
+                systems. Neraium operates as a read only interpretation layer.
               </p>
             </article>
 
-            <article class="feature-card">
+            <article class="glass-card">
               <h3>Early drift detection</h3>
               <p>
-                Identify emerging deviation before failure conditions escalate by
-                evaluating the structure of multivariate telemetry rather than
-                isolated thresholds.
+                Identify emerging system deviation before failure conditions
+                escalate.
               </p>
             </article>
 
-            <article class="feature-card">
+            <article class="glass-card">
               <h3>Defensible records</h3>
               <p>
-                Operational intelligence remains reviewable and explainable with a
-                permanent evidentiary chain for every interpretation outcome.
+                Preserve clear, reviewable records for engineering analysis,
+                compliance review, and incident response.
               </p>
             </article>
           </div>
@@ -76,15 +74,16 @@
         <div class="hero-visual" aria-hidden="true">
           <div class="glow-orb"></div>
 
-          <div class="telemetry-panel">
+          <section class="telemetry-panel">
             <div class="telemetry-header">
-              <div class="telemetry-label">Live Telemetry</div>
-              <div class="telemetry-meta">Example system view</div>
+              <span class="telemetry-label">Live Telemetry</span>
+              <span class="telemetry-meta">Example system view</span>
             </div>
 
             <div class="telemetry-body">
               <div class="chart-box">
-                <div class="chart-title">System drift profile</div>
+                <p class="chart-title">System drift profile</p>
+
                 <div class="mini-grid">
                   <svg class="line" viewBox="0 0 100 100" preserveAspectRatio="none">
                     <polyline
@@ -109,31 +108,33 @@
                 </div>
               </div>
 
-              <div class="status-row">
-                <div class="status-tile">
-                  <div class="status-kicker">Mode</div>
-                  <div class="status-value">Read only</div>
+              <div class="status-grid">
+                <div class="status-card">
+                  <span class="status-label">Mode</span>
+                  <strong class="status-value">Read only</strong>
                 </div>
-                <div class="status-tile">
-                  <div class="status-kicker">State</div>
-                  <div class="status-value">Drift emerging</div>
+
+                <div class="status-card">
+                  <span class="status-label">State</span>
+                  <strong class="status-value">Drift emerging</strong>
                 </div>
-                <div class="status-tile">
-                  <div class="status-kicker">Record</div>
-                  <div class="status-value">Verifiable</div>
+
+                <div class="status-card">
+                  <span class="status-label">Record</span>
+                  <strong class="status-value">Verifiable</strong>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="site-footer">
     <div class="container footer-inner">
-      <div>© 2026 Neraium. All rights reserved.</div>
-      <div>Systemic infrastructure intelligence.</div>
+      <span>© 2026 Neraium. All rights reserved.</span>
+      <span>Systemic infrastructure intelligence.</span>
     </div>
   </footer>
 </body>
