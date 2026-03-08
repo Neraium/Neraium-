@@ -5,27 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Neraium | Platform</title>
   <meta name="description" content="Neraium separates signal detection, interpretation governance, and evidentiary accountability." />
+  <meta name="theme-color" content="#000000" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <header class="site-header">
+<body data-page="platform">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" role="banner">
     <div class="container site-header__inner">
-      <a href="index.html" class="brand">Neraium</a>
-      <nav class="nav" aria-label="Primary">
-        <a href="index.html" class="nav-link" data-current="index">Home</a>
-        <a href="platform.html" class="nav-link active" data-current="platform">Platform</a>
-        <a href="technical.html" class="nav-link" data-current="technical">Technical</a>
-        <a href="governance.html" class="nav-link" data-current="governance">Governance</a>
-        <a href="contact.html" class="nav-link" data-current="contact">Contact</a>
+      <a href="index.html" class="brand" aria-label="Neraium Home">
+        <span class="brand-text">Neraium</span>
+        <span class="brand-accent">&gt;</span>
+      </a>
+      
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav-toggle__line"></span>
+        <span class="nav-toggle__line"></span>
+        <span class="nav-toggle__line"></span>
+      </button>
+
+      <nav class="nav" id="main-nav" aria-label="Primary navigation">
+        <a href="index.html" class="nav-link" data-page="index">Home</a>
+        <a href="platform.html" class="nav-link" data-page="platform">Platform</a>
+        <a href="technical.html" class="nav-link" data-page="technical">Technical</a>
+        <a href="governance.html" class="nav-link" data-page="governance">Governance</a>
+        <a href="contact.html" class="nav-link" data-page="contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="page-hero">
+  <main id="main-content">
+    <section class="page-hero" aria-labelledby="page-title">
       <div class="container">
-        <div class="eyebrow">Platform</div>
-        <h1 class="page-title">Three layers for defensible infrastructure interpretation</h1>
+        <div class="eyebrow">&gt; Platform</div>
+        <h1 id="page-title">Three layers for defensible infrastructure interpretation</h1>
         <p class="page-copy">
           Neraium separates signal detection, interpretation governance, and
           evidentiary accountability so outputs remain useful under operational,
@@ -34,32 +47,34 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="layers-heading">
+    <section class="capabilities-section" aria-labelledby="layers-heading">
       <div class="container">
-        <h2 id="layers-heading" class="section-title visually-hidden">Platform Layers</h2>
+        <h2 id="layers-heading" class="section-title">
+          <span class="title-prefix">[</span>Platform Layers<span class="title-prefix">]</span>
+        </h2>
         <div class="grid-3">
           <article class="card">
-            <div class="number">1</div>
-            <h3>Signal Geometry Layer</h3>
-            <p>
+            <div class="card-number">[01]</div>
+            <h3 class="card-title">Signal Geometry Layer</h3>
+            <p class="card-description">
               Models covariance structure in multivariate telemetry to detect
               system level deformation without requiring historical failure data.
             </p>
           </article>
 
           <article class="card">
-            <div class="number">2</div>
-            <h3>Aletheia's Gate</h3>
-            <p>
+            <div class="card-number">[02]</div>
+            <h3 class="card-title">Aletheia's Gate</h3>
+            <p class="card-description">
               Applies deterministic admissibility criteria including temporal
               persistence, physical interpretation boundaries, and multi sensor correlation thresholds.
             </p>
           </article>
 
           <article class="card">
-            <div class="number">3</div>
-            <h3>Evidence Vault Protocol</h3>
-            <p>
+            <div class="card-number">[03]</div>
+            <h3 class="card-title">Evidence Vault Protocol</h3>
+            <p class="card-description">
               Preserves a verifiable record of measured divergence, criteria used,
               system state, and final interpretation decision.
             </p>
@@ -68,11 +83,13 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="operational-heading">
+    <section class="info-section" aria-labelledby="operational-heading">
       <div class="container">
-        <div class="panel">
-          <h2 id="operational-heading">Operational role</h2>
-          <p>
+        <div class="info-panel">
+          <h2 id="operational-heading" class="info-title">
+            <span class="title-prefix">[</span>Operational Role<span class="title-prefix">]</span>
+          </h2>
+          <p class="info-text">
             Neraium operates as a read only interpretation layer that ingests telemetry from
             existing infrastructure systems. It does not control equipment, modify control logic,
             or issue operational directives.
@@ -81,11 +98,13 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="deployment-heading">
+    <section class="info-section" aria-labelledby="deployment-heading">
       <div class="container">
-        <div class="panel">
-          <h2 id="deployment-heading">Deployment model</h2>
-          <p>
+        <div class="info-panel">
+          <h2 id="deployment-heading" class="info-title">
+            <span class="title-prefix">[</span>Deployment Model<span class="title-prefix">]</span>
+          </h2>
+          <p class="info-text">
             The platform is designed for infrastructure edge deployment and can process telemetry
             locally without continuous cloud connectivity.
           </p>
@@ -94,10 +113,14 @@
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <div class="container footer__inner">
-      <div>© <span id="year"></span> Neraium. All rights reserved.</div>
-      <div>Systemic infrastructure intelligence.</div>
+      <div class="footer-text">
+        © <span id="year"></span> Neraium. All rights reserved.
+      </div>
+      <div class="footer-tagline">
+        Systemic infrastructure intelligence.
+      </div>
     </div>
   </footer>
 
@@ -105,14 +128,31 @@
     // Dynamic copyright year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Active navigation state management
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    // Mobile navigation toggle
+    const navToggle = document.getElementById('nav-toggle');
+    const mainNav = document.getElementById('main-nav');
+
+    navToggle.addEventListener('click', () => {
+      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', !isExpanded);
+      mainNav.classList.toggle('nav--open');
+    });
+
+    // Close nav when link is clicked
     const navLinks = document.querySelectorAll('.nav-link');
-    
     navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === currentPage) {
+      link.addEventListener('click', () => {
+        navToggle.setAttribute('aria-expanded', 'false');
+        mainNav.classList.remove('nav--open');
+      });
+    });
+
+    // Active navigation state management
+    const currentPageAttr = document.body.getAttribute('data-page');
+    navLinks.forEach(link => {
+      if (link.getAttribute('data-page') === currentPageAttr) {
         link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
       }
     });
   </script>
