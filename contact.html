@@ -12,11 +12,11 @@
     <div class="container site-header__inner">
       <a href="index.html" class="brand">Neraium</a>
       <nav class="nav" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="platform.html">Platform</a>
-        <a href="technical.html">Technical</a>
-        <a href="governance.html">Governance</a>
-        <a href="contact.html" class="active">Contact</a>
+        <a href="index.html" class="nav-link" data-current="index">Home</a>
+        <a href="platform.html" class="nav-link" data-current="platform">Platform</a>
+        <a href="technical.html" class="nav-link" data-current="technical">Technical</a>
+        <a href="governance.html" class="nav-link" data-current="governance">Governance</a>
+        <a href="contact.html" class="nav-link active" data-current="contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -33,16 +33,16 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" aria-labelledby="contact-heading">
       <div class="container">
         <div class="contact-band">
           <div>
-            <h2>Get in touch</h2>
+            <h2 id="contact-heading">Get in touch</h2>
             <p>For product, deployment, and partnership inquiries, contact Craig directly.</p>
           </div>
 
           <div class="button-row">
-            <a class="button button--primary" href="mailto:craig@neraium.com">craig@neraium.com</a>
+            <a class="button button--primary" href="mailto:Craig@neraium.com">Craig@neraium.com</a>
             <a class="button button--secondary" href="index.html">Back to home</a>
           </div>
         </div>
@@ -52,9 +52,19 @@
 
   <footer class="footer">
     <div class="container footer__inner">
-      <div>© 2026 Neraium. All rights reserved.</div>
+      <div>© <span id="year"></span> Neraium. All rights reserved.</div>
       <div>Systemic infrastructure intelligence.</div>
     </div>
   </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === currentPage) link.classList.add('active');
+    });
+  </script>
 </body>
 </html>
