@@ -4,17 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Neraium | Home</title>
-  <meta
-    name="description"
-    content="Neraium converts infrastructure telemetry into systemic intelligence."
-  />
+  <meta name="description" content="Neraium converts infrastructure telemetry into systemic intelligence." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container site-header__inner">
       <a href="index.html" class="brand">Neraium</a>
-
       <nav class="nav" aria-label="Primary">
         <a href="index.html" class="active">Home</a>
         <a href="platform.html">Platform</a>
@@ -26,16 +22,12 @@
   </header>
 
   <main>
-    <section class="hero section">
-      <div class="container hero__grid">
-        <div class="hero__content">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
           <div class="eyebrow">Systemic Infrastructure Intelligence</div>
-
-          <h1 class="hero-title">
-            Operational visibility for complex infrastructure systems
-          </h1>
-
-          <p class="hero-copy">
+          <h1>Operational visibility for complex infrastructure systems</h1>
+          <p>
             Neraium converts infrastructure telemetry into systemic intelligence.
             Detect emerging system drift earlier, understand operational behaviour,
             and maintain defensible records for critical environments.
@@ -45,87 +37,49 @@
             <a class="button button--primary" href="platform.html">View Platform</a>
             <a class="button button--secondary" href="contact.html">Contact</a>
           </div>
-
-          <div class="feature-list">
-            <article class="feature-item">
-              <h3>Read only architecture</h3>
-              <p>
-                Deploy alongside existing monitoring systems without interfering
-                with operations.
-              </p>
-            </article>
-
-            <article class="feature-item">
-              <h3>Early drift detection</h3>
-              <p>
-                Identify structural deviation before failure conditions become
-                obvious in conventional alarms.
-              </p>
-            </article>
-
-            <article class="feature-item">
-              <h3>Defensible interpretation</h3>
-              <p>
-                Preserve a clear evidentiary chain for engineering review,
-                compliance, and post incident analysis.
-              </p>
-            </article>
-          </div>
         </div>
 
-        <div class="hero__visual" aria-hidden="true">
-          <div class="glow"></div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-top">
+            <div class="visual-label">Live Telemetry</div>
+            <div>Example system view</div>
+          </div>
 
-          <div class="preview">
-            <div class="preview__header">
-              <div class="preview__label">Live Telemetry</div>
-              <div class="preview__meta">Example system view</div>
+          <div class="chart-box">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <polyline
+                points="0,72 8,71 16,70 24,66 32,67 40,62 48,61 56,58 64,56 72,48 80,41 88,30 96,23 100,18"
+                fill="none"
+                stroke="rgba(184,236,255,0.95)"
+                stroke-width="2.1"
+                vector-effect="non-scaling-stroke"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <polyline
+                points="0,80 8,79 16,78 24,77 32,76 40,75 48,74 56,73 64,72 72,71 80,71 88,70 96,69 100,68"
+                fill="none"
+                stroke="rgba(127,208,255,0.5)"
+                stroke-width="1.7"
+                vector-effect="non-scaling-stroke"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="metric-label">Mode</div>
+              <div class="metric-value">Read only</div>
             </div>
-
-            <div class="preview__body">
-              <div class="chart">
-                <div class="chart__title">System drift profile</div>
-
-                <div class="chart__grid">
-                  <svg class="chart__line" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <polyline
-                      points="0,72 8,70 16,71 24,66 32,67 40,61 48,63 56,58 64,56 72,48 80,42 88,31 96,24 100,20"
-                      fill="none"
-                      stroke="rgba(143,220,255,0.96)"
-                      stroke-width="2.2"
-                      vector-effect="non-scaling-stroke"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <polyline
-                      points="0,80 8,79 16,78 24,77 32,76 40,75 48,74 56,73 64,72 72,71 80,71 88,70 96,69 100,68"
-                      fill="none"
-                      stroke="rgba(74,184,255,0.5)"
-                      stroke-width="1.8"
-                      vector-effect="non-scaling-stroke"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <div class="metric-grid">
-                <div class="metric">
-                  <div class="metric__label">Mode</div>
-                  <div class="metric__value">Read only</div>
-                </div>
-
-                <div class="metric">
-                  <div class="metric__label">State</div>
-                  <div class="metric__value">Drift emerging</div>
-                </div>
-
-                <div class="metric">
-                  <div class="metric__label">Record</div>
-                  <div class="metric__value">Verifiable</div>
-                </div>
-              </div>
+            <div class="metric">
+              <div class="metric-label">State</div>
+              <div class="metric-value">Drift emerging</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Record</div>
+              <div class="metric-value">Verifiable</div>
             </div>
           </div>
         </div>
@@ -133,7 +87,7 @@
     </section>
 
     <section class="section">
-      <div class="container card-grid card-grid--3">
+      <div class="container grid-3">
         <article class="card">
           <div class="number">1</div>
           <h3>Signal Geometry Layer</h3>
@@ -147,9 +101,8 @@
           <div class="number">2</div>
           <h3>Aletheia’s Gate</h3>
           <p>
-            Applies deterministic admissibility criteria including persistence
-            requirements, physical interpretation limits, and multi sensor
-            correlation thresholds.
+            Applies deterministic admissibility criteria including persistence,
+            physical interpretation limits, and multi sensor correlation thresholds.
           </p>
         </article>
 
