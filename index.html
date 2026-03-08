@@ -4,15 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Neraium | Home</title>
-  <meta name="description" content="Neraium converts infrastructure telemetry into systemic intelligence." />
+  <meta
+    name="description"
+    content="Neraium converts infrastructure telemetry into systemic intelligence."
+  />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container site-header__inner">
       <a href="index.html" class="brand">Neraium</a>
+
       <nav class="nav" aria-label="Primary">
-        <a class="is-active" href="index.html">Home</a>
+        <a href="index.html" class="active">Home</a>
         <a href="platform.html">Platform</a>
         <a href="technical.html">Technical</a>
         <a href="governance.html">Governance</a>
@@ -24,9 +28,13 @@
   <main>
     <section class="hero section">
       <div class="container hero__grid">
-        <div>
+        <div class="hero__content">
           <div class="eyebrow">Systemic Infrastructure Intelligence</div>
-          <h1 class="hero-title">Operational visibility for complex infrastructure systems</h1>
+
+          <h1 class="hero-title">
+            Operational visibility for complex infrastructure systems
+          </h1>
+
           <p class="hero-copy">
             Neraium converts infrastructure telemetry into systemic intelligence.
             Detect emerging system drift earlier, understand operational behaviour,
@@ -41,17 +49,26 @@
           <div class="feature-list">
             <article class="feature-item">
               <h3>Read only architecture</h3>
-              <p>Deploy alongside existing monitoring systems without interfering with operations.</p>
+              <p>
+                Deploy alongside existing monitoring systems without interfering
+                with operations.
+              </p>
             </article>
 
             <article class="feature-item">
               <h3>Early drift detection</h3>
-              <p>Identify structural deviation before failure conditions become obvious in conventional alarms.</p>
+              <p>
+                Identify structural deviation before failure conditions become
+                obvious in conventional alarms.
+              </p>
             </article>
 
             <article class="feature-item">
               <h3>Defensible interpretation</h3>
-              <p>Preserve a clear evidentiary chain for engineering review, compliance, and post incident analysis.</p>
+              <p>
+                Preserve a clear evidentiary chain for engineering review,
+                compliance, and post incident analysis.
+              </p>
             </article>
           </div>
         </div>
@@ -68,6 +85,7 @@
             <div class="preview__body">
               <div class="chart">
                 <div class="chart__title">System drift profile</div>
+
                 <div class="chart__grid">
                   <svg class="chart__line" viewBox="0 0 100 100" preserveAspectRatio="none">
                     <polyline
@@ -97,10 +115,12 @@
                   <div class="metric__label">Mode</div>
                   <div class="metric__value">Read only</div>
                 </div>
+
                 <div class="metric">
                   <div class="metric__label">State</div>
                   <div class="metric__value">Drift emerging</div>
                 </div>
+
                 <div class="metric">
                   <div class="metric__label">Record</div>
                   <div class="metric__value">Verifiable</div>
@@ -109,6 +129,38 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container card-grid card-grid--3">
+        <article class="card">
+          <div class="number">1</div>
+          <h3>Signal Geometry Layer</h3>
+          <p>
+            Models covariance structure in multivariate telemetry to detect
+            system level deformation without relying on historical failure datasets.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="number">2</div>
+          <h3>Aletheia’s Gate</h3>
+          <p>
+            Applies deterministic admissibility criteria including persistence
+            requirements, physical interpretation limits, and multi sensor
+            correlation thresholds.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="number">3</div>
+          <h3>Evidence Vault Protocol</h3>
+          <p>
+            Preserves a verifiable record of measured divergence, applied criteria,
+            system state, and final interpretation outcome.
+          </p>
+        </article>
       </div>
     </section>
   </main>
