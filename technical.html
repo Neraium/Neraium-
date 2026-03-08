@@ -4,18 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Neraium | Technical</title>
-  <meta
-    name="description"
-    content="Technical foundations for multivariate telemetry interpretation."
-  />
+  <meta name="description" content="Technical architecture for multivariate telemetry interpretation." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="container header-inner">
+    <div class="container site-header__inner">
       <a href="index.html" class="brand">Neraium</a>
-
-      <nav class="nav" aria-label="Primary navigation">
+      <nav class="nav" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="platform.html">Platform</a>
         <a class="active" href="technical.html">Technical</a>
@@ -28,89 +24,60 @@
   <main>
     <section class="section page-hero">
       <div class="container narrow">
-        <p class="eyebrow">Technical</p>
+        <div class="eyebrow">Technical</div>
         <h1 class="page-title">Built for multivariate telemetry, not isolated threshold alarms</h1>
-        <p class="lead">
-          Traditional monitoring evaluates signals one at a time. Neraium
-          evaluates whether the overall behavior of a system remains physically
-          coherent.
+        <p class="page-copy">
+          Neraium evaluates whether the overall behaviour of a system remains physically coherent.
         </p>
       </div>
     </section>
 
     <section class="section">
-      <div class="container split-grid">
-        <div class="content-panel">
+      <div class="container tech-layout">
+        <div class="panel">
           <h2>Interpretation structure</h2>
 
-          <div class="tile-grid">
-            <div class="info-tile">
+          <div class="diagram-grid">
+            <div class="diagram-card">
               <h4>Multivariate geometry</h4>
-              <p>
-                Detect structural drift from relationships across signals rather
-                than isolated thresholds.
-              </p>
+              <p>Detects structural drift from relationships between sensor signals.</p>
             </div>
 
-            <div class="info-tile">
+            <div class="diagram-card">
               <h4>Temporal legitimacy</h4>
-              <p>
-                Require persistence over time before drift is admitted for
-                interpretation.
-              </p>
+              <p>Requires persistence over time before deformation becomes actionable.</p>
             </div>
 
-            <div class="info-tile">
+            <div class="diagram-card">
               <h4>Physical coherence</h4>
-              <p>
-                Keep interpretation within engineering boundaries that preserve
-                real world meaning.
-              </p>
+              <p>Constrains interpretation to valid engineering meaning.</p>
             </div>
 
-            <div class="info-tile">
-              <h4>Edge deployment</h4>
-              <p>
-                Run locally as a read only layer without changing existing control
-                systems.
-              </p>
+            <div class="diagram-card">
+              <h4>Read only deployment</h4>
+              <p>Operates without modifying control systems or issuing directives.</p>
             </div>
           </div>
         </div>
 
-        <aside class="content-panel">
-          <h2>Why it matters</h2>
+        <aside class="panel">
+          <h2>Why this matters</h2>
 
           <div class="bullet-list">
-            <div class="bullet-item">
-              <strong>Earlier awareness:</strong> detect deviation before failure
-              states become obvious in conventional alarms.
-            </div>
-
-            <div class="bullet-item">
-              <strong>Explainable outcomes:</strong> every interpretation is
-              bounded by clear admissibility logic.
-            </div>
-
-            <div class="bullet-item">
-              <strong>Operational fit:</strong> deploy alongside SCADA,
-              historian, and monitoring environments.
-            </div>
-
-            <div class="bullet-item">
-              <strong>Reviewable records:</strong> preserve evidence for
-              engineering analysis, compliance, and incident response.
-            </div>
+            <div class="bullet-card"><strong>Earlier awareness:</strong> detect drift before obvious failure states.</div>
+            <div class="bullet-card"><strong>Explainable outcomes:</strong> every interpretation is bounded by explicit logic.</div>
+            <div class="bullet-card"><strong>Operational fit:</strong> works alongside SCADA, historian, or monitoring systems.</div>
+            <div class="bullet-card"><strong>Defensible review:</strong> preserves records for engineering and incident analysis.</div>
           </div>
         </aside>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <span>© 2026 Neraium. All rights reserved.</span>
-      <span>Systemic infrastructure intelligence.</span>
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>© 2026 Neraium. All rights reserved.</div>
+      <div>Systemic infrastructure intelligence.</div>
     </div>
   </footer>
 </body>
