@@ -1,44 +1,98 @@
-<!-- governance.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium Governance</title>
+  <title>Neraium | Governance</title>
+  <meta
+    name="description"
+    content="Interpretation governance and evidentiary accountability for infrastructure signals."
+  />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="index.html"><span class="brand-mark">N</span><span class="brand-text">Neraium</span></a>
-      <nav class="nav">
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a href="index.html" class="brand">Neraium</a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html">Home</a>
         <a href="platform.html">Platform</a>
         <a href="technical.html">Technical</a>
-        <a href="governance.html" class="active">Governance</a>
-        <a href="contact.html" class="button ghost">Contact</a>
+        <a class="active" href="governance.html">Governance</a>
+        <a href="contact.html">Contact</a>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <main class="section">
-      <p class="eyebrow">Governance</p>
-      <h1>Decision integrity built into every layer.</h1>
-      <div class="grid-3">
-        <article class="card feature"><h2>Lineage</h2><p>Every decision links back to source signals, transforms, and operator review steps.</p></article>
-        <article class="card feature"><h2>Controls</h2><p>Approval gates, separation of duties, and policy rules reduce operational risk.</p></article>
-        <article class="card feature"><h2>Explainability</h2><p>Analytical outputs expose evidence, confidence, and triggering conditions in plain language.</p></article>
+  <main>
+    <section class="section page-hero">
+      <div class="container narrow">
+        <div class="eyebrow">Governance</div>
+        <h1 class="page-title">
+          Signals are not just detected. They are admitted, suppressed, or refused.
+        </h1>
+        <p class="page-copy">
+          Interpretation governance defines when the system may infer meaning and
+          when uncertainty overrides signal.
+        </p>
       </div>
-      <section class="section card checklist">
-        <div>Role-aware access and review workflows</div>
-        <div>Immutable audit trail for material decisions</div>
-        <div>Environment-specific policy packs</div>
-        <div>Structured handoff between automation and human oversight</div>
-      </section>
-    </main>
+    </section>
 
-    <footer class="footer">
-      <span>© 2026 Neraium</span>
-      <div><a href="technical.html">Technical</a><a href="contact.html">Contact</a></div>
-    </footer>
-  </div>
+    <section class="section">
+      <div class="container governance-grid">
+        <article class="governance-card">
+          <h2>Aletheia’s Gate</h2>
+          <p>
+            The admissibility boundary enforces interpretive discipline before
+            escalation.
+          </p>
+          <ul>
+            <li>Physical interpretation constraints</li>
+            <li>Temporal persistence requirements</li>
+            <li>Multi sensor correlation thresholds</li>
+            <li>Suppression of weak or invalid signals</li>
+          </ul>
+        </article>
+
+        <article class="governance-card">
+          <h2>Evidentiary accountability</h2>
+          <p>
+            Every outcome is preserved with the context required for later review.
+          </p>
+          <ul>
+            <li>Measured system divergence</li>
+            <li>Admissibility criteria applied</li>
+            <li>System state at evaluation</li>
+            <li>Final interpretation decision</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container narrow">
+        <div class="content-panel">
+          <h2>Interpretation constraints</h2>
+          <p>
+            Interpretation operates within schematic guardrails that define the
+            engineering envelope within which infrastructure behaviour may be
+            interpreted.
+          </p>
+          <p>
+            These guardrails determine when interpretation is permitted and when
+            the system must refuse inference.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2026 Neraium. All rights reserved.</div>
+      <div>Systemic infrastructure intelligence.</div>
+    </div>
+  </footer>
 </body>
 </html>
