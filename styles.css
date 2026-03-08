@@ -734,6 +734,101 @@ h1 {
   color: var(--color-text);
   line-height: var(--line-height-relaxed);
 }
+/* ================================================================
+   Page Hero & Info Sections
+   ================================================================ */
+
+.page-hero {
+  padding: var(--spacing-3xl) 0;
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 255, 65, 0.05) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .page-hero {
+    padding: var(--spacing-2xl) 0;
+  }
+}
+
+.page-copy {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text);
+  margin-bottom: 0;
+  max-width: 700px;
+}
+
+.info-section {
+  padding: var(--spacing-3xl) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+@media (max-width: 767px) {
+  .info-section {
+    padding: var(--spacing-2xl) 0;
+  }
+}
+
+.info-panel {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-accent);
+  padding: var(--spacing-2xl);
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+@media (max-width: 767px) {
+  .info-panel {
+    padding: var(--spacing-lg);
+  }
+}
+
+.info-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(0, 255, 65, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.info-panel:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+}
+
+.info-title {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .info-title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+.info-text {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text);
+  margin-bottom: 0;
+}
 
 /* ================================================================
    Footer
