@@ -1,83 +1,47 @@
+<!-- contact.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium | Contact</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Contact Neraium</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="brand">Nera<span>ium</span></a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html"><span class="brand-mark">N</span><span class="brand-text">Neraium</span></a>
+      <nav class="nav">
         <a href="platform.html">Platform</a>
         <a href="technical.html">Technical</a>
         <a href="governance.html">Governance</a>
-        <a href="contact.html" class="active">Contact</a>
-      </div>
-    </div>
-  </nav>
+        <a href="contact.html" class="button ghost active">Contact</a>
+      </nav>
+    </header>
 
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="eyebrow">Contact</div>
-        <h1>Get in touch</h1>
-        <p class="lead">
-          For pilots, partnerships, technical discussions, or infrastructure intelligence inquiries,
-          contact Neraium directly.
+    <main class="section split">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h1>Build with Neraium.</h1>
+        <p>
+          Whether you are designing a mission dashboard, telemetry backbone, or
+          governed decision workflow, Neraium can be configured to fit your environment.
         </p>
-
-        <div class="cta-row">
-          <a href="mailto:Craig@neraium.com" class="btn btn-primary">Craig@neraium.com</a>
-        </div>
       </div>
-    </section>
+      <form class="card contact-form">
+        <label>Name<input type="text" placeholder="Your name" /></label>
+        <label>Email<input type="email" placeholder="you@example.com" /></label>
+        <label>Organization<input type="text" placeholder="Organization" /></label>
+        <label>What are you building?<textarea rows="5" placeholder="Tell us about your use case."></textarea></label>
+        <button class="button" type="button">Request a demo</button>
+      </form>
+    </main>
 
-    <section class="section band">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Conversations</div>
-          <h2>How we can connect</h2>
-          <p>
-            Neraium works with infrastructure operators, technical teams, and organizations exploring telemetry intelligence.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <h3>Pilot discussions</h3>
-            <p>Explore how Neraium can fit into a specific infrastructure environment or operating context.</p>
-          </div>
-          <div class="card">
-            <h3>Technical review</h3>
-            <p>Discuss system behaviour, platform architecture, and technical fit for complex telemetry environments.</p>
-          </div>
-          <div class="card">
-            <h3>Partnerships</h3>
-            <p>Connect around infrastructure intelligence, utilities, industrial systems, and operational visibility.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="brand">Nera<span>ium</span></div>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="platform.html">Platform</a>
-        <a href="technical.html">Technical</a>
-        <a href="governance.html">Governance</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="footer-copy">© 2026 Neraium</div>
-    </div>
-  </footer>
+    <footer class="footer">
+      <span>© 2026 Neraium</span>
+      <div><a href="index.html">Home</a><a href="platform.html">Platform</a></div>
+    </footer>
+  </div>
+  <script src="telemetry.js"></script>
 </body>
 </html>
