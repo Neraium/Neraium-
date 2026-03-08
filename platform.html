@@ -1,112 +1,66 @@
+<!-- platform.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium | Platform</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Neraium Platform</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="brand">Nera<span>ium</span></a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html"><span class="brand-mark">N</span><span class="brand-text">Neraium</span></a>
+      <nav class="nav">
         <a href="platform.html" class="active">Platform</a>
         <a href="technical.html">Technical</a>
         <a href="governance.html">Governance</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </div>
-  </nav>
+        <a href="contact.html" class="button ghost">Contact</a>
+      </nav>
+    </header>
 
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="eyebrow">Platform</div>
-        <h1>Operational telemetry intelligence</h1>
-        <p class="lead">
-          Neraium operates as a systemic intelligence layer for infrastructure,
-          transforming telemetry from distributed assets into operational visibility.
-        </p>
+    <main class="section">
+      <p class="eyebrow">Platform</p>
+      <h1>One platform, four tightly integrated layers.</h1>
+      <div class="grid-2 stagger">
+        <article class="card">
+          <h2>Ingest</h2>
+          <p>Receive batch, stream, and event-native data through secure adapters with schema validation.</p>
+        </article>
+        <article class="card">
+          <h2>Map</h2>
+          <p>Build a living system graph that reflects assets, dependencies, ownership, and blast radius.</p>
+        </article>
+        <article class="card">
+          <h2>Analyze</h2>
+          <p>Apply anomaly scoring, drift monitoring, and decision support models on normalized telemetry.</p>
+        </article>
+        <article class="card">
+          <h2>Govern</h2>
+          <p>Wrap actions in approvals, policy rules, audit trails, and explainable decision context.</p>
+        </article>
       </div>
-    </section>
 
-    <section class="section band">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Pipeline</div>
-          <h2>How the platform works</h2>
+      <section class="section split">
+        <div class="card terminal">
+          <pre><code>source -> ingest -> normalize -> graph
+               -> score -> review -> action</code></pre>
+        </div>
+        <div>
+          <h2>Built for high-consequence operations.</h2>
           <p>
-            Neraium ingests infrastructure telemetry, organizes signals into a coherent system model,
-            and surfaces meaningful operational intelligence without interfering with control systems.
+            Neraium favors clarity over clutter. Every layer exposes a clean operational contract,
+            making the stack deployable in regulated, latency-sensitive, or highly distributed environments.
           </p>
+          <a class="button" href="technical.html">Read the technical view</a>
         </div>
+      </section>
+    </main>
 
-        <div class="grid-4">
-          <div class="card">
-            <h3>Telemetry intake</h3>
-            <p>Collect data from infrastructure systems, sensors, historians, and operational exports.</p>
-          </div>
-          <div class="card">
-            <h3>Signal normalization</h3>
-            <p>Prepare telemetry streams for comparison, context, and system-level interpretation.</p>
-          </div>
-          <div class="card">
-            <h3>Behaviour modelling</h3>
-            <p>Evaluate how distributed signals relate across assets and operating conditions.</p>
-          </div>
-          <div class="card">
-            <h3>Operator outputs</h3>
-            <p>Deliver actionable insight while preserving clear authority boundaries and auditability.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Use cases</div>
-          <h2>Where Neraium fits</h2>
-          <p>
-            The platform is built for environments where subtle infrastructure drift matters to service delivery,
-            reliability, compliance, and long-term asset management.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <h3>Water systems</h3>
-            <p>Distribution networks, treatment operations, pumping systems, and water quality telemetry.</p>
-          </div>
-          <div class="card">
-            <h3>Industrial environments</h3>
-            <p>Process systems, utility infrastructure, and plant-level operational telemetry.</p>
-          </div>
-          <div class="card">
-            <h3>Critical infrastructure</h3>
-            <p>Facilities that require defensible operational visibility and structured intelligence outputs.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="brand">Nera<span>ium</span></div>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="platform.html">Platform</a>
-        <a href="technical.html">Technical</a>
-        <a href="governance.html">Governance</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="footer-copy">© 2026 Neraium</div>
-    </div>
-  </footer>
+    <footer class="footer">
+      <span>© 2026 Neraium</span>
+      <div><a href="index.html">Home</a><a href="governance.html">Governance</a></div>
+    </footer>
+  </div>
 </body>
 </html>
