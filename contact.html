@@ -5,66 +5,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Neraium | Contact</title>
   <meta name="description" content="Contact Neraium." />
+  <meta name="theme-color" content="#000000" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="index.html" class="brand">Neraium</a>
-      <nav class="nav" aria-label="Primary">
-        <a href="index.html" class="nav-link" data-current="index">Home</a>
-        <a href="platform.html" class="nav-link" data-current="platform">Platform</a>
-        <a href="technical.html" class="nav-link" data-current="technical">Technical</a>
-        <a href="governance.html" class="nav-link" data-current="governance">Governance</a>
-        <a href="contact.html" class="nav-link active" data-current="contact">Contact</a>
-      </nav>
-    </div>
-  </header>
 
-  <main>
-    <section class="page-hero">
-      <div class="container">
-        <div class="eyebrow">Contact</div>
-        <h1 class="page-title">Discuss Neraium</h1>
-        <p class="page-copy">
-          Neraium is designed for operators seeking earlier drift detection, read only deployment,
-          and defensible operational records across complex infrastructure systems.
-        </p>
+<body data-page="contact">
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="site-header" role="banner">
+  <div class="container site-header__inner">
+
+    <a href="index.html" class="brand" aria-label="Neraium Home">
+      <span class="brand-text">Neraium</span>
+      <span class="brand-accent">&gt;</span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+    >
+      <span class="nav-toggle__line"></span>
+      <span class="nav-toggle__line"></span>
+      <span class="nav-toggle__line"></span>
+    </button>
+
+    <nav class="nav" id="main-nav" aria-label="Primary navigation">
+      <a href="index.html" class="nav-link" data-page="index">Home</a>
+      <a href="platform.html" class="nav-link" data-page="platform">Platform</a>
+      <a href="technical.html" class="nav-link" data-page="technical">Technical</a>
+      <a href="governance.html" class="nav-link" data-page="governance">Governance</a>
+      <a href="contact.html" class="nav-link" data-page="contact">Contact</a>
+    </nav>
+
+  </div>
+</header>
+
+<main id="main-content">
+
+<section class="page-hero">
+  <div class="container">
+
+    <div class="eyebrow">&gt; Contact</div>
+
+    <h1>Discuss Neraium</h1>
+
+    <p class="page-copy">
+      Neraium is designed for operators seeking earlier drift detection,
+      read only deployment, and defensible operational records across
+      complex infrastructure systems.
+    </p>
+
+  </div>
+</section>
+
+<section class="info-section" aria-labelledby="contact-heading">
+  <div class="container">
+
+    <div class="info-panel">
+
+      <h2 id="contact-heading" class="info-title">
+        <span class="title-prefix">[</span>Get in touch<span class="title-prefix">]</span>
+      </h2>
+
+      <p class="info-text">
+        For product, deployment, and partnership inquiries,
+        contact Craig directly.
+      </p>
+
+      <div class="button-row">
+
+        <a class="button button--primary" href="mailto:craig@neraium.com">
+          <span class="button-text">craig@neraium.com</span>
+          <span class="button-accent">→</span>
+        </a>
+
+        <a class="button button--secondary" href="index.html">
+          <span class="button-text">Back to Home</span>
+          <span class="button-accent">→</span>
+        </a>
+
       </div>
-    </section>
 
-    <section class="section" aria-labelledby="contact-heading">
-      <div class="container">
-        <div class="contact-band">
-          <div>
-            <h2 id="contact-heading">Get in touch</h2>
-            <p>For product, deployment, and partnership inquiries, contact Craig directly.</p>
-          </div>
-
-          <div class="button-row">
-            <a class="button button--primary" href="mailto:Craig@neraium.com">Craig@neraium.com</a>
-            <a class="button button--secondary" href="index.html">Back to home</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div>© <span id="year"></span> Neraium. All rights reserved.</div>
-      <div>Systemic infrastructure intelligence.</div>
     </div>
-  </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === currentPage) link.classList.add('active');
-    });
-  </script>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+
+  <div class="container footer__inner">
+
+    <div class="footer-text">
+      © <span id="year"></span> Neraium. All rights reserved.
+    </div>
+
+    <div class="footer-tagline">
+      Systemic infrastructure intelligence.
+    </div>
+
+  </div>
+
+</footer>
+
+<script>
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const navToggle = document.getElementById('nav-toggle');
+const mainNav = document.getElementById('main-nav');
+
+navToggle.addEventListener('click', () => {
+
+  const isExpanded =
+    navToggle.getAttribute('aria-expanded') === 'true';
+
+  navToggle.setAttribute('aria-expanded', !isExpanded);
+
+  mainNav.classList.toggle('nav--open');
+
+});
+
+const navLinks = document.querySelectorAll('.nav-link');
+
+navLinks.forEach(link => {
+
+  link.addEventListener('click', () => {
+
+    navToggle.setAttribute('aria-expanded', 'false');
+    mainNav.classList.remove('nav--open');
+
+  });
+
+});
+
+const currentPageAttr =
+  document.body.getAttribute('data-page');
+
+navLinks.forEach(link => {
+
+  if (link.getAttribute('data-page') === currentPageAttr) {
+
+    link.classList.add('active');
+    link.setAttribute('aria-current', 'page');
+
+  }
+
+});
+
+</script>
+
 </body>
 </html>
