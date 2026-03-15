@@ -1,190 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium | Governance</title>
-  <meta
-    name="description"
-    content="Governance for reviewable, bounded, and defensible findings in industrial infrastructure monitoring."
-  />
-  <meta name="theme-color" content="#050608" />
-
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <link rel="manifest" href="site.webmanifest" />
-
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neraium Governance | Systemic Infrastructure Intelligence</title>
+  <meta name="description" content="Governance for reviewable, bounded, and defensible findings in industrial infrastructure monitoring.">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body data-page="governance">
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header class="site-header" role="banner">
+<body>
+  <header class="site-header">
     <div class="container site-header__inner">
-      <a href="index.html" class="brand" aria-label="Neraium Home">
+      <a href="index.html" class="brand">
         <span class="brand-text">Neraium</span>
       </a>
 
-      <button
-        class="nav-toggle"
-        id="nav-toggle"
-        aria-label="Toggle navigation menu"
-        aria-expanded="false"
-        aria-controls="main-nav"
-        type="button"
-      >
-        <span class="nav-toggle__line"></span>
-        <span class="nav-toggle__line"></span>
-        <span class="nav-toggle__line"></span>
-      </button>
-
-      <nav class="nav" id="main-nav" aria-label="Primary navigation">
-        <a href="index.html" class="nav-link" data-page="index">Home</a>
-        <a href="platform.html" class="nav-link" data-page="platform">Platform</a>
-        <a href="technical.html" class="nav-link" data-page="technical">Technical</a>
-        <a href="governance.html" class="nav-link" data-page="governance">Governance</a>
-        <a href="contact.html" class="nav-link" data-page="contact">Contact</a>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="platform.html" class="nav-link">Platform</a>
+        <a href="technical.html" class="nav-link">Technical</a>
+        <a href="governance.html" class="nav-link active">Governance</a>
+        <a href="contact.html" class="nav-link">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main id="main-content">
-    <section class="page-hero" aria-labelledby="page-title">
-      <div class="container page-hero__content">
-        <div class="eyebrow">Governance</div>
-        <h1 id="page-title">Findings that remain reviewable and defensible</h1>
-        <p class="page-copy">
-          Neraium is intended to support disciplined operational review. The goal is not
-          uncontrolled automation, but earlier insight that can be evaluated by reliability
-          and engineering teams.
-        </p>
+  <main>
+    <section class="section">
+      <div class="container section-grid">
+        <div class="section-intro">
+          <div class="eyebrow">Governance</div>
+          <h2>Findings that remain reviewable and defensible</h2>
+        </div>
+
+        <div class="section-copy">
+          <p>
+            Neraium is intended to support disciplined operational review. The goal is not uncontrolled automation, but earlier insight that can be evaluated by reliability and engineering teams.
+          </p>
+        </div>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="governance-heading">
+    <section class="section section-dark">
       <div class="container">
         <div class="section-intro section-intro--center">
           <div class="eyebrow">Governance Model</div>
-          <h2 id="governance-heading">Designed for institutional use</h2>
+          <h2>Designed for institutional use</h2>
         </div>
 
-        <div class="feature-grid">
-          <article class="feature-panel">
-            <h3>Read-only operation</h3>
-            <p>Does not interact with plant controls or modify operations.</p>
-          </article>
+        <div class="platform-grid">
+          <div class="platform-card">
+            <div class="platform-card__label">Read-only Operation</div>
+            <p class="platform-card__text">Does not interact with plant controls or modify operations.</p>
+          </div>
 
-          <article class="feature-panel">
-            <h3>Human review</h3>
-            <p>Supports engineering assessment rather than replacing operator judgment.</p>
-          </article>
+          <div class="platform-card">
+            <div class="platform-card__label">Human Review</div>
+            <p class="platform-card__text">Supports engineering assessment rather than replacing operator judgment.</p>
+          </div>
 
-          <article class="feature-panel">
-            <h3>Structured findings</h3>
-            <p>Highlights developing issues in a form that can be examined and challenged.</p>
-          </article>
+          <div class="platform-card">
+            <div class="platform-card__label">Structured Findings</div>
+            <p class="platform-card__text">Highlights developing issues in a form that can be examined and challenged.</p>
+          </div>
 
-          <article class="feature-panel">
-            <h3>Defensible records</h3>
-            <p>Preserves context for later operational and reliability review.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-dark" aria-labelledby="accountability-heading">
-      <div class="container section-grid">
-        <div class="section-intro">
-          <div class="eyebrow">Accountability</div>
-          <h2 id="accountability-heading">Earlier insight without losing discipline</h2>
-        </div>
-
-        <div class="section-copy">
-          <p>
-            Neraium is building a new intelligence layer for industrial infrastructure
-            based on Systemic Infrastructure Intelligence. By analyzing relationships
-            across sensors and equipment, the platform detects changes in system behavior
-            that signal emerging degradation before failures occur.
-          </p>
-          <p>
-            The goal is to help industrial operators gain earlier insight into developing
-            problems, reduce unplanned downtime, and improve overall system reliability
-            while keeping results reviewable in real operating contexts.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-cta" aria-labelledby="cta-heading">
-      <div class="container section-grid">
-        <div class="section-intro">
-          <div class="eyebrow">Next Step</div>
-          <h2 id="cta-heading">Discuss Neraium</h2>
-        </div>
-
-        <div class="section-copy">
-          <p>
-            Explore deployment, pilot evaluation, or technical review for your environment.
-          </p>
-
-          <div class="button-row">
-            <a class="button button--primary" href="contact.html">Contact</a>
+          <div class="platform-card">
+            <div class="platform-card__label">Defensible Records</div>
+            <p class="platform-card__text">Preserves context for later operational and reliability review.</p>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer" role="contentinfo">
+  <footer class="footer">
     <div class="container footer__inner">
-      <div class="footer-text">© <span id="year"></span> Neraium. All rights reserved.</div>
+      <div class="footer-text">© <span id="year"></span> Neraium</div>
       <div class="footer-tagline">Systemic Infrastructure Intelligence</div>
     </div>
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const navToggle = document.getElementById('nav-toggle');
-    const mainNav = document.getElementById('main-nav');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    function closeNav() {
-      navToggle.setAttribute('aria-expanded', 'false');
-      mainNav.classList.remove('nav--open');
-    }
-
-    function openNav() {
-      navToggle.setAttribute('aria-expanded', 'true');
-      mainNav.classList.add('nav--open');
-    }
-
-    navToggle.addEventListener('click', () => {
-      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-      isExpanded ? closeNav() : openNav();
-    });
-
-    navLinks.forEach((link) => link.addEventListener('click', closeNav));
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeNav();
-    });
-
-    document.addEventListener('click', (event) => {
-      const clickedInsideNav = mainNav.contains(event.target);
-      const clickedToggle = navToggle.contains(event.target);
-      if (!clickedInsideNav && !clickedToggle) closeNav();
-    });
-
-    const currentPageAttr = document.body.getAttribute('data-page');
-    navLinks.forEach((link) => {
-      if (link.getAttribute('data-page') === currentPageAttr) {
-        link.classList.add('active');
-        link.setAttribute('aria-current', 'page');
-      }
-    });
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
+
 </html>
