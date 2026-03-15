@@ -1,333 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium | Systemic Infrastructure Intelligence</title>
-  <meta
-    name="description"
-    content="Neraium turns infrastructure telemetry into systemic intelligence for earlier awareness, read-only deployment, and defensible engineering review."
-  />
-  <meta name="theme-color" content="#000000" />
-  <meta property="og:title" content="Neraium | Systemic Infrastructure Intelligence" />
-  <meta
-    property="og:description"
-    content="Operational visibility for complex infrastructure systems."
-  />
-  <meta property="og:type" content="website" />
-  <link rel="stylesheet" href="styles.css" />
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Neraium | Systemic Infrastructure Intelligence</title>
+
+<meta name="description"
+content="Neraium helps industrial operators detect structural changes in system behavior before equipment failures occur.">
+
+<link rel="stylesheet" href="styles.css">
+
 </head>
+
 <body data-page="index">
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header class="site-header" role="banner">
-    <div class="container site-header__inner">
-      <a href="index.html" class="brand" aria-label="Neraium Home">
-        <span class="brand-text">Neraium</span>
-        <span class="brand-accent">&gt;</span>
-      </a>
+<header class="site-header">
 
-      <button
-        class="nav-toggle"
-        id="nav-toggle"
-        aria-label="Toggle navigation menu"
-        aria-expanded="false"
-        aria-controls="main-nav"
-        type="button"
-      >
-        <span class="nav-toggle__line"></span>
-        <span class="nav-toggle__line"></span>
-        <span class="nav-toggle__line"></span>
-      </button>
+<div class="container site-header__inner">
 
-      <nav class="nav" id="main-nav" aria-label="Primary navigation">
-        <a href="index.html" class="nav-link" data-page="index">Home</a>
-        <a href="platform.html" class="nav-link" data-page="platform">Platform</a>
-        <a href="technical.html" class="nav-link" data-page="technical">Technical</a>
-        <a href="governance.html" class="nav-link" data-page="governance">Governance</a>
-        <a href="contact.html" class="nav-link" data-page="contact">Contact</a>
-      </nav>
-    </div>
-  </header>
+<a href="index.html" class="brand">
+<span class="brand-text">Neraium</span>
+</a>
 
-  <main id="main-content">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div class="eyebrow">&gt; Systemic Infrastructure Intelligence</div>
-          <h1 id="hero-title">Operational visibility for complex infrastructure systems</h1>
-          <p class="hero-description">
-            Neraium interprets infrastructure telemetry as system behaviour, not isolated alarms.
-            It helps teams identify emerging drift earlier, understand operational change more
-            clearly, and preserve reviewable records for critical environments.
-          </p>
+<nav class="nav">
 
-          <div class="button-row">
-            <a class="button button--primary" href="platform.html">
-              <span class="button-text">Explore Platform</span>
-              <span class="button-accent">→</span>
-            </a>
-            <a class="button button--secondary" href="contact.html">
-              <span class="button-text">Request Briefing</span>
-              <span class="button-accent">→</span>
-            </a>
-          </div>
-        </div>
+<a href="index.html" class="nav-link">Home</a>
+<a href="platform.html" class="nav-link">Platform</a>
+<a href="technical.html" class="nav-link">Technical</a>
+<a href="governance.html" class="nav-link">Governance</a>
+<a href="contact.html" class="nav-link">Contact</a>
 
-        <div class="hero-visual">
-          <div class="visual-header">
-            <div class="visual-label">
-              <span class="label-bracket">[</span>Live Telemetry<span class="label-bracket">]</span>
-            </div>
-            <div class="visual-status">Illustrative system view</div>
-          </div>
+</nav>
 
-          <div class="chart-box" aria-hidden="true">
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="line-gradient-1" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#00b4ff" stop-opacity="0.28" />
-                  <stop offset="100%" stop-color="#00b4ff" stop-opacity="0.95" />
-                </linearGradient>
-                <linearGradient id="line-gradient-2" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#00b4ff" stop-opacity="0.16" />
-                  <stop offset="100%" stop-color="#00b4ff" stop-opacity="0.48" />
-                </linearGradient>
-              </defs>
+</div>
 
-              <polyline
-                points="0,72 8,71 16,70 24,66 32,67 40,62 48,61 56,58 64,56 72,48 80,41 88,30 96,23 100,18"
-                fill="none"
-                stroke="url(#line-gradient-1)"
-                stroke-width="2.1"
-                vector-effect="non-scaling-stroke"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <polyline
-                points="0,80 8,79 16,78 24,77 32,76 40,75 48,74 56,73 64,72 72,71 80,71 88,70 96,69 100,68"
-                fill="none"
-                stroke="url(#line-gradient-2)"
-                stroke-width="1.7"
-                vector-effect="non-scaling-stroke"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <circle cx="100" cy="18" r="1.5" fill="#00b4ff" fill-opacity="0.95" />
-              <circle cx="100" cy="68" r="1" fill="#00b4ff" fill-opacity="0.45" />
-            </svg>
-          </div>
+</header>
 
-          <div class="metric-grid">
-            <dl class="metric">
-              <dt class="metric-label">Mode</dt>
-              <dd class="metric-value">
-                <span class="metric-prefix">$</span>
-                Read-only
-              </dd>
-            </dl>
-            <dl class="metric">
-              <dt class="metric-label">State</dt>
-              <dd class="metric-value">
-                <span class="metric-prefix">#</span>
-                Drift emerging
-              </dd>
-            </dl>
-            <dl class="metric">
-              <dt class="metric-label">Record</dt>
-              <dd class="metric-value">
-                <span class="metric-prefix">&gt;</span>
-                Reviewable
-              </dd>
-            </dl>
-          </div>
-        </div>
-      </div>
-    </section>
+<main id="main-content">
 
-    <section class="capabilities-section" aria-labelledby="why-neraium-heading">
-      <div class="container">
-        <h2 id="why-neraium-heading" class="section-title">
-          <span class="title-prefix">[</span>Why Neraium<span class="title-prefix">]</span>
-        </h2>
+<section class="hero hero-image">
 
-        <div class="grid-3">
-          <article class="card">
-            <div class="card-number">[01]</div>
-            <h3 class="card-title">System-Level Awareness</h3>
-            <p class="card-description">
-              Understand behaviour across related signals instead of relying only on
-              single-variable threshold events.
-            </p>
-          </article>
+<div class="container hero-content">
 
-          <article class="card">
-            <div class="card-number">[02]</div>
-            <h3 class="card-title">Earlier Drift Detection</h3>
-            <p class="card-description">
-              Surface structural change before degradation becomes obvious through
-              conventional alarm conditions alone.
-            </p>
-          </article>
+<h1>Earlier visibility into industrial system change</h1>
 
-          <article class="card">
-            <div class="card-number">[03]</div>
-            <h3 class="card-title">Defensible Review</h3>
-            <p class="card-description">
-              Preserve findings in a form that supports engineering analysis,
-              escalation review, and institutional accountability.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
+<p class="hero-description">
 
-    <section class="technical-section" aria-labelledby="site-overview-heading">
-      <div class="container">
-        <h2 id="site-overview-heading" class="section-title">
-          <span class="title-prefix">[</span>Explore the System<span class="title-prefix">]</span>
-        </h2>
+Neraium provides Systemic Infrastructure Intelligence, helping operators detect
+structural changes in industrial systems before equipment failures occur.
 
-        <div class="two-column-grid">
-          <div class="tech-panel">
-            <h3 class="tech-panel-title">Site Overview</h3>
+</p>
 
-            <div class="diagram-grid">
-              <div class="diagram-item">
-                <h4 class="diagram-title">Platform</h4>
-                <p class="diagram-text">
-                  See how Neraium fits into operational environments, where it sits in the stack,
-                  and how it supports read-only deployment.
-                </p>
-              </div>
+<div class="button-row">
 
-              <div class="diagram-item">
-                <h4 class="diagram-title">Technical</h4>
-                <p class="diagram-text">
-                  Explore the interpretation method, including multivariate structure,
-                  temporal validity, and physically coherent escalation logic.
-                </p>
-              </div>
+<a class="button button--primary" href="platform.html">Explore Platform</a>
 
-              <div class="diagram-item">
-                <h4 class="diagram-title">Governance</h4>
-                <p class="diagram-text">
-                  Understand how inference is admitted, suppressed, or refused, and how
-                  decisions remain bounded and reviewable.
-                </p>
-              </div>
+<a class="button button--secondary" href="contact.html">Contact</a>
 
-              <div class="diagram-item">
-                <h4 class="diagram-title">Contact</h4>
-                <p class="diagram-text">
-                  Start a technical conversation, request a briefing, or discuss deployment,
-                  evaluation, and institutional fit.
-                </p>
-              </div>
-            </div>
-          </div>
+</div>
 
-          <aside class="tech-panel tech-panel--accent" aria-labelledby="home-highlights-heading">
-            <h3 id="home-highlights-heading" class="tech-panel-title">Core Characteristics</h3>
+</div>
 
-            <ul class="bullet-list">
-              <li class="bullet-item">
-                <strong class="bullet-label">Read-only operation:</strong>
-                <span class="bullet-text">built to interpret infrastructure telemetry without modifying control logic or issuing directives.</span>
-              </li>
-              <li class="bullet-item">
-                <strong class="bullet-label">Systemic interpretation:</strong>
-                <span class="bullet-text">evaluates relationships across signals instead of treating each measurement as an isolated event.</span>
-              </li>
-              <li class="bullet-item">
-                <strong class="bullet-label">Operational fit:</strong>
-                <span class="bullet-text">designed to work alongside existing industrial and infrastructure monitoring environments.</span>
-              </li>
-              <li class="bullet-item">
-                <strong class="bullet-label">Institutional accountability:</strong>
-                <span class="bullet-text">supports later review with structured outputs and preserved evaluation context.</span>
-              </li>
-            </ul>
-          </aside>
-        </div>
-      </div>
-    </section>
+</section>
 
-    <section class="info-section" aria-labelledby="home-cta-heading">
-      <div class="container">
-        <div class="info-panel">
-          <h2 id="home-cta-heading" class="info-title">
-            <span class="title-prefix">[</span>Next Step<span class="title-prefix">]</span>
-          </h2>
-          <p class="info-text">
-            If you are evaluating systemic monitoring for infrastructure environments, use the
-            platform, technical, and governance pages to understand how Neraium works, then get in
-            touch to discuss operational context and deployment fit.
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
 
-  <footer class="footer" role="contentinfo">
-    <div class="container footer__inner">
-      <div class="footer-text">
-        © <span id="year"></span> Neraium. All rights reserved.
-      </div>
-      <div class="footer-tagline">
-        Systemic infrastructure intelligence.
-      </div>
-    </div>
-  </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+<section class="section">
 
-    const navToggle = document.getElementById('nav-toggle');
-    const mainNav = document.getElementById('main-nav');
-    const navLinks = document.querySelectorAll('.nav-link');
+<div class="container">
 
-    function closeNav() {
-      navToggle.setAttribute('aria-expanded', 'false');
-      mainNav.classList.remove('nav--open');
-    }
+<h2>Turning maintenance from reactive to proactive</h2>
 
-    function openNav() {
-      navToggle.setAttribute('aria-expanded', 'true');
-      mainNav.classList.add('nav--open');
-    }
+<p>
 
-    navToggle.addEventListener('click', () => {
-      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-      isExpanded ? closeNav() : openNav();
-    });
+Industrial facilities generate enormous amounts of sensor data, yet many equipment failures still appear to happen unexpectedly. In reality, failures are usually preceded by subtle changes in how different parts of the system behave together.
 
-    navLinks.forEach((link) => {
-      link.addEventListener('click', closeNav);
-    });
+</p>
 
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        closeNav();
-      }
-    });
+<p>
 
-    document.addEventListener('click', (event) => {
-      const clickedInsideNav = mainNav.contains(event.target);
-      const clickedToggle = navToggle.contains(event.target);
+Neraium analyzes how signals across an industrial system interact over time. When these relationships begin to shift, it can indicate that degradation or instability is emerging even when individual sensors still appear normal.
 
-      if (!clickedInsideNav && !clickedToggle) {
-        closeNav();
-      }
-    });
+</p>
 
-    const currentPageAttr = document.body.getAttribute('data-page');
-    navLinks.forEach((link) => {
-      if (link.getAttribute('data-page') === currentPageAttr) {
-        link.classList.add('active');
-        link.setAttribute('aria-current', 'page');
-      }
-    });
-  </script>
+</div>
+
+</section>
+
+
+
+<section class="section section-dark">
+
+<div class="container">
+
+<h2>The Problem</h2>
+
+<p>
+
+Most monitoring systems evaluate equipment using thresholds or anomaly detection on individual sensors. These tools work well for obvious issues but often miss the early stages of developing problems.
+
+</p>
+
+<ul class="feature-list">
+
+<li>Changing relationships between power, load, and temperature</li>
+<li>Cooling performance drifting relative to operating conditions</li>
+<li>Unstable process dynamics across multiple subsystems</li>
+<li>Mechanical systems behaving differently under varying loads</li>
+
+</ul>
+
+<p>
+
+These signals can be difficult to detect when sensors are analyzed individually.
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<div class="container">
+
+<h2>The Neraium Approach</h2>
+
+<p>
+
+Neraium analyzes industrial systems as networks of interacting signals.
+
+</p>
+
+<p>
+
+The platform continuously evaluates relationships between sensors, stability of system behavior over time, and emerging patterns that indicate degradation.
+
+</p>
+
+<p>
+
+When structural changes appear, the system highlights equipment or processes that may require attention.
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<section class="section section-dark">
+
+<div class="container">
+
+<h2>Deployment</h2>
+
+<p>
+
+Neraium runs as a read-only intelligence layer that analyzes existing plant telemetry. The system reads existing sensor and process data but does not interact with control systems or modify plant operations.
+
+</p>
+
+<p>
+
+This allows the platform to operate alongside existing monitoring infrastructure with minimal deployment risk.
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<div class="container">
+
+<h2>Where This Applies</h2>
+
+<ul class="feature-list">
+
+<li>Steel production and melt shops</li>
+<li>Heavy manufacturing facilities</li>
+<li>Energy and power infrastructure</li>
+<li>Large mechanical and thermal systems</li>
+
+</ul>
+
+</div>
+
+</section>
+
+
+
+<section class="section section-cta">
+
+<div class="container">
+
+<h2>Pilot Approach</h2>
+
+<p>
+
+Organizations can deploy Neraium using existing plant telemetry to evaluate whether structural signals reveal developing issues earlier than conventional monitoring tools.
+
+</p>
+
+<a class="button button--primary" href="contact.html">Contact</a>
+
+</div>
+
+</section>
+
+</main>
+
+
+
+<footer class="footer">
+
+<div class="container footer__inner">
+
+<div>© <span id="year"></span> Neraium</div>
+
+<div>Systemic Infrastructure Intelligence</div>
+
+</div>
+
+</footer>
+
+
+
+<script>
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+</script>
+
 </body>
 </html>
