@@ -6,7 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neraium Technical | Systemic Infrastructure Intelligence</title>
   <meta name="description" content="Technical approach for identifying structural changes in industrial systems using relationships across signals over time.">
+  <meta property="og:title" content="Neraium Technical">
+  <meta property="og:description" content="Technical approach for identifying structural changes in industrial systems using relationships across signals over time.">
+  <meta property="og:image" content="https://www.neraium.com/hero.png">
+  <meta property="og:url" content="https://www.neraium.com/technical.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="canonical" href="https://www.neraium.com/technical.html">
   <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="site.webmanifest">
 </head>
 
 <body>
@@ -16,13 +25,19 @@
         <span class="brand-text">Neraium</span>
       </a>
 
-      <nav class="nav">
+      <nav class="nav" aria-label="Main navigation">
         <a href="index.html" class="nav-link">Home</a>
         <a href="platform.html" class="nav-link">Platform</a>
         <a href="technical.html" class="nav-link active">Technical</a>
         <a href="governance.html" class="nav-link">Governance</a>
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="this.previousElementSibling.classList.toggle('open')">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
     </div>
   </header>
 
