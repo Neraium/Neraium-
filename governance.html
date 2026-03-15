@@ -6,7 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neraium Governance | Systemic Infrastructure Intelligence</title>
   <meta name="description" content="Governance for reviewable, bounded, and defensible findings in industrial infrastructure monitoring.">
+  <meta property="og:title" content="Neraium Governance">
+  <meta property="og:description" content="Governance for reviewable, bounded, and defensible findings in industrial infrastructure monitoring.">
+  <meta property="og:image" content="https://www.neraium.com/hero.png">
+  <meta property="og:url" content="https://www.neraium.com/governance.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="canonical" href="https://www.neraium.com/governance.html">
   <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="site.webmanifest">
 </head>
 
 <body>
@@ -16,59 +25,102 @@
         <span class="brand-text">Neraium</span>
       </a>
 
-      <nav class="nav">
+      <nav class="nav" aria-label="Main navigation">
         <a href="index.html" class="nav-link">Home</a>
         <a href="platform.html" class="nav-link">Platform</a>
         <a href="technical.html" class="nav-link">Technical</a>
         <a href="governance.html" class="nav-link active">Governance</a>
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="this.previousElementSibling.classList.toggle('open')">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
     </div>
   </header>
 
   <main>
-    <section class="section">
-      <div class="container section-grid">
-        <div class="section-intro">
-          <div class="eyebrow">Governance</div>
-          <h2>Findings that remain reviewable and defensible</h2>
-        </div>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Governance</span>
+        <h1 class="page-hero__title">Findings that remain<br>reviewable and defensible</h1>
+        <p class="page-hero__sub">Neraium is designed to support disciplined operational review — not uncontrolled automation, but earlier insight that engineering teams can evaluate and act on.</p>
+      </div>
+    </section>
 
-        <div class="section-copy">
+    <section class="editorial">
+      <div class="container editorial__grid">
+        <div class="editorial__label">
+          <span class="eyebrow">Principles</span>
+        </div>
+        <div class="editorial__body">
+          <h2>Intelligence that supports human judgment</h2>
           <p>
-            Neraium is intended to support disciplined operational review. The goal is not uncontrolled automation, but earlier insight that can be evaluated by reliability and engineering teams.
+            The goal is not to remove operators from the loop. Neraium surfaces structural change early so that reliability and engineering teams can make better-informed decisions — with full visibility into what the system detected and why.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="section section-dark">
+    <section class="editorial editorial--dark">
       <div class="container">
-        <div class="section-intro section-intro--center">
-          <div class="eyebrow">Governance Model</div>
+        <div class="platform-section__header">
+          <span class="eyebrow">Governance Model</span>
           <h2>Designed for institutional use</h2>
         </div>
 
         <div class="platform-grid">
           <div class="platform-card">
+            <div class="platform-card__number">01</div>
             <div class="platform-card__label">Read-only Operation</div>
             <p class="platform-card__text">Does not interact with plant controls or modify operations.</p>
           </div>
 
           <div class="platform-card">
+            <div class="platform-card__number">02</div>
             <div class="platform-card__label">Human Review</div>
             <p class="platform-card__text">Supports engineering assessment rather than replacing operator judgment.</p>
           </div>
 
           <div class="platform-card">
+            <div class="platform-card__number">03</div>
             <div class="platform-card__label">Structured Findings</div>
             <p class="platform-card__text">Highlights developing issues in a form that can be examined and challenged.</p>
           </div>
 
           <div class="platform-card">
+            <div class="platform-card__number">04</div>
             <div class="platform-card__label">Defensible Records</div>
             <p class="platform-card__text">Preserves context for later operational and reliability review.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="editorial">
+      <div class="container editorial__grid">
+        <div class="editorial__label">
+          <span class="eyebrow">Accountability</span>
+        </div>
+        <div class="editorial__body">
+          <h2>Outputs that can be examined and challenged</h2>
+          <p>
+            Every finding Neraium surfaces is structured to be traceable — grounded in specific signal relationships and time windows, not opaque model outputs. Teams can interrogate what was detected, when it began, and which subsystems were involved.
+          </p>
+          <p>
+            This makes Neraium appropriate for environments where auditability, institutional accountability, and engineering rigor are not optional.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="container">
+        <div class="cta-band__inner">
+          <p class="cta-band__heading">Ready to evaluate governance-grade infrastructure intelligence?</p>
+          <a href="contact.html" class="button button--primary">Request a Briefing</a>
         </div>
       </div>
     </section>
@@ -76,8 +128,17 @@
 
   <footer class="footer">
     <div class="container footer__inner">
-      <div class="footer-text">© <span id="year"></span> Neraium</div>
-      <div class="footer-tagline">Systemic Infrastructure Intelligence</div>
+      <div class="footer__brand">
+        <span class="brand-text">Neraium</span>
+        <span class="footer__tagline">Systemic Infrastructure Intelligence</span>
+      </div>
+      <nav class="footer__nav">
+        <a href="platform.html" class="footer__link">Platform</a>
+        <a href="technical.html" class="footer__link">Technical</a>
+        <a href="governance.html" class="footer__link">Governance</a>
+        <a href="contact.html" class="footer__link">Contact</a>
+      </nav>
+      <div class="footer__copy">© <span id="year"></span> Neraium</div>
     </div>
   </footer>
 
