@@ -6,15 +6,9 @@
   <title>Neraium | Platform</title>
   <meta
     name="description"
-    content="Platform architecture for systemic infrastructure intelligence, edge deployment, and read-only telemetry interpretation."
+    content="A read-only intelligence layer that analyzes existing plant telemetry to identify structural changes in system behavior."
   />
   <meta name="theme-color" content="#000000" />
-  <meta property="og:title" content="Neraium | Platform" />
-  <meta
-    property="og:description"
-    content="A read-only interpretation platform for multivariate infrastructure telemetry."
-  />
-  <meta property="og:type" content="website" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-page="platform">
@@ -24,7 +18,6 @@
     <div class="container site-header__inner">
       <a href="index.html" class="brand" aria-label="Neraium Home">
         <span class="brand-text">Neraium</span>
-        <span class="brand-accent">&gt;</span>
       </a>
 
       <button
@@ -52,149 +45,92 @@
 
   <main id="main-content">
     <section class="page-hero" aria-labelledby="page-title">
-      <div class="container">
-        <div class="eyebrow">&gt; Platform</div>
-        <h1 id="page-title">A read-only platform for systemic infrastructure interpretation</h1>
+      <div class="container page-hero__content">
+        <div class="eyebrow">Platform</div>
+        <h1 id="page-title">A read-only intelligence layer for industrial infrastructure</h1>
         <p class="page-copy">
-          Neraium sits alongside existing infrastructure systems, ingests telemetry without
-          modifying control environments, and produces structured interpretation for engineering
-          review and operational awareness.
+          Neraium analyzes existing plant telemetry to identify structural changes in
+          system behavior before failures occur, without interacting with control systems
+          or modifying plant operations.
         </p>
       </div>
     </section>
 
-    <section class="capabilities-section" aria-labelledby="platform-layers-heading">
-      <div class="container">
-        <h2 id="platform-layers-heading" class="section-title">
-          <span class="title-prefix">[</span>Platform Layers<span class="title-prefix">]</span>
-        </h2>
-
-        <div class="grid-3">
-          <article class="card">
-            <div class="card-number">[01]</div>
-            <h3 class="card-title">Telemetry Intake Layer</h3>
-            <p class="card-description">
-              Receives multivariate telemetry from historians, SCADA environments, edge systems,
-              and other existing operational data sources without requiring replacement of
-              incumbent infrastructure.
-            </p>
-          </article>
-
-          <article class="card">
-            <div class="card-number">[02]</div>
-            <h3 class="card-title">Interpretation Layer</h3>
-            <p class="card-description">
-              Evaluates structural relationships across signals to determine whether system
-              behaviour remains coherent over time, rather than treating measurements as isolated
-              alarm conditions.
-            </p>
-          </article>
-
-          <article class="card">
-            <div class="card-number">[03]</div>
-            <h3 class="card-title">Review Output Layer</h3>
-            <p class="card-description">
-              Produces operator-facing and engineering-facing outputs that support review,
-              escalation, and downstream accountability without issuing machine control commands.
-            </p>
-          </article>
+    <section class="section" aria-labelledby="how-heading">
+      <div class="container section-grid">
+        <div class="section-intro">
+          <div class="eyebrow">How It Works</div>
+          <h2 id="how-heading">Built to operate alongside existing monitoring infrastructure</h2>
         </div>
-      </div>
-    </section>
 
-    <section class="info-section" aria-labelledby="operational-role-heading">
-      <div class="container">
-        <div class="info-panel">
-          <h2 id="operational-role-heading" class="info-title">
-            <span class="title-prefix">[</span>Operational Role<span class="title-prefix">]</span>
-          </h2>
-          <p class="info-text">
-            Neraium operates as an interpretation layer, not a control layer. It reads telemetry,
-            evaluates systemic behaviour, and surfaces structured findings for human and
-            institutional use. It does not actuate equipment, modify PLC logic, or replace
-            established supervisory systems.
+        <div class="section-copy">
+          <p>
+            The system reads existing sensor and process data but does not interact with
+            control systems or change plant operations. This makes deployment low risk
+            and allows Neraium to run alongside existing monitoring infrastructure.
+          </p>
+          <p>
+            By analyzing relationships across sensors and equipment, the platform detects
+            changes in system behavior that may indicate emerging degradation or instability.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="info-section" aria-labelledby="deployment-model-heading">
+    <section class="section section-dark" aria-labelledby="layers-heading">
       <div class="container">
-        <div class="info-panel">
-          <h2 id="deployment-model-heading" class="info-title">
-            <span class="title-prefix">[</span>Deployment Model<span class="title-prefix">]</span>
-          </h2>
-          <p class="info-text">
-            The platform is designed for edge-oriented deployment, allowing telemetry to be
-            processed close to the operational environment. This supports lower-latency analysis,
-            preserves local control boundaries, and reduces dependence on continuous cloud
-            connectivity.
-          </p>
+        <div class="section-intro section-intro--center">
+          <div class="eyebrow">Platform Structure</div>
+          <h2 id="layers-heading">Three parts of the platform</h2>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-panel">
+            <h3>Telemetry intake</h3>
+            <p>
+              Ingests plant telemetry from existing sensor and process data sources
+              without requiring workflow replacement.
+            </p>
+          </article>
+
+          <article class="feature-panel">
+            <h3>System analysis</h3>
+            <p>
+              Evaluates how signals across an industrial system interact and how those
+              relationships shift over time.
+            </p>
+          </article>
+
+          <article class="feature-panel">
+            <h3>Actionable output</h3>
+            <p>
+              Highlights equipment or processes that may require attention so teams can
+              review developing issues earlier.
+            </p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="technical-section" aria-labelledby="platform-characteristics-heading">
-      <div class="container">
-        <h2 id="platform-characteristics-heading" class="section-title">
-          <span class="title-prefix">[</span>Platform Characteristics<span class="title-prefix">]</span>
-        </h2>
+    <section class="section" aria-labelledby="applies-heading">
+      <div class="container section-grid">
+        <div class="section-intro">
+          <div class="eyebrow">Where This Applies</div>
+          <h2 id="applies-heading">Designed for complex industrial environments</h2>
+        </div>
 
-        <div class="two-column-grid">
-          <div class="tech-panel">
-            <h3 class="tech-panel-title">System Fit</h3>
-            <div class="diagram-grid">
-              <div class="diagram-item">
-                <h4 class="diagram-title">Read-Only Integration</h4>
-                <p class="diagram-text">
-                  Connects to operational telemetry sources without modifying existing control paths.
-                </p>
-              </div>
+        <div class="section-copy">
+          <ul class="feature-list">
+            <li>Steel production and melt shops</li>
+            <li>Heavy manufacturing facilities</li>
+            <li>Energy and power infrastructure</li>
+            <li>Large mechanical and thermal systems</li>
+          </ul>
 
-              <div class="diagram-item">
-                <h4 class="diagram-title">Edge-Compatible Design</h4>
-                <p class="diagram-text">
-                  Supports deployment within infrastructure environments where autonomy and locality matter.
-                </p>
-              </div>
-
-              <div class="diagram-item">
-                <h4 class="diagram-title">Operational Continuity</h4>
-                <p class="diagram-text">
-                  Fits alongside current monitoring stacks instead of demanding workflow replacement.
-                </p>
-              </div>
-
-              <div class="diagram-item">
-                <h4 class="diagram-title">Structured Outputs</h4>
-                <p class="diagram-text">
-                  Produces interpretable findings suitable for engineering review and institutional use.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <aside class="tech-panel tech-panel--accent" aria-labelledby="platform-why-heading">
-            <h3 id="platform-why-heading" class="tech-panel-title">Why It Matters</h3>
-            <ul class="bullet-list">
-              <li class="bullet-item">
-                <strong class="bullet-label">Low-friction adoption:</strong>
-                <span class="bullet-text">designed to work with infrastructure that already exists in the field.</span>
-              </li>
-              <li class="bullet-item">
-                <strong class="bullet-label">Operational separation:</strong>
-                <span class="bullet-text">preserves a clear boundary between interpretation and machine control.</span>
-              </li>
-              <li class="bullet-item">
-                <strong class="bullet-label">Deployment flexibility:</strong>
-                <span class="bullet-text">supports infrastructure environments where connectivity and trust boundaries vary.</span>
-              </li>
-              <li class="bullet-item">
-                <strong class="bullet-label">Engineering usability:</strong>
-                <span class="bullet-text">surfaces findings in a form that can be reviewed, challenged, and acted on responsibly.</span>
-              </li>
-            </ul>
-          </aside>
+          <p>
+            In these environments, early signals of instability often appear across
+            multiple signals before problems become visible in individual measurements.
+          </p>
         </div>
       </div>
     </section>
@@ -202,12 +138,8 @@
 
   <footer class="footer" role="contentinfo">
     <div class="container footer__inner">
-      <div class="footer-text">
-        © <span id="year"></span> Neraium. All rights reserved.
-      </div>
-      <div class="footer-tagline">
-        Systemic infrastructure intelligence.
-      </div>
+      <div class="footer-text">© <span id="year"></span> Neraium. All rights reserved.</div>
+      <div class="footer-tagline">Systemic Infrastructure Intelligence</div>
     </div>
   </footer>
 
@@ -233,23 +165,16 @@
       isExpanded ? closeNav() : openNav();
     });
 
-    navLinks.forEach((link) => {
-      link.addEventListener('click', closeNav);
-    });
+    navLinks.forEach((link) => link.addEventListener('click', closeNav));
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        closeNav();
-      }
+      if (event.key === 'Escape') closeNav();
     });
 
     document.addEventListener('click', (event) => {
       const clickedInsideNav = mainNav.contains(event.target);
       const clickedToggle = navToggle.contains(event.target);
-
-      if (!clickedInsideNav && !clickedToggle) {
-        closeNav();
-      }
+      if (!clickedInsideNav && !clickedToggle) closeNav();
     });
 
     const currentPageAttr = document.body.getAttribute('data-page');
