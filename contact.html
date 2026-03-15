@@ -1,133 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neraium | Contact</title>
-  <meta name="description" content="Contact Neraium." />
-  <meta name="theme-color" content="#050608" />
-
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <link rel="manifest" href="site.webmanifest" />
-
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Neraium</title>
+  <meta name="description" content="Contact Neraium.">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body data-page="contact">
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header class="site-header" role="banner">
+<body>
+  <header class="site-header">
     <div class="container site-header__inner">
-      <a href="index.html" class="brand" aria-label="Neraium Home">
+      <a href="index.html" class="brand">
         <span class="brand-text">Neraium</span>
       </a>
 
-      <button
-        class="nav-toggle"
-        id="nav-toggle"
-        aria-label="Toggle navigation menu"
-        aria-expanded="false"
-        aria-controls="main-nav"
-        type="button"
-      >
-        <span class="nav-toggle__line"></span>
-        <span class="nav-toggle__line"></span>
-        <span class="nav-toggle__line"></span>
-      </button>
-
-      <nav class="nav" id="main-nav" aria-label="Primary navigation">
-        <a href="index.html" class="nav-link" data-page="index">Home</a>
-        <a href="platform.html" class="nav-link" data-page="platform">Platform</a>
-        <a href="technical.html" class="nav-link" data-page="technical">Technical</a>
-        <a href="governance.html" class="nav-link" data-page="governance">Governance</a>
-        <a href="contact.html" class="nav-link" data-page="contact">Contact</a>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="platform.html" class="nav-link">Platform</a>
+        <a href="technical.html" class="nav-link">Technical</a>
+        <a href="governance.html" class="nav-link">Governance</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main id="main-content">
-    <section class="page-hero" aria-labelledby="page-title">
-      <div class="container page-hero__content">
-        <div class="eyebrow">Contact</div>
-        <h1 id="page-title">Discuss Neraium</h1>
-        <p class="page-copy">
-          For product, deployment, and pilot inquiries, contact Craig directly.
-        </p>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="contact-heading">
+  <main>
+    <section class="section">
       <div class="container section-grid">
         <div class="section-intro">
-          <div class="eyebrow">Get in Touch</div>
-          <h2 id="contact-heading">Start the conversation</h2>
+          <div class="eyebrow">Contact</div>
+          <h2>Discuss Neraium</h2>
         </div>
 
         <div class="section-copy">
           <p>
-            Neraium is designed for industrial teams seeking earlier insight into
-            developing problems, read-only deployment, and reviewable operational records.
+            For product, deployment, and pilot inquiries, contact Craig directly.
           </p>
 
           <div class="button-row">
             <a class="button button--primary" href="mailto:craig@neraium.com">craig@neraium.com</a>
-            <a class="button button--secondary" href="index.html">Back to Home</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer" role="contentinfo">
+  <footer class="footer">
     <div class="container footer__inner">
-      <div class="footer-text">© <span id="year"></span> Neraium. All rights reserved.</div>
+      <div class="footer-text">© <span id="year"></span> Neraium</div>
       <div class="footer-tagline">Systemic Infrastructure Intelligence</div>
     </div>
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const navToggle = document.getElementById('nav-toggle');
-    const mainNav = document.getElementById('main-nav');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    function closeNav() {
-      navToggle.setAttribute('aria-expanded', 'false');
-      mainNav.classList.remove('nav--open');
-    }
-
-    function openNav() {
-      navToggle.setAttribute('aria-expanded', 'true');
-      mainNav.classList.add('nav--open');
-    }
-
-    navToggle.addEventListener('click', () => {
-      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-      isExpanded ? closeNav() : openNav();
-    });
-
-    navLinks.forEach((link) => link.addEventListener('click', closeNav));
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeNav();
-    });
-
-    document.addEventListener('click', (event) => {
-      const clickedInsideNav = mainNav.contains(event.target);
-      const clickedToggle = navToggle.contains(event.target);
-      if (!clickedInsideNav && !clickedToggle) closeNav();
-    });
-
-    const currentPageAttr = document.body.getAttribute('data-page');
-    navLinks.forEach((link) => {
-      if (link.getAttribute('data-page') === currentPageAttr) {
-        link.classList.add('active');
-        link.setAttribute('aria-current', 'page');
-      }
-    });
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
+
 </html>
