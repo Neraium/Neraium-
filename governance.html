@@ -6,15 +6,9 @@
   <title>Neraium | Governance</title>
   <meta
     name="description"
-    content="Interpretation governance, admissibility controls, refusal logic, and evidentiary accountability."
+    content="Governance for reviewable, bounded, and defensible findings in industrial infrastructure monitoring."
   />
   <meta name="theme-color" content="#000000" />
-  <meta property="og:title" content="Neraium | Governance" />
-  <meta
-    property="og:description"
-    content="Controls that determine when inference is allowed, suppressed, or refused."
-  />
-  <meta property="og:type" content="website" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-page="governance">
@@ -24,7 +18,6 @@
     <div class="container site-header__inner">
       <a href="index.html" class="brand" aria-label="Neraium Home">
         <span class="brand-text">Neraium</span>
-        <span class="brand-accent">&gt;</span>
       </a>
 
       <button
@@ -52,145 +45,66 @@
 
   <main id="main-content">
     <section class="page-hero" aria-labelledby="page-title">
-      <div class="container">
-        <div class="eyebrow">&gt; Governance</div>
-        <h1 id="page-title">Inference is admitted, suppressed, or refused</h1>
+      <div class="container page-hero__content">
+        <div class="eyebrow">Governance</div>
+        <h1 id="page-title">Findings that remain reviewable and defensible</h1>
         <p class="page-copy">
-          Neraium does not treat every anomaly as meaningful. Governance defines when the system
-          may infer engineering significance, when weak signals must be suppressed, and when
-          uncertainty should override escalation entirely.
+          Neraium is intended to support disciplined operational review. The goal is not
+          uncontrolled automation, but earlier insight that can be evaluated by reliability
+          and engineering teams.
         </p>
       </div>
     </section>
 
-    <section class="governance-section" aria-labelledby="governance-components-heading">
+    <section class="section" aria-labelledby="governance-heading">
       <div class="container">
-        <h2 id="governance-components-heading" class="section-title">
-          <span class="title-prefix">[</span>Governance Components<span class="title-prefix">]</span>
-        </h2>
+        <div class="section-intro section-intro--center">
+          <div class="eyebrow">Governance Model</div>
+          <h2 id="governance-heading">Designed for institutional use</h2>
+        </div>
 
-        <div class="grid-2">
-          <article class="gov-panel">
-            <h3 class="gov-panel-title">Admissibility Boundary</h3>
-            <p class="gov-panel-description">
-              Interpretation is permitted only when system behaviour meets defined admissibility
-              conditions rather than merely exhibiting statistical irregularity.
-            </p>
-            <ul class="gov-list">
-              <li class="gov-list-item">Physical interpretation constraints</li>
-              <li class="gov-list-item">Temporal persistence requirements</li>
-              <li class="gov-list-item">Cross-signal coherence checks</li>
-              <li class="gov-list-item">Boundary enforcement before escalation</li>
-            </ul>
+        <div class="feature-grid">
+          <article class="feature-panel">
+            <h3>Read-only operation</h3>
+            <p>Does not interact with plant controls or modify operations.</p>
           </article>
 
-          <article class="gov-panel">
-            <h3 class="gov-panel-title">Evidence Preservation</h3>
-            <p class="gov-panel-description">
-              Every admitted outcome is retained with the context needed for later technical,
-              operational, and institutional review.
-            </p>
-            <ul class="gov-list">
-              <li class="gov-list-item">Measured system divergence</li>
-              <li class="gov-list-item">Criteria applied at evaluation time</li>
-              <li class="gov-list-item">System state during assessment</li>
-              <li class="gov-list-item">Final interpretation outcome</li>
-            </ul>
+          <article class="feature-panel">
+            <h3>Human review</h3>
+            <p>Supports engineering assessment rather than replacing operator judgment.</p>
+          </article>
+
+          <article class="feature-panel">
+            <h3>Structured findings</h3>
+            <p>Highlights developing issues in a form that can be examined and challenged.</p>
+          </article>
+
+          <article class="feature-panel">
+            <h3>Defensible records</h3>
+            <p>Preserves context for later operational and reliability review.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="technical-section" aria-labelledby="decision-outcomes-heading">
-      <div class="container">
-        <h2 id="decision-outcomes-heading" class="section-title">
-          <span class="title-prefix">[</span>Decision Outcomes<span class="title-prefix">]</span>
-        </h2>
-
-        <div class="two-column-grid">
-          <div class="tech-panel">
-            <h3 class="tech-panel-title">When Signals Are Admitted</h3>
-            <div class="diagram-grid">
-              <div class="diagram-item">
-                <h4 class="diagram-title">Persistent Deviation</h4>
-                <p class="diagram-text">
-                  The observed pattern remains present long enough to exceed transient anomaly behaviour.
-                </p>
-              </div>
-
-              <div class="diagram-item">
-                <h4 class="diagram-title">Physical Plausibility</h4>
-                <p class="diagram-text">
-                  The interpretation remains consistent with engineering-valid system behaviour.
-                </p>
-              </div>
-
-              <div class="diagram-item">
-                <h4 class="diagram-title">Cross-Signal Agreement</h4>
-                <p class="diagram-text">
-                  Multiple signals support the interpretation instead of contradicting it.
-                </p>
-              </div>
-
-              <div class="diagram-item">
-                <h4 class="diagram-title">Escalation Eligibility</h4>
-                <p class="diagram-text">
-                  Only after admissibility is satisfied can a finding advance into reviewable output.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <aside class="tech-panel tech-panel--accent" aria-labelledby="suppression-heading">
-            <h3 id="suppression-heading" class="tech-panel-title">When Signals Are Blocked</h3>
-            <ul class="bullet-list">
-              <li class="bullet-item">
-                <strong class="bullet-label">Suppressed:</strong>
-                <span class="bullet-text">weak, transient, or poorly supported deviations do not advance to meaningful interpretation.</span>
-              </li>
-              <li class="bullet-item">
-                <strong class="bullet-label">Refused:</strong>
-                <span class="bullet-text">signals that fall outside valid interpretive boundaries are denied inference altogether.</span>
-              </li>
-              <li class="bullet-item">
-                <strong class="bullet-label">Bounded:</strong>
-                <span class="bullet-text">the system cannot claim more meaning than the available evidence and constraints permit.</span>
-              </li>
-              <li class="bullet-item">
-                <strong class="bullet-label">Reviewable:</strong>
-                <span class="bullet-text">the basis for admission, suppression, or refusal remains available for later inspection.</span>
-              </li>
-            </ul>
-          </aside>
+    <section class="section section-dark" aria-labelledby="accountability-heading">
+      <div class="container section-grid">
+        <div class="section-intro">
+          <div class="eyebrow">Accountability</div>
+          <h2 id="accountability-heading">Earlier insight without losing discipline</h2>
         </div>
-      </div>
-    </section>
 
-    <section class="info-section" aria-labelledby="governance-role-heading">
-      <div class="container">
-        <div class="info-panel">
-          <h2 id="governance-role-heading" class="info-title">
-            <span class="title-prefix">[</span>Governance Role<span class="title-prefix">]</span>
-          </h2>
-          <p class="info-text">
-            Governance exists to preserve interpretive discipline. It prevents statistically unusual
-            behaviour from being automatically treated as meaningful system knowledge and ensures
-            that any inference advanced by the platform remains bounded, defensible, and open to review.
+        <div class="section-copy">
+          <p>
+            Neraium is building a new intelligence layer for industrial infrastructure
+            based on Systemic Infrastructure Intelligence. By analyzing relationships
+            across sensors and equipment, the platform detects changes in system behavior
+            that signal emerging degradation before failures occur.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="info-section" aria-labelledby="accountability-heading">
-      <div class="container">
-        <div class="info-panel">
-          <h2 id="accountability-heading" class="info-title">
-            <span class="title-prefix">[</span>Accountability Model<span class="title-prefix">]</span>
-          </h2>
-          <p class="info-text">
-            Neraium preserves the context required to understand why a signal was admitted,
-            suppressed, or refused. That record supports engineering analysis, post-incident
-            review, regulatory scrutiny, and institutional memory.
+          <p>
+            The goal is to help industrial operators gain earlier insight into developing
+            problems, reduce unplanned downtime, and improve overall system reliability
+            while keeping results reviewable in real operating contexts.
           </p>
         </div>
       </div>
@@ -199,12 +113,8 @@
 
   <footer class="footer" role="contentinfo">
     <div class="container footer__inner">
-      <div class="footer-text">
-        © <span id="year"></span> Neraium. All rights reserved.
-      </div>
-      <div class="footer-tagline">
-        Systemic infrastructure intelligence.
-      </div>
+      <div class="footer-text">© <span id="year"></span> Neraium. All rights reserved.</div>
+      <div class="footer-tagline">Systemic Infrastructure Intelligence</div>
     </div>
   </footer>
 
@@ -230,23 +140,16 @@
       isExpanded ? closeNav() : openNav();
     });
 
-    navLinks.forEach((link) => {
-      link.addEventListener('click', closeNav);
-    });
+    navLinks.forEach((link) => link.addEventListener('click', closeNav));
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        closeNav();
-      }
+      if (event.key === 'Escape') closeNav();
     });
 
     document.addEventListener('click', (event) => {
       const clickedInsideNav = mainNav.contains(event.target);
       const clickedToggle = navToggle.contains(event.target);
-
-      if (!clickedInsideNav && !clickedToggle) {
-        closeNav();
-      }
+      if (!clickedInsideNav && !clickedToggle) closeNav();
     });
 
     const currentPageAttr = document.body.getAttribute('data-page');
