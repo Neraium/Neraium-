@@ -467,6 +467,15 @@ h2 {
   color: var(--color-text);
 }
 
+h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(20px, 2.3vw, 28px);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 28px 0 14px;
+  color: var(--color-text);
+}
+
 .editorial__body p {
   font-size: 16px;
   font-weight: 300;
@@ -853,6 +862,41 @@ h2 {
   border: 1px solid var(--color-line);
   margin-bottom: 24px;
   width: 100%;
+}
+
+/* ─── RESULTS BLOCK ──────────────────────────────── */
+
+.results-block {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--color-line);
+  max-width: 760px;
+}
+
+.results-block__title {
+  margin-top: 0;
+}
+
+.results-block__sub {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 660px;
+  margin-bottom: 18px;
+}
+
+.results-figure {
+  margin-top: 18px;
+}
+
+.results-figure__caption {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-top: -12px;
+  padding-bottom: 6px;
 }
 
 /* ─── FOUNDER BLOCK ──────────────────────────────── */

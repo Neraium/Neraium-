@@ -110,6 +110,27 @@
           <p>
             This example shows how systemic drift can emerge well before the actual failure point, giving operations and reliability teams earlier visibility into developing problems.
           </p>
+
+          <div class="results-block" aria-label="Testing results (illustrative)">
+            <h3 class="results-block__title">Testing results (illustrative)</h3>
+            <p class="results-block__sub">
+              These plots are representative results from offline evaluation. Outputs, lead time, and sensitivity vary by system, telemetry quality, and operating regimes.
+            </p>
+
+            <figure class="results-figure">
+              <img src="results-drift.jpeg" alt="Smoothed drift metric over cycles, with early admission point and later failure marker indicating early warning lead time" class="tech-image">
+              <figcaption class="results-figure__caption">
+                Relationship-based drift crosses an admission level well before failure, indicating early structural change while individual signals may still appear normal.
+              </figcaption>
+            </figure>
+
+            <figure class="results-figure">
+              <img src="results-instability.jpeg" alt="Instability score over time with smoothed traces, precursor and instability markers, and a predicted failure line" class="tech-image">
+              <figcaption class="results-figure__caption">
+                Instability scoring can be staged (precursor → instability → risk), supporting review-driven triage rather than single-point alarms.
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
