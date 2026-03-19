@@ -60,6 +60,10 @@
           <p>
             Neraium analyzes how signals across an industrial system interact over time. When those relationships begin to shift, it can indicate that degradation or instability is emerging, even when individual sensors still appear normal.
           </p>
+          <div class="diagram-block" aria-label="Concept diagram">
+            <img src="diagram-threshold-vs-relationships.jpeg" alt="Comparison diagram showing threshold based single-tag alarms versus multi-signal relationship drift detection for earlier warning" class="tech-image" loading="lazy" decoding="async">
+            <p class="results-block__sub">Conceptual comparison. The intent is to show why relationship change can surface earlier signal than isolated tag limits.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -130,6 +134,16 @@
                 Instability scoring can be staged (precursor → instability → risk), supporting review-driven triage rather than single-point alarms.
               </figcaption>
             </figure>
+          </div>
+
+          <div class="results-block" aria-label="Sample output packet">
+            <h3 class="results-block__title">Sample output (redacted)</h3>
+            <p class="results-block__sub">
+              A one page example of a structural finding packet, showing time window, implicated tags, relationship shift summary, review notes, and traceability fields.
+            </p>
+            <div class="micro-cta">
+              <a class="button button--ghost" href="sample-finding-pack.pdf" target="_blank" rel="noopener noreferrer">Download sample finding pack</a>
+            </div>
           </div>
         </div>
       </div>
