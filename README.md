@@ -4,13 +4,13 @@ This repository contains the static website for Neraium.
 
 ## Project structure
 
-- `index.html` — home page
-- `platform.html` — platform overview page
-- `technical.html` — technical details page
-- `governance.html` — governance page
-- `contact.html` — contact/briefing page
-- `styles.css` — shared site styles
-- `site.webmanifest`, `robots.txt`, `sitemap.xml` — site metadata
+- `index.html` - home page
+- `platform.html` - platform overview page
+- `technical.html` - technical details page
+- `governance.html` - governance page
+- `contact.html` - contact/briefing page
+- `styles.css` - shared site styles
+- `site.webmanifest`, `robots.txt`, `sitemap.xml` - site metadata
 - image and icon files (`.png`, `.jpg`, `.ico`) used across pages
 
 ## Run locally

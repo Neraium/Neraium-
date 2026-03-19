@@ -632,46 +632,6 @@ h3 {
   line-height: 1.7;
 }
 
-/* ─── PILOT TABLE ────────────────────────────────── */
-
-.pilot-table {
-  margin-top: 22px;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  background: rgba(255,255,255,.02);
-}
-
-.pilot-table__row {
-  display: grid;
-  grid-template-columns: 160px 140px 1.4fr 1fr;
-  gap: 1px;
-  background: var(--color-line);
-}
-
-.pilot-table__cell {
-  background: rgba(6, 7, 10, .85);
-  padding: 14px 14px;
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--color-text-soft);
-  line-height: 1.6;
-}
-
-.pilot-table__row--head .pilot-table__cell {
-  background: rgba(11, 13, 18, .95);
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  font-weight: 500;
-}
-
-.pilot-table__cell strong {
-  color: var(--color-text);
-  font-weight: 600;
-}
-
 /* ─── WHERE IT FITS ──────────────────────────────── */
 
 .stack-rail {
@@ -708,45 +668,6 @@ h3 {
 
 .stack-rail__item--accent {
   background: rgba(200, 166, 106, .06);
-}
-
-/* ─── STEPS ──────────────────────────────────────── */
-
-.step-list {
-  margin-top: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  counter-reset: step;
-}
-
-.step-list li {
-  counter-increment: step;
-  border: 1px solid var(--color-line);
-  background: var(--color-bg-card);
-  border-radius: var(--radius-card);
-  padding: 16px 16px 16px 46px;
-  position: relative;
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--color-text-soft);
-  line-height: 1.7;
-}
-
-.step-list li::before {
-  content: counter(step);
-  position: absolute;
-  left: 14px;
-  top: 14px;
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: rgba(200, 166, 106, .14);
-  color: var(--color-accent);
-  font-size: 12px;
-  font-weight: 600;
 }
 
 /* ─── LINK CARDS ─────────────────────────────────── */
@@ -1118,10 +1039,6 @@ h3 {
   }
 
   .link-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .pilot-table__row {
     grid-template-columns: 1fr;
   }
 
