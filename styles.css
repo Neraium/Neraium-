@@ -563,6 +563,54 @@ h3 {
   gap: 12px;
 }
 
+.do-dont {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.do-dont__col {
+  border: 1px solid var(--color-line);
+  background: rgba(255,255,255,.02);
+  border-radius: var(--radius-card);
+  padding: 18px;
+}
+
+.do-dont__title {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.do-dont__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.do-dont__list li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.6;
+}
+
+.do-dont__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
 .trust-card {
   border: 1px solid var(--color-line);
   background: rgba(255,255,255,.02);
@@ -582,6 +630,46 @@ h3 {
   font-weight: 300;
   color: var(--color-text-soft);
   line-height: 1.7;
+}
+
+/* ─── PILOT TABLE ────────────────────────────────── */
+
+.pilot-table {
+  margin-top: 22px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: rgba(255,255,255,.02);
+}
+
+.pilot-table__row {
+  display: grid;
+  grid-template-columns: 160px 140px 1.4fr 1fr;
+  gap: 1px;
+  background: var(--color-line);
+}
+
+.pilot-table__cell {
+  background: rgba(6, 7, 10, .85);
+  padding: 14px 14px;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.6;
+}
+
+.pilot-table__row--head .pilot-table__cell {
+  background: rgba(11, 13, 18, .95);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.pilot-table__cell strong {
+  color: var(--color-text);
+  font-weight: 600;
 }
 
 /* ─── WHERE IT FITS ──────────────────────────────── */
@@ -1017,6 +1105,10 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .do-dont {
+    grid-template-columns: 1fr;
+  }
+
   .outcome-grid {
     grid-template-columns: 1fr;
   }
@@ -1026,6 +1118,10 @@ h3 {
   }
 
   .link-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .pilot-table__row {
     grid-template-columns: 1fr;
   }
 

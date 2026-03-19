@@ -106,7 +106,7 @@
         </div>
         <div class="editorial__body">
           <h2>Structural drift before failure</h2>
-          <img src="IMG_9010.png" alt="Example chart showing systemic drift emerging before failure" class="tech-image">
+          <img src="IMG_9010.png" alt="Example chart showing systemic drift emerging before failure" class="tech-image" loading="lazy" decoding="async">
           <p>
             This example shows how systemic drift can emerge well before the actual failure point, giving operations and reliability teams earlier visibility into developing problems.
           </p>
@@ -118,14 +118,14 @@
             </p>
 
             <figure class="results-figure">
-              <img src="results-drift.jpeg" alt="Smoothed drift metric over cycles, with early admission point and later failure marker indicating early warning lead time" class="tech-image">
+              <img src="results-drift.jpeg" alt="Smoothed drift metric over cycles, with early admission point and later failure marker indicating early warning lead time" class="tech-image" loading="lazy" decoding="async">
               <figcaption class="results-figure__caption">
                 Relationship-based drift crosses an admission level well before failure, indicating early structural change while individual signals may still appear normal.
               </figcaption>
             </figure>
 
             <figure class="results-figure">
-              <img src="results-instability.jpeg" alt="Instability score over time with smoothed traces, precursor and instability markers, and a predicted failure line" class="tech-image">
+              <img src="results-instability.jpeg" alt="Instability score over time with smoothed traces, precursor and instability markers, and a predicted failure line" class="tech-image" loading="lazy" decoding="async">
               <figcaption class="results-figure__caption">
                 Instability scoring can be staged (precursor → instability → risk), supporting review-driven triage rather than single-point alarms.
               </figcaption>
@@ -139,7 +139,10 @@
       <div class="container">
         <div class="cta-band__inner">
           <p class="cta-band__heading">See how structural change detection applies to your environment.</p>
-          <a href="contact.html" class="button button--primary">Request a Briefing</a>
+          <div class="button-row button-row--cta">
+            <a href="contact.html" class="button button--primary">Request a Briefing</a>
+            <a href="contact.html" class="button button--ghost">Evaluate a Pilot</a>
+          </div>
         </div>
       </div>
     </section>
