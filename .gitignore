@@ -1,0 +1,21 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-*
+
+# Logs and temp
+*.log
+*.tmp
+*.temp
+*.bak
+
+# Archives (if you generate zips locally)
+*.zip
