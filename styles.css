@@ -45,6 +45,32 @@ a {
   color: inherit;
 }
 
+/* Focus for keyboard users (visible outline, no change for mouse) */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Skip link: visible when focused so keyboard users can jump to main content */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  padding: 12px 20px;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 200;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 16px;
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -603,10 +629,13 @@ h2 {
   opacity: .75;
 }
 
-.founder-linkedin i {
-  font-size: 15px;
+.founder-linkedin .icon-linkedin {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
   vertical-align: middle;
-  margin-right: 4px;
+  margin-right: 5px;
+  fill: currentColor;
 }
 
 /* ─── FOOTER ─────────────────────────────────────── */

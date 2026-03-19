@@ -33,4 +33,12 @@
       setExpanded(false);
     }
   });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && nav.classList.contains("open")) {
+      nav.classList.remove("open");
+      setExpanded(false);
+      toggleButton.focus();
+    }
+  });
 })();
