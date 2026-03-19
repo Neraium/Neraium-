@@ -16,6 +16,7 @@
   <link rel="canonical" href="https://www.neraium.com/technical.html">
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="site.webmanifest">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Neraium","url":"https://www.neraium.com","description":"Systemic Infrastructure Intelligence for industrial systems. Read-only detection of structural change in multivariate telemetry before failures occur."}</script>
 </head>
 
 <body>
@@ -61,7 +62,7 @@
             Neraium analyzes how signals across an industrial system interact over time. When those relationships begin to shift, it can indicate that degradation or instability is emerging, even when individual sensors still appear normal.
           </p>
           <div class="diagram-block" aria-label="Concept diagram">
-            <img src="diagram-threshold-vs-relationships.jpeg" alt="Comparison diagram showing threshold based single-tag alarms versus multi-signal relationship drift detection for earlier warning" class="tech-image" loading="lazy" decoding="async">
+            <img src="diagram-threshold-vs-relationships.jpeg" alt="Comparison diagram showing threshold based single-tag alarms versus multi-signal relationship drift detection for earlier warning" class="tech-image" width="1000" height="667" loading="lazy" decoding="async">
             <p class="results-block__sub">Conceptual comparison. The intent is to show why relationship change can surface earlier signal than isolated tag limits.</p>
           </div>
         </div>
@@ -110,7 +111,7 @@
         </div>
         <div class="editorial__body">
           <h2>Structural drift before failure</h2>
-          <img src="IMG_9010.png" alt="Example chart showing systemic drift emerging before failure" class="tech-image" loading="lazy" decoding="async">
+          <img src="IMG_9010.png" alt="Example chart showing systemic drift emerging before failure" class="tech-image" width="800" height="450" loading="lazy" decoding="async">
           <p>
             This example shows how systemic drift can emerge well before the actual failure point, giving operations and reliability teams earlier visibility into developing problems.
           </p>
@@ -122,14 +123,14 @@
             </p>
 
             <figure class="results-figure">
-              <img src="results-drift.jpeg" alt="Smoothed drift metric over cycles, with early admission point and later failure marker indicating early warning lead time" class="tech-image" loading="lazy" decoding="async">
+              <img src="results-drift.jpeg" alt="Smoothed drift metric over cycles, with early admission point and later failure marker indicating early warning lead time" class="tech-image" width="800" height="450" loading="lazy" decoding="async">
               <figcaption class="results-figure__caption">
                 Relationship-based drift crosses an admission level well before failure, indicating early structural change while individual signals may still appear normal.
               </figcaption>
             </figure>
 
             <figure class="results-figure">
-              <img src="results-instability.jpeg" alt="Instability score over time with smoothed traces, precursor and instability markers, and a predicted failure line" class="tech-image" loading="lazy" decoding="async">
+              <img src="results-instability.jpeg" alt="Instability score over time with smoothed traces, precursor and instability markers, and a predicted failure line" class="tech-image" width="800" height="450" loading="lazy" decoding="async">
               <figcaption class="results-figure__caption">
                 Instability scoring can be staged (precursor → instability → risk), supporting review-driven triage rather than single-point alarms.
               </figcaption>

@@ -38,6 +38,7 @@ body {
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -487,6 +488,12 @@ h3 {
 
 .editorial__body p:last-child {
   margin-bottom: 0;
+}
+
+.editorial__body p.p--muted {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-top: 12px;
 }
 
 /* ─── SIMPLE LAYOUT BLOCKS ───────────────────────── */
