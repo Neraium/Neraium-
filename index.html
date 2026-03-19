@@ -48,16 +48,21 @@
 
       <div class="container hero-content">
         <div class="hero-inner">
-          <h1>
-            Systemic Infrastructure<br>
-            <em>Intelligence.</em>
-          </h1>
+          <p class="hero-kicker">Systemic Infrastructure Intelligence</p>
+          <h1>Earlier warning from the signals you already have.</h1>
           <p class="hero-description">
-            Detecting structural change in industrial systems before failures occur.
+            Neraium is a read-only intelligence layer for reliability and plant engineering teams. It detects early structural change in multivariate telemetry — before conventional alarms and thresholds become unambiguous.
           </p>
+          <ul class="hero-audience" aria-label="Intended audience">
+            <li>Reliability</li>
+            <li>Plant engineering</li>
+            <li>Critical infrastructure operators</li>
+            <li>Industrial asset owners</li>
+          </ul>
           <div class="button-row">
-            <a class="button button--primary" href="platform.html">Explore the Platform</a>
-            <a class="button button--ghost" href="contact.html">Request a Briefing</a>
+            <a class="button button--primary" href="contact.html">Request a Briefing</a>
+            <a class="button button--ghost" href="#how-it-works">See How It Works</a>
+            <a class="button button--link" href="technical.html">Review the Technical Basis</a>
           </div>
         </div>
       </div>
@@ -73,6 +78,7 @@
       <div class="container">
         <p class="statement-band__text">
           Industrial systems rarely fail without warning.<br>
+          <span class="statement-band__accent">The warning is often relational, not threshold-based.</span>
         </p>
       </div>
     </section>
@@ -91,86 +97,224 @@
       </div>
     </section>
 
-    <section class="editorial">
+    <section class="editorial" id="what-neraium-does">
       <div class="container editorial__grid">
         <div class="editorial__label">
-          <span class="eyebrow">Overview</span>
+          <span class="eyebrow">What Neraium does</span>
         </div>
         <div class="editorial__body">
-          <h2>Turning maintenance<br>from reactive to proactive</h2>
+          <h2>Detects developing instability across systems — not just out-of-range signals</h2>
           <p>
-            Neraium helps reliability teams detect developing issues earlier by analyzing how systems behave together over time, not individual thresholds, but structural relationships across multivariate telemetry.
+            Neraium evaluates how signals move together over time: load vs temperature, flow vs pressure, speed vs vibration, energy vs output. When those relationships shift, it can indicate degradation or instability while individual tags remain “normal.”
           </p>
+          <div class="outcome-grid" aria-label="What you receive">
+            <div class="outcome-card">
+              <div class="outcome-card__title">Early-change detections</div>
+              <p class="outcome-card__text">Time-bounded findings indicating where relationships are drifting or becoming unstable.</p>
+            </div>
+            <div class="outcome-card">
+              <div class="outcome-card__title">Reviewable evidence</div>
+              <p class="outcome-card__text">Signal sets, windows, and relationship shifts that can be examined by engineering teams.</p>
+            </div>
+            <div class="outcome-card">
+              <div class="outcome-card__title">Practical triage</div>
+              <p class="outcome-card__text">What changed, when it started, and which subsystems are implicated — to guide inspection and diagnosis.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="editorial editorial--dark">
+    <section class="editorial editorial--dark" id="why-thresholds-miss">
       <div class="container editorial__grid">
         <div class="editorial__label">
-          <span class="eyebrow">The Problem</span>
+          <span class="eyebrow">Why not threshold-only monitoring?</span>
         </div>
         <div class="editorial__body">
-          <h2>Traditional monitoring misses early system change</h2>
+          <h2>Conventional alarms are late when the failure mode is structural</h2>
+          <p>
+            Most monitoring is built around individual tag limits. But many industrial degradations show up first as a change in relationships between tags — long before any one value is clearly abnormal.
+          </p>
           <ul class="feature-list">
-            <li>Changing relationships between power, load, and temperature</li>
+            <li>Changing relationship between power, load, and temperature</li>
             <li>Cooling performance drifting relative to operating conditions</li>
-            <li>Unstable process dynamics across multiple subsystems</li>
-            <li>Mechanical systems behaving differently under varying loads</li>
+            <li>Unstable dynamics across coupled subsystems</li>
+            <li>Mechanical behavior changing under similar load conditions</li>
           </ul>
+          <div class="micro-cta">
+            <a class="button button--ghost" href="technical.html">Review the technical approach</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="editorial">
+    <section class="editorial" id="how-it-works">
       <div class="container editorial__grid">
         <div class="editorial__label">
-          <span class="eyebrow">Approach</span>
+          <span class="eyebrow">How Neraium works</span>
         </div>
         <div class="editorial__body">
-          <h2>A read-only intelligence layer<br>for industrial infrastructure</h2>
+          <h2>Tracks changes in relationships between signals over time</h2>
           <p>
-            Neraium sits alongside your existing monitoring stack. No control system integration. No operational disruption. A pure intelligence layer that surfaces what threshold-based tools cannot.
+            Neraium builds a baseline of how telemetry behaves together under varying conditions, then continuously tests for structural drift — changes in the geometry of the signal relationships — that can indicate developing instability.
           </p>
+          <div class="two-col">
+            <div class="callout">
+              <div class="callout__title">Plain-English</div>
+              <p class="callout__text">Instead of asking “is this tag high?”, it asks “are these tags still behaving together the way they used to?”</p>
+            </div>
+            <div class="callout">
+              <div class="callout__title">Technical</div>
+              <p class="callout__text">It evaluates multivariate structure and its change over time, focusing on relationship stability rather than isolated threshold exceedance.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="platform-section">
+    <section class="editorial editorial--dark" id="why-read-only">
+      <div class="container editorial__grid">
+        <div class="editorial__label">
+          <span class="eyebrow">Why read-only matters</span>
+        </div>
+        <div class="editorial__body">
+          <h2>Deployable in serious environments: non-invasive by design</h2>
+          <p>
+            Neraium is designed to run alongside SCADA, historians, and existing monitoring — without modifying plant operations or requiring control system access.
+          </p>
+          <div class="trust-grid" aria-label="Trust and deployment properties">
+            <div class="trust-card">
+              <div class="trust-card__title">Read-only deployment</div>
+              <p class="trust-card__text">Data handoff or mirrored feeds — no write paths into operations.</p>
+            </div>
+            <div class="trust-card">
+              <div class="trust-card__title">No operational disruption</div>
+              <p class="trust-card__text">No process changes required to begin evaluating historical or live telemetry.</p>
+            </div>
+            <div class="trust-card">
+              <div class="trust-card__title">Reviewable outputs</div>
+              <p class="trust-card__text">Findings are tied to concrete signals, time windows, and relationship changes.</p>
+            </div>
+            <div class="trust-card">
+              <div class="trust-card__title">Defensible interpretation</div>
+              <p class="trust-card__text">Designed to support engineering judgment, challenge, and audit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="editorial" id="where-it-fits">
+      <div class="container editorial__grid">
+        <div class="editorial__label">
+          <span class="eyebrow">Where it fits</span>
+        </div>
+        <div class="editorial__body">
+          <h2>Sits alongside your existing telemetry stack — it does not replace it</h2>
+          <p>
+            Neraium complements historians, SCADA, condition monitoring, and existing alarms by adding a relationship-based early-change layer on top of data you already collect.
+          </p>
+          <div class="stack-rail" aria-label="Existing systems plus Neraium">
+            <div class="stack-rail__item">
+              <div class="stack-rail__label">Existing stack</div>
+              <div class="stack-rail__text">SCADA · historians · PI/telemetry · condition monitoring · alarms</div>
+            </div>
+            <div class="stack-rail__divider" aria-hidden="true"></div>
+            <div class="stack-rail__item stack-rail__item--accent">
+              <div class="stack-rail__label">Neraium layer</div>
+              <div class="stack-rail__text">Structural change detection · interpretation · governance · reviewable outputs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="platform-section" id="platform-pillars">
       <div class="container">
         <div class="platform-section__header">
-          <span class="eyebrow">Platform</span>
-          <h2>Platform components</h2>
+          <span class="eyebrow">Platform / technical pillars</span>
+          <h2>Four elements, built for disciplined operational use</h2>
         </div>
 
         <div class="platform-grid">
           <a href="platform.html" class="platform-card">
             <div class="platform-card__number">01</div>
             <div class="platform-card__label">Signal Geometry</div>
-            <p class="platform-card__text">Detection of structural change across multivariate telemetry.</p>
+            <p class="platform-card__text"><strong>Plain:</strong> Identifies when systems stop behaving the same way together.<br><strong>Technical:</strong> Tracks multivariate structure and drift across telemetry.<br><strong>Implication:</strong> Earlier visibility into developing instability.</p>
             <span class="platform-card__arrow">→</span>
           </a>
 
           <a href="technical.html" class="platform-card">
             <div class="platform-card__number">02</div>
             <div class="platform-card__label">Interpretation Engine</div>
-            <p class="platform-card__text">Evaluation of system behavior through engineering constraints.</p>
+            <p class="platform-card__text"><strong>Plain:</strong> Turns detections into engineering-relevant hypotheses.<br><strong>Technical:</strong> Interprets shifts under operational constraints and context.<br><strong>Implication:</strong> Findings you can review, challenge, and act on.</p>
             <span class="platform-card__arrow">→</span>
           </a>
 
           <a href="governance.html" class="platform-card">
             <div class="platform-card__number">03</div>
             <div class="platform-card__label">Governance Layer</div>
-            <p class="platform-card__text">Admissibility logic ensuring interpretations remain defensible.</p>
+            <p class="platform-card__text"><strong>Plain:</strong> Prevents overreach and preserves traceability.<br><strong>Technical:</strong> Admissibility and record-keeping for bounded interpretations.<br><strong>Implication:</strong> Defensible outputs suitable for institutional use.</p>
             <span class="platform-card__arrow">→</span>
           </a>
 
-          <a href="contact.html" class="platform-card">
+          <a href="#pilot" class="platform-card">
             <div class="platform-card__number">04</div>
             <div class="platform-card__label">Pilot Deployment</div>
-            <p class="platform-card__text">Evaluate systemic intelligence on real industrial telemetry.</p>
+            <p class="platform-card__text"><strong>Plain:</strong> A practical, low-friction evaluation on your telemetry.<br><strong>Technical:</strong> Historical review + read-only integration + baseline + detection.<br><strong>Implication:</strong> Fast evidence without operational disruption.</p>
             <span class="platform-card__arrow">→</span>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="editorial" id="pilot">
+      <div class="container editorial__grid">
+        <div class="editorial__label">
+          <span class="eyebrow">Pilot / deployment model</span>
+        </div>
+        <div class="editorial__body">
+          <h2>A pilot is designed to be low-friction and review-driven</h2>
+          <p>
+            The goal is to evaluate whether structural change detection produces useful early warning in your environment — using the telemetry you already trust — without altering operations.
+          </p>
+          <ol class="step-list" aria-label="Typical pilot steps">
+            <li><strong>Historical telemetry review:</strong> select systems, tags, and time windows tied to known events and normal operation.</li>
+            <li><strong>Read-only integration:</strong> data handoff, historian export, or mirrored feed — no control interface required.</li>
+            <li><strong>Baseline establishment:</strong> characterize expected relationship structure across operating regimes.</li>
+            <li><strong>Structural instability detection:</strong> identify drift, coupling changes, and emerging instability.</li>
+            <li><strong>Engineering review outputs:</strong> time-bounded findings with evidence packs for reliability triage.</li>
+          </ol>
+          <div class="micro-cta">
+            <a class="button button--primary" href="contact.html">Evaluate a Pilot</a>
+            <a class="button button--ghost" href="platform.html">Platform overview</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="editorial editorial--dark" id="governance">
+      <div class="container editorial__grid">
+        <div class="editorial__label">
+          <span class="eyebrow">Governance / defensibility</span>
+        </div>
+        <div class="editorial__body">
+          <h2>Designed for environments where auditability is non-negotiable</h2>
+          <p>
+            Neraium is structured to support disciplined review: what changed, when it changed, and which relationships support the finding. The intent is to provide earlier insight without replacing engineering judgment.
+          </p>
+          <div class="link-cards" aria-label="Deeper reading">
+            <a class="link-card" href="technical.html">
+              <div class="link-card__title">Technical</div>
+              <p class="link-card__text">How relationship-based detection works, and why it surfaces early change.</p>
+              <span class="link-card__arrow">→</span>
+            </a>
+            <a class="link-card" href="governance.html">
+              <div class="link-card__title">Governance</div>
+              <p class="link-card__text">How findings remain bounded, reviewable, and defensible over time.</p>
+              <span class="link-card__arrow">→</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -178,8 +322,11 @@
     <section class="cta-band">
       <div class="container">
         <div class="cta-band__inner">
-          <p class="cta-band__heading">Ready to see what your systems are already signaling?</p>
-          <a href="contact.html" class="button button--primary">Request a Briefing</a>
+          <p class="cta-band__heading">Ready to evaluate systemic intelligence on your telemetry?</p>
+          <div class="button-row button-row--cta">
+            <a href="contact.html" class="button button--primary">Request a Briefing</a>
+            <a href="#pilot" class="button button--ghost">Evaluate a Pilot</a>
+          </div>
         </div>
       </div>
     </section>

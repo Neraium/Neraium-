@@ -15,6 +15,7 @@
   --font-serif: 'DM Serif Display', serif;
   --radius-card: 4px;
   --transition: 0.22s ease;
+  --shadow-soft: 0 14px 50px rgba(0,0,0,.25);
 }
 
 * {
@@ -43,6 +44,13 @@ img {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+/* ─── TYPE UTILITIES ─────────────────────────────── */
+
+strong {
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 /* Focus for keyboard users (visible outline, no change for mouse) */
@@ -217,6 +225,14 @@ ul {
   max-width: 760px;
 }
 
+.hero-kicker {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 14px;
+}
+
 h1 {
   font-family: var(--font-serif);
   font-size: clamp(44px, 6vw, 76px);
@@ -238,6 +254,25 @@ h1 em {
   max-width: 540px;
   line-height: 1.7;
   margin-bottom: 0;
+}
+
+.hero-audience {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  max-width: 720px;
+}
+
+.hero-audience li {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-line);
+  background: rgba(255,255,255,.02);
+  padding: 8px 10px;
+  border-radius: 999px;
 }
 
 .hero-rule {
@@ -333,6 +368,24 @@ h1 em {
   border-color: var(--color-text-soft);
 }
 
+.button--link {
+  background: transparent;
+  border-color: transparent;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: var(--color-text-soft);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.button--link:hover {
+  color: var(--color-text);
+}
+
+.button-row--cta {
+  margin-top: 0;
+}
+
 /* ─── STATEMENT BAND ─────────────────────────────── */
 
 .statement-band {
@@ -425,6 +478,221 @@ h2 {
 
 .editorial__body p:last-child {
   margin-bottom: 0;
+}
+
+/* ─── SIMPLE LAYOUT BLOCKS ───────────────────────── */
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.callout {
+  border: 1px solid var(--color-line);
+  background: rgba(255,255,255,.02);
+  border-radius: var(--radius-card);
+  padding: 18px 18px 16px;
+}
+
+.callout__title {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+
+.callout__text {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
+.micro-cta {
+  margin-top: 22px;
+}
+
+/* ─── OUTCOMES / TRUST ───────────────────────────── */
+
+.outcome-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.outcome-card {
+  border: 1px solid var(--color-line);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-card);
+  padding: 18px;
+  box-shadow: var(--shadow-soft);
+}
+
+.outcome-card__title {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.outcome-card__text {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
+.trust-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.trust-card {
+  border: 1px solid var(--color-line);
+  background: rgba(255,255,255,.02);
+  border-radius: var(--radius-card);
+  padding: 18px;
+}
+
+.trust-card__title {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  margin-bottom: 8px;
+}
+
+.trust-card__text {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
+/* ─── WHERE IT FITS ──────────────────────────────── */
+
+.stack-rail {
+  margin-top: 28px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: rgba(255,255,255,.02);
+}
+
+.stack-rail__item {
+  padding: 18px;
+}
+
+.stack-rail__divider {
+  height: 1px;
+  background: var(--color-line);
+}
+
+.stack-rail__label {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+
+.stack-rail__text {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
+.stack-rail__item--accent {
+  background: rgba(200, 166, 106, .06);
+}
+
+/* ─── STEPS ──────────────────────────────────────── */
+
+.step-list {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  counter-reset: step;
+}
+
+.step-list li {
+  counter-increment: step;
+  border: 1px solid var(--color-line);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-card);
+  padding: 16px 16px 16px 46px;
+  position: relative;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
+.step-list li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(200, 166, 106, .14);
+  color: var(--color-accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ─── LINK CARDS ─────────────────────────────────── */
+
+.link-cards {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.link-card {
+  border: 1px solid var(--color-line);
+  background: rgba(255,255,255,.02);
+  border-radius: var(--radius-card);
+  padding: 18px;
+  transition: background var(--transition), border-color var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link-card:hover {
+  background: rgba(200, 166, 106, .05);
+  border-color: var(--color-line-strong);
+}
+
+.link-card__title {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.link-card__text {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
+.link-card__arrow {
+  margin-top: 2px;
+  color: var(--color-accent);
+  font-size: 18px;
 }
 
 /* ─── FEATURE LIST ───────────────────────────────── */
@@ -527,6 +795,11 @@ h2 {
   line-height: 1.6;
   max-width: none;
   flex: 1;
+}
+
+.platform-card__text strong {
+  color: var(--color-text-soft);
+  font-weight: 500;
 }
 
 .platform-card__arrow {
@@ -696,6 +969,22 @@ h2 {
     gap: 32px;
   }
 
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .outcome-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .link-cards {
+    grid-template-columns: 1fr;
+  }
+
   .platform-grid {
     grid-template-columns: 1fr;
   }
@@ -764,6 +1053,12 @@ h2 {
   .button {
     width: 100%;
     text-align: center;
+  }
+
+  .button--link {
+    border: 1px solid var(--color-line-strong);
+    padding: 14px 30px;
+    color: var(--color-text);
   }
 
   .hero-rule {
