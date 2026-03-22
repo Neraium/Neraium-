@@ -4,14 +4,21 @@ This repository contains the static website for Neraium.
 
 ## Project structure
 
-- `index.html` - home page
-- `platform.html` - platform overview page
-- `technical.html` - technical details page
-- `governance.html` - governance page
-- `contact.html` - contact/briefing page
+- `index.html`, `platform.html`, `technical.html`, `governance.html`, `contact.html` — built output (do not edit by hand)
+- `_partials/` — shared `<head>`, header, and footer fragments
+- `_pages/` — per-page main content
+- `build.py` — assembles the root `*.html` files from the above
 - `styles.css` - shared site styles
 - `site.webmanifest`, `robots.txt`, `sitemap.xml` - site metadata
 - image and icon files (`.png`, `.jpg`, `.ico`) used across pages
+
+## Edit pages
+
+After changing `_partials/`, `_pages/`, or `build.py`, regenerate the site:
+
+```bash
+python3 build.py
+```
 
 ## Run locally
 

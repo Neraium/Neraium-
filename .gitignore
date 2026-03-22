@@ -19,3 +19,7 @@ desktop.ini
 
 # Archives (if you generate zips locally)
 *.zip
+
+# Python
+__pycache__/
+*.py[cod]
