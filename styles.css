@@ -880,6 +880,106 @@ h3 {
   color: var(--color-accent);
 }
 
+/* ─── SECTION HEADING ───────────────────────────── */
+
+.section-heading {
+  margin-bottom: 30px;
+}
+
+.section-heading h2 {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+/* ─── METRICS + FAQ ─────────────────────────────── */
+
+.metrics,
+.faq {
+  padding: 100px 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.metric-card {
+  border: 1px solid var(--color-line);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-card);
+  padding: 18px;
+}
+
+.metric-card__value {
+  font-size: 15px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 10px;
+}
+
+.metric-card__label {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
+.faq {
+  background: var(--color-bg-soft);
+}
+
+.faq__container {
+  max-width: 960px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: rgba(255,255,255,.02);
+}
+
+.faq-trigger {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  text-align: left;
+  padding: 16px 18px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.faq-icon {
+  color: var(--color-accent);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.faq-panel {
+  border-top: 1px solid var(--color-line);
+  padding: 12px 18px 16px;
+}
+
+.faq-panel p {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-soft);
+  line-height: 1.7;
+}
+
 /* ─── CTA BAND ───────────────────────────────────── */
 
 .cta-band {
@@ -1093,6 +1193,10 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
   .cta-band__inner {
     flex-direction: column;
     align-items: flex-start;
@@ -1190,6 +1294,11 @@ h3 {
   }
 
   .cta-band {
+    padding: 64px 0;
+  }
+
+  .metrics,
+  .faq {
     padding: 64px 0;
   }
 
