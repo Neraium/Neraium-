@@ -53,4 +53,25 @@
       toggleButton.focus();
     }
   });
+
+  const faqList = document.querySelector("[data-faq-list]");
+  if (!faqList) {
+    return;
+  }
+
+  faqList.querySelectorAll(".faq-item").forEach((item) => {
+    const trigger = item.querySelector(".faq-trigger");
+    const panel = item.querySelector(".faq-panel");
+    const icon = item.querySelector(".faq-icon");
+    if (!trigger || !panel || !icon) {
+      return;
+    }
+
+    trigger.addEventListener("click", () => {
+      const willOpen = trigger.getAttribute("aria-expanded") !== "true";
+      trigger.setAttribute("aria-expanded", String(willOpen));
+      panel.hidden = !willOpen;
+      icon.textContent = willOpen ? "−" : "+";
+    });
+  });
 })();
