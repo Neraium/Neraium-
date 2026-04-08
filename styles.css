@@ -1311,3 +1311,80 @@ h3 {
     gap: 16px;
   }
 }
+
+/* ─── 2026 REFRESH ───────────────────────────────── */
+body {
+  background:
+    radial-gradient(circle at 15% 12%, rgba(200, 166, 106, .12), transparent 42%),
+    radial-gradient(circle at 85% 0%, rgba(96, 133, 210, .14), transparent 36%),
+    var(--color-bg);
+}
+
+.hero-inner h1 {
+  font-size: clamp(2.2rem, 4.4vw, 4.2rem);
+  line-height: 1.08;
+  max-width: 14ch;
+}
+
+.hero-description {
+  max-width: 62ch;
+}
+
+.button--primary {
+  background: linear-gradient(135deg, #c8a66a, #d7b87b);
+  color: #111318;
+  border-color: transparent;
+  box-shadow: 0 12px 30px rgba(200, 166, 106, .25);
+}
+
+.button--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px rgba(200, 166, 106, .3);
+}
+
+.launch-band {
+  padding: 34px 0;
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+  background: linear-gradient(90deg, rgba(200, 166, 106, .14), rgba(92, 121, 181, .08));
+}
+
+.launch-band__inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.launch-band__kicker {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--color-accent);
+}
+
+.launch-band__text {
+  color: var(--color-text-soft);
+}
+
+.outcome-card,
+.metric-card,
+.platform-card,
+.faq-item,
+.link-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .015));
+  border: 1px solid rgba(255, 255, 255, .12);
+  backdrop-filter: blur(3px);
+}
+
+.link-card:hover,
+.platform-card:hover {
+  border-color: rgba(200, 166, 106, .55);
+}
+
+@media (max-width: 900px) {
+  .launch-band__inner {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
