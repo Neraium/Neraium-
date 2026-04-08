@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Serif+Display:ital@0;1&display=swap">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260408">
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="hero.png" as="image">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Neraium provides Systemic Infrastructure Intelligence, early failure detection through structural relationship modeling in multivariate telemetry."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}}]}</script>
@@ -43,7 +43,6 @@
         <a href="index.html" class="nav-link active" aria-current="page">Home</a>
         <a href="platform.html" class="nav-link">Platform</a>
         <a href="technical.html" class="nav-link">Use Cases</a>
-        <a href="governance.html" class="nav-link">About</a>
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
 
@@ -54,6 +53,11 @@
       </button>
     </div>
   </header>
+  <div class="site-notice">
+    <div class="container">
+      <p><strong>Site refresh live:</strong> April 2026 update focused on pilots, platform fit, and direct contact paths.</p>
+    </div>
+  </div>
 
   <main id="main">
     <section class="hero">
@@ -62,8 +66,8 @@
 
       <div class="container hero-content">
         <div class="hero-inner">
-          <p class="hero-kicker">Systemic Infrastructure Intelligence</p>
-          <h1>Neraium detects when systems stop behaving like themselves.</h1>
+          <p class="hero-kicker">Infrastructure Risk Intelligence</p>
+          <h1>Detect hidden system degradation before it becomes downtime.</h1>
           <p class="hero-description">
             Early failure detection for critical environments, based on structural changes in how multivariate signals relate over time.
           </p>
@@ -77,8 +81,33 @@
 
       <div class="hero-rule">
         <span class="hero-rule__line"></span>
-        <span class="hero-rule__label">Read-only · Structural monitoring · Interpretable diagnostics</span>
+        <span class="hero-rule__label">Read-only monitoring | Structural intelligence | Fast operator response</span>
         <span class="hero-rule__line"></span>
+      </div>
+    </section>
+
+    <section class="launch-band" aria-label="Product update">
+      <div class="container launch-band__inner">
+        <p class="launch-band__kicker">Now booking Spring pilots</p>
+        <p class="launch-band__text">Deploy in read-only mode, validate lead time quickly, and expand once your team trusts the findings.</p>
+        <a class="button button--ghost" href="contact.html">Book a live walkthrough</a>
+      </div>
+    </section>
+
+    <section class="value-pillars" aria-label="Why teams switch to structural monitoring">
+      <div class="container value-pillars__grid">
+        <article class="value-pillars__card">
+          <p class="value-pillars__title">Detect before thresholds fire</p>
+          <p class="value-pillars__text">Find changing relationships while conventional alarms still show nominal operation.</p>
+        </article>
+        <article class="value-pillars__card">
+          <p class="value-pillars__title">Keep operations in control</p>
+          <p class="value-pillars__text">Read-only deployment keeps your existing controls, historians, and workflows untouched.</p>
+        </article>
+        <article class="value-pillars__card">
+          <p class="value-pillars__title">Act on clear diagnostics</p>
+          <p class="value-pillars__text">Every finding maps to inspectable signal behavior so teams can triage with confidence.</p>
+        </article>
       </div>
     </section>
 
@@ -177,9 +206,9 @@
             Neraium is not a niche cultivation analytics product. It is a Systemic Infrastructure Intelligence platform designed for environments where risk emerges first as structural change.
           </p>
           <div class="link-cards" aria-label="Deeper reading">
-            <a class="link-card" href="governance.html">
-              <div class="link-card__title">About Neraium</div>
-              <p class="link-card__text">Company direction and infrastructure category framing.</p>
+            <a class="link-card" href="platform.html">
+              <div class="link-card__title">Platform architecture</div>
+              <p class="link-card__text">How relationship modeling converts telemetry into early warning.</p>
               <span class="link-card__arrow">→</span>
             </a>
             <a class="link-card" href="contact.html">
@@ -276,14 +305,13 @@
       <nav class="footer__nav" aria-label="Footer navigation">
         <a href="platform.html" class="footer__link">Platform</a>
         <a href="technical.html" class="footer__link">Use Cases</a>
-        <a href="governance.html" class="footer__link">About</a>
         <a href="contact.html" class="footer__link">Contact</a>
       </nav>
       <div class="footer__copy">© <span id="year"></span> Neraium</div>
     </div>
   </footer>
 
-  <script src="scripts.js" defer></script>
+  <script src="scripts.js?v=20260408" defer></script>
 </body>
 
 </html>
