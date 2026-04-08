@@ -125,6 +125,17 @@ ul {
   gap: 24px;
 }
 
+.site-notice {
+  border-bottom: 1px solid var(--color-line);
+  background: linear-gradient(90deg, rgba(216, 177, 111, .22), rgba(93, 122, 184, .16));
+}
+
+.site-notice p {
+  padding: 10px 0;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
 .brand {
   display: inline-flex;
   align-items: center;

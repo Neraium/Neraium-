@@ -27,6 +27,10 @@ def split_path_and_fragment(value: str) -> tuple[str, str | None]:
     return path, frag or None
 
 
+def strip_querystring(value: str) -> str:
+    return value.split("?", 1)[0]
+
+
 @dataclass(frozen=True)
 class LinkRef:
     source_file: Path
@@ -103,6 +107,7 @@ class TestStaticSite(unittest.TestCase):
                     continue
 
                 path_part, _frag = split_path_and_fragment(raw)
+                path_part = strip_querystring(path_part)
                 if not path_part:
                     # href like "#section" handled above
                     continue
@@ -167,4 +172,3 @@ class TestStaticSite(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
