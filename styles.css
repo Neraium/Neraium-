@@ -4,12 +4,12 @@
   --surface: #0d1a34;
   --surface-soft: #112344;
   --line: #284170;
-  --line-bright: #3c67b3;
+  --line-bright: #345ca3;
   --text: #f3f6ff;
   --muted: #cdd6e8;
-  --accent: #2f6cff;
-  --accent-strong: #63a1ff;
-  --accent-soft: rgba(47, 108, 255, 0.16);
+  --accent: #2457d6;
+  --accent-strong: #4d82e6;
+  --accent-soft: rgba(36, 87, 214, 0.16);
   --radius: 12px;
   --header-h: 76px;
   --font-display: "Sora", "Space Grotesk", "Segoe UI", sans-serif;
@@ -33,7 +33,7 @@ body {
   color: var(--text);
   line-height: 1.68;
   background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(47, 108, 255, 0.22), transparent 54%),
+    radial-gradient(1200px 600px at 80% -10%, rgba(36, 87, 214, 0.2), transparent 54%),
     radial-gradient(900px 520px at -10% 110%, rgba(27, 54, 110, 0.22), transparent 58%),
     linear-gradient(170deg, #02050f 0%, #041029 50%, #030714 100%);
 }
