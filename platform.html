@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#06070a">
-  <title>Neraium Platform | Turn Telemetry Into Clear Observations</title>
-  <meta name="description" content="Neraium compares current telemetry against normal system behavior and gives operators clear observations to review.">
-  <meta property="og:title" content="Neraium Platform | Turn Telemetry Into Clear Observations">
-  <meta property="og:description" content="See how Neraium turns facility data into read-only observations operators can use.">
+  <title>Neraium Platform | Read-Only Early-Warning Monitoring</title>
+  <meta name="description" content="Neraium analyzes existing facility telemetry, compares signal relationships, and gives operators clear read-only observations to review.">
+  <meta property="og:title" content="Neraium Platform | Read-Only Early-Warning Monitoring">
+  <meta property="og:description" content="See how Neraium turns existing telemetry into operator-ready observations without controlling equipment.">
   <meta property="og:image" content="https://www.neraium.com/hero.png">
   <meta property="og:url" content="https://www.neraium.com/platform.html">
   <meta property="og:type" content="website">
@@ -15,7 +15,7 @@
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Neraium Platform">
-  <meta name="twitter:description" content="Turn telemetry into clear operator observations.">
+  <meta name="twitter:description" content="Read-only monitoring that turns existing telemetry into clear operator observations.">
   <meta name='ga4-measurement-id' content='G-XXXXXXXXXX'>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="styles.css?v=20260522">
   <link rel="manifest" href="site.webmanifest">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Neraium helps operators see abnormal system behavior earlier by comparing telemetry against normal operating relationships."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","@id":"https://www.neraium.com/platform.html#webpage","url":"https://www.neraium.com/platform.html","name":"Platform","isPartOf":{"@id":"https://www.neraium.com/#website"},"about":{"@id":"https://www.neraium.com/#organization"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Neraium helps operators identify abnormal system behavior earlier by analyzing relationships in existing telemetry."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","@id":"https://www.neraium.com/platform.html#webpage","url":"https://www.neraium.com/platform.html","name":"Platform","isPartOf":{"@id":"https://www.neraium.com/#website"},"about":{"@id":"https://www.neraium.com/#organization"}}]}</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -54,8 +54,13 @@
     <section class="page-hero">
       <div class="container">
         <span class="eyebrow">Platform</span>
-        <h1 class="page-hero__title">Turn facility telemetry into clear operator observations.</h1>
-        <p class="page-hero__sub">Neraium watches how system readings move together, compares them against normal behavior, and shows operators what changed without controlling equipment.</p>
+        <h1 class="page-hero__title">Read-only monitoring that explains what changed.</h1>
+        <p class="page-hero__sub">Neraium connects to existing telemetry, learns normal operating relationships, and surfaces abnormal behavior as clear observations for operators and engineers to review.</p>
+        <div class="trust-strip" aria-label="Platform summary">
+          <div class="trust-item"><span class="trust-item__kicker">Input</span><span class="trust-item__value">CSV, historian exports, or read-only telemetry connections.</span></div>
+          <div class="trust-item"><span class="trust-item__kicker">Analysis</span><span class="trust-item__value">Relationship changes across multiple signals.</span></div>
+          <div class="trust-item"><span class="trust-item__kicker">Output</span><span class="trust-item__value">Operator-ready observations and review context.</span></div>
+        </div>
       </div>
     </section>
 
@@ -63,28 +68,54 @@
       <div class="container">
         <div class="platform-section__header">
           <span class="eyebrow">Core workflow</span>
-          <h2>Four simple steps from data to review</h2>
+          <h2>From raw telemetry to reviewable operating context</h2>
         </div>
         <div class="platform-grid">
           <div class="platform-card">
             <div class="platform-card__number">01</div>
-            <div class="platform-card__label">Learn normal behavior</div>
-            <p class="platform-card__text">Build a baseline from the way your system normally behaves across different operating conditions.</p>
+            <div class="platform-card__label">Connect existing data</div>
+            <p class="platform-card__text">Begin with the telemetry sources your team already has: CSV exports, historical logs, historians, or read-only integrations.</p>
           </div>
           <div class="platform-card">
             <div class="platform-card__number">02</div>
-            <div class="platform-card__label">Watch for unusual changes</div>
-            <p class="platform-card__text">Compare new readings against that baseline and flag relationships that start moving differently.</p>
+            <div class="platform-card__label">Learn normal relationships</div>
+            <p class="platform-card__text">Map how signals normally move together under real operating conditions instead of judging each reading alone.</p>
           </div>
           <div class="platform-card">
             <div class="platform-card__number">03</div>
-            <div class="platform-card__label">Confirm the signal</div>
-            <p class="platform-card__text">Look for changes that persist long enough to be worth an operator review, instead of reacting to every noisy reading.</p>
+            <div class="platform-card__label">Flag abnormal behavior</div>
+            <p class="platform-card__text">Identify persistent relationship changes that may deserve operator attention before a traditional alarm fires.</p>
           </div>
           <div class="platform-card">
             <div class="platform-card__number">04</div>
-            <div class="platform-card__label">Show where to look</div>
-            <p class="platform-card__text">Give teams a plain observation, affected signals, and a practical next place to inspect.</p>
+            <div class="platform-card__label">Explain where to look</div>
+            <p class="platform-card__text">Present the affected signals, operating context, confidence indicators, and next review area in plain language.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="editorial" id="customer-output">
+      <div class="container editorial__grid">
+        <div class="editorial__label">
+          <span class="eyebrow">What customers see</span>
+        </div>
+        <div class="editorial__body">
+          <h2>A finding your team can review, not a black-box score</h2>
+          <p>A Neraium observation is designed to answer practical questions: what changed, which system area is involved, how persistent the behavior is, and what an operator or engineer should inspect next.</p>
+          <div class="finding-example">
+            <div class="finding-example__section">
+              <span class="finding-example__label">Example observation</span>
+              <p class="finding-example__text">Flow-pressure relationship is weakening during normal demand periods.</p>
+            </div>
+            <div class="finding-example__section">
+              <span class="finding-example__label">Why it matters</span>
+              <p class="finding-example__text">The individual readings may still look acceptable, but the system is no longer behaving like its baseline.</p>
+            </div>
+            <div class="finding-example__section">
+              <span class="finding-example__label">Review next</span>
+              <p class="finding-example__text">Inspect pump performance, filter loading, valve position, or operating schedule changes.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -129,10 +160,10 @@
     <section class="cta-band">
       <div class="container">
         <div class="cta-band__inner">
-          <p class="cta-band__heading">See whether Neraium can add useful visibility to one of your systems.</p>
+          <p class="cta-band__heading">Evaluate one system with your data before expanding.</p>
           <div class="button-row button-row--cta">
-            <a href="pilot.html" class="button button--primary">Request Pilot Access</a>
-            <a href="technical.html" class="button button--ghost">Explore use cases</a>
+            <a href="pilot.html" class="button button--primary">View Pilot Plan</a>
+            <a href="security.html" class="button button--ghost">Review Security</a>
           </div>
         </div>
       </div>
@@ -144,20 +175,21 @@
       <div class="footer__brand">
         <img src="neraium-logo.jpeg" alt="Neraium logo" class="brand-mark brand-mark--footer" width="24" height="24" loading="lazy" decoding="async">
         <span class="brand-text">Neraium</span>
-        <span class="footer__tagline">Facility Monitoring Intelligence</span>
+        <span class="footer__tagline">Read-only monitoring for complex operations</span>
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <a href="platform.html" class="footer__link">Platform</a>
         <a href="technical.html" class="footer__link">Use Cases</a>
         <a href="pilot.html" class="footer__link">Pilot</a>
         <a href="methodology.html" class="footer__link">Methodology</a>
+        <a href="security.html" class="footer__link">Security</a>
         <a href="contact.html" class="footer__link">Contact</a>
       </nav>
       <div class="footer__copy">&copy; <span id="year"></span> Neraium</div>
     </div>
   </footer>
 
-  <a class="mobile-sticky-cta" href="pilot.html" data-track="mobile_sticky_platform">Request Pilot</a>
+  <a class="mobile-sticky-cta" href="pilot.html" data-track="mobile_sticky_platform">View Pilot Plan</a>
   <script src="scripts.js?v=20260522" defer></script>
 </body>
 </html>
