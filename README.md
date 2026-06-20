@@ -1,16 +1,22 @@
 # Neraium Website
 
-This repository contains the static website for Neraium.
+This repository contains the static marketing website for Neraium.
 
 ## Project structure
 
 - `index.html` - home page
-- `platform.html` - platform overview page
-- `technical.html` - technical details page
-- `contact.html` - contact/briefing page
+- `platform.html` - platform overview
+- `technical.html` - use cases
+- `pilot.html` - pilot program overview
+- `methodology.html` - evaluation and pilot verification methodology
+- `security.html` - security and data-handling overview
+- `operator-brief.html` - one-page operator/pilot brief
+- `contact.html` - pilot intake/contact page
 - `styles.css` - shared site styles
-- `site.webmanifest`, `robots.txt`, `sitemap.xml` - site metadata
-- image and icon files (`.png`, `.jpg`, `.ico`) used across pages
+- `scripts.js` - navigation, analytics hooks, forms, ROI calculator, and FAQ behavior
+- `site.webmanifest`, `robots.txt`, `sitemap.xml`, `.well-known/security.txt` - site metadata
+- `tests/test_site.py` - static-site checks for links, anchors, alt text, SEO metadata, and sitemap coverage
+- image, PDF, and icon files used across pages
 
 ## Run locally
 
@@ -21,6 +27,12 @@ python3 -m http.server 8080
 ```
 
 Then visit `http://localhost:8080`.
+
+## Run checks
+
+```bash
+python3 -m unittest discover -s tests
+```
 
 ## Receive/export the website code
 
