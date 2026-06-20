@@ -1,6 +1,7 @@
 import os
 import re
 import unittest
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path
@@ -8,6 +9,7 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SITE_ORIGIN = "https://www.neraium.com"
 
 
 def is_external_url(value: str) -> bool:
@@ -46,11 +48,23 @@ class SiteParser(HTMLParser):
         self.ids: set[str] = set()
         self.imgs: list[dict[str, str]] = []
         self.refs: list[LinkRef] = []
+        self.title_text = ""
+        self.meta_descriptions: list[str] = []
+        self.canonical_links: list[str] = []
+        self._in_title = False
 
     def handle_starttag(self, tag, attrs):
         attrs_dict = {k: v for k, v in attrs if k}
         if "id" in attrs_dict and attrs_dict["id"]:
             self.ids.add(attrs_dict["id"])
+
+        if tag == "title":
+            self._in_title = True
+
+        if tag == "meta":
+            name = (attrs_dict.get("name") or "").lower()
+            if name == "description" and attrs_dict.get("content"):
+                self.meta_descriptions.append(attrs_dict["content"].strip())
 
         if tag == "img":
             self.imgs.append(attrs_dict)
@@ -67,11 +81,21 @@ class SiteParser(HTMLParser):
             href = attrs_dict.get("href")
             if href and rel in ("stylesheet", "icon", "apple-touch-icon", "manifest", "canonical"):
                 self.refs.append(LinkRef(self.source_file, "link", "href", href))
+            if rel == "canonical" and href:
+                self.canonical_links.append(href.strip())
 
         if tag == "script":
             src = attrs_dict.get("src")
             if src:
                 self.refs.append(LinkRef(self.source_file, "script", "src", src))
+
+    def handle_data(self, data):
+        if self._in_title:
+            self.title_text += data
+
+    def handle_endtag(self, tag):
+        if tag == "title":
+            self._in_title = False
 
 
 def load_html(file_path: Path) -> SiteParser:
@@ -88,6 +112,12 @@ def resolve_site_path(raw_path: str) -> Path:
     # Site is flat at repo root; allow leading slash.
     path = raw_path.lstrip("/")
     return (ROOT / path).resolve()
+
+
+def html_file_to_public_url(file_path: Path) -> str:
+    if file_path.name == "index.html":
+        return f"{SITE_ORIGIN}/"
+    return f"{SITE_ORIGIN}/{file_path.name}"
 
 
 class TestStaticSite(unittest.TestCase):
@@ -168,6 +198,32 @@ class TestStaticSite(unittest.TestCase):
                     errors.append(f"{html_file.name}: <img src='{src}'> missing non-empty alt text")
         if errors:
             self.fail("Accessibility issues:\n" + "\n".join(errors))
+
+    def test_every_page_has_basic_seo_metadata(self):
+        errors: list[str] = []
+        for html_file in site_html_files():
+            parsed = load_html(html_file)
+            title = parsed.title_text.strip()
+            description = next((item for item in parsed.meta_descriptions if item), "")
+            canonical = parsed.canonical_links
+            expected_canonical = html_file_to_public_url(html_file)
+            if not title:
+                errors.append(f"{html_file.name}: missing <title>")
+            if not description:
+                errors.append(f"{html_file.name}: missing meta description")
+            if canonical != [expected_canonical]:
+                errors.append(f"{html_file.name}: canonical should be '{expected_canonical}', found {canonical}")
+        if errors:
+            self.fail("SEO metadata issues:\n" + "\n".join(errors))
+
+    def test_sitemap_includes_every_public_html_page(self):
+        sitemap_path = ROOT / "sitemap.xml"
+        self.assertTrue(sitemap_path.exists(), "sitemap.xml is missing")
+        root = ET.parse(sitemap_path).getroot()
+        namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+        sitemap_urls = {node.text.strip() for node in root.findall("sm:url/sm:loc", namespace) if node.text}
+        expected_urls = {html_file_to_public_url(path) for path in site_html_files()}
+        self.assertEqual(expected_urls, sitemap_urls)
 
 
 if __name__ == "__main__":
