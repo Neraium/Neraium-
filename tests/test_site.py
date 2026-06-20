@@ -1,4 +1,3 @@
-import os
 import re
 import unittest
 import xml.etree.ElementTree as ET
@@ -51,6 +50,7 @@ class SiteParser(HTMLParser):
         self.title_text = ""
         self.meta_descriptions: list[str] = []
         self.canonical_links: list[str] = []
+        self.robots_directives: list[str] = []
         self._in_title = False
 
     def handle_starttag(self, tag, attrs):
@@ -63,8 +63,11 @@ class SiteParser(HTMLParser):
 
         if tag == "meta":
             name = (attrs_dict.get("name") or "").lower()
-            if name == "description" and attrs_dict.get("content"):
-                self.meta_descriptions.append(attrs_dict["content"].strip())
+            content = (attrs_dict.get("content") or "").strip()
+            if name == "description" and content:
+                self.meta_descriptions.append(content)
+            if name == "robots" and content:
+                self.robots_directives.append(content.lower())
 
         if tag == "img":
             self.imgs.append(attrs_dict)
@@ -97,6 +100,10 @@ class SiteParser(HTMLParser):
         if tag == "title":
             self._in_title = False
 
+    @property
+    def is_noindex(self) -> bool:
+        return any("noindex" in directive for directive in self.robots_directives)
+
 
 def load_html(file_path: Path) -> SiteParser:
     parser = SiteParser(file_path)
@@ -106,6 +113,10 @@ def load_html(file_path: Path) -> SiteParser:
 
 def site_html_files() -> list[Path]:
     return sorted([p for p in ROOT.glob("*.html") if p.is_file()])
+
+
+def indexable_html_files() -> list[Path]:
+    return [path for path in site_html_files() if not load_html(path).is_noindex]
 
 
 def resolve_site_path(raw_path: str) -> Path:
@@ -211,7 +222,7 @@ class TestStaticSite(unittest.TestCase):
                 errors.append(f"{html_file.name}: missing <title>")
             if not description:
                 errors.append(f"{html_file.name}: missing meta description")
-            if canonical != [expected_canonical]:
+            if not parsed.is_noindex and canonical != [expected_canonical]:
                 errors.append(f"{html_file.name}: canonical should be '{expected_canonical}', found {canonical}")
         if errors:
             self.fail("SEO metadata issues:\n" + "\n".join(errors))
@@ -222,7 +233,7 @@ class TestStaticSite(unittest.TestCase):
         root = ET.parse(sitemap_path).getroot()
         namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
         sitemap_urls = {node.text.strip() for node in root.findall("sm:url/sm:loc", namespace) if node.text}
-        expected_urls = {html_file_to_public_url(path) for path in site_html_files()}
+        expected_urls = {html_file_to_public_url(path) for path in indexable_html_files()}
         self.assertEqual(expected_urls, sitemap_urls)
 
 
