@@ -1,26 +1,25 @@
-# OS
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Editor / IDE
-*.swp
-*.swo
-*~
-.idea/
-.vscode/
-*.sublime-*
-
-# Logs and temp
-*.log
-*.tmp
-*.temp
-*.bak
 
 # Archives (if you generate zips locally)
-*.zip
-
+# Editor / IDE
+# Logs and temp
+# OS
 # Python bytecode
-__pycache__/
+*.bak
+*.log
 *.pyc
 *.pyo
+*.sublime-*
+*.swo
+*.swp
+*.temp
+*.tmp
+*.zip
+*~
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+__pycache__/
+artifacts/
+desktop.ini
+node_modules/

@@ -1,0 +1,28 @@
+{
+  "name": "neraium-",
+  "version": "1.0.0",
+  "description": "This repository contains the static marketing website for Neraium.",
+  "main": "scripts.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neraium/Neraium-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Neraium/Neraium-/issues"
+  },
+  "homepage": "https://github.com/Neraium/Neraium-#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "lighthouse": "^13.4.1",
+    "playwright": "^1.62.1"
+  }
+}

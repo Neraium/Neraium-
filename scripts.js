@@ -43,6 +43,7 @@
   if (nav && toggleButton) {
     const setExpanded = (isExpanded) => {
       toggleButton.setAttribute("aria-expanded", String(isExpanded));
+      toggleButton.setAttribute("aria-label", isExpanded ? "Close navigation" : "Open navigation");
     };
 
     toggleButton.addEventListener("click", (e) => {
@@ -70,7 +71,7 @@
     });
 
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 640 && nav.classList.contains("open")) {
+      if (window.innerWidth > 980 && nav.classList.contains("open")) {
         nav.classList.remove("open");
         setExpanded(false);
       }
