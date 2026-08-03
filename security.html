@@ -3,127 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#06070a">
-  <title>Neraium Security | Data Handling and Read-Only Deployment</title>
-  <meta name="description" content="Neraium security and data handling overview: read-only architecture, scoped access, retention boundaries, and pilot deployment controls.">
-  <meta property="og:title" content="Neraium Security | Data Handling and Read-Only Deployment">
-  <meta property="og:description" content="Security posture and data handling for pilot and production deployments.">
-  <meta property="og:image" content="https://www.neraium.com/hero.png">
+  <meta name="theme-color" content="#080a0d">
+  <title>Neraium Security | Read-Only Data Boundaries</title>
+  <meta name="description" content="Review Neraium's read-only operating boundary, scoped data access, historical assessment path, retention decisions, and human-review controls.">
+  <meta property="og:title" content="Neraium Security | Read-Only Data Boundaries">
+  <meta property="og:description" content="A clear data and control boundary for infrastructure intelligence assessments.">
+  <meta property="og:image" content="https://www.neraium.com/neraium-product-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Neraium interface showing a persistent relationship-change finding">
   <meta property="og:url" content="https://www.neraium.com/security.html">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Neraium">
+  <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Neraium Security">
-  <meta name="twitter:description" content="Read-only architecture, data boundaries, and operational access model.">
-  <meta name="twitter:image" content="https://www.neraium.com/hero.png">
-  <meta name='ga4-measurement-id' content='G-XXXXXXXXXX'>
+  <meta name="twitter:description" content="Read-only architecture, scoped data access, and review boundaries.">
+  <meta name="twitter:image" content="https://www.neraium.com/neraium-product-preview.png">
+  <meta name="twitter:image:alt" content="Neraium interface showing a persistent relationship-change finding">
+  <meta name="ga4-measurement-id" content="G-XXXXXXXXXX">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="canonical" href="https://www.neraium.com/security.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20260522">
+  <link rel="stylesheet" href="styles.css?v=20260801">
   <link rel="manifest" href="site.webmanifest">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Neraium provides read-only infrastructure intelligence for telemetry-rich operational systems."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","@id":"https://www.neraium.com/security.html#webpage","url":"https://www.neraium.com/security.html","name":"Security","description":"Neraium read-only data and control boundaries.","isPartOf":{"@id":"https://www.neraium.com/#website"},"about":{"@id":"https://www.neraium.com/#organization"}}]}</script>
 </head>
-<body>
+<body class="has-mobile-cta">
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="index.html" class="brand">
-        <img src="neraium-logo.jpeg" alt="Neraium logo" class="brand-mark" width="28" height="28" decoding="async">
-        <span class="brand-text">Neraium</span>
-      </a>
-      <nav class="nav" id="main-navigation" aria-label="Main navigation">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="platform.html" class="nav-link">Platform</a>
-        <a href="technical.html" class="nav-link">Use Cases</a>
-        <a href="pilot.html" class="nav-link">Pilot</a>
-        <a href="methodology.html" class="nav-link">Methodology</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </nav>
-      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="main-navigation" aria-expanded="false">
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-      </button>
-    </div>
-  </header>
+  <header class="site-header"><div class="container site-header__inner"><a href="index.html" class="brand" aria-label="Neraium home"><img src="neraium-logo.jpeg" alt="Neraium logo" class="brand-mark" width="28" height="22" decoding="async"><span class="brand-text">Neraium</span></a><nav class="nav" id="main-navigation" aria-label="Main navigation"><a href="index.html" class="nav-link">Home</a><a href="platform.html" class="nav-link">Platform</a><a href="technical.html" class="nav-link">Use Cases</a><a href="pilot.html" class="nav-link">Pilot</a><a href="contact.html" class="nav-link">Contact</a></nav><a class="header-action" href="contact.html">Pilot review</a><button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="main-navigation" aria-expanded="false"><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span></button></div></header>
+
   <main id="main">
-    <section class="page-hero">
-      <div class="container">
-        <span class="eyebrow">Security</span>
-        <h1 class="page-hero__title">Read-only by design</h1>
-        <p class="page-hero__sub">Neraium is designed for observational analysis and operator decision support, not control-layer writes.</p>
+    <section class="page-hero"><div class="container platform-hero__layout"><div class="platform-hero__copy"><p class="eyebrow">Security and data handling</p><h1 class="page-hero__title">Read-only is the operating boundary.</h1><p class="page-hero__sub">Neraium observes approved operational data. It does not write to control systems, issue commands, change setpoints, or control equipment.</p><div class="button-row"><a class="button button--primary" href="contact.html">Discuss Requirements</a><a class="button button--secondary" href="#data-boundary">Review Data Handling</a></div></div><aside class="boundary-card" aria-label="Control boundary"><span class="boundary-card__label">Control access</span><strong>None required</strong><ul><li>Historical export supported</li><li>Read-only live source optional</li><li>Engineering authority unchanged</li></ul></aside></div></section>
+
+    <section class="section section--band" id="data-boundary">
+      <div class="container"><div class="section-heading section-heading--split"><div><p class="eyebrow">Architecture boundary</p><h2>Existing control systems remain separate.</h2></div><p class="section-intro">The analysis path is defined around approved data sources and a documented review workflow.</p></div>
+        <ol class="data-flow" aria-label="Security data flow"><li class="data-flow__node"><span class="data-flow__step">01 / Owner</span><h3>Source approval</h3><p>The environment owner identifies the permitted system, signals, period, and transfer method.</p></li><li class="data-flow__connector" aria-hidden="true">→</li><li class="data-flow__node"><span class="data-flow__step">02 / Access</span><h3>Read-only ingestion</h3><p>Historical files or an approved source provide observational data without a write path.</p></li><li class="data-flow__connector" aria-hidden="true">→</li><li class="data-flow__node"><span class="data-flow__step">03 / Analysis</span><h3>Scoped processing</h3><p>Only the agreed system and data are included in the assessment or monitoring scope.</p></li><li class="data-flow__connector" aria-hidden="true">→</li><li class="data-flow__node"><span class="data-flow__step">04 / Review</span><h3>Human-reviewed output</h3><p>Findings and supporting evidence are provided to authorized reviewers.</p></li></ol>
+        <p class="architecture-boundary"><strong>Control boundary:</strong> no control-system credentials or write permissions are required for a historical assessment.</p>
       </div>
     </section>
+
     <section class="section">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Architecture</p>
-          <h2>Data access boundaries</h2>
-        </div>
-        <div class="trust-center-grid">
-          <article class="card">
-            <h3>Read-only telemetry model</h3>
-            <p class="copy">Connectors ingest observational data only. Neraium does not write into control systems.</p>
-          </article>
-          <article class="card">
-            <h3>Scoped access controls</h3>
-            <p class="copy">Source mappings and role boundaries are defined per environment before pilot start.</p>
-          </article>
-          <article class="card">
-            <h3>Operator-first outputs</h3>
-            <p class="copy">Findings are designed for review and human decision making, not autonomous control actions.</p>
-          </article>
-          <article class="card">
-            <h3>Deployment boundaries</h3>
-            <p class="copy">Pilot scope documents approved data sources, retention windows, and review workflows.</p>
-          </article>
-        </div>
-      </div>
+      <div class="container content-rail"><div class="rail-label"><p class="eyebrow">Data handling</p><h2>Decisions are made before data moves.</h2></div><ol class="step-list"><li><span>01</span><h3>Define the minimum scope</h3><p>Agree the selected system, signals, time window, and operating question.</p></li><li><span>02</span><h3>Approve the transfer path</h3><p>Use a customer-approved export, secure transfer process, database path, or read-only API.</p></li><li><span>03</span><h3>Set access and review roles</h3><p>Identify who may provide data, review findings, and receive assessment outputs.</p></li><li><span>04</span><h3>Agree retention and closeout</h3><p>Document retention, return, or deletion expectations for the selected engagement.</p></li></ol></div>
     </section>
+
     <section class="section section--band">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Controls</p>
-          <h2>Trust-center checklist</h2>
-        </div>
-        <ul class="bullet-list">
-          <li>Data access approved by environment owner before ingestion.</li>
-          <li>No control-system write paths enabled during pilot.</li>
-          <li>Role-permission mapping reviewed with operator stakeholders.</li>
-          <li>Benchmark evaluation results clearly separated from live production outcomes.</li>
-        </ul>
-      </div>
+      <div class="container"><div class="section-heading"><p class="eyebrow">Assessment controls</p><h2>Practical controls for a bounded review.</h2></div><div class="principle-grid"><article><span class="card-index">01</span><h3>Least data needed</h3><p>The first assessment is limited to the signals and history needed for the agreed system question.</p></article><article><span class="card-index">02</span><h3>Named operating owner</h3><p>Source approval and engineering review remain with the organization responsible for the system.</p></article><article><span class="card-index">03</span><h3>Separated outputs</h3><p>Validation examples, data-quality observations, and system-behavior findings are labeled distinctly.</p></article></div></div>
     </section>
+
     <section class="section">
-      <div class="container">
-        <div class="button-row">
-          <a class="button button--primary" href="contact.html">Discuss Security Requirements</a>
-          <a class="button button--ghost" href="pilot.html">Return to Pilot</a>
-        </div>
-      </div>
+      <div class="container technical-split"><div><p class="eyebrow">Deployment path</p><h2>Historical first. Live only after review.</h2><p class="copy-large">A historical assessment can be completed without any persistent source connection. If live monitoring is later justified, its authentication, network path, access controls, and retention are reviewed as a separate deployment decision.</p></div><aside class="does-not-card"><span class="does-not-card__label">No implied certification</span><ul><li>Security requirements are reviewed per environment</li><li>Deployment controls depend on the approved architecture</li><li>No compliance certification is claimed on this page</li><li>Customer security review remains authoritative</li></ul></aside></div>
     </section>
+
+    <section class="cta-band"><div class="container cta-band__inner"><div><p class="eyebrow">Security review</p><p class="cta-band__heading">Map the data boundary before the assessment.</p></div><div class="button-row button-row--cta"><a class="button button--primary" href="contact.html">Discuss Security Requirements</a><a class="button button--secondary" href="platform.html#architecture">Review Architecture</a></div></div></section>
   </main>
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__brand">
-        <img src="neraium-logo.jpeg" alt="Neraium logo" class="brand-mark brand-mark--footer" width="24" height="24" loading="lazy" decoding="async">
-        <span class="brand-text">Neraium</span>
-        <span class="footer__tagline">Systemic Infrastructure Intelligence</span>
-      </div>
-      <nav class="footer__nav" aria-label="Footer navigation">
-        <a href="platform.html" class="footer__link">Platform</a>
-        <a href="technical.html" class="footer__link">Use Cases</a>
-        <a href="pilot.html" class="footer__link">Pilot</a>
-        <a href="methodology.html" class="footer__link">Methodology</a>
-        <a href="security.html" class="footer__link">Security</a>
-        <a href="contact.html" class="footer__link">Contact</a>
-      </nav>
-      <div class="footer__copy">&copy; <span id="year"></span> Neraium</div>
-    </div>
-  </footer>
-  <a class="mobile-sticky-cta" href="contact.html" data-track="mobile_sticky_security">Contact</a>
-  <script src="scripts.js?v=20260522" defer></script>
+
+  <footer class="footer"><div class="container footer__inner"><div class="footer__brand"><span class="footer__wordmark">Neraium</span><span class="footer__tagline">Read-only infrastructure intelligence</span></div><nav class="footer__nav" aria-label="Footer navigation"><a href="platform.html" class="footer__link">Platform</a><a href="technical.html" class="footer__link">Use Cases</a><a href="pilot.html" class="footer__link">Pilot</a><a href="methodology.html" class="footer__link">Methodology</a><a href="security.html" class="footer__link">Security</a><a href="operator-brief.html" class="footer__link">Operator Brief</a><a href="contact.html" class="footer__link">Contact</a></nav><div class="footer__copy">&copy; <span id="year"></span> Neraium</div></div></footer>
+  <a class="mobile-sticky-cta" href="contact.html" data-track="mobile_sticky_security">Discuss Requirements</a>
+  <script src="scripts.js?v=20260801" defer></script>
 </body>
 </html>

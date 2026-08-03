@@ -256,11 +256,11 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     def test_homepage_hero_positioning_and_ctas(self):
         text = self.normalized(self.index)
-        self.assertIn("Systemic infrastructure intelligence", text)
-        self.assertIn("See when a chilled-water system stops behaving like itself.", text)
+        self.assertIn("Infrastructure intelligence", text)
+        self.assertIn("See when infrastructure stops behaving like itself.", text)
         self.assertIn(
-            "Neraium learns the operating relationships between flow, pressure, demand, "
-            "temperature, valve response, and equipment behavior.",
+            "Neraium learns how complex systems normally operate. When persistent relationships "
+            "change, it presents the evidence and shows engineers where investigation should begin.",
             text,
         )
         self.assert_link(self.index, "Request a Pilot Review", "contact.html")
@@ -269,12 +269,13 @@ class TestPositioningAndExperience(unittest.TestCase):
     def test_homepage_answers_required_product_questions(self):
         text = self.normalized(self.index)
         required_phrases = (
-            "chilled-water system",
-            "persistent changes",
-            "evidence engineers can investigate",
-            "Read-only",
+            "Threshold alarms watch individual values",
+            "Persistent relationship change",
+            "Supporting relationships",
+            "Read-only by design",
             "Uses existing operational data",
-            "Human-reviewed findings",
+            "Human reviewed",
+            "Engineers remain in control",
             "Evaluate Neraium using one real system",
         )
         for phrase in required_phrases:
@@ -287,7 +288,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertIn('id="relationship-evidence"', self.index)
         required_finding_copy = (
             "Simulated validation example",
-            "not a customer result",
+            "Not a customer result",
             "Pump demand no longer matches expected flow response",
             "139.9 hours",
             "16 changes",
@@ -298,7 +299,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in required_finding_copy:
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, text)
-        self.assert_link(self.index, "View Evidence", "sample-finding-pack.pdf")
+        self.assert_link(self.index, "View Evidence", "platform.html#platform-evidence")
 
     def test_read_only_and_human_review_boundaries(self):
         for page_name, html in (("index.html", self.index), ("platform.html", self.platform)):
@@ -312,13 +313,16 @@ class TestPositioningAndExperience(unittest.TestCase):
         text = self.normalized(self.platform)
         required_concepts = (
             "Architecture and data flow",
+            "Data sources and signal mapping",
             "Relationship analysis",
+            "Learned relationships",
             "Persistence testing",
             "Operational-mode awareness",
             "Data quality is kept separate from physical behavior",
             "Historical assessment",
             "Live monitoring",
             "Human in the loop",
+            "What Neraium does not do",
         )
         for phrase in required_concepts:
             with self.subTest(phrase=phrase):
@@ -326,18 +330,21 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     def test_homepage_section_order(self):
         section_ids = (
+            "operational-problem",
             "what-neraium-detects",
             "example-finding",
             "how-it-works",
             "engineering-trust",
+            "where-it-applies",
             "pilot-process",
         )
         positions = [self.index.index(f'id="{section_id}"') for section_id in section_ids]
         self.assertEqual(positions, sorted(positions))
 
     def test_required_social_metadata_and_structured_data(self):
-        for page_name, html in (("index.html", self.index), ("platform.html", self.platform)):
-            with self.subTest(page=page_name):
+        for html_file in indexable_html_files():
+            html = html_file.read_text(encoding="utf-8")
+            with self.subTest(page=html_file.name):
                 for marker in (
                     'property="og:title"',
                     'property="og:description"',
@@ -354,12 +361,16 @@ class TestPositioningAndExperience(unittest.TestCase):
                     html,
                     re.DOTALL,
                 )
-                self.assertIsNotNone(match, f"{page_name} is missing JSON-LD")
+                self.assertIsNotNone(match, f"{html_file.name} is missing JSON-LD")
                 payload = json.loads(match.group(1))
                 self.assertEqual(payload.get("@context"), "https://schema.org")
                 graph_types = {item.get("@type") for item in payload.get("@graph", [])}
                 self.assertIn("Organization", graph_types)
-                self.assertIn("WebPage", graph_types)
+                self.assertIn("WebSite", graph_types)
+                self.assertTrue(
+                    graph_types.intersection({"WebPage", "ContactPage"}),
+                    f"{html_file.name} is missing a page schema type",
+                )
 
     def test_responsive_navigation_contract(self):
         for page_name, html in (("index.html", self.index), ("platform.html", self.platform)):
@@ -385,18 +396,36 @@ class TestPositioningAndExperience(unittest.TestCase):
                 self.assertIn('aria-label="Footer navigation"', html)
 
     def test_no_disallowed_claims_were_introduced(self):
-        changed_pages = f"{self.index}\n{self.platform}".lower()
+        changed_pages = "\n".join(path.read_text(encoding="utf-8") for path in site_html_files()).lower()
         disallowed = (
+            "ai-powered",
+            "revolutionary",
+            "predictive failure",
             "predicts failures",
             "prevents failures",
             "diagnoses root cause",
             "guarantees early warning",
             "replaces engineers",
             "autonomously controls",
+            "single pane of glass",
         )
         for claim in disallowed:
             with self.subTest(claim=claim):
                 self.assertNotIn(claim, changed_pages)
+
+    def test_no_em_dashes_in_public_source(self):
+        source_files = [*site_html_files(), ROOT / "styles.css", ROOT / "scripts.js"]
+        for source_file in source_files:
+            with self.subTest(file=source_file.name):
+                self.assertNotIn("—", source_file.read_text(encoding="utf-8"))
+
+    def test_all_public_pages_use_current_positioning(self):
+        for html_file in indexable_html_files():
+            text = self.normalized(html_file.read_text(encoding="utf-8")).lower()
+            with self.subTest(page=html_file.name):
+                self.assertIn("read-only", text)
+                self.assertNotIn("systemic infrastructure intelligence", text)
+                self.assertNotIn("early failure", text)
 
 
 if __name__ == "__main__":

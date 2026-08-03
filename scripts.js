@@ -111,6 +111,28 @@
   window.addEventListener("scroll", onScrollDepth, { passive: true });
   onScrollDepth();
 
+  const mobileStickyCta = document.querySelector(".mobile-sticky-cta");
+  const pageHero = document.querySelector(".page-hero");
+  if (mobileStickyCta && pageHero) {
+    const setMobileStickyVisibility = (isVisible) => {
+      mobileStickyCta.classList.toggle("is-visible", isVisible);
+      mobileStickyCta.setAttribute("aria-hidden", String(!isVisible));
+      if (isVisible) {
+        mobileStickyCta.removeAttribute("tabindex");
+      } else {
+        mobileStickyCta.setAttribute("tabindex", "-1");
+      }
+    };
+
+    setMobileStickyVisibility(false);
+    if ("IntersectionObserver" in window) {
+      const heroObserver = new IntersectionObserver(([entry]) => {
+        setMobileStickyVisibility(!entry.isIntersecting);
+      });
+      heroObserver.observe(pageHero);
+    }
+  }
+
   const contactForm = document.getElementById("contact-form");
   const formFeedback = document.getElementById("form-feedback");
   const formStartedAt = document.getElementById("form-started-at");
@@ -227,30 +249,6 @@
         trackEvent("contact_submit_error", { path: window.location.pathname });
       }
     });
-  }
-
-  const roiCalc = document.getElementById("roi-calc");
-  if (roiCalc) {
-    const incidentCost = document.getElementById("roi-incident-cost");
-    const incidentRate = document.getElementById("roi-incident-rate");
-    const preventRate = document.getElementById("roi-prevent-rate");
-    const result = document.getElementById("roi-result");
-    const output = () => {
-      const cost = Number(incidentCost?.value || 0);
-      const rate = Number(incidentRate?.value || 0);
-      const prevent = Number(preventRate?.value || 0) / 100;
-      const annual = Math.max(0, cost * rate * prevent);
-      if (result) {
-        result.textContent = `$${annual.toLocaleString()} potential annual avoided loss`;
-      }
-      trackEvent("roi_calculated", { cost, rate, prevent });
-    };
-    [incidentCost, incidentRate, preventRate].forEach((el) => {
-      if (el) {
-        el.addEventListener("input", output);
-      }
-    });
-    output();
   }
 
   const faqList = document.querySelector("[data-faq-list]");

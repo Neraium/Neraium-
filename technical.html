@@ -1,245 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#06070a">
-  <title>Neraium Use Cases | Structural Instability Detection Across Infrastructure</title>
-  <meta name="description" content="Neraium structural instability detection spans controlled environments, water infrastructure, and critical systems, and is deployable across sensor-rich operations.">
-  <meta property="og:title" content="Neraium Use Cases | Structural Instability Detection Across Infrastructure">
-  <meta property="og:description" content="Evaluated in controlled benchmark settings, with pilots planned across water systems and critical industrial infrastructure.">
-  <meta property="og:image" content="https://www.neraium.com/hero.png">
+  <meta name="theme-color" content="#080a0d">
+  <title>Neraium Use Cases | Telemetry-Rich Infrastructure</title>
+  <meta name="description" content="Review where Neraium relationship analysis may be useful, the telemetry and operating context it requires, and the systems that can be evaluated.">
+  <meta property="og:title" content="Neraium Use Cases | Telemetry-Rich Infrastructure">
+  <meta property="og:description" content="Evaluate relationship-change monitoring against one real operational system.">
+  <meta property="og:image" content="https://www.neraium.com/neraium-product-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Neraium interface showing a persistent relationship-change finding">
   <meta property="og:url" content="https://www.neraium.com/technical.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Neraium">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Neraium Use Cases">
-  <meta name="twitter:description" content="Structural instability detection for sensor-rich environments and critical systems.">
-  
-  <meta name='ga4-measurement-id' content='G-XXXXXXXXXX'>
+  <meta name="twitter:description" content="Use-case fit for read-only infrastructure intelligence.">
+  <meta name="twitter:image" content="https://www.neraium.com/neraium-product-preview.png">
+  <meta name="twitter:image:alt" content="Neraium interface showing a persistent relationship-change finding">
+  <meta name="ga4-measurement-id" content="G-XXXXXXXXXX">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="canonical" href="https://www.neraium.com/technical.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20260522">
+  <link rel="stylesheet" href="styles.css?v=20260801">
   <link rel="manifest" href="site.webmanifest">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Neraium provides Systemic Infrastructure Intelligence, early instability detection through structural relationship modeling in multivariate telemetry."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","@id":"https://www.neraium.com/technical.html#webpage","url":"https://www.neraium.com/technical.html","name":"Use Cases","isPartOf":{"@id":"https://www.neraium.com/#website"},"about":{"@id":"https://www.neraium.com/#organization"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Neraium provides read-only infrastructure intelligence for telemetry-rich operational systems."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","@id":"https://www.neraium.com/technical.html#webpage","url":"https://www.neraium.com/technical.html","name":"Use Cases","description":"Use-case fit for Neraium relationship analysis.","isPartOf":{"@id":"https://www.neraium.com/#website"},"about":{"@id":"https://www.neraium.com/#organization"}}]}</script>
 </head>
-
-<body>
+<body class="has-mobile-cta">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="container site-header__inner">
-      <a href="index.html" class="brand">
-        <img src="neraium-logo.jpeg" alt="Neraium logo" class="brand-mark" width="28" height="28" decoding="async">
-        <span class="brand-text">Neraium</span>
-      </a>
-
-      <nav class="nav" id="main-navigation" aria-label="Main navigation">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="platform.html" class="nav-link">Platform</a>
-        <a href="technical.html" class="nav-link active" aria-current="page">Use Cases</a>
-        <a href="pilot.html" class="nav-link">Pilot</a>
-        <a href="methodology.html" class="nav-link">Methodology</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </nav>
-
-      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="main-navigation" aria-expanded="false">
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-      </button>
+      <a href="index.html" class="brand" aria-label="Neraium home"><img src="neraium-logo.jpeg" alt="Neraium logo" class="brand-mark" width="28" height="22" decoding="async"><span class="brand-text">Neraium</span></a>
+      <nav class="nav" id="main-navigation" aria-label="Main navigation"><a href="index.html" class="nav-link">Home</a><a href="platform.html" class="nav-link">Platform</a><a href="technical.html" class="nav-link active" aria-current="page">Use Cases</a><a href="pilot.html" class="nav-link">Pilot</a><a href="contact.html" class="nav-link">Contact</a></nav>
+      <a class="header-action" href="contact.html" data-track="header_request_review">Pilot review</a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="main-navigation" aria-expanded="false"><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span></button>
     </div>
   </header>
 
   <main id="main">
     <section class="page-hero">
       <div class="container">
-        <span class="eyebrow">Use Cases</span>
-        <h1 class="page-hero__title">Structural instability detection for high-stakes systems</h1>
-        <p class="page-hero__sub">Evaluated in controlled benchmark environments and designed for water infrastructure, production systems, and other critical assets where risk begins as structural change.</p>
+        <p class="eyebrow">Use-case fit</p>
+        <h1 class="page-hero__title">Where relationship monitoring earns its place.</h1>
+        <p class="page-hero__sub">Neraium is intended for complex operational systems where multiple signals, known operating context, and engineering review can make persistent relationship change useful.</p>
+        <div class="button-row"><a class="button button--primary" href="contact.html">Review One System</a><a class="button button--secondary" href="#fit-criteria">Check the Fit Criteria</a></div>
+        <dl class="platform-summary" aria-label="Use-case fit summary"><div><dt>Telemetry</dt><dd>Multiple related operational signals</dd></div><div><dt>Context</dt><dd>Modes, schedules, staging, maintenance, and demand</dd></div><div><dt>Review</dt><dd>An engineering team able to assess the evidence</dd></div></dl>
       </div>
     </section>
 
-    <section class="editorial">
-      <div class="container editorial__grid">
-        <div class="editorial__label">
-          <span class="eyebrow">Current deployment</span>
-        </div>
-        <div class="editorial__body">
-          <h2>Benchmarked in controlled environments</h2>
-          <p>
-            Controlled operations with dense telemetry, repeatable cycles, and documented failure histories create ideal conditions for validating structural instability detection. Initial pilots in cultivation, commercial pools in Las Vegas, and similar facilities are used to verify the detection framework before broader infrastructure expansion.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="editorial editorial--dark" id="pilot-outputs">
-      <div class="container editorial__grid">
-        <div class="editorial__label">
-          <span class="eyebrow">Pilot outputs</span>
-        </div>
-        <div class="editorial__body">
-          <h2>Structured findings operators can act on</h2>
-          <p>
-            A finding is not a score or a chart. It is a structured explanation of emerging system instability: what relationships are breaking, how fast, how certain, and what action window remains.
-          </p>
-
-          <div class="finding-example">
-            <div class="finding-example__header">
-              <span class="finding-example__label">System State</span>
-              <span class="finding-example__value">Drifting</span>
-            </div>
-
-            <div class="finding-example__section">
-              <span class="finding-example__label">Structural Drift</span>
-              <span class="finding-example__value">0.58 (upward, accelerating)</span>
-              <p class="finding-example__note">Magnitude and direction of change</p>
-            </div>
-
-            <div class="finding-example__section">
-              <span class="finding-example__label">Primary Finding</span>
-              <span class="finding-example__text">Pressure-temperature relationship weakening in cooling subsystem</span>
-              <p class="finding-example__note">Not a sensor reading. A relationship change.</p>
-            </div>
-
-            <div class="finding-example__section">
-              <span class="finding-example__label">Time Context</span>
-              <div class="finding-example__timeline">
-                <p>Instability detected 36 cycles ago</p>
-                <p>Acceleration observed over last 8 cycles</p>
-              </div>
-              <p class="finding-example__note">When it started and how it is evolving</p>
-            </div>
-
-            <div class="finding-example__section">
-              <span class="finding-example__label">Urgency &amp; Action Window</span>
-              <span class="finding-example__value">Moderate to high</span>
-              <p class="finding-example__text">Estimated intervention window: 60-120 cycles</p>
-              <p class="finding-example__note">Not a prediction. Time to decide and act.</p>
-            </div>
-
-            <div class="finding-example__section">
-              <span class="finding-example__label">Confidence</span>
-              <span class="finding-example__value">0.82</span>
-              <p class="finding-example__text">Persistent drift + relational breakdown + covariance shift</p>
-              <p class="finding-example__note">Evidence strength. Why you should trust this.</p>
-            </div>
-
-            <div class="finding-example__section">
-              <span class="finding-example__label">Operator Focus</span>
-              <div class="finding-example__list">
-                <p>Cooling loop integrity</p>
-                <p>Flow consistency across load conditions</p>
-              </div>
-              <p class="finding-example__note">Decision support, not automation</p>
-            </div>
-          </div>
-
-          <div class="micro-cta">
-            <a class="button button--ghost" href="sample-finding-pack.pdf">Download sample findings</a>
-          </div>
+    <section class="section section--band" id="fit-criteria">
+      <div class="container content-rail">
+        <div class="rail-label"><p class="eyebrow">Fit criteria</p><h2>A system first, not a sector first.</h2><p>Suitability is established from the data and the operating question.</p></div>
+        <div class="criteria-grid">
+          <article class="criteria-card"><span>01 / Signals</span><h3>Related telemetry exists</h3><p>Pressure, flow, temperature, demand, commands, states, or other signals describe connected system behavior.</p></article>
+          <article class="criteria-card"><span>02 / History</span><h3>A baseline can be established</h3><p>Approved historical data covers enough normal operation to represent relevant modes and ranges.</p></article>
+          <article class="criteria-card"><span>03 / Context</span><h3>Operating changes can be explained</h3><p>Schedules, staging, maintenance, known interventions, and demand conditions are available for review.</p></article>
+          <article class="criteria-card"><span>04 / Question</span><h3>The team has a review goal</h3><p>Engineers can state which system behavior needs better visibility and how a useful finding would be judged.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="editorial editorial--dark">
+    <section class="section">
       <div class="container">
-        <div class="platform-section__header">
-          <span class="eyebrow">Next targets</span>
-          <h2>Critical infrastructure systems</h2>
-        </div>
-
-        <div class="platform-grid">
-          <div class="platform-card">
-            <div class="platform-card__number">01</div>
-            <div class="platform-card__label">Water systems</div>
-            <p class="platform-card__text">Pumping, treatment, and distribution with complex operating regimes and structural coupling.</p>
-          </div>
-
-          <div class="platform-card">
-            <div class="platform-card__number">02</div>
-            <div class="platform-card__label">Production and manufacturing</div>
-            <p class="platform-card__text">Industrial systems where hidden signal relationships change before visible failure or quality loss.</p>
-          </div>
-
-          <div class="platform-card">
-            <div class="platform-card__number">03</div>
-            <div class="platform-card__label">Multi-signal critical systems</div>
-            <p class="platform-card__text">Any infrastructure where dense telemetry reveals degradation through relationship changes, not just threshold excursions.</p>
-          </div>
+        <div class="section-heading section-heading--split"><div><p class="eyebrow">Systems to evaluate</p><h2>Broad enough to be useful. Bounded enough to be credible.</h2></div><p class="section-intro">These are candidate application areas, not claims of deployment in every environment.</p></div>
+        <div class="spec-grid">
+          <article class="spec-card"><span>Water</span><h3>Water infrastructure</h3><p>Pumping, filtration, treatment, storage, and distribution systems with connected operational signals.</p></article>
+          <article class="spec-card"><span>Hydronics</span><h3>Hydronic systems</h3><p>Flow, pressure, valve response, temperature, demand, and staged equipment behavior.</p></article>
+          <article class="spec-card"><span>Central plants</span><h3>Chilled-water plants</h3><p>Plant demand, pump response, differential pressure, thermal response, staging, and equipment states.</p></article>
+          <article class="spec-card"><span>Cooling</span><h3>Cooling infrastructure</h3><p>Cooling loops, heat-transfer systems, pumps, valves, and related facility telemetry.</p></article>
+          <article class="spec-card"><span>Networks</span><h3>Pumps, filters, and valves</h3><p>Connected asset groups where command, demand, pressure, flow, and response can be evaluated together.</p></article>
+          <article class="spec-card"><span>Facilities</span><h3>Complex facility systems</h3><p>Telemetry-rich operational systems in large facilities, campuses, and resort engineering environments.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="editorial">
-      <div class="container editorial__grid">
-        <div class="editorial__label">
-          <span class="eyebrow">Why it scales</span>
-        </div>
-        <div class="editorial__body">
-          <h2>Universal method, any multivariate system</h2>
-          <p>
-            Structural instability detection depends on telemetry quality, operating context, and the presence of relationship patterns that change before failure. It does not depend on one vertical, one facility design, or one equipment type. It transfers wherever early degradation appears as structural change.
-          </p>
-          <div class="micro-cta">
-            <a class="button button--ghost" href="platform.html">See the platform</a>
-          </div>
-        </div>
+    <section class="section section--band">
+      <div class="container technical-split">
+        <div><p class="eyebrow">Signal families</p><h2>Relationships need operational meaning.</h2><p class="copy-large">The useful unit is not a tag in isolation. It is a mapped relationship that an engineer recognizes within the system.</p></div>
+        <div class="mapping-ledger" role="table" aria-label="Example signal relationships"><div class="mapping-ledger__header" role="row"><span role="columnheader">Signal A</span><span role="columnheader">Signal B</span><span role="columnheader">Review question</span></div><div role="row"><span role="cell">Demand</span><span role="cell">Flow</span><span role="cell">Does response still match?</span></div><div role="row"><span role="cell">Pressure</span><span role="cell">Flow</span><span role="cell">Has the curve shifted?</span></div><div role="row"><span role="cell">Valve command</span><span role="cell">Temperature</span><span role="cell">Has timing changed?</span></div><div role="row"><span role="cell">Equipment state</span><span role="cell">System output</span><span role="cell">Is staging behavior consistent?</span></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container content-rail">
+        <div class="rail-label"><p class="eyebrow">Poor-fit conditions</p><h2>When Neraium may not be useful.</h2></div>
+        <div class="does-not-card"><ul><li>Only one isolated signal is available</li><li>Historical data is too sparse to establish behavior</li><li>Operating modes cannot be distinguished</li><li>Signal meaning or timing cannot be validated</li><li>No engineering owner is available to review findings</li><li>The use case requires automated equipment control</li></ul></div>
       </div>
     </section>
 
     <section class="cta-band">
-      <div class="container">
-        <div class="cta-band__inner">
-          <p class="cta-band__heading">Establish structural instability lead time for your environment.</p>
-          <div class="button-row button-row--cta">
-            <a href="pilot.html" class="button button--primary">Request Pilot Briefing</a>
-            <a href="platform.html" class="button button--ghost">Platform detail</a>
-          </div>
-        </div>
-      </div>
+      <div class="container cta-band__inner"><div><p class="eyebrow">Assess the fit</p><p class="cta-band__heading">Start with one system and one review question.</p></div><div class="button-row button-row--cta"><a href="contact.html" class="button button--primary">Request a Pilot Review</a><a href="platform.html" class="button button--secondary">Review the Platform</a></div></div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__brand">
-        <img src="neraium-logo.jpeg" alt="Neraium logo" class="brand-mark brand-mark--footer" width="24" height="24" loading="lazy" decoding="async">
-        <span class="brand-text">Neraium</span>
-        <span class="footer__tagline">Systemic Infrastructure Intelligence</span>
-      </div>
-      <nav class="footer__nav" aria-label="Footer navigation">
-        <a href="platform.html" class="footer__link">Platform</a>
-        <a href="technical.html" class="footer__link">Use Cases</a>
-        <a href="pilot.html" class="footer__link">Pilot</a>
-        <a href="methodology.html" class="footer__link">Methodology</a>
-        <a href="contact.html" class="footer__link">Contact</a>
-      </nav>
-      <div class="footer__copy">&copy; <span id="year"></span> Neraium</div>
-    </div>
-  </footer>
-
-  <a class="mobile-sticky-cta" href="pilot.html" data-track="mobile_sticky_use_cases">Request Briefing</a>
-
-  <script src="scripts.js?v=20260522" defer></script>
+  <footer class="footer"><div class="container footer__inner"><div class="footer__brand"><span class="footer__wordmark">Neraium</span><span class="footer__tagline">Read-only infrastructure intelligence</span></div><nav class="footer__nav" aria-label="Footer navigation"><a href="platform.html" class="footer__link">Platform</a><a href="technical.html" class="footer__link">Use Cases</a><a href="pilot.html" class="footer__link">Pilot</a><a href="methodology.html" class="footer__link">Methodology</a><a href="security.html" class="footer__link">Security</a><a href="operator-brief.html" class="footer__link">Operator Brief</a><a href="contact.html" class="footer__link">Contact</a></nav><div class="footer__copy">&copy; <span id="year"></span> Neraium</div></div></footer>
+  <a class="mobile-sticky-cta" href="contact.html" data-track="mobile_sticky_use_cases">Request a Pilot Review</a>
+  <script src="scripts.js?v=20260801" defer></script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

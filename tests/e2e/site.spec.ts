@@ -2,8 +2,19 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const pages = [
-  { path: '/index.html', name: 'homepage', heading: /chilled-water system stops behaving/i },
-  { path: '/platform.html', name: 'platform', heading: /read-only relationship analysis/i },
+  { path: '/index.html', name: 'homepage', heading: /infrastructure stops behaving like itself/i },
+  { path: '/platform.html', name: 'platform', heading: /read-only analysis for telemetry-rich infrastructure/i },
+] as const;
+
+const publicPages = [
+  '/index.html',
+  '/platform.html',
+  '/technical.html',
+  '/pilot.html',
+  '/methodology.html',
+  '/security.html',
+  '/operator-brief.html',
+  '/contact.html',
 ] as const;
 
 const primaryNavigation = [
@@ -16,6 +27,7 @@ const primaryNavigation = [
 
 const importantImages = [
   '/neraium-logo.jpeg',
+  '/neraium-product-preview.png',
   '/infra-bg-1.jpg',
   '/infra-bg-2.jpg',
 ] as const;
@@ -191,6 +203,36 @@ for (const sitePage of pages) {
       expect(dimensions.body, JSON.stringify(dimensions)).toBeLessThanOrEqual(dimensions.viewport);
     });
 
+    if (sitePage.name === 'homepage') {
+      test('shows the product in the first viewport', async ({ page }) => {
+        await page.goto(sitePage.path, { waitUntil: 'networkidle' });
+        const product = page.locator('.product-window');
+        await expect(product).toBeVisible();
+        const box = await product.boundingBox();
+        const viewport = page.viewportSize();
+        expect(box).not.toBeNull();
+        expect(viewport).not.toBeNull();
+        const visibleHeight = Math.min((box?.y ?? 0) + (box?.height ?? 0), viewport?.height ?? 0)
+          - Math.max(box?.y ?? 0, 0);
+        expect(visibleHeight).toBeGreaterThanOrEqual(120);
+      });
+    }
+
+    if (sitePage.name === 'platform') {
+      test('keeps the mobile pilot action clear of the hero', async ({ page }) => {
+        test.skip((page.viewportSize()?.width ?? 0) > 720, 'Mobile interaction only');
+        await page.goto(sitePage.path, { waitUntil: 'networkidle' });
+        const stickyCta = page.locator('.mobile-sticky-cta');
+        await expect(stickyCta).toHaveAttribute('aria-hidden', 'true');
+        await expect(stickyCta).toHaveAttribute('tabindex', '-1');
+
+        await page.locator('#architecture').scrollIntoViewIfNeeded();
+        await expect(stickyCta).toHaveClass(/is-visible/);
+        await expect(stickyCta).toHaveAttribute('aria-hidden', 'false');
+        await expect(stickyCta).not.toHaveAttribute('tabindex', '-1');
+      });
+    }
+
     test('captures a full-page screenshot', async ({ page }, testInfo) => {
       await page.goto(sitePage.path, { waitUntil: 'networkidle' });
       await page.evaluate(() => document.fonts.ready);
@@ -207,3 +249,31 @@ for (const sitePage of pages) {
     });
   });
 }
+
+test('all public pages load without console errors, broken images, or overflow', async ({ page }) => {
+  for (const pathName of publicPages) {
+    const errors: string[] = [];
+    const onPageError = (error: Error) => errors.push(`${pathName}: ${error.message}`);
+    const onConsole = (message: { type(): string; text(): string }) => {
+      if (message.type() === 'error') errors.push(`${pathName}: ${message.text()}`);
+    };
+    page.on('pageerror', onPageError);
+    page.on('console', onConsole);
+    const response = await page.goto(pathName, { waitUntil: 'load' });
+    expect(response?.ok(), `${pathName} should load`).toBe(true);
+    await expect(page.locator('main')).toBeVisible();
+    const dimensions = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      document: document.documentElement.scrollWidth,
+      body: document.body.scrollWidth,
+    }));
+    expect(dimensions.document, `${pathName}: ${JSON.stringify(dimensions)}`).toBeLessThanOrEqual(dimensions.viewport);
+    expect(dimensions.body, `${pathName}: ${JSON.stringify(dimensions)}`).toBeLessThanOrEqual(dimensions.viewport);
+    for (const image of await page.locator('img').all()) {
+      await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
+    }
+    expect(errors, errors.join('\n')).toEqual([]);
+    page.off('pageerror', onPageError);
+    page.off('console', onConsole);
+  }
+});
