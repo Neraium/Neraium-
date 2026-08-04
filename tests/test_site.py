@@ -50,6 +50,9 @@ class SiteParser(HTMLParser):
         self.refs: list[LinkRef] = []
         self.title_text = ""
         self.meta_descriptions: list[str] = []
+        self.h1_count = 0
+        self.og_titles: list[str] = []
+        self.og_descriptions: list[str] = []
         self.canonical_links: list[str] = []
         self.robots_directives: list[str] = []
         self._in_title = False
@@ -61,12 +64,19 @@ class SiteParser(HTMLParser):
 
         if tag == "title":
             self._in_title = True
+        if tag == "h1":
+            self.h1_count += 1
 
         if tag == "meta":
             name = (attrs_dict.get("name") or "").lower()
             content = (attrs_dict.get("content") or "").strip()
             if name == "description" and content:
                 self.meta_descriptions.append(content)
+            prop = (attrs_dict.get("property") or "").lower()
+            if prop == "og:title" and content:
+                self.og_titles.append(content)
+            if prop == "og:description" and content:
+                self.og_descriptions.append(content)
             if name == "robots" and content:
                 self.robots_directives.append(content.lower())
 
@@ -225,6 +235,8 @@ class TestStaticSite(unittest.TestCase):
                 errors.append(f"{html_file.name}: missing meta description")
             if not parsed.is_noindex and canonical != [expected_canonical]:
                 errors.append(f"{html_file.name}: canonical should be '{expected_canonical}', found {canonical}")
+            if len(parsed.og_titles) != 1 or len(parsed.og_descriptions) != 1:
+                errors.append(f"{html_file.name}: missing distinct Open Graph title or description")
         if errors:
             self.fail("SEO metadata issues:\n" + "\n".join(errors))
 
@@ -237,6 +249,49 @@ class TestStaticSite(unittest.TestCase):
         expected_urls = {html_file_to_public_url(path) for path in indexable_html_files()}
         self.assertEqual(expected_urls, sitemap_urls)
 
+
+    def test_every_public_page_has_exactly_one_h1(self):
+        errors = []
+        for html_file in site_html_files():
+            count = load_html(html_file).h1_count
+            if count != 1:
+                errors.append(f"{html_file.name}: expected 1 h1, found {count}")
+        if errors:
+            self.fail("Heading hierarchy issues:\n" + "\n".join(errors))
+
+    def test_unique_titles_and_page_appropriate_descriptions(self):
+        titles = {}
+        descriptions = {}
+        for html_file in indexable_html_files():
+            parsed = load_html(html_file)
+            title = parsed.title_text.strip()
+            desc = parsed.meta_descriptions[0] if parsed.meta_descriptions else ""
+            titles.setdefault(title, []).append(html_file.name)
+            descriptions.setdefault(desc, []).append(html_file.name)
+        duplicate_titles = {k:v for k,v in titles.items() if len(v)>1}
+        duplicate_desc = {k:v for k,v in descriptions.items() if len(v)>1}
+        self.assertEqual({}, duplicate_titles)
+        self.assertEqual({}, duplicate_desc)
+
+    def test_primary_navigation_consistency_and_routes(self):
+        expected = [('platform.html','Platform'),('evidence.html','Evidence'),('technical.html','Applications'),('security.html','Security'),('pilot.html','Evaluation'),('company.html','Company')]
+        for html_file in site_html_files():
+            html = html_file.read_text(encoding='utf-8')
+            for href, label in expected:
+                self.assertIn(f'href="{href}"', html, f"{html_file.name} missing {label} route")
+            self.assertNotIn('>How It Works</a>', html)
+            self.assertNotIn('>Contact</a></nav><a class="header-action"', html)
+        self.assertTrue((ROOT / 'evidence.html').exists())
+        self.assertTrue((ROOT / 'company.html').exists())
+
+    def test_no_placeholder_active_analytics_or_broken_social_images(self):
+        scripts = (ROOT / 'scripts.js').read_text(encoding='utf-8')
+        self.assertIn("gaMeasurementId !== 'G-XXXXXXXXXX'", scripts)
+        for html_file in indexable_html_files():
+            html = html_file.read_text(encoding='utf-8')
+            self.assertNotIn('googletagmanager.com/gtag/js?id=G-XXXXXXXXXX', html)
+            for match in re.findall(r'<meta property="og:image" content="https://www\.neraium\.com/([^"]+)">', html):
+                self.assertTrue((ROOT / match).exists(), f"{html_file.name}: missing social image {match}")
 
 
 class TestPositioningAndExperience(unittest.TestCase):
@@ -254,7 +309,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         text = self.normalized(self.index)
         for phrase in (
             "Systemic Infrastructure Intelligence",
-            "persistent changes in how complex operational systems behave",
+            "Identify persistent changes across interconnected operational systems.",
             "structured Evidence Packages",
             "Request a Historical Evaluation",
             "See an Evidence Package",
@@ -264,7 +319,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_information_architecture_sections_exist(self):
-        for section_id in ("platform", "problem", "what", "evidence", "evaluation", "maintenance", "security", "applications", "different", "contact", "company"):
+        for section_id in ("platform", "problem", "what", "evidence", "evaluation", "security", "applications", "different", "contact"):
             self.assertIn(f'id="{section_id}"', self.index)
 
     def test_evidence_package_and_maintenance_view_are_complete(self):
@@ -289,7 +344,7 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     def test_security_boundaries_are_clearly_distinguished(self):
         text = self.normalized(self.index)
-        for phrase in ("Implemented site-level boundary", "Deployment-dependent controls", "Not claimed here", "does not claim completed SOC 2"):
+        for phrase in ("Read-only architecture", "Outside the control path", "Approved export or read-only source", "Human engineering review"):
             self.assertIn(phrase, text)
 
     def test_contact_form_fields_and_warning(self):
@@ -299,10 +354,11 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertIn('data-netlify="true"', self.index)
 
     def test_design_tokens_and_responsive_contract(self):
-        for token in ("--bg", "--ink", "--muted", "--line", "--navy", "--steel", "--cyan", "--amber", "--success", "--unknown", "--evidence", "--space", "--radius", "--shadow"):
+        for token in ("--color-navy-base", "--color-navy-hover", "--color-navy-muted", "--color-teal-base", "--color-teal-hover", "--color-teal-pressed", "--color-teal-pale", "--color-teal-border", "--color-text-primary", "--color-text-secondary", "--color-text-muted", "--color-page-background", "--color-surface-raised", "--color-border", "--color-warning", "--color-error", "--color-success", "--color-unavailable", "--space", "--radius", "--shadow"):
             self.assertIn(token, self.styles)
         self.assertRegex(self.styles, r"@media\s*\(max-width:\s*980px\)")
         self.assertIn("prefers-reduced-motion", self.styles)
+        self.assertIn("#007A74", self.styles)
         self.assertIn(".nav.open", self.styles)
         self.assertIn("Close navigation", self.scripts)
 
