@@ -708,3 +708,55 @@ h3 {
     transition: none !important;
   }
 }
+
+/* Architecture flow and compact evidence support */
+.architecture-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  align-items: stretch;
+}
+
+.architecture-flow span {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 96px;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  color: var(--ink);
+  font-weight: 800;
+  text-align: center;
+}
+
+.architecture-flow span:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -0.72rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cyan);
+  font-size: 1.4rem;
+  z-index: 1;
+}
+
+.evidence-package p {
+  color: var(--muted);
+}
+
+@media (max-width: 980px) {
+  .architecture-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-flow span:not(:last-child)::after {
+    content: "↓";
+    right: auto;
+    top: auto;
+    bottom: -1.05rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

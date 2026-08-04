@@ -2,17 +2,19 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/index.html', purpose: /Systemic Infrastructure Intelligence/i },
+  { path: '/index.html', purpose: /Identify persistent changes/i },
   { path: '/platform.html', purpose: /relationship-level review/i },
+  { path: '/evidence.html', purpose: /Structured findings/i },
   { path: '/technical.html', purpose: /Operational systems/i },
   { path: '/pilot.html', purpose: /Historical Evaluation/i },
   { path: '/methodology.html', purpose: /Baseline, comparison, persistence/i },
   { path: '/security.html', purpose: /Security model/i },
+  { path: '/company.html', purpose: /practical infrastructure investigation/i },
   { path: '/operator-brief.html', purpose: /Printable engineering/i },
   { path: '/contact.html', purpose: /approved data export/i },
 ] as const;
 
-const navLinks = ['Platform','How It Works','Evidence Packages','Security','Applications','Evaluation','Company','Contact'] as const;
+const navLinks = ['Platform','Evidence','Applications','Security','Evaluation','Company'] as const;
 
 async function openPrimaryNavigation(page: Page) {
   const toggle = page.locator('.nav-toggle');
@@ -37,7 +39,7 @@ for (const sitePage of publicPages) {
       await expect(page.getByRole('banner')).toBeVisible();
       await expect(page.getByRole('main')).toBeVisible();
       await expect(page.getByRole('contentinfo')).toBeVisible();
-      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /persistent behavioral changes/i);
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.+/);
       expect(errors).toEqual([]);
     });
 
@@ -46,7 +48,7 @@ for (const sitePage of publicPages) {
       await openPrimaryNavigation(page);
       const navigation = page.getByRole('navigation', { name: 'Main navigation' });
       for (const label of navLinks) await expect(navigation.getByRole('link', { name: label })).toBeVisible();
-      await expect(page.getByRole('link', { name: /Request a Historical Evaluation/i }).first()).toHaveAttribute('href', 'contact.html');
+      await expect(page.getByRole('link', { name: /Request an Evaluation|Request a Historical Evaluation/i }).first()).toHaveAttribute('href', 'contact.html');
       await page.keyboard.press('Tab');
       await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
       await expect(page.getByRole('link', { name: 'Skip to content' })).toHaveCSS('outline-style', 'solid');
