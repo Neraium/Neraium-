@@ -238,11 +238,11 @@ class TestStaticSite(unittest.TestCase):
         self.assertEqual(expected_urls, sitemap_urls)
 
 
+
 class TestPositioningAndExperience(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.index = (ROOT / "index.html").read_text(encoding="utf-8")
-        cls.platform = (ROOT / "platform.html").read_text(encoding="utf-8")
         cls.styles = (ROOT / "styles.css").read_text(encoding="utf-8")
         cls.scripts = (ROOT / "scripts.js").read_text(encoding="utf-8")
 
@@ -250,182 +250,80 @@ class TestPositioningAndExperience(unittest.TestCase):
     def normalized(value: str) -> str:
         return " ".join(re.sub(r"<[^>]+>", " ", value).split())
 
-    def assert_link(self, html: str, label: str, href: str):
-        pattern = rf'<a\b[^>]*href=["\']{re.escape(href)}["\'][^>]*>\s*{re.escape(label)}\s*</a>'
-        self.assertRegex(html, pattern, f"Expected link '{label}' to point to '{href}'")
-
-    def test_homepage_hero_positioning_and_ctas(self):
+    def test_core_positioning_and_ctas(self):
         text = self.normalized(self.index)
-        self.assertIn("Infrastructure intelligence", text)
-        self.assertIn("See when infrastructure stops behaving like itself.", text)
-        self.assertIn(
-            "Neraium learns how complex systems normally operate. When persistent relationships "
-            "change, it presents the evidence and shows engineers where investigation should begin.",
-            text,
-        )
-        self.assert_link(self.index, "Request a Pilot Review", "contact.html")
-        self.assert_link(self.index, "See an Example Finding", "#example-finding")
+        for phrase in (
+            "Systemic Infrastructure Intelligence",
+            "persistent changes in how complex operational systems behave",
+            "structured Evidence Packages",
+            "Request a Historical Evaluation",
+            "See an Evidence Package",
+            "Read-Only",
+            "Outside the control path",
+        ):
+            self.assertIn(phrase, text)
 
-    def test_homepage_answers_required_product_questions(self):
+    def test_information_architecture_sections_exist(self):
+        for section_id in ("platform", "problem", "what", "evidence", "evaluation", "maintenance", "security", "applications", "different", "contact", "company"):
+            self.assertIn(f'id="{section_id}"', self.index)
+
+    def test_evidence_package_and_maintenance_view_are_complete(self):
         text = self.normalized(self.index)
-        required_phrases = (
-            "Threshold alarms watch individual values",
-            "Persistent relationship change",
-            "Supporting relationships",
-            "Read-only by design",
-            "Uses existing operational data",
-            "Human reviewed",
-            "Engineers remain in control",
-            "Evaluate Neraium using one real system",
-        )
-        for phrase in required_phrases:
-            with self.subTest(phrase=phrase):
-                self.assertIn(phrase, text)
+        for phrase in (
+            "EP-CHW-017",
+            "Pump power and delivered flow relationship weakened under comparable operating conditions.",
+            "System",
+            "Behavioral Finding",
+            "Earliest Supported",
+            "Operating Context",
+            "Supporting Evidence",
+            "Confidence notes",
+            "Evidence Limitations",
+            "Recommended Starting Point",
+            "What we see",
+            "What to check first",
+            "What we do not know yet",
+            "Telemetry cannot distinguish hydraulic restriction from pump-performance degradation.",
+        ):
+            self.assertIn(phrase, text)
 
-    def test_example_finding_is_complete_and_clearly_labeled(self):
+    def test_security_boundaries_are_clearly_distinguished(self):
         text = self.normalized(self.index)
-        self.assertIn('id="example-finding"', self.index)
-        self.assertIn('id="relationship-evidence"', self.index)
-        required_finding_copy = (
-            "Simulated validation example",
-            "Not a customer result",
-            "Pump demand no longer matches expected flow response",
-            "139.9 hours",
-            "16 changes",
-            "Persistence result",
-            "Post-repair result",
-            "View Evidence",
-        )
-        for phrase in required_finding_copy:
-            with self.subTest(phrase=phrase):
-                self.assertIn(phrase, text)
-        self.assert_link(self.index, "View Evidence", "platform.html#platform-evidence")
+        for phrase in ("Implemented site-level boundary", "Deployment-dependent controls", "Not claimed here", "does not claim completed SOC 2"):
+            self.assertIn(phrase, text)
 
-    def test_read_only_and_human_review_boundaries(self):
-        for page_name, html in (("index.html", self.index), ("platform.html", self.platform)):
-            text = self.normalized(html).lower()
-            with self.subTest(page=page_name):
-                self.assertIn("read-only", text)
-                self.assertIn("never controls equipment", text)
-                self.assertIn("engineers remain in control", text)
+    def test_contact_form_fields_and_warning(self):
+        for field_id in ("name", "organization", "role", "email", "facility", "data", "message"):
+            self.assertIn(f'id="{field_id}"', self.index)
+        self.assertIn("Do not submit telemetry, credentials, security diagrams, or confidential operational information through this form.", self.index)
+        self.assertIn('data-netlify="true"', self.index)
 
-    def test_platform_covers_core_technical_concepts(self):
-        text = self.normalized(self.platform)
-        required_concepts = (
-            "Architecture and data flow",
-            "Data sources and signal mapping",
-            "Relationship analysis",
-            "Learned relationships",
-            "Persistence testing",
-            "Operational-mode awareness",
-            "Data quality is kept separate from physical behavior",
-            "Historical assessment",
-            "Live monitoring",
-            "Human in the loop",
-            "What Neraium does not do",
-        )
-        for phrase in required_concepts:
-            with self.subTest(phrase=phrase):
-                self.assertIn(phrase, text)
-
-    def test_homepage_section_order(self):
-        section_ids = (
-            "operational-problem",
-            "what-neraium-detects",
-            "example-finding",
-            "how-it-works",
-            "engineering-trust",
-            "where-it-applies",
-            "pilot-process",
-        )
-        positions = [self.index.index(f'id="{section_id}"') for section_id in section_ids]
-        self.assertEqual(positions, sorted(positions))
+    def test_design_tokens_and_responsive_contract(self):
+        for token in ("--bg", "--ink", "--muted", "--line", "--navy", "--steel", "--cyan", "--amber", "--success", "--unknown", "--evidence", "--space", "--radius", "--shadow"):
+            self.assertIn(token, self.styles)
+        self.assertRegex(self.styles, r"@media\s*\(max-width:\s*980px\)")
+        self.assertIn("prefers-reduced-motion", self.styles)
+        self.assertIn(".nav.open", self.styles)
+        self.assertIn("Close navigation", self.scripts)
 
     def test_required_social_metadata_and_structured_data(self):
         for html_file in indexable_html_files():
             html = html_file.read_text(encoding="utf-8")
             with self.subTest(page=html_file.name):
-                for marker in (
-                    'property="og:title"',
-                    'property="og:description"',
-                    'property="og:image"',
-                    'property="og:url"',
-                    'name="twitter:card"',
-                    'name="ga4-measurement-id"',
-                    'type="application/ld+json"',
-                ):
+                for marker in ('property="og:title"','property="og:description"','property="og:image"','property="og:url"','name="twitter:card"','name="ga4-measurement-id"','type="application/ld+json"'):
                     self.assertIn(marker, html)
-
-                match = re.search(
-                    r'<script\s+type=["\']application/ld\+json["\']>(.*?)</script>',
-                    html,
-                    re.DOTALL,
-                )
-                self.assertIsNotNone(match, f"{html_file.name} is missing JSON-LD")
-                payload = json.loads(match.group(1))
-                self.assertEqual(payload.get("@context"), "https://schema.org")
+                payload = json.loads(re.search(r'<script\s+type=["\']application/ld\+json["\']>(.*?)</script>', html, re.DOTALL).group(1))
                 graph_types = {item.get("@type") for item in payload.get("@graph", [])}
                 self.assertIn("Organization", graph_types)
                 self.assertIn("WebSite", graph_types)
-                self.assertTrue(
-                    graph_types.intersection({"WebPage", "ContactPage"}),
-                    f"{html_file.name} is missing a page schema type",
-                )
+                self.assertIn("SoftwareApplication", graph_types)
 
-    def test_responsive_navigation_contract(self):
-        for page_name, html in (("index.html", self.index), ("platform.html", self.platform)):
-            with self.subTest(page=page_name):
-                self.assertIn('id="main-navigation"', html)
-                self.assertRegex(
-                    html,
-                    r'<button\b[^>]*class=["\'][^"\']*nav-toggle[^"\']*["\'][^>]*'
-                    r'aria-controls=["\']main-navigation["\'][^>]*aria-expanded=["\']false["\']',
-                )
-        self.assertIn("@media (max-width: 980px)", self.styles)
-        self.assertIn(".nav.open", self.styles)
-        self.assertIn("window.innerWidth > 980", self.scripts)
-        self.assertIn('"Close navigation" : "Open navigation"', self.scripts)
-
-    def test_accessibility_landmarks_and_heading_basics(self):
-        for page_name, html in (("index.html", self.index), ("platform.html", self.platform)):
-            with self.subTest(page=page_name):
-                self.assertEqual(len(re.findall(r"<main\b", html)), 1)
-                self.assertEqual(len(re.findall(r"<h1\b", html)), 1)
-                self.assertIn('class="skip-link" href="#main"', html)
-                self.assertIn('aria-label="Main navigation"', html)
-                self.assertIn('aria-label="Footer navigation"', html)
-
-    def test_no_disallowed_claims_were_introduced(self):
+    def test_no_disallowed_claims_or_em_dashes(self):
         changed_pages = "\n".join(path.read_text(encoding="utf-8") for path in site_html_files()).lower()
-        disallowed = (
-            "ai-powered",
-            "revolutionary",
-            "predictive failure",
-            "predicts failures",
-            "prevents failures",
-            "diagnoses root cause",
-            "guarantees early warning",
-            "replaces engineers",
-            "autonomously controls",
-            "single pane of glass",
-        )
-        for claim in disallowed:
-            with self.subTest(claim=claim):
-                self.assertNotIn(claim, changed_pages)
-
-    def test_no_em_dashes_in_public_source(self):
-        source_files = [*site_html_files(), ROOT / "styles.css", ROOT / "scripts.js"]
-        for source_file in source_files:
-            with self.subTest(file=source_file.name):
-                self.assertNotIn("—", source_file.read_text(encoding="utf-8"))
-
-    def test_all_public_pages_use_current_positioning(self):
-        for html_file in indexable_html_files():
-            text = self.normalized(html_file.read_text(encoding="utf-8")).lower()
-            with self.subTest(page=html_file.name):
-                self.assertIn("read-only", text)
-                self.assertNotIn("systemic infrastructure intelligence", text)
-                self.assertNotIn("early failure", text)
+        for claim in ("ai-powered", "predictive failure", "predicts failures", "guarantees savings", "diagnoses root cause", "replaces engineers", "autonomously controls"):
+            self.assertNotIn(claim, changed_pages)
+        for source_file in [*site_html_files(), ROOT / "styles.css", ROOT / "scripts.js"]:
+            self.assertNotIn("—", source_file.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

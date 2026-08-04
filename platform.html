@@ -3,253 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080a0d">
-  <title>Neraium Platform | Read-Only Relationship Analysis</title>
-  <meta name="description" content="Review Neraium's read-only architecture, signal mapping, learned operating relationships, persistence testing, evidence generation, and human-review boundary.">
-  <meta property="og:title" content="Neraium Platform | Read-Only Relationship Analysis">
-  <meta property="og:description" content="See how approved operational data becomes persistent relationship-change evidence for engineering review.">
+  <meta name="theme-color" content="#f4f1ea">
+  <title>Platform | Neraium</title>
+  <meta name="description" content="Neraium helps engineering and maintenance teams identify persistent behavioral changes in complex infrastructure and review the supporting evidence without changing existing control systems.">
+  <meta property="og:title" content="Platform | Neraium">
+  <meta property="og:description" content="Identify persistent infrastructure behavior changes and review structured Evidence Packages without entering the control path.">
   <meta property="og:image" content="https://www.neraium.com/neraium-product-preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Neraium interface showing a persistent relationship-change finding">
+  <meta property="og:image:alt" content="Neraium Evidence Package example for engineering review">
   <meta property="og:url" content="https://www.neraium.com/platform.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Neraium">
-  <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Neraium Platform | Read-Only Relationship Analysis">
-  <meta name="twitter:description" content="Architecture, persistence, evidence, and human review for telemetry-rich infrastructure.">
+  <meta name="twitter:title" content="Platform | Neraium">
+  <meta name="twitter:description" content="Structured evidence for persistent changes in operational system behavior.">
   <meta name="twitter:image" content="https://www.neraium.com/neraium-product-preview.png">
-  <meta name="twitter:image:alt" content="Neraium interface showing a persistent relationship-change finding">
   <meta name="ga4-measurement-id" content="G-XXXXXXXXXX">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="canonical" href="https://www.neraium.com/platform.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20260801">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css?v=20260804b">
   <link rel="manifest" href="site.webmanifest">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Neraium provides read-only infrastructure intelligence for telemetry-rich operational systems."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","@id":"https://www.neraium.com/platform.html#webpage","url":"https://www.neraium.com/platform.html","name":"Neraium Platform","description":"The read-only Neraium architecture for signal mapping, relationship analysis, persistence, evidence, and engineering review.","isPartOf":{"@id":"https://www.neraium.com/#website"},"about":{"@id":"https://www.neraium.com/#organization"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Systemic infrastructure intelligence for facility and industrial teams."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","url":"https://www.neraium.com/platform.html","name":"Platform | Neraium","isPartOf":{"@id":"https://www.neraium.com/#website"}},{"@type":"SoftwareApplication","name":"Neraium","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"Read-only platform for organizing approved operational telemetry into structured Evidence Packages for engineering review.","publisher":{"@id":"https://www.neraium.com/#organization"}}]}</script>
 </head>
-<body class="has-mobile-cta">
+<body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="index.html" class="brand" aria-label="Neraium home">
-        <img src="neraium-logo.jpeg" alt="Neraium logo" class="brand-mark" width="28" height="22" decoding="async">
-        <span class="brand-text">Neraium</span>
-      </a>
-      <nav class="nav" id="main-navigation" aria-label="Main navigation">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="platform.html" class="nav-link active" aria-current="page">Platform</a>
-        <a href="technical.html" class="nav-link">Use Cases</a>
-        <a href="pilot.html" class="nav-link">Pilot</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </nav>
-      <a class="header-action" href="contact.html" data-track="header_request_review">Pilot review</a>
-      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="main-navigation" aria-expanded="false">
-        <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
-      </button>
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="Neraium home"><img src="neraium-logo.jpeg" alt="Neraium logo" width="32" height="32"><span>Neraium</span></a>
+      <nav class="nav" id="main-navigation" aria-label="Main navigation"><a href="platform.html" aria-current="page">Platform</a><a href="methodology.html" >How It Works</a><a href="index.html#evidence" >Evidence Packages</a><a href="security.html" >Security</a><a href="technical.html" >Applications</a><a href="pilot.html" >Evaluation</a><a href="operator-brief.html" >Company</a><a href="contact.html" >Contact</a></nav>
+      <a class="header-action" href="contact.html">Request a Historical Evaluation</a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="main-navigation" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
-
   <main id="main">
-    <section class="page-hero platform-hero">
-      <div class="container platform-hero__layout">
-        <div class="platform-hero__copy">
-          <p class="eyebrow">Platform architecture</p>
-          <h1 class="page-hero__title">Read-only analysis for telemetry-rich infrastructure.</h1>
-          <p class="page-hero__sub">Neraium maps operational signals, learns how they behave together, tests divergence for persistence, and prepares evidence for an engineer to review.</p>
-          <div class="button-row">
-            <a class="button button--primary" href="contact.html" data-track="platform_request_pilot_review">Request a Pilot Review</a>
-            <a class="button button--secondary" href="#architecture">Review the Architecture</a>
-          </div>
-        </div>
-        <aside class="boundary-card" aria-label="Neraium control boundary">
-          <span class="boundary-card__label">Control boundary</span>
-          <strong>Observation only</strong>
-          <ul>
-            <li>No commands</li>
-            <li>No setpoint changes</li>
-            <li>No equipment control</li>
-          </ul>
-        </aside>
-      </div>
-      <div class="container">
-        <dl class="platform-summary" aria-label="Platform summary">
-          <div><dt>Input</dt><dd>Approved historical or live operational data</dd></div>
-          <div><dt>Analysis</dt><dd>Mapped signals, operating relationships, modes, and persistence</dd></div>
-          <div><dt>Output</dt><dd>Evidence and investigation context for human review</dd></div>
-        </dl>
-      </div>
-    </section>
 
-    <section class="section section--band" id="architecture">
-      <div class="container">
-        <div class="section-heading section-heading--split">
-          <div><p class="eyebrow">Architecture and data flow</p><h2>A separate analysis path alongside existing controls.</h2></div>
-          <p class="section-intro">Neraium reads approved data. The BAS, SCADA, historian, alarms, and control logic continue to operate as designed.</p>
-        </div>
-        <ol class="data-flow" aria-label="Neraium data flow">
-          <li class="data-flow__node"><span class="data-flow__step">01 / Sources</span><h3>Operational data</h3><p>Historian exports, BAS, SCADA, CSV, databases, controllers, or approved APIs.</p><div class="chip-row"><span class="chip">Historical</span><span class="chip">Live</span></div></li>
-          <li class="data-flow__connector" aria-hidden="true">→</li>
-          <li class="data-flow__node"><span class="data-flow__step">02 / Mapping</span><h3>Signal context</h3><p>Names, units, timestamps, asset associations, operating states, and known maintenance.</p><div class="chip-row"><span class="chip">Signals</span><span class="chip">Modes</span></div></li>
-          <li class="data-flow__connector" aria-hidden="true">→</li>
-          <li class="data-flow__node"><span class="data-flow__step">03 / Analysis</span><h3>Relationship model</h3><p>How related signals behave together under established operating conditions.</p><div class="chip-row"><span class="chip">Baseline</span><span class="chip">Persistence</span></div></li>
-          <li class="data-flow__connector" aria-hidden="true">→</li>
-          <li class="data-flow__node"><span class="data-flow__step">04 / Review</span><h3>Engineering evidence</h3><p>What changed, when it began, whether it persisted, and where review should start.</p><div class="chip-row"><span class="chip">Finding</span><span class="chip">Context</span></div></li>
-        </ol>
-        <p class="architecture-boundary"><strong>Read-only boundary:</strong> Neraium has no path to write commands, change setpoints, or control equipment.</p>
-      </div>
-    </section>
+    <section class="page-hero"><div class="container"><p class="eyebrow">Platform</p><h1>Read-only infrastructure intelligence for relationship-level review.</h1><p class="lead">Neraium organizes approved operational telemetry into baselines, comparisons, persistent behavior-change findings, and Evidence Packages for human review.</p></div></section>
+    <section class="section"><div class="container"><div class="section-head"><h2>Architecture boundary</h2><p>The platform is designed to sit outside the control path. For a Historical Evaluation, a secure file export can be enough. Any live source access must be approved, read-only, and deployment-specific.</p></div><div class="cards three"><article><h3>Approved data in</h3><p>Exports or approved read-only sources can come from BAS, SCADA, historian, PLC-derived telemetry, databases, APIs, or secure files when those paths are available.</p></article><article><h3>Analysis workspace</h3><p>Signals are mapped to systems, modes, and operating context before comparing baseline behavior with a later period.</p></article><article><h3>Evidence out</h3><p>Supported findings are assembled into Evidence Packages for engineers and maintenance teams. Insufficient evidence remains an acceptable result.</p></article></div></div></section>
+    <section class="section band"><div class="container split"><div><h2>Capabilities</h2><ul class="check-list"><li>Relationship evaluation across related signals.</li><li>Baseline and later-period comparison.</li><li>Persistence checks to reduce transient-noise findings.</li><li>Operating Context where data supports it.</li><li>Evidence Limitations preserved with every example finding.</li></ul></div><div><h2>Not control software</h2><p>Neraium does not change setpoints, issue commands, override equipment, or replace engineering judgment. It is evidence support for investigation.</p></div></div></section>
+<section class="section band" id="evidence"><div class="container"><div class="section-head"><p class="eyebrow">Evidence Package example</p><h2>A concise engineering artifact, not a decorative dashboard.</h2><p>Illustrative chilled-water pumping example. This is not customer data and it does not assert a diagnosis.</p></div><article class="evidence-package"><header><div><span class="package-id">EP-CHW-017</span><h3>Pump power and delivered flow relationship weakened under comparable operating conditions.</h3></div><span class="stamp">Illustrative only</span></header><dl class="evidence-grid"><div><dt>System</dt><dd>Chilled-water secondary pumping loop.</dd></div><div><dt>Behavioral Finding</dt><dd>Pump power increased relative to delivered flow and persisted across comparable operating periods.</dd></div><div><dt>Earliest Supported</dt><dd>Example timestamp: 2026-05-14 02:10 local, based on available telemetry.</dd></div><div><dt>Operating Context</dt><dd>Comparable load band, same operating mode, similar commanded speed range.</dd></div><div><dt>Supporting Evidence</dt><dd>Power-flow residual shift, pressure-flow response change, repeated across illustrative operating windows.</dd></div><div><dt>Confidence notes</dt><dd>Persistence: strong. Context match: moderate. Instrument agreement: partial. Explanation certainty: unknown.</dd></div><div><dt>Evidence Limitations</dt><dd>Telemetry cannot distinguish hydraulic restriction from pump-performance degradation.</dd></div><div><dt>Recommended Starting Point</dt><dd>Verify valve position, inspect strainer differential pressure, and confirm commanded speed matches actual speed.</dd></div></dl></article></div></section>
 
-    <section class="section" id="signal-mapping">
-      <div class="container technical-split">
-        <div>
-          <p class="eyebrow">Data sources and signal mapping</p>
-          <h2>Analysis begins with engineering context.</h2>
-          <p class="copy-large">Tags are not treated as anonymous columns. Signal meaning, timing, unit consistency, equipment association, and expected operating states shape the baseline.</p>
-        </div>
-        <div class="mapping-ledger" role="table" aria-label="Signal mapping example">
-          <div class="mapping-ledger__header" role="row"><span role="columnheader">Source tag</span><span role="columnheader">Mapped role</span><span role="columnheader">Context</span></div>
-          <div role="row"><span role="cell">P-201_CMD</span><span role="cell">Pump demand</span><span role="cell">0 to 100%</span></div>
-          <div role="row"><span role="cell">FT-204</span><span role="cell">Flow response</span><span role="cell">Validated units</span></div>
-          <div role="row"><span role="cell">DP-201</span><span role="cell">Differential pressure</span><span role="cell">Common clock</span></div>
-          <div role="row"><span role="cell">MODE_PLANT</span><span role="cell">Operating mode</span><span role="cell">Staging context</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--band" id="analysis">
-      <div class="container">
-        <div class="section-heading section-heading--split">
-          <div><p class="eyebrow">Relationship analysis</p><h2>Behavior is evaluated in context.</h2></div>
-          <p class="section-intro">A changed relationship matters only when the comparison is technically appropriate.</p>
-        </div>
-        <div class="analysis-composition">
-          <article class="analysis-card">
-            <span class="card-index">01 / Learned relationships</span>
-            <h3>Signals are considered together</h3>
-            <div class="relationship-map" aria-label="Example learned signal relationships">
-              <span class="relationship-node relationship-node--a">Demand</span>
-              <span class="relationship-node relationship-node--b">Flow</span>
-              <span class="relationship-node relationship-node--c">Pressure</span>
-              <span class="relationship-node relationship-node--d">Temperature</span>
-              <span class="relationship-map__line relationship-map__line--one"></span>
-              <span class="relationship-map__line relationship-map__line--two"></span>
-              <span class="relationship-map__line relationship-map__line--three"></span>
-            </div>
-            <p>Pump demand against flow response, pressure against flow, valve command against temperature response, and other mapped relationships.</p>
-          </article>
-          <article class="analysis-card">
-            <span class="card-index">02 / Operational-mode awareness</span>
-            <h3>Like is compared with like</h3>
-            <div class="mode-register" aria-label="Operating modes used as analysis context">
-              <span><b>Mode A</b>Low demand</span>
-              <span class="is-current"><b>Mode B</b>Staged operation</span>
-              <span><b>Mode C</b>Peak demand</span>
-              <span><b>Excluded</b>Maintenance</span>
-            </div>
-            <p>Schedules, staging, demand ranges, maintenance periods, and known modes provide comparison context.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section persistence-section" id="persistence">
-      <div class="container persistence-layout">
-        <div>
-          <p class="eyebrow">Persistence testing</p>
-          <h2>A change must remain before it becomes a finding.</h2>
-          <p class="copy-large">Short-lived noise, transitions, and isolated exceptions are not presented the same way as divergence that remains across time, observations, or relevant operating cycles.</p>
-        </div>
-        <ol class="persistence-gate" aria-label="Persistence testing stages">
-          <li><span>Observation 01</span><strong>Relationship moved</strong></li>
-          <li><span>Observation 02</span><strong>Change remained</strong></li>
-          <li><span>Relevant cycle</span><strong>Mode consistent</strong></li>
-          <li class="persistence-gate__result"><span>Finding state</span><strong>Persistence confirmed</strong></li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section section--band" id="platform-evidence">
-      <div class="container evidence-output-layout">
-        <div>
-          <p class="eyebrow">Evidence generation</p>
-          <h2>Every finding retains the path back to the data.</h2>
-          <p class="copy-large">Neraium presents supporting evidence and investigation context. It does not declare root cause or make the operating decision.</p>
-          <ul class="evidence-list">
-            <li><span>01</span><p><strong>What changed</strong>The affected relationship or group of relationships.</p></li>
-            <li><span>02</span><p><strong>When it began</strong>The first observed divergence and comparison period.</p></li>
-            <li><span>03</span><p><strong>Whether it persisted</strong>The observations or cycles supporting persistence.</p></li>
-            <li><span>04</span><p><strong>Data quality</strong>Missing, stale, shifted, or disagreeing signals remain visible.</p></li>
-            <li><span>05</span><p><strong>Investigation context</strong>Signals, assets, and operating conditions where review can begin.</p></li>
-          </ul>
-        </div>
-        <aside class="platform-finding-card" aria-label="Simulated finding output">
-          <div class="platform-finding-card__header"><span class="validation-label">Simulated example</span><span class="finding-ui__id">FINDING 0142</span></div>
-          <span class="status-badge"><span class="status-badge__dot"></span>Persistence confirmed</span>
-          <h3>Pump demand no longer matches expected flow response</h3>
-          <dl class="platform-finding-card__stats">
-            <div><dt>First detected</dt><dd>Hour 412.1</dd></div>
-            <div><dt>Relationships</dt><dd>16 changed</dd></div>
-            <div><dt>Post-repair</dt><dd>Disappeared</dd></div>
-          </dl>
-          <a class="finding-ui__link" href="index.html#example-finding">Review the example finding <span aria-hidden="true">↗</span></a>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section" id="separation">
-      <div class="container">
-        <div class="section-heading section-heading--split">
-          <div><p class="eyebrow">Signal integrity</p><h2>Data quality is kept separate from physical behavior.</h2></div>
-          <p class="section-intro">The review should show whether evidence may reflect the system, the instrumentation, or the data path.</p>
-        </div>
-        <div class="separation-grid">
-          <article class="separation-card"><span class="separation-card__label">Physical-behavior review</span><h3>Relationship change</h3><p>Signals are available and timely, but their operating relationship has moved away from the established baseline.</p><ul><li>Pressure-to-flow response changed</li><li>Demand-to-output response weakened</li><li>Behavior persisted in the same mode</li></ul></article>
-          <article class="separation-card separation-card--data"><span class="separation-card__label">Data-quality review</span><h3>Instrumentation or timing issue</h3><p>The available evidence may be affected by the measurement or data path and is identified for separate review.</p><ul><li>Stale, repeated, or flat values</li><li>Missing intervals or timestamp shifts</li><li>Possible drift, scaling change, or disagreement</li></ul></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--band" id="assessment-paths">
-      <div class="container">
-        <div class="section-heading"><p class="eyebrow">Historical assessment and live monitoring</p><h2>Start historically. Move live only when justified.</h2></div>
-        <div class="path-grid">
-          <article class="path-card"><span class="path-card__number">01</span><div><h3>Historical assessment</h3><p>Use an approved baseline and comparison period from one system. Review findings against known operating context, interventions, and repairs.</p><ul class="path-card__details"><li>Bounded data transfer</li><li>No live connection required</li><li>Known events can be compared</li></ul></div></article>
-          <article class="path-card"><span class="path-card__number">02</span><div><h3>Live monitoring</h3><p>If historical results are useful, connect an approved read-only source and continue the same evidence and human-review workflow.</p><ul class="path-card__details"><li>Read-only ingestion</li><li>Persistent-change review</li><li>Engineering authority remains unchanged</li></ul></div></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section platform-boundary" id="human-review">
-      <div class="container boundary-layout">
-        <div><p class="eyebrow">Human in the loop</p><h2>An additional set of eyes for engineering teams.</h2><p class="copy-large">Neraium never controls equipment. It surfaces changes and supporting relationships. Engineers remain in control. They validate the context, inspect the system, and decide what happens next.</p></div>
-        <div class="does-not-card">
-          <span class="does-not-card__label">What Neraium does not do</span>
-          <ul><li>Control equipment</li><li>Change operating setpoints</li><li>Diagnose root cause</li><li>Replace existing alarms</li><li>Replace engineering judgment</li></ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta-band">
-      <div class="container cta-band__inner">
-        <div><p class="eyebrow">Evaluate one system</p><p class="cta-band__heading">Test the evidence against your own operating history.</p></div>
-        <div class="button-row button-row--cta"><a href="contact.html" class="button button--primary" data-track="platform_final_request_review">Request a Pilot Review</a><a href="security.html" class="button button--secondary">Review Security</a></div>
-      </div>
-    </section>
   </main>
-
   <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__brand"><span class="footer__wordmark">Neraium</span><span class="footer__tagline">Read-only infrastructure intelligence</span></div>
-      <nav class="footer__nav" aria-label="Footer navigation"><a href="platform.html" class="footer__link">Platform</a><a href="technical.html" class="footer__link">Use Cases</a><a href="pilot.html" class="footer__link">Pilot</a><a href="methodology.html" class="footer__link">Methodology</a><a href="security.html" class="footer__link">Security</a><a href="operator-brief.html" class="footer__link">Operator Brief</a><a href="contact.html" class="footer__link">Contact</a></nav>
-      <div class="footer__copy">&copy; <span id="year"></span> Neraium</div>
+    <div class="container footer-grid">
+      <div><strong>Neraium</strong><p>Systemic Infrastructure Intelligence</p></div>
+      <nav aria-label="Footer navigation"><a href="platform.html">Platform</a><a href="methodology.html">How It Works</a><a href="index.html#evidence">Evidence Packages</a><a href="security.html">Security</a><a href="technical.html">Applications</a><a href="pilot.html">Evaluation</a><a href="operator-brief.html">Company</a><a href="contact.html">Contact</a></nav>
+      <small>&copy; <span id="year"></span> Neraium</small>
     </div>
   </footer>
-  <a class="mobile-sticky-cta" href="contact.html" data-track="mobile_sticky_platform">Request a Pilot Review</a>
-  <script src="scripts.js?v=20260801" defer></script>
+  <script src="scripts.js?v=20260804b" defer></script>
 </body>
 </html>

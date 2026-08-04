@@ -3,86 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080a0d">
-  <title>Neraium Methodology | How Findings Are Established</title>
-  <meta name="description" content="See how Neraium establishes baselines, compares operating behavior, tests persistence, separates data quality, and prepares findings for human review.">
-  <meta property="og:title" content="Neraium Methodology | How Findings Are Established">
-  <meta property="og:description" content="A transparent method for baseline selection, relationship comparison, persistence testing, and engineering review.">
+  <meta name="theme-color" content="#f4f1ea">
+  <title>How It Works | Neraium</title>
+  <meta name="description" content="Neraium helps engineering and maintenance teams identify persistent behavioral changes in complex infrastructure and review the supporting evidence without changing existing control systems.">
+  <meta property="og:title" content="How It Works | Neraium">
+  <meta property="og:description" content="Identify persistent infrastructure behavior changes and review structured Evidence Packages without entering the control path.">
   <meta property="og:image" content="https://www.neraium.com/neraium-product-preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Neraium interface showing a persistent relationship-change finding">
+  <meta property="og:image:alt" content="Neraium Evidence Package example for engineering review">
   <meta property="og:url" content="https://www.neraium.com/methodology.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Neraium">
-  <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Neraium Methodology">
-  <meta name="twitter:description" content="How persistent relationship-change findings are established and reviewed.">
+  <meta name="twitter:title" content="How It Works | Neraium">
+  <meta name="twitter:description" content="Structured evidence for persistent changes in operational system behavior.">
   <meta name="twitter:image" content="https://www.neraium.com/neraium-product-preview.png">
-  <meta name="twitter:image:alt" content="Neraium interface showing a persistent relationship-change finding">
   <meta name="ga4-measurement-id" content="G-XXXXXXXXXX">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="canonical" href="https://www.neraium.com/methodology.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20260801">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css?v=20260804b">
   <link rel="manifest" href="site.webmanifest">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Neraium provides read-only infrastructure intelligence for telemetry-rich operational systems."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","@id":"https://www.neraium.com/methodology.html#webpage","url":"https://www.neraium.com/methodology.html","name":"Methodology","description":"How Neraium findings are established and reviewed.","isPartOf":{"@id":"https://www.neraium.com/#website"},"about":{"@id":"https://www.neraium.com/#organization"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Systemic infrastructure intelligence for facility and industrial teams."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","url":"https://www.neraium.com/methodology.html","name":"How It Works | Neraium","isPartOf":{"@id":"https://www.neraium.com/#website"}},{"@type":"SoftwareApplication","name":"Neraium","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"Read-only platform for organizing approved operational telemetry into structured Evidence Packages for engineering review.","publisher":{"@id":"https://www.neraium.com/#organization"}}]}</script>
 </head>
-<body class="has-mobile-cta">
+<body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header"><div class="container site-header__inner"><a href="index.html" class="brand" aria-label="Neraium home"><img src="neraium-logo.jpeg" alt="Neraium logo" class="brand-mark" width="28" height="22" decoding="async"><span class="brand-text">Neraium</span></a><nav class="nav" id="main-navigation" aria-label="Main navigation"><a href="index.html" class="nav-link">Home</a><a href="platform.html" class="nav-link">Platform</a><a href="technical.html" class="nav-link">Use Cases</a><a href="pilot.html" class="nav-link">Pilot</a><a href="contact.html" class="nav-link">Contact</a></nav><a class="header-action" href="contact.html">Pilot review</a><button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="main-navigation" aria-expanded="false"><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span></button></div></header>
-
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="Neraium home"><img src="neraium-logo.jpeg" alt="Neraium logo" width="32" height="32"><span>Neraium</span></a>
+      <nav class="nav" id="main-navigation" aria-label="Main navigation"><a href="platform.html" >Platform</a><a href="methodology.html" aria-current="page">How It Works</a><a href="index.html#evidence" >Evidence Packages</a><a href="security.html" >Security</a><a href="technical.html" >Applications</a><a href="pilot.html" >Evaluation</a><a href="operator-brief.html" >Company</a><a href="contact.html" >Contact</a></nav>
+      <a class="header-action" href="contact.html">Request a Historical Evaluation</a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="main-navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
   <main id="main">
-    <section class="page-hero"><div class="container"><p class="eyebrow">Methodology</p><h1 class="page-hero__title">How a finding is established.</h1><p class="page-hero__sub">Neraium compares mapped operating relationships against an approved baseline, checks context and data quality, requires persistence, and keeps the evidence available for engineering review.</p><div class="button-row"><a class="button button--primary" href="contact.html">Discuss an Assessment</a><a class="button button--secondary" href="#method">Review the Method</a></div></div></section>
 
-    <section class="section section--band">
-      <div class="container">
-        <div class="section-heading"><p class="eyebrow">Evaluation principles</p><h2>Evidence must survive technical scrutiny.</h2></div>
-        <div class="principle-grid"><article><span class="card-index">01</span><h3>Bounded comparison</h3><p>The system, baseline, comparison period, included signals, and exclusions are defined before findings are reviewed.</p></article><article><span class="card-index">02</span><h3>Like-for-like context</h3><p>Operating modes, demand ranges, staging, schedules, and known maintenance shape appropriate comparisons.</p></article><article><span class="card-index">03</span><h3>Visible support</h3><p>Timing, affected relationships, persistence, and data-quality context stay attached to the finding.</p></article></div>
-      </div>
-    </section>
+    <section class="page-hero"><div class="container"><p class="eyebrow">How It Works</p><h1>Baseline, comparison, persistence, evidence, review.</h1><p class="lead">Neraium’s methodology is designed to preserve context and uncertainty rather than converting telemetry into unsupported certainty.</p></div></section>
+    <section class="section"><div class="container"><div class="cards three"><article><h3>1. Approved telemetry</h3><p>Use approved exports or read-only sources supplied for a defined system.</p></article><article><h3>2. Validated baseline</h3><p>Establish a historical period whose modes and context are suitable for comparison.</p></article><article><h3>3. Later period</h3><p>Compare subsequent behavior under comparable operating conditions where possible.</p></article><article><h3>4. Persistent changes</h3><p>Flag relationship changes that remain beyond transient noise.</p></article><article><h3>5. Evidence Package</h3><p>Organize finding, context, support, limitations, confidence notes, and starting point.</p></article><article><h3>6. Human review</h3><p>Engineers and maintenance teams decide what the evidence means operationally.</p></article></div></div></section>
+    <section class="section band"><div class="container split"><div><h2>Uncertainty stays visible</h2><p>Evidence Packages can state that data quality is insufficient, context is incomplete, or the telemetry cannot distinguish between plausible mechanical explanations.</p></div><div><h2>Review is authoritative</h2><p>The method supports investigation. It does not autonomously diagnose, guarantee lead time, or assign root cause.</p></div></div></section>
 
-    <section class="section" id="method">
-      <div class="container content-rail">
-        <div class="rail-label"><p class="eyebrow">Finding method</p><h2>Six checks from source data to review.</h2><p>The method is adapted to the selected system and approved data.</p></div>
-        <ol class="step-list">
-          <li><span>01</span><h3>Define the system boundary</h3><p>Identify the assets, signals, time period, operating question, and known exclusions.</p></li>
-          <li><span>02</span><h3>Map signals and context</h3><p>Confirm names, units, clocks, states, modes, staging, maintenance, and signal meaning.</p></li>
-          <li><span>03</span><h3>Establish normal relationships</h3><p>Build a baseline for how relevant signals behave together under represented conditions.</p></li>
-          <li><span>04</span><h3>Compare operating behavior</h3><p>Look for divergence from established relationships within technically appropriate context.</p></li>
-          <li><span>05</span><h3>Test persistence and data quality</h3><p>Separate transient noise and signal issues from behavior that remains across time or relevant cycles.</p></li>
-          <li><span>06</span><h3>Prepare evidence for review</h3><p>Present what changed, when it began, what supports it, and where investigation can start.</p></li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section section--band">
-      <div class="container">
-        <div class="section-heading section-heading--split"><div><p class="eyebrow">Finding states</p><h2>Not every change becomes the same kind of output.</h2></div><p class="section-intro">The output should make uncertainty and signal quality visible, not collapse them into one score.</p></div>
-        <div class="review-grid"><article class="review-card"><span>Observed</span><h3>Change under review</h3><p>A relationship moved, but persistence or operating context is not yet sufficient.</p></article><article class="review-card"><span>Signal integrity</span><h3>Data-quality issue</h3><p>Stale values, gaps, timing shifts, flatlines, drift, or disagreement may affect interpretation.</p></article><article class="review-card"><span>Finding</span><h3>Persistent divergence</h3><p>The relationship change remains through the defined persistence and context checks.</p></article><article class="review-card"><span>Post-intervention</span><h3>Change absent or remaining</h3><p>The same relationship evidence is checked after repair, maintenance, or another intervention.</p></article></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container technical-split">
-        <div><p class="eyebrow">Validation examples</p><h2>Examples are labeled before they are interpreted.</h2><p class="copy-large">A simulated or controlled validation example is not presented as a customer outcome. Lead time belongs to the named dataset or assessment period and does not imply the same timing in another system.</p></div>
-        <aside class="platform-finding-card" aria-label="Validation labeling example"><div class="platform-finding-card__header"><span class="validation-label">Simulated validation example</span><span class="finding-ui__id">SYSTEM 01</span></div><h3>Required context stays with the result</h3><dl class="platform-finding-card__stats"><div><dt>Data basis</dt><dd>Named assessment</dd></div><div><dt>Time basis</dt><dd>Reported units</dd></div><div><dt>Customer claim</dt><dd>None</dd></div></dl></aside>
-      </div>
-    </section>
-
-    <section class="section section--band">
-      <div class="container content-rail"><div class="rail-label"><p class="eyebrow">Engineering review</p><h2>What the method cannot decide.</h2></div><div class="does-not-card"><ul><li>Whether a component has failed</li><li>The root cause of the observed behavior</li><li>Whether an intervention is required</li><li>The safety or operating consequence of a finding</li><li>Whether the available baseline represents every condition</li><li>What action the engineering team should take</li></ul><p class="note">Those decisions remain with qualified operators and engineers using site context.</p></div></div>
-    </section>
-
-    <section class="cta-band"><div class="container cta-band__inner"><div><p class="eyebrow">Use your own operating history</p><p class="cta-band__heading">Evaluate the method on one bounded system.</p></div><div class="button-row button-row--cta"><a class="button button--primary" href="contact.html">Request a Pilot Review</a><a class="button button--secondary" href="security.html">Review Security</a></div></div></section>
   </main>
-
-  <footer class="footer"><div class="container footer__inner"><div class="footer__brand"><span class="footer__wordmark">Neraium</span><span class="footer__tagline">Read-only infrastructure intelligence</span></div><nav class="footer__nav" aria-label="Footer navigation"><a href="platform.html" class="footer__link">Platform</a><a href="technical.html" class="footer__link">Use Cases</a><a href="pilot.html" class="footer__link">Pilot</a><a href="methodology.html" class="footer__link">Methodology</a><a href="security.html" class="footer__link">Security</a><a href="operator-brief.html" class="footer__link">Operator Brief</a><a href="contact.html" class="footer__link">Contact</a></nav><div class="footer__copy">&copy; <span id="year"></span> Neraium</div></div></footer>
-  <a class="mobile-sticky-cta" href="contact.html" data-track="mobile_sticky_methodology">Request a Pilot Review</a>
-  <script src="scripts.js?v=20260801" defer></script>
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><strong>Neraium</strong><p>Systemic Infrastructure Intelligence</p></div>
+      <nav aria-label="Footer navigation"><a href="platform.html">Platform</a><a href="methodology.html">How It Works</a><a href="index.html#evidence">Evidence Packages</a><a href="security.html">Security</a><a href="technical.html">Applications</a><a href="pilot.html">Evaluation</a><a href="operator-brief.html">Company</a><a href="contact.html">Contact</a></nav>
+      <small>&copy; <span id="year"></span> Neraium</small>
+    </div>
+  </footer>
+  <script src="scripts.js?v=20260804b" defer></script>
 </body>
 </html>

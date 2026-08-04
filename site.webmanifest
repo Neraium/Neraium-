@@ -3,18 +3,10 @@
   "short_name": "Neraium",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#080a0d",
-  "theme_color": "#080a0d",
+  "background_color": "#f4f1ea",
+  "theme_color": "#f4f1ea",
   "icons": [
-    {
-      "src": "android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }
