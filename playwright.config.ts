@@ -1,4 +1,6 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
+
+const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || process.env.CHROME_BIN || undefined;
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -13,7 +15,8 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:8080',
     browserName: 'chromium',
-    colorScheme: 'dark',
+    colorScheme: 'light',
+    launchOptions: executablePath ? { executablePath } : undefined,
     trace: 'on-first-retry',
   },
   webServer: {
@@ -23,21 +26,11 @@ export default defineConfig({
     timeout: 15_000,
   },
   projects: [
-    {
-      name: 'desktop-1440x1000',
-      use: { viewport: { width: 1440, height: 1000 } },
-    },
-    {
-      name: 'tablet-1024x768',
-      use: { viewport: { width: 1024, height: 768 } },
-    },
-    {
-      name: 'mobile-390x844',
-      use: { viewport: { width: 390, height: 844 }, isMobile: true },
-    },
-    {
-      name: 'mobile-430x932',
-      use: { viewport: { width: 430, height: 932 }, isMobile: true },
-    },
+    { name: 'mobile-320x800', use: { ...devices['Desktop Chrome'], viewport: { width: 320, height: 800 } } },
+    { name: 'mobile-375x812', use: { ...devices['Desktop Chrome'], viewport: { width: 375, height: 812 } } },
+    { name: 'tablet-768x1024', use: { ...devices['Desktop Chrome'], viewport: { width: 768, height: 1024 } } },
+    { name: 'tablet-1024x768', use: { ...devices['Desktop Chrome'], viewport: { width: 1024, height: 768 } } },
+    { name: 'desktop-1440x1000', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 1000 } } },
+    { name: 'desktop-1920x1080', use: { ...devices['Desktop Chrome'], viewport: { width: 1920, height: 1080 } } },
   ],
 });
