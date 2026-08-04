@@ -348,10 +348,14 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_contact_form_fields_and_warning(self):
+        contact = (ROOT / "contact.html").read_text(encoding="utf-8")
         for field_id in ("name", "organization", "role", "email", "facility", "data", "message"):
-            self.assertIn(f'id="{field_id}"', self.index)
-        self.assertIn("Do not submit telemetry, credentials, security diagrams, or confidential operational information through this form.", self.index)
-        self.assertIn('data-netlify="true"', self.index)
+            self.assertIn(f'id="{field_id}"', contact)
+        self.assertIn("Do not submit telemetry, credentials, security diagrams, or confidential operational information through this form.", contact)
+        self.assertIn("One system is enough to begin.", contact)
+        self.assertIn("Initial data-fit review within three business days.", contact)
+        self.assertIn('data-netlify="true"', contact)
+        self.assertNotIn('data-netlify="true"', self.index)
 
     def test_design_tokens_and_responsive_contract(self):
         for token in ("--bg", "--ink", "--muted", "--line", "--navy", "--steel", "--cyan", "--amber", "--success", "--unknown", "--evidence", "--space", "--radius", "--shadow"):

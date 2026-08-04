@@ -4,20 +4,21 @@
 
 /* Design tokens */
 :root {
-  --bg: #f4f1ea;
-  --bg-alt: #ebe6dc;
-  --ink: #15191d;
-  --muted: #5f676f;
-  --line: #d3cdc1;
-  --navy: #172a3a;
-  --navy-2: #0e1c28;
-  --steel: #456b80;
-  --cyan: #2d8192;
+  --bg: #ffffff;
+  --bg-alt: #f4f7f8;
+  --ink: #10202b;
+  --muted: #5a6a72;
+  --line: #dbe5e8;
+  --navy: #003a4d;
+  --navy-2: #062536;
+  --steel: #2e6472;
+  --teal: #007a74;
+  --cyan: #007a74;
   --amber: #a8752a;
   --success: #3f7a58;
   --unknown: #77736b;
-  --panel: #fffdf8;
-  --evidence: #f8f5ee;
+  --panel: #ffffff;
+  --evidence: #f7fafb;
   --space-section: clamp(4rem, 7vw, 7rem);
   --space-page-hero: clamp(4.5rem, 8vw, 7.5rem);
   --radius: 18px;
@@ -25,7 +26,7 @@
   --shadow: 0 24px 60px rgba(31, 38, 44, 0.12);
   --font-body: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --h1: clamp(3rem, 8vw, 7.2rem);
+  --h1: clamp(2.9rem, 7vw, 5.8rem);
   --h2: clamp(2rem, 4vw, 4rem);
   --h3: clamp(1.1rem, 2vw, 1.45rem);
   --body: clamp(1rem, 1.1vw, 1.12rem);
@@ -130,7 +131,7 @@ textarea:focus-visible {
   top: 0;
   z-index: 10;
   border-bottom: 1px solid var(--line);
-  background: rgba(244, 241, 234, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(14px);
 }
 
@@ -229,8 +230,8 @@ textarea:focus-visible {
 h1 {
   max-width: 12ch;
   font-size: var(--h1);
-  line-height: 0.92;
-  letter-spacing: -0.075em;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
 }
 
 .page-hero h1,
@@ -381,7 +382,7 @@ h3 {
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: rgba(255, 253, 248, 0.94);
+  background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow);
 }
 
@@ -503,16 +504,16 @@ h3 {
 /* Security and contact */
 .navy {
   background: var(--navy-2);
-  color: #f7f3eb;
+  color: #f7fbfc;
 }
 
 .navy .eyebrow {
-  color: #8fb8c5;
+  color: #8fd4cf;
 }
 
 .navy p,
 .navy article p {
-  color: #c6d0d5;
+  color: #cfe0e5;
 }
 
 .facts {
@@ -528,7 +529,7 @@ h3 {
 }
 
 .cta {
-  background: linear-gradient(180deg, #f4f1ea, #e5ded1);
+  background: linear-gradient(180deg, #ffffff, #eef5f6);
 }
 
 .contact-form {
@@ -583,7 +584,11 @@ h3 {
 .footer {
   padding: 2rem 0;
   background: var(--ink);
-  color: #f7f3eb;
+  color: #f7fbfc;
+}
+
+.cta-slim {
+  max-width: 860px;
 }
 
 .footer-grid {
