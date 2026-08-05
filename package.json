@@ -10,8 +10,8 @@
     "test": "playwright test",
     "test:e2e": "playwright test",
     "build": "node scripts/build-static-site.mjs",
-    "deploy": "npm run build && npx wrangler deploy",
-    "preview": "npm run build && npx wrangler dev"
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "lighthouse": "^13.4.1",
-    "playwright": "^1.62.1"
+    "playwright": "^1.62.1",
+    "wrangler": "4.118.0"
   }
 }
