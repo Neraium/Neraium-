@@ -16,6 +16,7 @@ const publicAssets = [
   'operator-brief.html',
   'pilot.html',
   'platform.html',
+  'privacy.html',
   'robots.txt',
   'sample-finding-pack.pdf',
   'scripts.js',
@@ -87,7 +88,7 @@ for (const asset of publicAssets) {
 }
 
 const referencedImages = new Set();
-for (const file of ['404.html', 'company.html', 'contact.html', 'evidence.html', 'index.html', 'methodology.html', 'operator-brief.html', 'pilot.html', 'platform.html', 'security.html', 'site.webmanifest', 'styles.css', 'technical.html']) {
+for (const file of ['404.html', 'company.html', 'contact.html', 'evidence.html', 'index.html', 'methodology.html', 'operator-brief.html', 'pilot.html', 'platform.html', 'privacy.html', 'security.html', 'site.webmanifest', 'styles.css', 'technical.html']) {
   const text = await readFile(file, 'utf8');
   for (const ref of collectReferencedImages(text)) referencedImages.add(ref);
 }
