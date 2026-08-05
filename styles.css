@@ -16,15 +16,15 @@
   --panel:#0d1b20;
   --panel-2:#101f25;
   --evidence:#08181d;
-  --space-section:clamp(4rem, 7vw, 7.5rem);
+  --space-section:clamp(3.75rem, 6.4vw, 6.75rem);
   --space-page-hero:clamp(4.8rem, 8vw, 8.5rem);
   --radius:22px;
   --radius-sm:12px;
   --shadow:0 28px 80px rgba(0, 0, 0, .42);
   --font-body:Inter, system-ui, -apple-system, Segoe UI, sans-serif;
   --font-mono:"IBM Plex Mono", ui-monospace, monospace;
-  --h1: clamp(3.4rem, 7.6vw, 7.2rem);
-  --h2: clamp(2.05rem, 4.4vw, 4.65rem);
+  --h1: clamp(3.15rem, 7vw, 6.55rem);
+  --h2: clamp(2rem, 3.9vw, 4.1rem);
   --h3: clamp(1.08rem, 1.65vw, 1.45rem);
   --body: clamp(1rem, 1vw, 1.1rem)
 }
@@ -215,11 +215,21 @@ h3 {
   background:linear-gradient(180deg, #0b171b, #0a1418)
 }
 .section-head {
-  max-width:850px;
+  max-width:760px;
   margin-bottom:2rem
 }
 .section p, .page-hero p, .cards article p, .apps article p {
+  max-width:68ch;
   color:var(--muted)
+}
+.cards article p + p, .apps article p + p {
+  margin-top:.8rem
+}
+.apps article h2 {
+  margin-bottom:.7rem;
+  font-size:clamp(1.22rem, 1.7vw, 1.55rem);
+  line-height:1.16;
+  letter-spacing:-.025em
 }
 .button-row {
   display:flex;
@@ -338,7 +348,7 @@ h3 {
   color:#a8bbc0
 }
 .compare-card, .facts, .maintenance-card, .contact-form, .founder-block, .cards article, .apps article, .evidence-package, .brief-grid article {
-  padding:1.35rem;
+  padding:clamp(1.15rem, 2vw, 1.55rem);
   border:1px solid var(--line);
   border-radius:var(--radius);
   background:linear-gradient(180deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, .025));
@@ -353,7 +363,7 @@ h3 {
 }
 .cards, .apps, .brief-grid {
   display:grid;
-  gap:1rem
+  gap:clamp(1rem, 1.6vw, 1.25rem)
 }
 .three, .apps {
   grid-template-columns:repeat(3, 1fr)
@@ -423,6 +433,9 @@ h3 {
   display:grid;
   gap:.8rem
 }
+.facts.compact {
+  align-content:start
+}
 .facts p {
   padding:.85rem;
   border-left:3px solid var(--cyan);
@@ -435,6 +448,10 @@ h3 {
 .contact-form {
   display:grid;
   gap:.65rem
+}
+.contact-form .text-link {
+  justify-self:start;
+  margin-top:.2rem
 }
 .contact-form label {
   font-size:.92rem;
@@ -594,7 +611,7 @@ h3 {
 }
 h1, .page-hero h1, .cta h1 {
   max-width:100%;
-  font-size:clamp(3rem, 14vw, 4.1rem);
+  font-size:clamp(2.55rem, 12.5vw, 3.85rem);
   line-height:.98;
   letter-spacing:-.055em
 }
@@ -624,6 +641,15 @@ h1, .page-hero h1, .cta h1 {
 }
 .button {
   width:100%
+}
+.site-header {
+  position:sticky
+}
+.nav-shell {
+  height:74px
+}
+.nav {
+  inset:74px 14px auto 14px
 }
 
 }
