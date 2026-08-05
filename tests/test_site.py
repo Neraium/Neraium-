@@ -30,6 +30,12 @@ def split_path_and_fragment(value: str) -> tuple[str, str | None]:
     return path, frag or None
 
 
+def assert_generated_site_output() -> None:
+    message = "Generated site output is missing. Run `npm run build` before deployment tests."
+    if not (ROOT / "dist").is_dir() or not (ROOT / "dist" / "assets" / "images").is_dir():
+        raise AssertionError(message)
+
+
 def strip_querystring(value: str) -> str:
     return value.split("?", 1)[0]
 
@@ -552,6 +558,7 @@ class TestImageDeploymentPipeline(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        assert_generated_site_output()
         cls.image_refs: set[str] = set()
         for path in site_html_files() + [ROOT / "styles.css", ROOT / "site.webmanifest"]:
             cls.image_refs.update(cls._local_image_refs_from_text(path.read_text(encoding="utf-8")))
@@ -615,6 +622,10 @@ class TestImageDeploymentPipeline(unittest.TestCase):
             self.assertFalse(any(part in forbidden for part in path.parts), str(path))
 
 class TestImageHttpServing(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        assert_generated_site_output()
+
     def test_local_http_server_returns_images(self):
         import http.server
         import socketserver
