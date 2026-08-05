@@ -121,10 +121,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .brand img {
   display:block;
-  width:auto;
-  height:64px;
-  max-width:min(34vw, 92px);
+  width:210px;
+  height:auto;
+  max-width:min(46vw, 230px);
+  max-height:78px;
   object-fit:contain
+}
+.brand-lockup {
+  display:block
 }
 .nav {
   display:flex;
@@ -662,12 +666,13 @@ h1, .page-hero h1, .cta h1 {
   position:sticky
 }
 .nav-shell {
-  height:76px
+  height:82px
 }
 .brand img {
-  width:auto;
-  height:56px;
-  max-width:78px
+  width:clamp(170px, 52vw, 190px);
+  height:auto;
+  max-width:min(58vw, 200px);
+  max-height:72px
 }
 .nav {
   inset:76px 14px auto 14px

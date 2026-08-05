@@ -138,6 +138,9 @@ def site_html_files() -> list[Path]:
     return sorted([p for p in ROOT.glob("*.html") if p.is_file()])
 
 
+OFFICIAL_LOGO = "/assets/images/neraium-logo-lockup-white.png"
+
+
 def indexable_html_files() -> list[Path]:
     return [path for path in site_html_files() if not load_html(path).is_noindex]
 
@@ -295,6 +298,28 @@ class TestStaticSite(unittest.TestCase):
             self.assertNotIn('>Contact</a></nav><a class="header-action"', html)
         self.assertTrue((ROOT / 'evidence.html').exists())
         self.assertTrue((ROOT / 'company.html').exists())
+
+    def test_public_headers_use_official_white_logo_lockup(self):
+        expected_img = f'<img src="{OFFICIAL_LOGO}" alt="Neraium logo" class="brand-lockup">'
+        errors = []
+        for html_file in site_html_files():
+            html = html_file.read_text(encoding="utf-8")
+            header_match = re.search(r"<header class=\"site-header\">.*?</header>", html, re.DOTALL)
+            if not header_match:
+                errors.append(f"{html_file.name}: missing site header")
+                continue
+            header = header_match.group(0)
+            if expected_img not in header:
+                errors.append(f"{html_file.name}: missing official logo img")
+            if f'href="index.html"' not in header:
+                errors.append(f"{html_file.name}: logo/header does not link home")
+            if "neraium-logo-lockup.svg" in header:
+                errors.append(f"{html_file.name}: old SVG logo still used in header")
+            brand_link = re.search(r'<a class="brand"[^>]*>(.*?)</a>', header, re.DOTALL)
+            if brand_link and re.sub(r"<[^>]+>", "", brand_link.group(1)).strip():
+                errors.append(f"{html_file.name}: header renders separate brand text")
+        if errors:
+            self.fail("Logo header issues:\n" + "\n".join(errors))
 
     def test_no_placeholder_active_analytics_or_broken_social_images(self):
         scripts = (ROOT / 'scripts.js').read_text(encoding='utf-8')
@@ -664,6 +689,26 @@ class TestImageDeploymentPipeline(unittest.TestCase):
                 errors.append(f"dist case mismatch: {ref}")
         if errors:
             self.fail("Image resolution errors:\n" + "\n".join(errors))
+
+    def test_official_white_logo_exists_in_source_and_dist(self):
+        self.assertIn(OFFICIAL_LOGO, self.image_refs)
+        for root in (ROOT, self.DIST):
+            logo = root / OFFICIAL_LOGO.lstrip("/")
+            self.assertTrue(logo.is_file(), str(logo))
+            self.assertEqual("neraium-logo-lockup-white.png", logo.name)
+            self.assertRegex(logo.name, r"^[a-z0-9][a-z0-9.-]*\.png$")
+            data = logo.read_bytes()
+            self.assertTrue(data.startswith(b"\x89PNG\r\n\x1a\n"))
+            self.assertIn(b"IHDR", data[:32])
+
+    def test_every_visible_logo_has_required_alt_text(self):
+        for html_file in site_html_files():
+            logos = [
+                img for img in load_html(html_file).imgs
+                if (img.get("src") or "").strip() == OFFICIAL_LOGO
+            ]
+            self.assertEqual(1, len(logos), html_file.name)
+            self.assertEqual("Neraium logo", logos[0].get("alt"), html_file.name)
 
     def test_images_are_non_empty_valid_and_cloudflare_safe(self):
         signatures = {
