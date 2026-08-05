@@ -19,8 +19,8 @@
   --unknown: #77736b;
   --panel: #ffffff;
   --evidence: #f7fafb;
-  --space-section: clamp(4rem, 7vw, 7rem);
-  --space-page-hero: clamp(4.5rem, 8vw, 7.5rem);
+  --space-section: clamp(3.25rem, 5.5vw, 5.75rem);
+  --space-page-hero: clamp(3.5rem, 6vw, 6rem);
   --radius: 18px;
   --radius-sm: 10px;
   --shadow: 0 24px 60px rgba(31, 38, 44, 0.12);
@@ -51,7 +51,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--body);
-  line-height: 1.65;
+  line-height: 1.58;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -230,8 +230,8 @@ textarea:focus-visible {
 h1 {
   max-width: 12ch;
   font-size: var(--h1);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
 }
 
 .page-hero h1,
@@ -243,8 +243,8 @@ h1 {
 h2 {
   margin-bottom: 1rem;
   font-size: var(--h2);
-  line-height: 1.02;
-  letter-spacing: -0.055em;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
 }
 
 h3 {
@@ -255,10 +255,10 @@ h3 {
 
 .lead {
   max-width: 760px;
-  margin-top: 1.4rem;
+  margin-top: 1rem;
   color: #303941;
   font-size: clamp(1.15rem, 2vw, 1.5rem);
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .section {
@@ -273,7 +273,7 @@ h3 {
 
 .section-head {
   max-width: 850px;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .section p,
@@ -288,7 +288,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  margin-top: 1.8rem;
+  margin-top: 1.4rem;
 }
 
 .button {
@@ -313,6 +313,11 @@ h3 {
 .secondary {
   background: transparent;
   color: var(--navy);
+}
+
+.button.on-dark {
+  border-color: #8fd4cf;
+  color: #f7fbfc;
 }
 
 .text-link {
@@ -414,7 +419,7 @@ h3 {
 .apps article,
 .evidence-package,
 .brief-grid article {
-  padding: 1.4rem;
+  padding: 1.25rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--panel);
@@ -668,18 +673,18 @@ h3 {
 
   .hero,
   .page-hero {
-    padding: 3rem 0 4rem;
+    padding: 2.2rem 0 3rem;
   }
 
   h1,
   .page-hero h1,
   .cta h1 {
-    max-width: 10ch;
-    font-size: clamp(3.1rem, 17vw, 5rem);
+    max-width: 11ch;
+    font-size: clamp(2.7rem, 14vw, 4.8rem);
   }
 
   .lead {
-    font-size: 1.08rem;
+    font-size: 1.02rem;
   }
 
   .three,
@@ -697,6 +702,8 @@ h3 {
 
   .boundary-list {
     display: grid;
+    gap: 0.35rem;
+    margin-top: 1rem;
   }
 
   .button {
@@ -726,7 +733,7 @@ h3 {
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 96px;
+  min-height: 82px;
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
