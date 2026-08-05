@@ -319,33 +319,142 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_information_architecture_sections_exist(self):
-        for section_id in ("platform", "problem", "what", "evidence", "evaluation", "security", "applications", "different", "contact"):
+        retained_home_sections = ("platform", "what", "evidence", "maintenance", "evaluation", "security", "contact")
+        for section_id in retained_home_sections:
             self.assertIn(f'id="{section_id}"', self.index)
+        for removed_home_section in ("applications", "different"):
+            self.assertNotIn(f'id="{removed_home_section}"', self.index)
+
+        navigation = re.search(r'<nav class="nav" id="main-navigation".*?</nav>', self.index, re.DOTALL).group(0)
+        self.assertIn('href="technical.html"', navigation)
+        self.assertIn('>Applications</a>', navigation)
+
+        applications = (ROOT / "technical.html").read_text(encoding="utf-8")
+        applications_text = self.normalized(applications)
+        self.assertIn('id="applications"', applications)
+        for phrase in (
+            "Operational systems where relationships carry the signal.",
+            "Resorts and casinos",
+            "Commercial buildings and campuses",
+            "Chilled-water and utility plants",
+            "Water and pumping infrastructure",
+            "Industrial facilities",
+            "Cruise and maritime",
+        ):
+            self.assertIn(phrase, applications_text)
 
     def test_evidence_package_and_maintenance_view_are_complete(self):
         text = self.normalized(self.index)
+        evidence = (ROOT / "evidence.html").read_text(encoding="utf-8")
+        evidence_text = self.normalized(evidence)
+        operator = (ROOT / "operator-brief.html").read_text(encoding="utf-8")
+        operator_text = self.normalized(operator)
+
         for phrase in (
+            "Evidence Package preview",
             "EP-CHW-017",
             "Pump power and delivered flow relationship weakened under comparable operating conditions.",
             "System",
             "Behavioral Finding",
-            "Earliest Supported",
             "Operating Context",
-            "Supporting Evidence",
-            "Confidence notes",
             "Evidence Limitations",
-            "Recommended Starting Point",
-            "What we see",
-            "What to check first",
-            "What we do not know yet",
             "Telemetry cannot distinguish hydraulic restriction from pump-performance degradation.",
         ):
             self.assertIn(phrase, text)
+        self.assertIn('href="evidence.html">View the Complete Evidence Package</a>', self.index)
+        self.assertIn('href="operator-brief.html">View Maintenance View</a>', self.index)
+
+        for full_field in ("Earliest Supported", "Supporting Evidence", "Confidence notes", "Recommended Starting Point"):
+            self.assertNotIn(full_field, text)
+        for phrase in (
+            "Earliest Supported",
+            "Operating Context",
+            "Supporting Evidence",
+            "Confidence",
+            "Evidence Limitations",
+            "Recommended Starting Point",
+        ):
+            self.assertIn(phrase, evidence_text)
+        for phrase in ("What we see", "What to check first", "What we do not know yet"):
+            self.assertIn(phrase, operator_text)
 
     def test_security_boundaries_are_clearly_distinguished(self):
         text = self.normalized(self.index)
-        for phrase in ("Read-only architecture", "Outside the control path", "Approved export or read-only source", "Human engineering review"):
+        security = (ROOT / "security.html").read_text(encoding="utf-8")
+        security_text = self.normalized(security)
+        for phrase in (
+            "Read-only security summary",
+            "Evidence outside the control path.",
+            "Neraium is read-only",
+            "outside the control path",
+            "without live integration",
+            "Approved export or read-only source",
+            "Human engineering review",
+        ):
             self.assertIn(phrase, text)
+        self.assertIn('href="security.html">Review Security Model</a>', self.index)
+        for phrase in (
+            "Implemented",
+            "Deployment-dependent",
+            "Planned or assessed separately",
+            "Not claimed",
+            "Read-only operation, outside the control path",
+            "does not claim SOC 2",
+        ):
+            self.assertIn(phrase, security_text)
+
+
+    def test_homepage_reduction_regression_contract(self):
+        text = self.normalized(self.index)
+        expected_order = [
+            'id="platform"',
+            'id="what"',
+            'id="evidence"',
+            'id="maintenance"',
+            'id="evaluation"',
+            'id="security"',
+            'id="contact"',
+        ]
+        positions = [self.index.index(marker) for marker in expected_order]
+        self.assertEqual(positions, sorted(positions))
+        self.assertNotIn('id="applications"', self.index)
+        self.assertNotIn('id="different"', self.index)
+        for long_form_phrase in (
+            "Resorts and casinos",
+            "Commercial buildings and campuses",
+            "Chilled-water and utility plants",
+            "Water and pumping infrastructure",
+            "Industrial facilities",
+            "Cruise and maritime",
+            "What we see",
+            "What to check first",
+            "What we do not know yet",
+            "Earliest Supported",
+            "Supporting Evidence",
+            "Recommended Starting Point",
+            "Implemented baseline",
+            "Deployment-dependent controls",
+            "Claims not made",
+        ):
+            self.assertNotIn(long_form_phrase, text)
+
+    def test_primary_ctas_and_reduced_homepage_routes_remain_valid(self):
+        for href, label in (
+            ("contact.html", "Request a Historical Evaluation"),
+            ("evidence.html", "See an Evidence Package"),
+            ("evidence.html", "View the Complete Evidence Package"),
+            ("operator-brief.html", "View Maintenance View"),
+            ("pilot.html", "Explore Historical Evaluation"),
+            ("security.html", "Review Security Model"),
+        ):
+            self.assertIn(f'href="{href}"', self.index, f"missing route for {label}")
+            self.assertTrue((ROOT / href).exists(), f"missing target page for {label}")
+
+    def test_mobile_typography_contract_remains_intact(self):
+        self.assertRegex(self.styles, r"font-size:\s*clamp\(")
+        self.assertRegex(self.styles, r"@media\s*\(max-width:\s*620px\)")
+        self.assertIn("--h1: clamp", self.styles)
+        self.assertIn(".lead", self.styles)
 
     def test_contact_form_fields_and_warning(self):
         contact = (ROOT / "contact.html").read_text(encoding="utf-8")
