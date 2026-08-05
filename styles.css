@@ -115,17 +115,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .brand {
   display:flex;
   align-items:center;
-  gap:.82rem;
+  min-width:0;
   color:#fff;
-  font-size:1.08rem;
-  font-weight:720;
-  letter-spacing:.005em;
   text-decoration:none
 }
 .brand img {
-  width:48px;
-  height:48px;
-  border-radius:12px
+  display:block;
+  width:auto;
+  height:64px;
+  max-width:min(34vw, 92px);
+  object-fit:contain
 }
 .nav {
   display:flex;
@@ -665,14 +664,10 @@ h1, .page-hero h1, .cta h1 {
 .nav-shell {
   height:76px
 }
-.brand {
-  gap:.68rem;
-  font-size:1rem
-}
 .brand img {
-  width:40px;
-  height:40px;
-  border-radius:10px
+  width:auto;
+  height:56px;
+  max-width:78px
 }
 .nav {
   inset:76px 14px auto 14px
