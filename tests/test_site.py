@@ -316,14 +316,23 @@ class TestPositioningAndExperience(unittest.TestCase):
         text = self.normalized(self.index)
         for phrase in (
             "Systemic Infrastructure Intelligence",
-            "Identify persistent changes across interconnected operational systems.",
-            "concise Evidence Packages",
+            "Identify persistent changes in operational systems.",
+            "analyzes how operational systems behave over time",
+            "persistent behavioral changes",
+            "conventional threshold monitoring",
+            "Detect Persistent Behavioral Change",
+            "Preserve Operational Context",
+            "Deliver Engineering Evidence",
             "Request a Historical Evaluation",
             "See an Evidence Package",
             "Read-Only",
             "Outside the control path",
         ):
             self.assertIn(phrase, text)
+
+        self.assertIn("Evidence Package preview", text)
+        self.assertIn("An artifact produced by the analysis.", text)
+        self.assertNotIn("concise Evidence Packages", text)
 
     def test_information_architecture_sections_exist(self):
         retained_home_sections = ("platform", "problem", "what", "evidence", "evaluation", "contact")
@@ -391,10 +400,10 @@ class TestPositioningAndExperience(unittest.TestCase):
         security_text = self.normalized(security)
         for phrase in (
             "Historical Evaluation",
-            "Start with approved historical data before considering live integration.",
-            "operates read-only",
+            "Start with historical data before live integration.",
+            "stays read-only",
             "Outside the control path",
-            "No live connection required for the initial evaluation",
+            "No live connection required",
         ):
             self.assertIn(phrase, text)
         self.assertIn('href="pilot.html">Explore Historical Evaluation</a>', self.index)
