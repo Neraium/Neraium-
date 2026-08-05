@@ -91,6 +91,11 @@ class SiteParser(HTMLParser):
             self.imgs.append(attrs_dict)
             if "src" in attrs_dict and attrs_dict["src"]:
                 self.refs.append(LinkRef(self.source_file, "img", "src", attrs_dict["src"]))
+            if "srcset" in attrs_dict and attrs_dict["srcset"]:
+                for candidate in attrs_dict["srcset"].split(","):
+                    url = candidate.strip().split()[0] if candidate.strip() else ""
+                    if url:
+                        self.refs.append(LinkRef(self.source_file, "img", "srcset", url))
 
         if tag == "a":
             href = attrs_dict.get("href")
@@ -100,7 +105,7 @@ class SiteParser(HTMLParser):
         if tag == "link":
             rel = (attrs_dict.get("rel") or "").lower()
             href = attrs_dict.get("href")
-            if href and rel in ("stylesheet", "icon", "apple-touch-icon", "manifest", "canonical"):
+            if href and (rel in ("stylesheet", "icon", "apple-touch-icon", "manifest", "canonical") or attrs_dict.get("as") in ("style", "font")):
                 self.refs.append(LinkRef(self.source_file, "link", "href", href))
             if rel == "canonical" and href:
                 self.canonical_links.append(href.strip())
@@ -310,6 +315,8 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     @staticmethod
     def normalized(value: str) -> str:
+        value = re.sub(r"<style\b[^>]*>.*?</style>", " ", value, flags=re.DOTALL | re.I)
+        value = re.sub(r"<script\b[^>]*>.*?</script>", " ", value, flags=re.DOTALL | re.I)
         return " ".join(re.sub(r"<[^>]+>", " ", value).split())
 
     def test_core_positioning_and_ctas(self):
@@ -532,6 +539,66 @@ class TestPositioningAndExperience(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class TestPerformanceOptimizations(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.index = load_html(ROOT / "index.html")
+        cls.index_html = (ROOT / "index.html").read_text(encoding="utf-8")
+
+    def test_home_hero_image_priority_and_dimensions(self):
+        hero = next((img for img in self.index.imgs if img.get("src") == "/assets/images/pump-room.jpg"), None)
+        self.assertIsNotNone(hero, "Homepage hero image is missing")
+        self.assertNotEqual("lazy", hero.get("loading"), "LCP hero image must not be lazy loaded")
+        self.assertEqual("high", hero.get("fetchpriority"))
+        self.assertEqual("async", hero.get("decoding"))
+        self.assertEqual("720", hero.get("width"))
+        self.assertEqual("520", hero.get("height"))
+        self.assertIn("srcset", hero)
+        self.assertIn("sizes", hero)
+
+    def test_below_fold_images_are_lazy_loaded_when_appropriate(self):
+        eager_allowlist = {"/assets/images/pump-room.jpg", "/assets/images/neraium-logo-lockup.svg"}
+        errors = []
+        for img in load_html(ROOT / "index.html").imgs:
+            src = img.get("src", "")
+            if src.startswith("/assets/images/") and src not in eager_allowlist:
+                if img.get("loading") != "lazy":
+                    errors.append(f"index.html: {src}")
+                if img.get("decoding") != "async":
+                    errors.append(f"index.html: {src} missing async decoding")
+        if errors:
+            self.fail("Below-the-fold image priority issues:\n" + "\n".join(errors))
+
+    def test_stylesheet_loads_asynchronously_with_noscript_fallback(self):
+        for html_file in site_html_files():
+            html = html_file.read_text(encoding="utf-8")
+            self.assertRegex(html, r'<link rel="preload" href="styles\.css\?v=20260805d" as="style" onload=')
+            self.assertRegex(html, r'<noscript>[\s\S]*<link rel="stylesheet" href="styles\.css\?v=20260805d">[\s\S]*</noscript>')
+
+    def test_critical_css_is_small_and_homepage_only(self):
+        match = re.search(r'<style id="critical-css">(.*?)</style>', self.index_html, re.DOTALL)
+        self.assertIsNotNone(match, "Homepage critical CSS block is missing")
+        self.assertLess(len(match.group(1).encode("utf-8")), 5000)
+
+    def test_google_fonts_stylesheet_is_not_render_blocking(self):
+        for html_file in site_html_files():
+            html = html_file.read_text(encoding="utf-8")
+            head_before_noscript = html.split("<noscript>", 1)[0]
+            self.assertNotRegex(head_before_noscript, r'<link rel="stylesheet" href="https://fonts\.googleapis\.com')
+            self.assertIn('rel="preload" href="https://fonts.googleapis.com/css2?family=Inter', html)
+
+    def test_font_weights_are_limited_to_used_weights(self):
+        for html_file in site_html_files():
+            html = html_file.read_text(encoding="utf-8")
+            self.assertIn('Inter:wght@400;500;600;700;800', html)
+            self.assertIn('IBM+Plex+Mono:wght@400;500;600;700', html)
+            self.assertNotIn('wght@100', html)
+
+    def test_no_public_asset_exceeds_cloudflare_limit(self):
+        for path in [p for p in ROOT.rglob("*") if p.is_file() and ".git" not in p.parts and "node_modules" not in p.parts]:
+            self.assertLessEqual(path.stat().st_size, 25 * 1024 * 1024, str(path.relative_to(ROOT)))
+
 
 class TestImageDeploymentPipeline(unittest.TestCase):
     IMAGE_DIR = ROOT / "assets" / "images"

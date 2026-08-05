@@ -58,16 +58,19 @@ function collectReferencedImages(text) {
   const refs = new Set();
   const patterns = [
     /<img\b[^>]*\bsrc=["']([^"']+)["']/gi,
+    /<img\b[^>]*\bsrcset=["']([^"']+)["']/gi,
     /<meta\b[^>]*(?:property|name)=["'](?:og:image|twitter:image)["'][^>]*\bcontent=["']([^"']+)["']/gi,
     /url\(["']?([^"')]+)["']?\)/gi,
     /"src"\s*:\s*"([^"]+)"/gi,
   ];
   for (const pattern of patterns) {
     for (const match of text.matchAll(pattern)) {
-      let value = match[1].trim();
-      if (value.startsWith('https://www.neraium.com/')) value = value.replace('https://www.neraium.com', '');
-      if (!value.startsWith('/assets/images/')) continue;
-      refs.add(value.split(/[?#]/, 1)[0]);
+      for (const candidate of match[1].split(',')) {
+        let value = candidate.trim().split(/\s+/, 1)[0];
+        if (value.startsWith('https://www.neraium.com/')) value = value.replace('https://www.neraium.com', '');
+        if (!value.startsWith('/assets/images/')) continue;
+        refs.add(value.split(/[?#]/, 1)[0]);
+      }
     }
   }
   return refs;
