@@ -1,5 +1,4 @@
 import json
-import subprocess
 import re
 import unittest
 import xml.etree.ElementTree as ET
@@ -11,6 +10,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ORIGIN = "https://www.neraium.com"
+HOMEPAGE_PRE_REDUCTION_WORD_COUNT = 599
 
 
 def is_external_url(value: str) -> bool:
@@ -421,9 +421,26 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertNotIn('id="different"', self.index)
         self.assertNotIn('id="maintenance"', self.index)
         self.assertNotIn('id="security"', self.index)
-        original_words = len(self.normalized(subprocess.check_output(["git", "show", "HEAD:index.html"], cwd=ROOT, text=True)).split())
         current_words = len(text.split())
-        self.assertLessEqual(current_words, original_words * 0.60)
+        maximum_words = int(HOMEPAGE_PRE_REDUCTION_WORD_COUNT * 0.60)
+        reduction = 1 - (current_words / HOMEPAGE_PRE_REDUCTION_WORD_COUNT)
+        diagnostic = (
+            f"baseline={HOMEPAGE_PRE_REDUCTION_WORD_COUNT}; "
+            f"current={current_words}; "
+            f"reduction={reduction:.1%}; "
+            f"maximum={maximum_words}"
+        )
+        self.assertLessEqual(
+            current_words,
+            maximum_words,
+            (
+                f"Homepage has {current_words} words; expected at most "
+                f"{maximum_words} based on the "
+                f"{HOMEPAGE_PRE_REDUCTION_WORD_COUNT}-word pre-reduction baseline. "
+                f"{diagnostic}"
+            ),
+        )
+        self.assertGreaterEqual(reduction, 0.40, diagnostic)
         for long_form_phrase in (
             "Resorts and casinos",
             "Commercial buildings and campuses",
