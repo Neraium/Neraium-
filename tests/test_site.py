@@ -517,3 +517,124 @@ class TestPositioningAndExperience(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class TestImageDeploymentPipeline(unittest.TestCase):
+    IMAGE_DIR = ROOT / "assets" / "images"
+    DIST = ROOT / "dist"
+    HERO_IMAGE = "/assets/images/pump-room.jpg"
+    REUPLOADED = {
+        "pump-room.jpg",
+        "evidence-package-laptop.jpg",
+        "read-only-workflow.jpg",
+        "pressure-gauges.jpg",
+        "rooftop-cooling.jpg",
+        "engineer-tablet.jpg",
+        "control-panels.jpg",
+    }
+
+    @staticmethod
+    def _local_image_refs_from_text(text: str) -> set[str]:
+        refs: set[str] = set()
+        patterns = (
+            r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
+            r'<meta\b[^>]*(?:property|name)=["\'](?:og:image|twitter:image)["\'][^>]*\bcontent=["\']([^"\']+)["\']',
+            r'url\(["\']?([^"\')]+)["\']?\)',
+            r'"src"\s*:\s*"([^"]+)"',
+        )
+        for pattern in patterns:
+            for match in re.findall(pattern, text, flags=re.I):
+                value = match.strip()
+                if value.startswith(SITE_ORIGIN + "/"):
+                    value = value.removeprefix(SITE_ORIGIN)
+                if value.startswith("/assets/images/"):
+                    refs.add(strip_querystring(value))
+        return refs
+
+    @classmethod
+    def setUpClass(cls):
+        cls.image_refs: set[str] = set()
+        for path in site_html_files() + [ROOT / "styles.css", ROOT / "site.webmanifest"]:
+            cls.image_refs.update(cls._local_image_refs_from_text(path.read_text(encoding="utf-8")))
+
+    def test_public_image_filenames_are_url_safe_and_unique(self):
+        basenames: dict[str, list[str]] = {}
+        for image in self.IMAGE_DIR.iterdir():
+            if image.is_file():
+                self.assertRegex(image.name, r"^[a-z0-9][a-z0-9.-]*\.(jpg|jpeg|png|webp|svg)$")
+                self.assertNotIn(" ", image.name)
+                basenames.setdefault(image.stem, []).append(image.name)
+        duplicates = {name: files for name, files in basenames.items() if len(files) > 1}
+        self.assertEqual({}, duplicates)
+
+    def test_every_referenced_image_exists_in_source_and_dist_case_sensitive(self):
+        errors = []
+        for ref in sorted(self.image_refs):
+            source = ROOT / ref.lstrip("/")
+            dist = self.DIST / ref.lstrip("/")
+            if not source.is_file():
+                errors.append(f"source missing: {ref}")
+            if not dist.is_file():
+                errors.append(f"dist missing: {ref}")
+            if source.parent.is_dir() and source.name not in {p.name for p in source.parent.iterdir()}:
+                errors.append(f"source case mismatch: {ref}")
+            if dist.parent.is_dir() and dist.name not in {p.name for p in dist.parent.iterdir()}:
+                errors.append(f"dist case mismatch: {ref}")
+        if errors:
+            self.fail("Image resolution errors:\n" + "\n".join(errors))
+
+    def test_images_are_non_empty_valid_and_cloudflare_safe(self):
+        signatures = {
+            ".jpg": lambda b: b.startswith(b"\xff\xd8\xff"),
+            ".jpeg": lambda b: b.startswith(b"\xff\xd8\xff"),
+            ".png": lambda b: b.startswith(b"\x89PNG\r\n\x1a\n"),
+            ".webp": lambda b: b[:4] == b"RIFF" and b[8:12] == b"WEBP",
+            ".svg": lambda b: b.lstrip().startswith(b"<svg"),
+        }
+        for ref in sorted(self.image_refs):
+            data = (self.DIST / ref.lstrip("/")).read_bytes()
+            self.assertGreater(len(data), 0, ref)
+            self.assertLessEqual(len(data), 25 * 1024 * 1024, ref)
+            self.assertTrue(signatures[Path(ref).suffix.lower()](data), ref)
+
+    def test_hero_and_reuploaded_images_are_in_dist(self):
+        self.assertIn(self.HERO_IMAGE, self.image_refs)
+        self.assertTrue((self.DIST / self.HERO_IMAGE.lstrip("/")).is_file())
+        copied = {path.name for path in (self.DIST / "assets" / "images").iterdir()}
+        self.assertTrue(self.REUPLOADED.issubset(copied))
+
+    def test_visible_images_have_meaningful_alt_text(self):
+        for html_file in site_html_files():
+            for img in load_html(html_file).imgs:
+                alt = (img.get("alt") or "").strip()
+                self.assertGreaterEqual(len(alt), 8, f"{html_file.name}: {img.get('src')}")
+                self.assertNotIn(alt.lower(), {"image", "photo", "picture", "graphic"})
+
+    def test_dist_image_directory_excludes_internal_files(self):
+        forbidden = {"node_modules", ".git", "tests", "scripts", "__pycache__", ".cache", "AGENTS.md"}
+        for path in (self.DIST / "assets" / "images").rglob("*"):
+            self.assertFalse(any(part in forbidden for part in path.parts), str(path))
+
+class TestImageHttpServing(unittest.TestCase):
+    def test_local_http_server_returns_images(self):
+        import http.server
+        import socketserver
+        import threading
+        import urllib.request
+
+        refs = set()
+        for path in site_html_files() + [ROOT / "styles.css", ROOT / "site.webmanifest"]:
+            refs.update(TestImageDeploymentPipeline._local_image_refs_from_text(path.read_text(encoding="utf-8")))
+        handler = lambda *args, **kwargs: http.server.SimpleHTTPRequestHandler(*args, directory=str(ROOT / "dist"), **kwargs)
+        with socketserver.TCPServer(("127.0.0.1", 0), handler) as server:
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                base = f"http://127.0.0.1:{server.server_address[1]}"
+                for ref in sorted(refs):
+                    with urllib.request.urlopen(base + ref, timeout=5) as response:
+                        self.assertEqual(200, response.status, ref)
+                        self.assertTrue(response.headers.get("Content-Type", "").startswith("image/"), ref)
+                        response.read()
+            finally:
+                server.shutdown()
+                thread.join(timeout=5)

@@ -18,7 +18,7 @@
 
 ## Image source and license plan
 - The redesign uses only assets already stored in this repository and treats them as project-provided assets. No third-party images were downloaded or hotlinked.
-- `infra-bg-1.jpg`, `infra-bg-2.jpg`, and `diagram-threshold-vs-relationships.jpeg` are used as local infrastructure/diagram visuals with descriptive alt text.
+- `/assets/images/infra-bg-1.jpg`, `/assets/images/infra-bg-2.jpg`, and `/assets/images/diagram-threshold-vs-relationships.jpg` are used as local infrastructure/diagram visuals with descriptive alt text.
 - Because the environment did not provide provenance metadata for existing photos, no new external license claims were added. Recommended follow-up: add an `ASSET_LICENSES.md` file with ownership, photographer, source URL, and license terms for each committed image.
 
 ## Follow-up implementation review
