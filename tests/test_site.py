@@ -138,7 +138,7 @@ def site_html_files() -> list[Path]:
     return sorted([p for p in ROOT.glob("*.html") if p.is_file()])
 
 
-OFFICIAL_LOGO = "/assets/images/neraium-logo-lockup-white.png"
+OFFICIAL_LOGO = "/assets/images/neraium-logo-lockup.svg"
 
 
 def indexable_html_files() -> list[Path]:
@@ -313,8 +313,6 @@ class TestStaticSite(unittest.TestCase):
                 errors.append(f"{html_file.name}: missing official logo img")
             if f'href="index.html"' not in header:
                 errors.append(f"{html_file.name}: logo/header does not link home")
-            if "neraium-logo-lockup.svg" in header:
-                errors.append(f"{html_file.name}: old SVG logo still used in header")
             brand_link = re.search(r'<a class="brand"[^>]*>(.*?)</a>', header, re.DOTALL)
             if brand_link and re.sub(r"<[^>]+>", "", brand_link.group(1)).strip():
                 errors.append(f"{html_file.name}: header renders separate brand text")
@@ -356,7 +354,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             "Preserve Operational Context",
             "Deliver Engineering Evidence",
             "Request a Historical Evaluation",
-            "See an Evidence Package",
+            "See sample EP-CHW-017 report",
             "Read-Only",
             "Outside the control path",
         ):
@@ -408,7 +406,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             "Telemetry cannot distinguish hydraulic restriction from pump-performance degradation.",
         ):
             self.assertIn(phrase, text)
-        self.assertIn('href="evidence.html">View the Complete Evidence Package</a>', self.index)
+        self.assertIn('href="evidence.html">View sample EP-CHW-017 report</a>', self.index)
         self.assertNotIn('id="maintenance"', self.index)
         self.assertNotIn('href="operator-brief.html">View Maintenance View</a>', self.index)
 
@@ -510,8 +508,8 @@ class TestPositioningAndExperience(unittest.TestCase):
     def test_primary_ctas_and_reduced_homepage_routes_remain_valid(self):
         for href, label in (
             ("contact.html", "Request a Historical Evaluation"),
-            ("evidence.html", "See an Evidence Package"),
-            ("evidence.html", "View the Complete Evidence Package"),
+            ("evidence.html", "See sample EP-CHW-017 report"),
+            ("evidence.html", "View sample EP-CHW-017 report"),
             ("pilot.html", "Explore Historical Evaluation"),
             ("security.html", "Review Security Model"),
         ):
@@ -690,16 +688,15 @@ class TestImageDeploymentPipeline(unittest.TestCase):
         if errors:
             self.fail("Image resolution errors:\n" + "\n".join(errors))
 
-    def test_official_white_logo_exists_in_source_and_dist(self):
+    def test_official_logo_exists_in_source_and_dist(self):
         self.assertIn(OFFICIAL_LOGO, self.image_refs)
         for root in (ROOT, self.DIST):
             logo = root / OFFICIAL_LOGO.lstrip("/")
             self.assertTrue(logo.is_file(), str(logo))
-            self.assertEqual("neraium-logo-lockup-white.png", logo.name)
-            self.assertRegex(logo.name, r"^[a-z0-9][a-z0-9.-]*\.png$")
-            data = logo.read_bytes()
-            self.assertTrue(data.startswith(b"\x89PNG\r\n\x1a\n"))
-            self.assertIn(b"IHDR", data[:32])
+            self.assertEqual("neraium-logo-lockup.svg", logo.name)
+            self.assertRegex(logo.name, r"^[a-z0-9][a-z0-9.-]*\.svg$")
+            data = logo.read_text(encoding="utf-8")
+            self.assertTrue(data.lstrip().startswith("<svg"))
 
     def test_every_visible_logo_has_required_alt_text(self):
         for html_file in site_html_files():
