@@ -1,4 +1,5 @@
 import json
+import subprocess
 import re
 import unittest
 import xml.etree.ElementTree as ET
@@ -310,7 +311,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Systemic Infrastructure Intelligence",
             "Identify persistent changes across interconnected operational systems.",
-            "structured Evidence Packages",
+            "concise Evidence Packages",
             "Request a Historical Evaluation",
             "See an Evidence Package",
             "Read-Only",
@@ -319,10 +320,10 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_information_architecture_sections_exist(self):
-        retained_home_sections = ("platform", "what", "evidence", "maintenance", "evaluation", "security", "contact")
+        retained_home_sections = ("platform", "problem", "what", "evidence", "evaluation", "contact")
         for section_id in retained_home_sections:
             self.assertIn(f'id="{section_id}"', self.index)
-        for removed_home_section in ("applications", "different"):
+        for removed_home_section in ("applications", "different", "maintenance", "security"):
             self.assertNotIn(f'id="{removed_home_section}"', self.index)
 
         navigation = re.search(r'<nav class="nav" id="main-navigation".*?</nav>', self.index, re.DOTALL).group(0)
@@ -353,18 +354,18 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Evidence Package preview",
             "EP-CHW-017",
-            "Pump power and delivered flow relationship weakened under comparable operating conditions.",
+            "Pump power and delivered flow relationship weakened.",
             "System",
-            "Behavioral Finding",
-            "Operating Context",
-            "Evidence Limitations",
+            "Supported Observation",
+            "Limitation",
             "Telemetry cannot distinguish hydraulic restriction from pump-performance degradation.",
         ):
             self.assertIn(phrase, text)
         self.assertIn('href="evidence.html">View the Complete Evidence Package</a>', self.index)
-        self.assertIn('href="operator-brief.html">View Maintenance View</a>', self.index)
+        self.assertNotIn('id="maintenance"', self.index)
+        self.assertNotIn('href="operator-brief.html">View Maintenance View</a>', self.index)
 
-        for full_field in ("Earliest Supported", "Supporting Evidence", "Confidence notes", "Recommended Starting Point"):
+        for full_field in ("Earliest Supported", "Behavioral Finding", "Supporting Evidence", "Confidence notes", "Recommended Starting Point"):
             self.assertNotIn(full_field, text)
         for phrase in (
             "Earliest Supported",
@@ -383,16 +384,16 @@ class TestPositioningAndExperience(unittest.TestCase):
         security = (ROOT / "security.html").read_text(encoding="utf-8")
         security_text = self.normalized(security)
         for phrase in (
-            "Read-only security summary",
-            "Evidence outside the control path.",
-            "Neraium is read-only",
-            "outside the control path",
-            "without live integration",
-            "Approved export or read-only source",
-            "Human engineering review",
+            "Historical Evaluation",
+            "Start with approved historical data before considering live integration.",
+            "operates read-only",
+            "Outside the control path",
+            "No live connection required for the initial evaluation",
         ):
             self.assertIn(phrase, text)
+        self.assertIn('href="pilot.html">Explore Historical Evaluation</a>', self.index)
         self.assertIn('href="security.html">Review Security Model</a>', self.index)
+        self.assertNotIn('architecture-flow', self.index)
         for phrase in (
             "Implemented",
             "Deployment-dependent",
@@ -408,17 +409,21 @@ class TestPositioningAndExperience(unittest.TestCase):
         text = self.normalized(self.index)
         expected_order = [
             'id="platform"',
+            'id="problem"',
             'id="what"',
             'id="evidence"',
-            'id="maintenance"',
             'id="evaluation"',
-            'id="security"',
             'id="contact"',
         ]
         positions = [self.index.index(marker) for marker in expected_order]
         self.assertEqual(positions, sorted(positions))
         self.assertNotIn('id="applications"', self.index)
         self.assertNotIn('id="different"', self.index)
+        self.assertNotIn('id="maintenance"', self.index)
+        self.assertNotIn('id="security"', self.index)
+        original_words = len(self.normalized(subprocess.check_output(["git", "show", "HEAD:index.html"], cwd=ROOT, text=True)).split())
+        current_words = len(text.split())
+        self.assertLessEqual(current_words, original_words * 0.60)
         for long_form_phrase in (
             "Resorts and casinos",
             "Commercial buildings and campuses",
@@ -443,7 +448,6 @@ class TestPositioningAndExperience(unittest.TestCase):
             ("contact.html", "Request a Historical Evaluation"),
             ("evidence.html", "See an Evidence Package"),
             ("evidence.html", "View the Complete Evidence Package"),
-            ("operator-brief.html", "View Maintenance View"),
             ("pilot.html", "Explore Historical Evaluation"),
             ("security.html", "Review Security Model"),
         ):
