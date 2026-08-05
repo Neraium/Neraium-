@@ -106,7 +106,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   backdrop-filter:blur(18px)
 }
 .nav-shell {
-  height:84px;
+  min-height:92px;
+  padding-block:.45rem;
   display:grid;
   grid-template-columns:auto 1fr auto auto;
   align-items:center;
@@ -121,10 +122,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .brand img {
   display:block;
-  width:210px;
+  width:235px;
   height:auto;
-  max-width:min(46vw, 230px);
-  max-height:78px;
+  max-width:min(46vw, 258px);
+  max-height:88px;
   object-fit:contain
 }
 .brand-lockup {
@@ -666,17 +667,18 @@ h1, .page-hero h1, .cta h1 {
   position:sticky
 }
 .nav-shell {
-  height:96px;
+  min-height:108px;
+  padding-block:.55rem;
   gap:1rem
 }
 .brand img {
-  width:clamp(135px, 40vw, 155px);
+  width:clamp(152px, 44vw, 174px);
   height:auto;
-  max-width:min(52vw, 155px);
-  max-height:76px
+  max-width:min(56vw, 174px);
+  max-height:88px
 }
 .nav {
-  inset:90px 22px auto 22px
+  inset:104px 22px auto 22px
 }
 
 }
