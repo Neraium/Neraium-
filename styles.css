@@ -621,7 +621,7 @@ h3 {
 
 @media (max-width:620px) {
   .container {
-  width:min(100% - 28px, 1180px)
+  width:min(100% - 44px, 1180px)
 }
 .hero, .page-hero {
   padding:2.2rem 0 3rem
@@ -666,16 +666,17 @@ h1, .page-hero h1, .cta h1 {
   position:sticky
 }
 .nav-shell {
-  height:82px
+  height:96px;
+  gap:1rem
 }
 .brand img {
-  width:clamp(170px, 52vw, 190px);
+  width:clamp(135px, 40vw, 155px);
   height:auto;
-  max-width:min(58vw, 200px);
-  max-height:72px
+  max-width:min(52vw, 155px);
+  max-height:76px
 }
 .nav {
-  inset:76px 14px auto 14px
+  inset:90px 22px auto 22px
 }
 
 }
