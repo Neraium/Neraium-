@@ -384,6 +384,74 @@ class TestPositioningAndExperience(unittest.TestCase):
         for source_file in [*site_html_files(), ROOT / "styles.css", ROOT / "scripts.js"]:
             self.assertNotIn("—", source_file.read_text(encoding="utf-8"))
 
+DIST = ROOT / "dist"
+MAX_CLOUDFLARE_ASSET_BYTES = 25 * 1024 * 1024
+EXPECTED_DIST_FILES = {
+    "index.html", "platform.html", "evidence.html", "technical.html", "security.html",
+    "pilot.html", "methodology.html", "company.html", "operator-brief.html", "contact.html", "404.html",
+    "styles.css", "scripts.js", "site.webmanifest", "robots.txt", "sitemap.xml",
+    "favicon.ico", "favicon-16x16.png", "favicon-32x32.png", "apple-touch-icon.png",
+    "android-chrome-192x192.png", "android-chrome-512x512.png", "neraium-logo.jpeg",
+    "neraium-product-preview.png", "infra-bg-1.jpg", "infra-bg-2.jpg",
+    "diagram-threshold-vs-relationships.jpeg", "founder-contact.jpeg", ".well-known/security.txt",
+}
+FORBIDDEN_DIST_PARTS = {"node_modules", ".git", "tests", "test-results", "playwright-report", "playwright-screenshots", "__pycache__"}
+INTERNAL_ONLY_DIST_FILES = {"README.md", "AUDIT.md", "ASSET_PROVENANCE.md", "package.json", "package-lock.json", "playwright.config.ts", "netlify.toml"}
+
+
+def dist_files() -> list[Path]:
+    return sorted(path for path in DIST.rglob("*") if path.is_file())
+
+
+class TestStaticBuildOutput(unittest.TestCase):
+    def test_required_public_files_are_copied(self):
+        actual = {path.relative_to(DIST).as_posix() for path in dist_files()}
+        self.assertEqual(actual, EXPECTED_DIST_FILES)
+
+    def test_required_pages_css_javascript_images_icons_and_metadata_exist(self):
+        for rel_path in EXPECTED_DIST_FILES:
+            self.assertTrue((DIST / rel_path).is_file(), f"dist is missing {rel_path}")
+
+    def test_html_references_resolve_inside_dist(self):
+        errors: list[str] = []
+        for html_file in DIST.glob("*.html"):
+            parsed = load_html(html_file)
+            for ref in parsed.refs:
+                raw = ref.raw.strip()
+                if not raw or raw.startswith("#") or is_external_url(raw) or is_ignored_href(raw):
+                    continue
+                path_part, _frag = split_path_and_fragment(raw)
+                path_part = strip_querystring(path_part).lstrip("/")
+                if path_part and not (DIST / path_part).exists():
+                    errors.append(f"{html_file.name}: {ref.raw} -> missing {path_part}")
+        if errors:
+            self.fail("Broken dist references:\n" + "\n".join(errors))
+
+    def test_forbidden_content_is_not_deployed(self):
+        actual = {path.relative_to(DIST).as_posix() for path in dist_files()}
+        self.assertTrue(actual.isdisjoint(INTERNAL_ONLY_DIST_FILES))
+        for path in dist_files():
+            parts = set(path.relative_to(DIST).parts)
+            self.assertTrue(parts.isdisjoint(FORBIDDEN_DIST_PARTS), f"forbidden path copied: {path}")
+            self.assertNotIn(path.suffix, {".py", ".ts", ".md"}, f"internal source file copied: {path}")
+
+    def test_no_output_file_exceeds_cloudflare_asset_limit(self):
+        oversized = [path.relative_to(DIST).as_posix() for path in dist_files() if path.stat().st_size > MAX_CLOUDFLARE_ASSET_BYTES]
+        self.assertEqual(oversized, [])
+
+    def test_build_output_is_deterministic_across_repeated_runs(self):
+        import hashlib
+        import subprocess
+
+        def snapshot() -> dict[str, str]:
+            subprocess.run(["node", "scripts/build-static-site.mjs"], cwd=ROOT, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            return {
+                path.relative_to(DIST).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in dist_files()
+            }
+
+        self.assertEqual(snapshot(), snapshot())
+
 
 if __name__ == "__main__":
     unittest.main()

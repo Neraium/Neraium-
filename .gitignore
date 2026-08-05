@@ -26,3 +26,5 @@ node_modules/
 playwright-report/
 playwright-screenshots/
 test-results/
+
+dist/
