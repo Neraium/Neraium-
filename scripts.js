@@ -1,29 +1,21 @@
 (() => {
-  const gaMeta = document.querySelector('meta[name="ga4-measurement-id"]');
-  const gaMeasurementId = gaMeta?.getAttribute('content')?.trim();
-  if (gaMeasurementId && gaMeasurementId !== 'G-XXXXXXXXXX') {
-    const gaScript = document.createElement('script');
-    gaScript.async = true;
-    gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaMeasurementId)}`;
-    document.head.appendChild(gaScript);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
-    window.gtag('js', new Date());
-    window.gtag('config', gaMeasurementId, { anonymize_ip: true });
-  }
-
-  const trackEvent = (name, payload = {}) => {
-    window.dispatchEvent(new CustomEvent('neraium:analytics', { detail: { name, payload, ts: Date.now() } }));
-    if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: name, ...payload });
-    if (typeof window.gtag === 'function') window.gtag('event', name, payload);
-  };
-
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
   const nav = document.getElementById('main-navigation');
   const toggleButton = document.querySelector('.nav-toggle');
   if (nav && toggleButton) {
+    const headerAction = document.querySelector('.header-action');
+    if (headerAction) {
+      const mobileAction = headerAction.cloneNode(true);
+      mobileAction.classList.remove('header-action');
+      mobileAction.classList.add('nav-contact');
+      if (/^\/contact(?:\.html)?\/?$/.test(window.location.pathname)) {
+        mobileAction.setAttribute('aria-current', 'page');
+      }
+      nav.appendChild(mobileAction);
+    }
+
     const setExpanded = (expanded) => {
       toggleButton.setAttribute('aria-expanded', String(expanded));
       toggleButton.setAttribute('aria-label', expanded ? 'Close navigation' : 'Open navigation');
@@ -32,6 +24,7 @@
       event.stopPropagation();
       const isOpen = nav.classList.toggle('open');
       setExpanded(isOpen);
+      if (isOpen && event.detail === 0) nav.querySelector('a')?.focus();
     });
     nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
       nav.classList.remove('open');
@@ -50,15 +43,12 @@
         toggleButton.focus();
       }
     });
+    window.matchMedia('(min-width: 981px)').addEventListener('change', (event) => {
+      if (!event.matches) return;
+      nav.classList.remove('open');
+      setExpanded(false);
+    });
   }
-
-  document.querySelectorAll('a.button, .nav a, [data-track]').forEach((element) => {
-    element.addEventListener('click', () => trackEvent('cta_click', {
-      label: element.getAttribute('data-track') || element.textContent.trim(),
-      href: element.getAttribute('href') || '',
-      path: window.location.pathname
-    }));
-  });
 
   const form = document.getElementById('contact-form');
   const feedback = document.getElementById('form-feedback');
@@ -90,7 +80,7 @@
       const status = document.createElement('span');
       status.textContent = 'Your request is ready. Review it in your email application, then choose send.';
       feedback.append(status, emailLink);
-      trackEvent('contact_request_prepared', { path: window.location.pathname });
+      feedback.focus();
     });
   }
 })();

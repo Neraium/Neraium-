@@ -20,10 +20,10 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    command: 'python3 -m http.server 4179 --bind 127.0.0.1',
-    url: 'http://127.0.0.1:4179/index.html',
+    command: 'npm run preview -- --port 4179 --ip 127.0.0.1',
+    url: 'http://127.0.0.1:4179/',
     reuseExistingServer: !process.env.CI,
-    timeout: 15_000,
+    timeout: 120_000,
   },
   projects: [
     { name: 'mobile-320x800', use: { ...devices['Desktop Chrome'], viewport: { width: 320, height: 800 } } },

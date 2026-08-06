@@ -305,7 +305,7 @@ class TestStaticSite(unittest.TestCase):
         self.assertTrue((ROOT / 'company.html').exists())
 
     def test_public_headers_use_official_white_logo_lockup(self):
-        expected_img = f'<img src="{OFFICIAL_LOGO}" alt="Neraium logo" class="brand-lockup">'
+        expected_img = f'<img src="{OFFICIAL_LOGO}" width="1146" height="833" alt="Neraium logo" class="brand-lockup">'
         errors = []
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
@@ -324,12 +324,13 @@ class TestStaticSite(unittest.TestCase):
         if errors:
             self.fail("Logo header issues:\n" + "\n".join(errors))
 
-    def test_no_placeholder_active_analytics_or_broken_social_images(self):
+    def test_no_dormant_analytics_or_broken_social_images(self):
         scripts = (ROOT / 'scripts.js').read_text(encoding='utf-8')
-        self.assertIn("gaMeasurementId !== 'G-XXXXXXXXXX'", scripts)
-        for html_file in indexable_html_files():
+        for marker in ('G-XXXXXXXXXX', 'googletagmanager.com', 'dataLayer', 'window.gtag'):
+            self.assertNotIn(marker, scripts)
+        for html_file in site_html_files():
             html = html_file.read_text(encoding='utf-8')
-            self.assertNotIn('googletagmanager.com/gtag/js?id=G-XXXXXXXXXX', html)
+            self.assertNotIn('name="ga4-measurement-id"', html)
             for match in re.findall(r'<meta property="og:image" content="https://www\.neraium\.com/([^"]+)">', html):
                 self.assertTrue((ROOT / match).exists(), f"{html_file.name}: missing social image {match}")
 
@@ -535,13 +536,15 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertRegex(self.styles, r"@media\s*\(max-width:\s*980px\)")
         self.assertIn("prefers-reduced-motion", self.styles)
         self.assertIn(".nav.open", self.styles)
+        self.assertIn(".nav-contact", self.styles)
+        self.assertIn("@media print", self.styles)
         self.assertIn("Close navigation", self.scripts)
 
     def test_required_social_metadata_and_structured_data(self):
         for html_file in indexable_html_files():
             html = html_file.read_text(encoding="utf-8")
             with self.subTest(page=html_file.name):
-                for marker in ('property="og:title"','property="og:description"','property="og:image"','property="og:url"','name="twitter:card"','name="ga4-measurement-id"','type="application/ld+json"'):
+                for marker in ('property="og:title"','property="og:description"','property="og:image"','property="og:url"','name="twitter:card"','type="application/ld+json"'):
                     self.assertIn(marker, html)
                 payload = json.loads(re.search(r'<script\s+type=["\']application/ld\+json["\']>(.*?)</script>', html, re.DOTALL).group(1))
                 graph_types = {item.get("@type") for item in payload.get("@graph", [])}
@@ -562,6 +565,8 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         config = json.loads((ROOT / "wrangler.jsonc").read_text(encoding="utf-8"))
         self.assertEqual("auto-trailing-slash", config["assets"]["html_handling"])
         self.assertEqual("404-page", config["assets"]["not_found_handling"])
+        self.assertFalse(config["workers_dev"])
+        self.assertFalse(config["preview_urls"])
 
     def test_redirects_preserve_current_and_retired_routes(self):
         redirects = (ROOT / "_redirects").read_text(encoding="utf-8")
@@ -579,13 +584,28 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         headers = (ROOT / "_headers").read_text(encoding="utf-8")
         for header in (
             "Content-Security-Policy:",
+            "Cross-Origin-Opener-Policy: same-origin",
             "Strict-Transport-Security:",
             "X-Content-Type-Options: nosniff",
             "X-Frame-Options: DENY",
+            "X-Permitted-Cross-Domain-Policies: none",
             "Referrer-Policy: strict-origin-when-cross-origin",
             "form-action 'self' mailto:",
         ):
             self.assertIn(header, headers)
+
+    def test_security_txt_has_required_contact_expiry_and_canonical(self):
+        security_txt = (ROOT / ".well-known" / "security.txt").read_text(encoding="utf-8")
+        self.assertIn("Contact: mailto:craig@neraium.com", security_txt)
+        self.assertRegex(security_txt, r"(?m)^Expires: 20\d{2}-\d{2}-\d{2}T")
+        self.assertIn("Canonical: https://www.neraium.com/.well-known/security.txt", security_txt)
+
+    def test_custom_404_uses_root_assets_without_a_false_canonical(self):
+        not_found = (ROOT / "404.html").read_text(encoding="utf-8")
+        self.assertIn('name="robots" content="noindex"', not_found)
+        self.assertNotIn('rel="canonical"', not_found)
+        for asset in ('/styles.css?v=20260806b', '/scripts.js?v=20260806b', '/site.webmanifest'):
+            self.assertIn(asset, not_found)
 
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
@@ -629,8 +649,19 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertIn('<link rel="stylesheet" href="styles.css?v=20260806a">', html)
+            self.assertIn('<link rel="stylesheet" href="/styles.css?v=20260806b">', html)
+            self.assertIn('<script src="/scripts.js?v=20260806b" defer></script>', html)
+            self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)
+
+    def test_above_fold_media_is_not_deferred(self):
+        for filename in ("platform.html", "evidence.html", "technical.html", "pilot.html"):
+            html = (ROOT / filename).read_text(encoding="utf-8")
+            hero = re.search(r'<section class="page-hero[^>]*>.*?</section>', html, re.DOTALL)
+            self.assertIsNotNone(hero, filename)
+            if "<img " in hero.group(0):
+                self.assertIn('loading="eager"', hero.group(0), filename)
+                self.assertIn('fetchpriority="high"', hero.group(0), filename)
 
     def test_homepage_has_no_inline_style_block(self):
         self.assertNotIn("<style", self.index_html)

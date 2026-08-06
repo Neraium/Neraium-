@@ -19,19 +19,18 @@
   <meta name="twitter:title" content="Contact Neraium | Request a Historical Evaluation">
   <meta name="twitter:description" content="Request a Neraium Historical Evaluation using a practical scoping form that does not ask for telemetry, credentials, diagrams, or confidential operational data.">
   <meta name="twitter:image" content="https://www.neraium.com/assets/images/neraium-brand-preview.png">
-  <meta name="ga4-measurement-id" content="G-XXXXXXXXXX"><!-- Inactive placeholder only. scripts.js does not load analytics for this value. -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
   <link rel="canonical" href="https://www.neraium.com/contact">
-  <link rel="stylesheet" href="styles.css?v=20260806a">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="/styles.css?v=20260806b">
+  <link rel="manifest" href="/site.webmanifest">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.neraium.com/#organization","name":"Neraium","url":"https://www.neraium.com","description":"Systemic Infrastructure Intelligence for engineering, operations, and maintenance teams."},{"@type":"WebSite","@id":"https://www.neraium.com/#website","url":"https://www.neraium.com","name":"Neraium","publisher":{"@id":"https://www.neraium.com/#organization"}},{"@type":"WebPage","url":"https://www.neraium.com/contact","name":"Contact Neraium | Request a Historical Evaluation","isPartOf":{"@id":"https://www.neraium.com/#website"}},{"@type":"SoftwareApplication","name":"Neraium","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"Read-only analysis of persistent behavioral changes across interconnected operational systems, with context, evidence, uncertainty, and limitations preserved for human review.","publisher":{"@id":"https://www.neraium.com/#organization"}}]}</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="container nav-shell">
-      <a class="brand" href="/" aria-label="Neraium home"><img src="/assets/images/neraium-logo-lockup.svg" alt="Neraium logo" class="brand-lockup"></a>
+      <a class="brand" href="/" aria-label="Neraium home"><img src="/assets/images/neraium-logo-lockup.svg" width="1146" height="833" alt="Neraium logo" class="brand-lockup"></a>
       <nav class="nav" id="main-navigation" aria-label="Main navigation"><a href="/platform" >Platform</a><a href="/evidence" >Evidence</a><a href="/technical" >Applications</a><a href="/security" >Security</a><a href="/pilot" >Evaluation</a><a href="/company" >Company</a></nav>
       <a class="header-action" href="/contact">Request an Evaluation</a>
       <button class="nav-toggle" type="button" aria-label="Open navigation" aria-controls="main-navigation" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -53,12 +52,12 @@
           </div>
         </div>
         <form class="contact-form" id="contact-form" action="mailto:craig@neraium.com" method="post" enctype="text/plain">
-          <div class="form-field"><label for="name">Name</label><input id="name" name="Name" autocomplete="name" required></div>
-          <div class="form-field"><label for="email">Work email</label><input id="email" name="Work email" type="email" autocomplete="email" required></div>
-          <div class="form-field"><label for="organization">Organization</label><input id="organization" name="Organization" autocomplete="organization" required></div>
-          <div class="form-field"><label for="facility">System or facility type</label><input id="facility" name="System or facility type" required></div>
-          <div class="form-field form-field-wide"><label for="review-question">What would you like to review?</label><textarea id="review-question" name="Review question" rows="4" required></textarea></div>
-          <div class="form-field"><label for="role">Role <span>(optional)</span></label><input id="role" name="Role" autocomplete="organization-title"></div>
+          <div class="form-field"><label for="name">Name</label><input id="name" name="Name" autocomplete="name" maxlength="100" required></div>
+          <div class="form-field"><label for="email">Work email</label><input id="email" name="Work email" type="email" autocomplete="email" maxlength="254" required></div>
+          <div class="form-field"><label for="organization">Organization</label><input id="organization" name="Organization" autocomplete="organization" maxlength="160" required></div>
+          <div class="form-field"><label for="facility">System or facility type</label><input id="facility" name="System or facility type" maxlength="160" required></div>
+          <div class="form-field form-field-wide"><label for="review-question">What would you like to review?</label><textarea id="review-question" name="Review question" rows="4" maxlength="600" required></textarea></div>
+          <div class="form-field"><label for="role">Role <span>(optional)</span></label><input id="role" name="Role" autocomplete="organization-title" maxlength="120"></div>
           <div class="form-field">
             <label for="preferred-contact">Preferred contact method <span>(optional)</span></label>
             <select id="preferred-contact" name="Preferred contact method">
@@ -67,12 +66,12 @@
               <option value="Video call">Video call</option>
             </select>
           </div>
-          <div class="form-field form-field-wide"><label for="data">Time horizon or data availability <span>(optional)</span></label><textarea id="data" name="Time horizon or data availability" rows="3" placeholder="For example: historian trends available for the past season."></textarea></div>
+          <div class="form-field form-field-wide"><label for="data">Time horizon or data availability <span>(optional)</span></label><textarea id="data" name="Time horizon or data availability" rows="3" maxlength="300" placeholder="For example: historian trends available for the past season."></textarea></div>
           <p class="form-note form-field-wide">Do not upload operational data through this form. If the evaluation appears suitable, Neraium will coordinate a customer-approved transfer method.</p>
           <p class="form-transparency form-field-wide">Preparing the request does not upload or submit these details to the website. It creates a draft in your email application for you to review and send.</p>
           <button class="button primary form-field-wide" type="submit">Prepare email request</button>
           <a class="text-link form-field-wide" href="mailto:craig@neraium.com?subject=Neraium%20Historical%20Evaluation">Email directly instead</a>
-          <div class="form-feedback form-field-wide" id="form-feedback" aria-live="polite"></div>
+          <div class="form-feedback form-field-wide" id="form-feedback" role="status" aria-live="polite" tabindex="-1"></div>
         </form>
       </div>
     </section>
@@ -85,6 +84,6 @@
       <small>&copy; <span id="year"></span> Neraium</small>
     </div>
   </footer>
-  <script src="scripts.js?v=20260806a" defer></script>
+  <script src="/scripts.js?v=20260806b" defer></script>
 </body>
 </html>

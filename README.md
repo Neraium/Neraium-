@@ -37,7 +37,7 @@ npm ci
 npm run build
 ```
 
-Run the Cloudflare-compatible preview:
+Run the production build through Cloudflare's local Static Assets runtime:
 
 ```bash
 npm run preview
@@ -50,4 +50,4 @@ python3 -m unittest discover -s tests
 npm test
 ```
 
-The Python suite checks content contracts, links, assets, metadata, accessibility basics, sitemap coverage, and deployment files. Playwright checks interaction, responsive layout, navigation, and screenshots across the configured browsers and viewports.
+The Python suite checks content contracts, links, assets, metadata, accessibility basics, sitemap coverage, and deployment files. Playwright runs against Wrangler's Static Assets runtime so clean URLs, redirects, headers, the nested custom 404, interaction, responsive layout, navigation, and screenshots are exercised across the configured viewports.

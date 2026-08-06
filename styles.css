@@ -1,5 +1,6 @@
 /* ========================================================================== Neraium public website source stylesheet ========================================================================== */
 :root {
+  color-scheme:dark;
   --bg:#061217;
   --bg-alt:#0a1920;
   --ink:#f2f7f7;
@@ -38,6 +39,9 @@ html {
 }
 body {
   margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
   overflow-x:hidden;
   background:var(--bg);
   color:var(--ink);
@@ -48,6 +52,9 @@ body {
 }
 body::before {
   display:none
+}
+main {
+  flex:1
 }
 img {
   display:block;
@@ -127,7 +134,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   justify-content:center;
   gap:1.1rem
 }
-.nav a, .header-action {
+.nav a, .header-action, .nav-contact {
   color:var(--muted);
   font-size:.78rem;
   font-weight:600;
@@ -136,6 +143,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .nav a:hover, .nav a[aria-current=page] {
   color:#fff
+}
+.nav a[aria-current=page] {
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:.45rem
 }
 .header-action {
   padding:.76rem 1.05rem;
@@ -146,6 +158,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .nav-toggle {
   display:none;
+  width:48px;
+  height:48px;
+  padding:7px;
   background:none;
   border:0;
   cursor:pointer
@@ -156,6 +171,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   height:2px;
   margin:5px;
   background:#fff
+}
+.nav-contact {
+  display:none
 }
 .hero, .page-hero {
   padding:var(--space-page-hero) 0 var(--space-section)
@@ -582,6 +600,10 @@ h3 {
 .form-feedback:empty {
   display:none
 }
+.form-feedback:focus-visible {
+  outline:2px solid var(--cyan);
+  outline-offset:4px
+}
 .prepared-email-link {
   width:auto
 }
@@ -664,7 +686,8 @@ h3 {
   display:none
 }
 .nav-toggle {
-  display:block;
+  display:grid;
+  place-content:center;
   justify-self:end
 }
 .nav {
@@ -681,6 +704,21 @@ h3 {
 }
 .nav.open {
   display:flex
+}
+.nav a {
+  padding:.65rem .7rem;
+  border-radius:4px
+}
+.nav-contact {
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  margin-top:.25rem;
+  border:1px solid var(--teal);
+  background:var(--teal);
+  color:#fff!important;
+  text-align:center
 }
 .hero-grid, .split, .contact-grid {
   grid-template-columns:1fr
@@ -792,6 +830,24 @@ h1, .page-hero h1, .cta h1 {
 
 }
 
+@media print {
+  :root { color-scheme:light; }
+  html { scroll-padding-top:0; }
+  body, .section, .section.band, .band, .navy, .cta, .footer, .evidence-showcase, .evaluation-strip {
+    background:#fff!important;
+    color:#111!important;
+  }
+  .site-header, .skip-link, .footer, .button-row { display:none!important; }
+  .hero, .page-hero, .section { padding:1.25rem 0!important; }
+  .container, .wide-figure { width:100%!important; }
+  p, .lead, .section p, .page-hero p, .cards article p, .apps article p,
+  .facts p, .evidence-package p, .evidence-grid dd, .hero-finding-card dd,
+  .founder-block span, .founder-block a { color:#222!important; }
+  .cards article, .apps article, .facts p, .maintenance-card, .evidence-package,
+  .hero-finding-card, .brief-grid article { border-color:#aaa!important; background:#fff!important; }
+  a { color:#111!important; }
+}
+
 
 .hero-evidence-list {
   display:grid;
@@ -897,20 +953,11 @@ h1, .page-hero h1, .cta h1 {
 .facility-context img {
   object-position:center 45%;
 }
-.security-diagram {
-  margin-bottom:1rem;
-  background:#061014;
-}
-.security-diagram img {
-  aspect-ratio:21/7;
-  object-position:center 58%;
-}
 @media (max-width:980px) {
   .review-split {
     grid-template-columns:1fr;
   }
-  .wide-figure img,
-  .security-diagram img {
+  .wide-figure img {
     aspect-ratio:16/9;
   }
 }
@@ -918,8 +965,7 @@ h1, .page-hero h1, .cta h1 {
   .wide-figure {
     width:min(100% - 28px, 1180px);
   }
-  .wide-figure img,
-  .security-diagram img {
+  .wide-figure img {
     aspect-ratio:4/3;
   }
 }

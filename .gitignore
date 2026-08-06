@@ -18,6 +18,7 @@
 .DS_Store
 .idea/
 .vscode/
+.wrangler/
 Thumbs.db
 __pycache__/
 artifacts/

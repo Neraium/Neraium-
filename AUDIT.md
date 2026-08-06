@@ -70,3 +70,11 @@ EP-CHW-017 remains clearly illustrative and does not include invented percentage
 2. Deploy the revised `dist/` build, then verify headers, redirects, custom 404 behavior, sitemap, and contact-email preparation on production.
 3. Request recrawling of the homepage and sitemap in the applicable search-console account after deployment.
 4. If Neraium later adopts a verified server-side inquiry service, replace the email-draft flow only after confirming recipient, retention, spam controls, privacy disclosure, and production delivery.
+
+## Final production-readiness pass
+
+- Verified the committed build with Wrangler's Static Assets runtime instead of a generic file server, including clean routes, legacy redirects, response headers, and custom 404 status.
+- Corrected custom 404 assets to root-relative URLs so nested missing routes retain styling, navigation, and script behavior.
+- Removed dormant analytics scaffolding that was inactive, undisclosed, and incompatible with the strict production content-security policy.
+- Added a mobile evaluation link, predictable keyboard focus for the menu, larger touch targets, print-safe styles, bounded contact fields, and clearer form status focus.
+- Disabled public `workers.dev` and version-preview URLs in the deploy configuration, completed `security.txt` expiry metadata, and added complementary browser isolation headers.
