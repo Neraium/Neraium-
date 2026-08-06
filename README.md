@@ -1,45 +1,53 @@
-# Neraium Website
+# Neraium public website
 
-This repository contains the static public website for Neraium.
+This repository contains Neraium's static public website. The source is plain HTML, CSS, and JavaScript; the production build validates local assets and copies deployable files to `dist/`.
 
-## Project structure
+## Public pages
 
-- `index.html` - home page
-- `platform.html` - platform overview
-- `technical.html` - use cases
-- `pilot.html` - pilot program overview
-- `methodology.html` - evaluation and pilot verification methodology
-- `security.html` - security and data-handling overview
-- `operator-brief.html` - one-page operator/pilot brief
-- `contact.html` - pilot intake/contact page
-- `styles.css` - shared site styles
-- `scripts.js` - navigation, analytics hooks, forms, and FAQ behavior
-- `site.webmanifest`, `robots.txt`, `sitemap.xml`, `.well-known/security.txt` - site metadata
-- `tests/test_site.py` - static-site checks for links, anchors, alt text, SEO metadata, and sitemap coverage
-- image, PDF, and icon files used across pages
+- `index.html` - concise company and product overview
+- `platform.html` - analysis approach and operating boundary
+- `evidence.html` - illustrative Evidence Package
+- `technical.html` - representative applications and initial market focus
+- `pilot.html` - Historical Evaluation scope and process
+- `methodology.html` - evaluation methodology
+- `security.html` - security and deployment boundaries
+- `company.html` - mission, principles, founder, and company process
+- `operator-brief.html` - one-page evaluation brief
+- `contact.html` - low-friction evaluation inquiry
+- `privacy.html` and `404.html` - privacy and not-found pages
 
-## Run locally
+The contact page prepares a draft in the visitor's email application. It does not transmit form contents to the website and must not be used to send operational data. A server-side intake service is not configured.
 
-Because this is a static site, you can open any HTML file directly in a browser, or serve it locally:
+## Deployment and indexing
+
+- `wrangler.jsonc` configures Cloudflare Workers Static Assets, clean HTML URLs, and the custom 404 page.
+- `_redirects` preserves legacy `.html` and retired public routes.
+- `_headers` defines production security and cache headers.
+- `netlify.toml` publishes the built `dist/` directory if Netlify is used instead.
+- `robots.txt`, `sitemap.xml`, `site.webmanifest`, and `.well-known/security.txt` provide crawler and site metadata.
+
+The site uses `https://www.neraium.com` as its canonical origin. Apex, `www`, and HTTP consolidation must also be enforced at the DNS/CDN account level; that redirect cannot be expressed for another hostname in a Workers Static Assets `_redirects` file.
+
+## Local development
+
+Install dependencies and build:
 
 ```bash
-python3 -m http.server 8080
+npm ci
+npm run build
 ```
 
-Then visit `http://localhost:8080`.
+Run the Cloudflare-compatible preview:
 
-## Run checks
+```bash
+npm run preview
+```
+
+## Verification
 
 ```bash
 python3 -m unittest discover -s tests
+npm test
 ```
 
-## Receive/export the website code
-
-To package the full website code into a zip archive:
-
-```bash
-zip -r neraium-website-code.zip . -x ".git/*"
-```
-
-This creates `neraium-website-code.zip`, which you can share or download.
+The Python suite checks content contracts, links, assets, metadata, accessibility basics, sitemap coverage, and deployment files. Playwright checks interaction, responsive layout, navigation, and screenshots across the configured browsers and viewports.

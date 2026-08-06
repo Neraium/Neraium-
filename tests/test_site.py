@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ORIGIN = "https://www.neraium.com"
-HOMEPAGE_PRE_REDUCTION_WORD_COUNT = 599
+HOMEPAGE_MAX_WORD_COUNT = 420
 
 
 def is_external_url(value: str) -> bool:
@@ -146,15 +146,20 @@ def indexable_html_files() -> list[Path]:
 
 
 def resolve_site_path(raw_path: str) -> Path:
-    # Site is flat at repo root; allow leading slash.
+    # Source files are flat HTML; production uses Cloudflare clean URLs.
     path = raw_path.lstrip("/")
-    return (ROOT / path).resolve()
+    if not path:
+        return (ROOT / "index.html").resolve()
+    candidate = (ROOT / path).resolve()
+    if candidate.exists():
+        return candidate
+    return (ROOT / f"{path}.html").resolve()
 
 
 def html_file_to_public_url(file_path: Path) -> str:
     if file_path.name == "index.html":
         return f"{SITE_ORIGIN}/"
-    return f"{SITE_ORIGIN}/{file_path.name}"
+    return f"{SITE_ORIGIN}/{file_path.stem}"
 
 
 class TestStaticSite(unittest.TestCase):
@@ -289,7 +294,7 @@ class TestStaticSite(unittest.TestCase):
         self.assertEqual({}, duplicate_desc)
 
     def test_primary_navigation_consistency_and_routes(self):
-        expected = [('platform.html','Platform'),('evidence.html','Evidence'),('technical.html','Applications'),('security.html','Security'),('pilot.html','Evaluation'),('company.html','Company')]
+        expected = [('/platform','Platform'),('/evidence','Evidence'),('/technical','Applications'),('/security','Security'),('/pilot','Evaluation'),('/company','Company')]
         for html_file in site_html_files():
             html = html_file.read_text(encoding='utf-8')
             for href, label in expected:
@@ -311,7 +316,7 @@ class TestStaticSite(unittest.TestCase):
             header = header_match.group(0)
             if expected_img not in header:
                 errors.append(f"{html_file.name}: missing official logo img")
-            if f'href="index.html"' not in header:
+            if 'href="/"' not in header:
                 errors.append(f"{html_file.name}: logo/header does not link home")
             brand_link = re.search(r'<a class="brand"[^>]*>(.*?)</a>', header, re.DOTALL)
             if brand_link and re.sub(r"<[^>]+>", "", brand_link.group(1)).strip():
@@ -347,22 +352,22 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Systemic Infrastructure Intelligence",
             "Identify persistent changes in operational systems.",
-            "analyzes how operational systems behave over time",
-            "persistent behavioral changes",
-            "conventional threshold monitoring",
+            "analyzes how equipment relationships change over time",
+            "even when individual measurements remain inside normal limits",
             "Detect Persistent Behavioral Change",
             "Preserve Operational Context",
             "Deliver Engineering Evidence",
             "Request a Historical Evaluation",
-            "See sample EP-CHW-017 report",
-            "Read-Only",
+            "Review the illustrative finding",
+            "Read-only",
             "Outside the control path",
+            "Human judgment remains authoritative",
+            "Built first for interconnected water, pumping, and central-plant systems",
         ):
             self.assertIn(phrase, text)
 
-        self.assertIn("Evidence Package preview", text)
-        self.assertIn("An artifact produced by the analysis.", text)
-        self.assertNotIn("concise Evidence Packages", text)
+        self.assertIn("Evidence Packages preserve what a team needs to review.", text)
+        self.assertIn("an analysis output, not Neraium’s product category", text)
 
     def test_information_architecture_sections_exist(self):
         retained_home_sections = ("platform", "problem", "what", "evidence", "evaluation", "contact")
@@ -372,7 +377,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertNotIn(f'id="{removed_home_section}"', self.index)
 
         navigation = re.search(r'<nav class="nav" id="main-navigation".*?</nav>', self.index, re.DOTALL).group(0)
-        self.assertIn('href="technical.html"', navigation)
+        self.assertIn('href="/technical"', navigation)
         self.assertIn('>Applications</a>', navigation)
 
         applications = (ROOT / "technical.html").read_text(encoding="utf-8")
@@ -380,12 +385,12 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertIn('id="applications"', applications)
         for phrase in (
             "Operational systems where relationships carry the signal.",
-            "Resorts and casinos",
-            "Commercial buildings and campuses",
-            "Chilled-water and utility plants",
-            "Water and pumping infrastructure",
-            "Industrial facilities",
-            "Cruise and maritime",
+            "Representative evaluation contexts. Not claims of customer deployments.",
+            "Central plants and chilled-water systems",
+            "Water and pumping systems",
+            "Campuses and large facilities",
+            "Resorts and commercial properties",
+            "Other telemetry-rich infrastructure",
         ):
             self.assertIn(phrase, applications_text)
 
@@ -397,18 +402,18 @@ class TestPositioningAndExperience(unittest.TestCase):
         operator_text = self.normalized(operator)
 
         for phrase in (
-            "Evidence Package preview",
             "EP-CHW-017",
-            "Pump power and delivered flow relationship weakened.",
-            "System",
-            "Supported Observation",
-            "Limitation",
-            "Telemetry cannot distinguish hydraulic restriction from pump-performance degradation.",
+            "Power to delivered flow relationship weakened.",
+            "Supported observation",
+            "Threshold status",
+            "No limit was required to be exceeded.",
+            "Telemetry alone cannot distinguish hydraulic restriction from pump-performance degradation.",
+            "Not customer data and not a root-cause diagnosis.",
         ):
             self.assertIn(phrase, text)
-        self.assertIn('href="evidence.html">View sample EP-CHW-017 report</a>', self.index)
+        self.assertIn('href="/evidence">Review the illustrative finding</a>', self.index)
         self.assertNotIn('id="maintenance"', self.index)
-        self.assertNotIn('href="operator-brief.html">View Maintenance View</a>', self.index)
+        self.assertNotIn('href="/operator-brief">View Maintenance View</a>', self.index)
 
         for full_field in ("Earliest Supported", "Behavioral Finding", "Supporting Evidence", "Confidence notes", "Recommended Starting Point"):
             self.assertNotIn(full_field, text)
@@ -417,6 +422,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             "Operating Context",
             "Supporting Evidence",
             "Confidence",
+            "Threshold Status",
             "Evidence Limitations",
             "Recommended Starting Point",
         ):
@@ -431,20 +437,22 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Historical Evaluation",
             "Start with historical data before live integration.",
-            "stays read-only",
+            "remains read-only",
             "Outside the control path",
-            "No live connection required",
+            "No live connection required initially",
+            "BAS, SCADA, historians, PLCs, alarms, CMMS",
         ):
             self.assertIn(phrase, text)
-        self.assertIn('href="pilot.html">Explore Historical Evaluation</a>', self.index)
-        self.assertIn('href="security.html">Review Security Model</a>', self.index)
+        self.assertIn('href="/pilot">Explore Historical Evaluation</a>', self.index)
+        self.assertIn('href="/security">Review security and deployment</a>', self.index)
         self.assertNotIn('architecture-flow', self.index)
         for phrase in (
-            "Implemented",
-            "Deployment-dependent",
-            "Planned or assessed separately",
-            "Not claimed",
-            "Read-only operation, outside the control path",
+            "Operating boundary",
+            "Customer-hosted deployment",
+            "Public inquiry boundary",
+            "Deployment-dependent controls",
+            "Assessed separately",
+            "Claims not made",
             "does not claim SOC 2",
         ):
             self.assertIn(phrase, security_text)
@@ -467,32 +475,15 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertNotIn('id="maintenance"', self.index)
         self.assertNotIn('id="security"', self.index)
         current_words = len(text.split())
-        maximum_words = int(HOMEPAGE_PRE_REDUCTION_WORD_COUNT * 0.60)
-        reduction = 1 - (current_words / HOMEPAGE_PRE_REDUCTION_WORD_COUNT)
-        diagnostic = (
-            f"baseline={HOMEPAGE_PRE_REDUCTION_WORD_COUNT}; "
-            f"current={current_words}; "
-            f"reduction={reduction:.1%}; "
-            f"maximum={maximum_words}"
-        )
         self.assertLessEqual(
             current_words,
-            maximum_words,
-            (
-                f"Homepage has {current_words} words; expected at most "
-                f"{maximum_words} based on the "
-                f"{HOMEPAGE_PRE_REDUCTION_WORD_COUNT}-word pre-reduction baseline. "
-                f"{diagnostic}"
-            ),
+            HOMEPAGE_MAX_WORD_COUNT,
+            f"Homepage has {current_words} words; expected at most {HOMEPAGE_MAX_WORD_COUNT}.",
         )
-        self.assertGreaterEqual(reduction, 0.40, diagnostic)
         for long_form_phrase in (
-            "Resorts and casinos",
-            "Commercial buildings and campuses",
-            "Chilled-water and utility plants",
-            "Water and pumping infrastructure",
-            "Industrial facilities",
-            "Cruise and maritime",
+            "Central plants and chilled-water systems",
+            "Water and pumping systems",
+            "Campuses and large facilities",
             "What we see",
             "What to check first",
             "What we do not know yet",
@@ -507,14 +498,13 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     def test_primary_ctas_and_reduced_homepage_routes_remain_valid(self):
         for href, label in (
-            ("contact.html", "Request a Historical Evaluation"),
-            ("evidence.html", "See sample EP-CHW-017 report"),
-            ("evidence.html", "View sample EP-CHW-017 report"),
-            ("pilot.html", "Explore Historical Evaluation"),
-            ("security.html", "Review Security Model"),
+            ("/contact", "Request a Historical Evaluation"),
+            ("/evidence", "Review the illustrative finding"),
+            ("/pilot", "Explore Historical Evaluation"),
+            ("/security", "Review security and deployment"),
         ):
             self.assertIn(f'href="{href}"', self.index, f"missing route for {label}")
-            self.assertTrue((ROOT / href).exists(), f"missing target page for {label}")
+            self.assertTrue(resolve_site_path(href).exists(), f"missing target page for {label}")
 
     def test_mobile_typography_contract_remains_intact(self):
         self.assertRegex(self.styles, r"font-size:\s*clamp\(")
@@ -524,13 +514,20 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     def test_contact_form_fields_and_warning(self):
         contact = (ROOT / "contact.html").read_text(encoding="utf-8")
-        for field_id in ("name", "organization", "role", "email", "facility", "data", "message"):
+        for field_id in ("name", "email", "organization", "facility", "review-question", "role", "preferred-contact", "data"):
             self.assertIn(f'id="{field_id}"', contact)
-        self.assertIn("Do not submit telemetry, credentials, security diagrams, or confidential operational information through this form.", contact)
-        self.assertIn("One system is enough to begin.", contact)
-        self.assertIn("Initial data-fit review within three business days.", contact)
-        self.assertIn('data-netlify="true"', contact)
-        self.assertNotIn('data-netlify="true"', self.index)
+        for required_id in ("name", "email", "organization", "facility", "review-question"):
+            self.assertRegex(contact, rf'id="{required_id}"[^>]*required')
+        for optional_id in ("role", "preferred-contact", "data"):
+            field = re.search(rf'<(?:input|select|textarea)[^>]*id="{optional_id}"[^>]*>', contact)
+            self.assertIsNotNone(field)
+            self.assertNotIn("required", field.group(0))
+        self.assertIn("Do not upload operational data through this form.", contact)
+        self.assertIn("customer-approved transfer method", contact)
+        self.assertIn("does not upload or submit these details to the website", contact)
+        self.assertIn('action="mailto:craig@neraium.com"', contact)
+        self.assertNotIn('data-netlify="true"', contact)
+        self.assertNotIn("business day", contact.lower())
 
     def test_design_tokens_and_responsive_contract(self):
         for token in ("--bg", "--ink", "--muted", "--line", "--navy", "--steel", "--cyan", "--amber", "--success", "--unknown", "--evidence", "--space", "--radius", "--shadow"):
@@ -560,6 +557,45 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertNotIn("—", source_file.read_text(encoding="utf-8"))
 
 
+class TestDeploymentAndIndexing(unittest.TestCase):
+    def test_cloudflare_uses_clean_urls_and_custom_404(self):
+        config = json.loads((ROOT / "wrangler.jsonc").read_text(encoding="utf-8"))
+        self.assertEqual("auto-trailing-slash", config["assets"]["html_handling"])
+        self.assertEqual("404-page", config["assets"]["not_found_handling"])
+
+    def test_redirects_preserve_current_and_retired_routes(self):
+        redirects = (ROOT / "_redirects").read_text(encoding="utf-8")
+        for rule in (
+            "/index.html / 301",
+            "/platform.html /platform 301",
+            "/contact.html /contact 301",
+            "/analysis.html /platform 301",
+            "/application.html /technical 301",
+            "/governance.html /security 301",
+        ):
+            self.assertIn(rule, redirects)
+
+    def test_cloudflare_headers_cover_security_and_caching(self):
+        headers = (ROOT / "_headers").read_text(encoding="utf-8")
+        for header in (
+            "Content-Security-Policy:",
+            "Strict-Transport-Security:",
+            "X-Content-Type-Options: nosniff",
+            "X-Frame-Options: DENY",
+            "Referrer-Policy: strict-origin-when-cross-origin",
+            "form-action 'self' mailto:",
+        ):
+            self.assertIn(header, headers)
+
+    def test_deployment_control_files_are_built(self):
+        assert_generated_site_output()
+        for filename in ("_headers", "_redirects"):
+            self.assertTrue((ROOT / "dist" / filename).is_file())
+        netlify = (ROOT / "netlify.toml").read_text(encoding="utf-8")
+        self.assertIn('command = "npm run build"', netlify)
+        self.assertIn('publish = "dist"', netlify)
+
+
 if __name__ == "__main__":
     unittest.main()
 
@@ -569,19 +605,16 @@ class TestPerformanceOptimizations(unittest.TestCase):
         cls.index = load_html(ROOT / "index.html")
         cls.index_html = (ROOT / "index.html").read_text(encoding="utf-8")
 
-    def test_home_hero_image_priority_and_dimensions(self):
-        hero = next((img for img in self.index.imgs if img.get("src") == "/assets/images/pump-room.jpg"), None)
-        self.assertIsNotNone(hero, "Homepage hero image is missing")
-        self.assertNotEqual("lazy", hero.get("loading"), "LCP hero image must not be lazy loaded")
-        self.assertEqual("high", hero.get("fetchpriority"))
-        self.assertEqual("async", hero.get("decoding"))
-        self.assertEqual("720", hero.get("width"))
-        self.assertEqual("520", hero.get("height"))
-        self.assertIn("srcset", hero)
-        self.assertIn("sizes", hero)
+    def test_home_hero_prioritizes_structured_proof_over_decorative_media(self):
+        self.assertIn('class="hero-finding-card"', self.index_html)
+        self.assertIn('aria-labelledby="example-finding-title"', self.index_html)
+        self.assertIn("Supported observation", self.index_html)
+        self.assertIn("Threshold status", self.index_html)
+        self.assertIn("Limitation", self.index_html)
+        self.assertNotIn('class="hero-visual product-hero"', self.index_html)
 
     def test_below_fold_images_are_lazy_loaded_when_appropriate(self):
-        eager_allowlist = {"/assets/images/pump-room.jpg", "/assets/images/neraium-logo-lockup.svg"}
+        eager_allowlist = {"/assets/images/neraium-logo-lockup.svg"}
         errors = []
         for img in load_html(ROOT / "index.html").imgs:
             src = img.get("src", "")
@@ -593,30 +626,21 @@ class TestPerformanceOptimizations(unittest.TestCase):
         if errors:
             self.fail("Below-the-fold image priority issues:\n" + "\n".join(errors))
 
-    def test_stylesheet_loads_asynchronously_with_noscript_fallback(self):
+    def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="preload" href="styles\.css\?v=20260805d" as="style" onload=')
-            self.assertRegex(html, r'<noscript>[\s\S]*<link rel="stylesheet" href="styles\.css\?v=20260805d">[\s\S]*</noscript>')
+            self.assertIn('<link rel="stylesheet" href="styles.css?v=20260806a">', html)
+            self.assertNotIn("onload=", html)
 
-    def test_critical_css_is_small_and_homepage_only(self):
-        match = re.search(r'<style id="critical-css">(.*?)</style>', self.index_html, re.DOTALL)
-        self.assertIsNotNone(match, "Homepage critical CSS block is missing")
-        self.assertLess(len(match.group(1).encode("utf-8")), 5000)
+    def test_homepage_has_no_inline_style_block(self):
+        self.assertNotIn("<style", self.index_html)
 
-    def test_google_fonts_stylesheet_is_not_render_blocking(self):
+    def test_site_has_no_external_font_dependency(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            head_before_noscript = html.split("<noscript>", 1)[0]
-            self.assertNotRegex(head_before_noscript, r'<link rel="stylesheet" href="https://fonts\.googleapis\.com')
-            self.assertIn('rel="preload" href="https://fonts.googleapis.com/css2?family=Inter', html)
-
-    def test_font_weights_are_limited_to_used_weights(self):
-        for html_file in site_html_files():
-            html = html_file.read_text(encoding="utf-8")
-            self.assertIn('Inter:wght@400;500;600;700;800', html)
-            self.assertIn('IBM+Plex+Mono:wght@400;500;600;700', html)
-            self.assertNotIn('wght@100', html)
+            self.assertNotIn("fonts.googleapis.com", html)
+            self.assertNotIn("fonts.gstatic.com", html)
+        self.assertIn('"Segoe UI"', (ROOT / "styles.css").read_text(encoding="utf-8"))
 
     def test_no_public_asset_exceeds_cloudflare_limit(self):
         for path in [p for p in ROOT.rglob("*") if p.is_file() and ".git" not in p.parts and "node_modules" not in p.parts]:
@@ -626,7 +650,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
 class TestImageDeploymentPipeline(unittest.TestCase):
     IMAGE_DIR = ROOT / "assets" / "images"
     DIST = ROOT / "dist"
-    HERO_IMAGE = "/assets/images/pump-room.jpg"
+    FEATURED_IMAGE = "/assets/images/evidence-package-laptop.jpg"
     REUPLOADED = {
         "pump-room.jpg",
         "evidence-package-laptop.jpg",
@@ -721,9 +745,9 @@ class TestImageDeploymentPipeline(unittest.TestCase):
             self.assertLessEqual(len(data), 25 * 1024 * 1024, ref)
             self.assertTrue(signatures[Path(ref).suffix.lower()](data), ref)
 
-    def test_hero_and_reuploaded_images_are_in_dist(self):
-        self.assertIn(self.HERO_IMAGE, self.image_refs)
-        self.assertTrue((self.DIST / self.HERO_IMAGE.lstrip("/")).is_file())
+    def test_featured_and_reuploaded_images_are_in_dist(self):
+        self.assertIn(self.FEATURED_IMAGE, self.image_refs)
+        self.assertTrue((self.DIST / self.FEATURED_IMAGE.lstrip("/")).is_file())
         copied = {path.name for path in (self.DIST / "assets" / "images").iterdir()}
         self.assertTrue(self.REUPLOADED.issubset(copied))
 

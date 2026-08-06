@@ -1,0 +1,23 @@
+# Current HTML filenames consolidate to Cloudflare's clean production URLs.
+/index.html / 301
+/platform.html /platform 301
+/evidence.html /evidence 301
+/technical.html /technical 301
+/security.html /security 301
+/pilot.html /pilot 301
+/company.html /company 301
+/methodology.html /methodology 301
+/operator-brief.html /operator-brief 301
+/contact.html /contact 301
+/privacy.html /privacy 301
+
+# Retired public routes preserve continuity instead of returning a 404.
+/Index.html / 301
+/Index1.html / 301
+/index.html.html / 301
+/analysis /platform 301
+/analysis.html /platform 301
+/application /technical 301
+/application.html /technical 301
+/governance /security 301
+/governance.html /security 301

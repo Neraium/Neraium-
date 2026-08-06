@@ -8,10 +8,10 @@ const publicPages = [
   { path: '/technical.html', purpose: /Operational systems/i },
   { path: '/pilot.html', purpose: /Historical Evaluation/i },
   { path: '/methodology.html', purpose: /Baseline, comparison, persistence/i },
-  { path: '/security.html', purpose: /Security model/i },
+  { path: '/security.html', purpose: /Read-only by design/i },
   { path: '/company.html', purpose: /practical infrastructure investigation/i },
   { path: '/operator-brief.html', purpose: /Printable engineering/i },
-  { path: '/contact.html', purpose: /approved data export/i },
+  { path: '/contact.html', purpose: /one system and one review question/i },
 ] as const;
 
 const navLinks = ['Platform','Evidence','Applications','Security','Evaluation','Company'] as const;
@@ -45,13 +45,13 @@ for (const sitePage of publicPages) {
 
     test('supports navigation, CTA, and keyboard focus', async ({ page }) => {
       await page.goto(sitePage.path);
-      await openPrimaryNavigation(page);
-      const navigation = page.getByRole('navigation', { name: 'Main navigation' });
-      for (const label of navLinks) await expect(navigation.getByRole('link', { name: label })).toBeVisible();
-      await expect(page.getByRole('link', { name: /Request an Evaluation|Request a Historical Evaluation/i }).first()).toHaveAttribute('href', 'contact.html');
       await page.keyboard.press('Tab');
       await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
       await expect(page.getByRole('link', { name: 'Skip to content' })).toHaveCSS('outline-style', 'solid');
+      await expect(page.locator('.header-action')).toHaveAttribute('href', '/contact');
+      await openPrimaryNavigation(page);
+      const navigation = page.getByRole('navigation', { name: 'Main navigation' });
+      for (const label of navLinks) await expect(navigation.getByRole('link', { name: label })).toBeVisible();
     });
 
     test('has no horizontal overflow and loads local images with alt text', async ({ page }) => {
@@ -82,10 +82,23 @@ for (const sitePage of publicPages) {
   });
 }
 
-test('contact form validates practical fields without fake success', async ({ page }) => {
+test('contact form validates practical fields and prepares an email without fake submission', async ({ page }) => {
+  const posts: string[] = [];
+  page.on('request', (request) => {
+    if (request.method() === 'POST') posts.push(request.url());
+  });
   await page.goto('/contact.html');
   await page.locator('#contact-form button[type="submit"]').click();
-  await expect(page.locator('#form-feedback')).toContainText(/complete the required/i);
+  await expect(page.locator('#name')).toBeFocused();
+  await page.locator('#name').fill('Alex Morgan');
+  await page.locator('#email').fill('alex@example.com');
+  await page.locator('#organization').fill('Example Facilities');
+  await page.locator('#facility').fill('Central plant');
+  await page.locator('#review-question').fill('Has pumping response changed across comparable periods?');
+  await page.locator('#contact-form button[type="submit"]').click();
+  await expect(page.locator('#form-feedback')).toContainText(/request is ready/i);
+  await expect(page.locator('#form-feedback a')).toHaveAttribute('href', /^mailto:craig@neraium[.]com[?]/);
+  expect(posts).toEqual([]);
 });
 
 test('respects reduced motion preference', async ({ page }) => {

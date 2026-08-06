@@ -5,6 +5,8 @@ import path from 'node:path';
 const outputDir = 'dist';
 const publicAssets = [
   '.well-known',
+  '_headers',
+  '_redirects',
   '404.html',
   'assets/images',
   'company.html',

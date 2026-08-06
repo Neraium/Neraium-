@@ -1,7 +1,8 @@
 # Netlify deployment configuration for neraium.com
 
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
 
 # ── Security headers applied to every response ──────────────────────────────
 [[headers]]
@@ -14,11 +15,11 @@
     Strict-Transport-Security  = "max-age=31536000; includeSubDomains; preload"
     # CSP allows:
     #   scripts  – only from self (scripts.js)
-    #   styles   – self + Google Fonts CSS + Font Awesome CSS
-    #   fonts    – self + Google Fonts files + Font Awesome webfonts
+    #   styles   – self-hosted stylesheet only
+    #   fonts    – system fonts only
     #   images   – self + data URIs (no external image embeds)
     #   forms    – self + mailto: action (contact page)
-    Content-Security-Policy    = "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; form-action 'self';"
+    Content-Security-Policy    = "default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self'; style-src 'self'; upgrade-insecure-requests"
 
 # ── Cache-control rules ──────────────────────────────────────────────────────
 

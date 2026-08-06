@@ -62,31 +62,35 @@
 
   const form = document.getElementById('contact-form');
   const feedback = document.getElementById('form-feedback');
-  const started = document.getElementById('form-started-at');
-  const honeypot = document.getElementById('company-website');
-  if (form && feedback && started) {
-    started.value = String(Date.now());
-    form.addEventListener('submit', async (event) => {
+  if (form && feedback) {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
-      const requiredIds = ['name', 'organization', 'role', 'email', 'facility', 'data'];
+      feedback.replaceChildren();
+      const requiredIds = ['name', 'email', 'organization', 'facility', 'review-question'];
       const missing = requiredIds.some((id) => !document.getElementById(id)?.value.trim());
       const email = document.getElementById('email')?.value.trim() || '';
       if (missing) { feedback.textContent = 'Please complete the required practical scoping fields.'; return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { feedback.textContent = 'Please enter a valid email address.'; return; }
-      const elapsed = Date.now() - Number(started.value || 0);
-      if ((honeypot && honeypot.value.trim()) || elapsed < 2500) { feedback.textContent = 'Thanks. Your request was received.'; return; }
-      feedback.textContent = 'Sending your request...';
-      trackEvent('contact_submit_attempt', { path: window.location.pathname });
-      try {
-        const response = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
-        if (!response.ok) throw new Error(`Form submission failed with ${response.status}`);
-        form.reset();
-        feedback.textContent = 'Thanks. Neraium received your request and will follow up.';
-        trackEvent('contact_submit_success', { path: window.location.pathname });
-      } catch (error) {
-        feedback.innerHTML = 'The secure form could not be submitted in this environment. Please email <a href="mailto:craig@neraium.com">craig@neraium.com</a>.';
-        trackEvent('contact_submit_error', { message: error.message });
-      }
+
+      const value = (id) => document.getElementById(id)?.value.trim() || '';
+      const body = [
+        `Name: ${value('name')}`,
+        `Work email: ${email}`,
+        `Organization: ${value('organization')}`,
+        `System or facility type: ${value('facility')}`,
+        `Review question: ${value('review-question')}`,
+        value('role') ? `Role: ${value('role')}` : '',
+        value('preferred-contact') ? `Preferred contact method: ${value('preferred-contact')}` : '',
+        value('data') ? `Time horizon or data availability: ${value('data')}` : '',
+      ].filter(Boolean).join('\n\n');
+      const emailLink = document.createElement('a');
+      emailLink.className = 'button secondary prepared-email-link';
+      emailLink.href = `mailto:craig@neraium.com?subject=${encodeURIComponent('Neraium Historical Evaluation')}&body=${encodeURIComponent(body)}`;
+      emailLink.textContent = 'Open the prepared email';
+      const status = document.createElement('span');
+      status.textContent = 'Your request is ready. Review it in your email application, then choose send.';
+      feedback.append(status, emailLink);
+      trackEvent('contact_request_prepared', { path: window.location.pathname });
     });
   }
 })();
