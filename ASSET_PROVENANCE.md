@@ -1,22 +1,19 @@
 # Asset provenance
 
-This document covers displayed image assets and icons used by the public Neraium website. Where source evidence is not present in the repository, provenance is marked unknown and replacement or license documentation is required before making ownership or licensing claims.
+This document covers image and icon assets referenced by the current public Neraium website. Where source evidence is not present in the repository, provenance remains unknown and ownership or licensing claims must not be made.
 
-| File path | Source | Ownership or license status | Attribution requirements | Pages where used | Dimensions | File size | Alt text |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `/assets/images/infra-bg-1.jpg` | Existing repository asset, source record not included. | Unknown. Replacement or written license documentation required. | Unknown until source is verified. | `index.html` | 1800 x 1200 | 187,793 bytes | Mechanical infrastructure with piping and plant equipment |
-| `/assets/images/infra-bg-2.jpg` | Existing repository asset, source record not included. | Unknown. Replacement or written license documentation required. | Unknown until source is verified. | Currently retained, not displayed on current public pages. | 1800 x 1349 | 908,436 bytes | Not displayed on current public pages. |
-| `/assets/images/diagram-threshold-vs-relationships.jpg` | Existing repository asset, source record not included. | Unknown. Replacement or written license documentation required. | Unknown until source is verified. | `index.html` | 1536 x 1024 | 1,186,895 bytes | Diagram comparing threshold monitoring with relationship-based evidence review |
-| `/assets/images/founder-contact.jpg` | Existing repository asset, likely founder-provided portrait, source record not included. | Unknown until founder ownership or permission is documented. | Unknown until source is verified. | `company.html` | 1320 x 1298 | 582,575 bytes | Craig Curtis, founder of Neraium |
-| `/assets/images/neraium-brand.jpg` | Existing repository brand asset, source record not included. | Unknown until brand ownership documentation is retained. | No attribution stated in repository. | All public HTML pages in the header. | 715 x 567 | 72,306 bytes | Neraium logo |
-| `assets/images/neraium-brand-preview.png` | Existing repository social preview image, source record not included. | Unknown. Replacement or written license documentation required if derived from third-party imagery. | Unknown until source is verified. | Open Graph and Twitter image metadata on public pages. | 1200 x 630 | 87,663 bytes | Neraium Evidence Package preview for engineering review |
-| `favicon.ico` | Existing repository icon asset, source record not included. | Unknown until brand ownership documentation is retained. | No attribution stated in repository. | Browser favicon on public pages. | Multi-resolution icon, dimensions not parsed by repository tooling. | 15,406 bytes | Decorative browser icon, referenced through icon metadata. |
-| `/assets/images/favicon-16x16.png` | Existing repository icon asset, source record not included. | Unknown until brand ownership documentation is retained. | No attribution stated in repository. | `site.webmanifest` and browser icon discovery. | 16 x 16 | 567 bytes | Decorative favicon. |
-| `/assets/images/favicon-32x32.png` | Existing repository icon asset, source record not included. | Unknown until brand ownership documentation is retained. | No attribution stated in repository. | `site.webmanifest` and browser icon discovery. | 32 x 32 | 1,239 bytes | Decorative favicon. |
-| `/assets/images/apple-touch-icon.png` | Existing repository icon asset, source record not included. | Unknown until brand ownership documentation is retained. | No attribution stated in repository. | Apple touch icon metadata on public pages. | 180 x 180 | 16,287 bytes | Decorative app icon. |
-| `/assets/images/android-chrome-192x192.png` | Existing repository icon asset, source record not included. | Unknown until brand ownership documentation is retained. | No attribution stated in repository. | `site.webmanifest`. | 192 x 192 | 17,911 bytes | Decorative app icon. |
-| `/assets/images/android-chrome-512x512.png` | Existing repository icon asset, source record not included. | Unknown until brand ownership documentation is retained. | No attribution stated in repository. | `site.webmanifest`. | 512 x 512 | 90,733 bytes | Decorative app icon. |
+| File path | Source record | Status | Current use |
+| --- | --- | --- | --- |
+| `/assets/images/neraium-logo-lockup.svg` | Not included in repository. | Existing brand asset; ownership documentation should be retained. | Visible header logo on every public HTML page. |
+| `/assets/images/founder-contact.jpg` | Not included in repository. | Existing founder portrait; permission or ownership should be documented. | Founder portrait on `company.html`; alt text identifies Craig Curtis. |
+| `/assets/images/neraium-brand-preview.png` | Not included in repository. | Existing social preview; derivation or ownership should be documented. | Open Graph and Twitter preview metadata. |
+| `favicon.ico` | Not included in repository. | Existing brand icon. | Browser favicon. |
+| `/assets/images/apple-touch-icon.png` | Not included in repository. | Existing brand icon. | Apple touch-icon metadata. |
+| `/assets/images/android-chrome-192x192.png` | Not included in repository. | Existing brand icon. | Web manifest. |
+| `/assets/images/android-chrome-512x512.png` | Not included in repository. | Existing brand icon. | Web manifest. |
 
-## Replacement requirement
+Other image files remain in `assets/images/` for compatibility and rollback but are not displayed by the current public pages. They must not be described as licensed, commissioned, customer-derived, or project-owned without a source record.
 
-Before public claims are made that any image is licensed, commissioned, or project-owned, add the purchase record, creator release, generation record, or license text to the repository or an internal asset register and update this file.
+## Documentation requirement
+
+Before making any public ownership or licensing claim, retain the purchase record, creator release, generation record, or license text in an approved asset register and update this file.

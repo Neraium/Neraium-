@@ -43,12 +43,15 @@
         toggleButton.focus();
       }
     });
-    window.matchMedia('(min-width: 981px)').addEventListener('change', (event) => {
+    window.matchMedia('(min-width: 1121px)').addEventListener('change', (event) => {
       if (!event.matches) return;
       nav.classList.remove('open');
       setExpanded(false);
     });
   }
+
+  const printButton = document.querySelector('[data-print-brief]');
+  if (printButton) printButton.addEventListener('click', () => window.print());
 
   const form = document.getElementById('contact-form');
   const feedback = document.getElementById('form-feedback');
@@ -56,31 +59,65 @@
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       feedback.replaceChildren();
+      feedback.removeAttribute('data-state');
       const requiredIds = ['name', 'email', 'organization', 'facility', 'review-question'];
       const missing = requiredIds.some((id) => !document.getElementById(id)?.value.trim());
       const email = document.getElementById('email')?.value.trim() || '';
-      if (missing) { feedback.textContent = 'Please complete the required practical scoping fields.'; return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { feedback.textContent = 'Please enter a valid email address.'; return; }
+      if (missing) {
+        feedback.dataset.state = 'error';
+        feedback.textContent = 'Please complete the required practical scoping fields.';
+        feedback.focus();
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        feedback.dataset.state = 'error';
+        feedback.textContent = 'Please enter a valid work email address.';
+        feedback.focus();
+        return;
+      }
 
-      const value = (id) => document.getElementById(id)?.value.trim() || '';
-      const body = [
-        `Name: ${value('name')}`,
-        `Work email: ${email}`,
-        `Organization: ${value('organization')}`,
-        `System or facility type: ${value('facility')}`,
-        `Review question: ${value('review-question')}`,
-        value('role') ? `Role: ${value('role')}` : '',
-        value('preferred-contact') ? `Preferred contact method: ${value('preferred-contact')}` : '',
-        value('data') ? `Time horizon or data availability: ${value('data')}` : '',
-      ].filter(Boolean).join('\n\n');
-      const emailLink = document.createElement('a');
-      emailLink.className = 'button secondary prepared-email-link';
-      emailLink.href = `mailto:craig@neraium.com?subject=${encodeURIComponent('Neraium Historical Evaluation')}&body=${encodeURIComponent(body)}`;
-      emailLink.textContent = 'Open the prepared email';
-      const status = document.createElement('span');
-      status.textContent = 'Your request is ready. Review it in your email application, then choose send.';
-      feedback.append(status, emailLink);
-      feedback.focus();
+      const submitButton = form.querySelector('button[type="submit"]');
+      const idleLabel = submitButton?.dataset.idleLabel || submitButton?.textContent || 'Prepare Evaluation Request';
+      const loadingLabel = submitButton?.dataset.loadingLabel || 'Preparing request...';
+      form.setAttribute('aria-busy', 'true');
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = loadingLabel;
+      }
+
+      window.requestAnimationFrame(() => {
+        try {
+          const value = (id) => document.getElementById(id)?.value.trim() || '';
+          const body = [
+            `Name: ${value('name')}`,
+            `Work email: ${email}`,
+            `Organization: ${value('organization')}`,
+            `System or facility type: ${value('facility')}`,
+            `Review question: ${value('review-question')}`,
+            value('role') ? `Role: ${value('role')}` : '',
+            value('preferred-contact') ? `Preferred contact method: ${value('preferred-contact')}` : '',
+            value('data') ? `General data availability or context: ${value('data')}` : '',
+          ].filter(Boolean).join('\n\n');
+          const emailLink = document.createElement('a');
+          emailLink.className = 'button secondary prepared-email-link';
+          emailLink.href = `mailto:craig@neraium.com?subject=${encodeURIComponent('Neraium Historical Evaluation')}&body=${encodeURIComponent(body)}`;
+          emailLink.textContent = 'Open the prepared email';
+          const status = document.createElement('span');
+          status.textContent = 'Your request is ready. Review it in your email application, then choose send.';
+          feedback.dataset.state = 'success';
+          feedback.append(status, emailLink);
+        } catch {
+          feedback.dataset.state = 'error';
+          feedback.textContent = 'The request could not be prepared. Please email craig@neraium.com directly.';
+        } finally {
+          form.removeAttribute('aria-busy');
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = idleLabel;
+          }
+          feedback.focus();
+        }
+      });
     });
   }
 })();

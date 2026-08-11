@@ -2,20 +2,20 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /Identify persistent changes/i, canonical: 'https://www.neraium.com/' },
-  { path: '/platform', purpose: /relationship-level review/i, canonical: 'https://www.neraium.com/platform' },
-  { path: '/evidence', purpose: /Structured findings/i, canonical: 'https://www.neraium.com/evidence' },
-  { path: '/technical', purpose: /Operational systems/i, canonical: 'https://www.neraium.com/technical' },
-  { path: '/pilot', purpose: /Historical Evaluation/i, canonical: 'https://www.neraium.com/pilot' },
-  { path: '/methodology', purpose: /Baseline, comparison, persistence/i, canonical: 'https://www.neraium.com/methodology' },
+  { path: '/', purpose: /Know when the system/i, canonical: 'https://www.neraium.com/' },
+  { path: '/platform', purpose: /Understand whether the system/i, canonical: 'https://www.neraium.com/platform' },
+  { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://www.neraium.com/evidence' },
+  { path: '/technical', purpose: /Built first for complex facility infrastructure/i, canonical: 'https://www.neraium.com/technical' },
+  { path: '/pilot', purpose: /Start with history/i, canonical: 'https://www.neraium.com/pilot' },
+  { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://www.neraium.com/methodology' },
   { path: '/security', purpose: /Read-only by design/i, canonical: 'https://www.neraium.com/security' },
-  { path: '/company', purpose: /practical infrastructure investigation/i, canonical: 'https://www.neraium.com/company' },
-  { path: '/operator-brief', purpose: /Printable engineering/i, canonical: 'https://www.neraium.com/operator-brief' },
+  { path: '/company', purpose: /Infrastructure intelligence built around evidence/i, canonical: 'https://www.neraium.com/company' },
+  { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://www.neraium.com/operator-brief' },
   { path: '/contact', purpose: /one system and one review question/i, canonical: 'https://www.neraium.com/contact' },
-  { path: '/privacy', purpose: /Privacy and public-inquiry boundaries/i, canonical: 'https://www.neraium.com/privacy' },
+  { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://www.neraium.com/privacy' },
 ] as const;
 
-const navLinks = ['Platform','Evidence','Applications','Security','Evaluation','Company'] as const;
+const navLinks = ['Platform','Methodology','Evidence','Applications','Security','Evaluation','Company'] as const;
 
 async function openPrimaryNavigation(page: Page) {
   const toggle = page.locator('.nav-toggle');
@@ -73,7 +73,7 @@ for (const sitePage of publicPages) {
       await page.goto(sitePage.path, { waitUntil: 'networkidle' });
       const slug = sitePage.path.slice(1) || 'index';
       await page.screenshot({ path: path.join('playwright-screenshots', testInfo.project.name, `${slug}-full-page.png`), fullPage: true, animations: 'disabled' });
-      for (const [selector, name] of [['.hero, .page-hero','hero'],['#evidence','evidence-package'],['#maintenance','maintenance-view'],['#security','security'],['#applications','applications'],['#contact','contact']] as const) {
+      for (const [selector, name] of [['.hero, .page-hero','hero'],['#how-it-works','product-flow'],['#baseline','baseline'],['#evidence','evidence'],['#method-flow','method-flow'],['#maintenance','operator-view'],['#security','security'],['#applications','applications'],['#contact','contact']] as const) {
         const target = page.locator(selector).first();
         if (await target.count()) {
           await target.scrollIntoViewIfNeeded();

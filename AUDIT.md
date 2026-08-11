@@ -1,80 +1,69 @@
 # Neraium public website audit
 
-Audit date: 2026-08-06
+Audit date: 2026-08-11
 
-Audited source: current `main` of `https://github.com/Neraium/Neraium-.git`
+Audited source: current local `main` of `git@github.com:Neraium/Neraium-.git`
 
-Deployment observed: Cloudflare Workers Static Assets at `www.neraium.com`
+Production comparison: `https://www.neraium.com`
 
-## Architecture verified before changes
+Deployment model: Cloudflare Workers Static Assets at `www.neraium.com`
 
-- The public site is a static HTML, CSS, and JavaScript application. It is not the separate product/application repository.
-- The repository already contained ten substantive, indexable public pages: Home, Platform, Evidence, Applications, Evaluation, Methodology, Security, Company, Operator Brief, and Contact, plus Privacy and a custom 404 page.
-- Shared navigation exposed Platform, Evidence, Applications, Security, Evaluation, Company, and Contact. Methodology and Operator Brief were linked contextually.
-- Every indexable page already had a distinct title and description, Open Graph metadata, canonical URL, structured data, and sitemap coverage.
-- `robots.txt`, `sitemap.xml`, `.well-known/security.txt`, favicon/manifest assets, and a `404.html` file already existed.
-- The deployment configuration was mixed: a Cloudflare Workers configuration was present, while the public form and some security behavior still assumed Netlify.
-- No external image assets were introduced. Existing repository images remain project-supplied assets without additional provenance claims.
+## Production and repository baseline
 
-## Issues that still existed
+The production HTML matched the repository baseline across the public routes at the start of this audit. The site was already a lightweight static implementation with clean deployment controls, dedicated product pages, disciplined claims, consistent dark navy/teal identity, and a transparent mail-draft contact path.
 
-1. Search results were stale. A search result still surfaced older water-focused title/copy although the current repository title already used “Systemic Infrastructure Intelligence.” This is primarily a recrawl and canonical-consistency problem, not evidence that the current site has only two pages.
-2. Concrete proof arrived too late and was visually secondary. The homepage described the concept before showing what a supported finding actually looks like.
-3. The initial market story was too broad. The site needed a clear starting point in central plants, chilled-water, pumping, water/utility systems, campuses, resorts, and large facilities without claiming that Neraium is limited to water.
-4. Evidence Packages sometimes carried too much of the product explanation. They needed to remain a structured analysis output rather than the product category.
-5. The Historical Evaluation and Contact copy added friction through a fixed 90-day suggestion, a required Role field, a required operational-data question, and an unsupported three-business-day response statement.
-6. The production contact path was unreliable. The form used Netlify attributes on a Cloudflare deployment; posting to `/` could return the homepage and be reported by JavaScript as success even though no verified intake occurred.
-7. Canonical and sitemap URLs used `.html`, while the live Cloudflare configuration redirected those URLs to clean routes. Legacy and retired routes were not explicitly mapped.
-8. The live Cloudflare site did not receive the Netlify-only security headers. The committed custom 404 also was not configured as the Workers not-found response.
-9. HTTP, apex-domain, and `www` versions all returned content without a verified canonical host redirect. This remains an account-level Cloudflare/DNS action.
-10. Company and trust content existed but was thin and sometimes implied a broader team than the repository could verify.
+The existing structure already had distinct pages for Platform, Evidence, Applications, Evaluation, Methodology, Security, Company, Operator Brief, Contact, Privacy, and 404 handling. Metadata, canonical URLs, structured data, sitemap coverage, redirects, security headers, reduced-motion support, and foundational accessibility were also present.
 
-## Critique items already solved in the current site
+## What was already strong and preserved
 
-- The site was not a two-page brochure; it already had dedicated Platform, Evidence, Applications, Evaluation, Methodology, Security, Company, Operator Brief, and Contact content.
-- The current title and category were already “Systemic Infrastructure Intelligence,” not an exclusively water-system title.
-- Read-only operation, separation from the control path, human review, uncertainty, limitations, historical evaluation, and customer-controlled boundaries were already present in several pages.
-- A representative EP-CHW-017 Evidence Package and sample PDF already existed.
-- Founding information for Craig Kennedy was present. No additional people, biographies, offices, customer roster, or corporate milestones were verifiable.
-- Sitemap, robots, page metadata, structured data, and a 404 file already existed; their consistency and deployment behavior needed correction rather than invention.
+- Static HTML, CSS, SVG, and vanilla JavaScript architecture
+- Cloudflare clean routes, redirects, security headers, and custom 404 behavior
+- Read-only and outside-control-path operating boundaries
+- Human-authority, uncertainty, and root-cause limitations
+- Historical Evaluation as a lower-risk starting point
+- EP-CHW-017 as a clearly illustrative evidence structure
+- Official brand assets, founder information, and dark navy/teal identity
+- Transparent `mailto:` inquiry mechanism with no fake server submission
+- Existing URLs, sitemap routes, manifest, favicon, and security contact
 
-## Recommendations that conflicted with product strategy
+## What was outdated or incomplete
 
-- Recasting Neraium as a water-only product would conflict with its cross-domain systemic-infrastructure positioning. The revision leads with water, pumping, and central-plant systems as the initial market story, then states that the method can apply to other telemetry-rich operational infrastructure.
-- Treating Evidence Packages as the category would collapse the distinction between the analysis product and one of its outputs. The revision makes this boundary explicit.
-- Expanding the homepage into a long technical document would weaken the requested evaluation journey. Detailed methodology, applications, security, and evidence remain on dedicated pages.
-- Framing Neraium as an autonomous control, prediction, or operator-replacement system would contradict the read-only and human-authority boundaries.
+- The product story was too close to telemetry-to-relationship-change-to-Evidence-Package.
+- Baseline qualification, signal usability, data quality, operating context, multiscale persistence, provenance, continued comparison, and insufficient-evidence outcomes were not prominent enough.
+- Evidence Packages carried too much of the category definition.
+- The homepage lacked a concrete visual explanation of systemic change inside individual limits.
+- Methodology was too brief for a technical buyer.
+- Applications implied a broader market posture than the strongest current facility-infrastructure wedge justified.
+- Several pages used uniform cards, oversized display type, small supporting text, and document-like layouts.
+- The Operator Brief did not answer the practical operator questions directly enough.
+- Contact behavior needed clearer loading, success, validation, and error states.
+- Shared navigation did not expose Methodology despite its importance.
 
-## Recommendations requiring unavailable evidence
+## Selective modernization implemented
 
-The repository did not support claims about named customers, live deployments, active pilots, testimonials, certifications, SOC 2 status, quantified savings, avoided failures, downtime reduction, predictive certainty, root-cause certainty, revenue, customer metrics, a free evaluation, or a guaranteed response time. None were added.
+- Reframed the homepage around establishing operating behavior before judging later change.
+- Added a lightweight SVG/HTML chilled-water relationship artifact showing individual signals inside limits while power-to-flow behavior changes persistently.
+- Replaced the generic three-step explanation with the seven-stage current product flow and two valid outcome branches.
+- Made baseline learning, data readiness, comparable context, expected behavior, multiscale persistence, provenance, and limitations visible across Home, Platform, and Methodology.
+- Positioned Evidence Packages as downstream analysis outputs and expanded the illustrative evidence artifact without fake precision.
+- Added an explicit insufficient-evidence artifact and reinforced that absence of support is not proof of absence.
+- Focused Applications on central plants, chilled water, pumping, water, resorts, and large facilities while defining broader fit by system characteristics rather than deployment claims.
+- Clarified the read-only path alongside BAS, SCADA, historians, PLC-derived telemetry, CMMS workflows, operators, engineers, and maintenance teams without a return control arrow.
+- Reworked Historical Evaluation around one system, one question, approved history, no initial live connection, and no guaranteed finding.
+- Strengthened Security while retaining only already-supported customer-hosted language and explicitly declining unsupported certification claims.
+- Rewrote the Operator Brief as five direct operational questions with printable styling.
+- Preserved the contact mechanism while adding explicit public-form boundaries and visible interaction states.
+- Consolidated the visual system in one stylesheet with refined type scale, spacing, restrained surfaces, evidence patterns, responsive recomposition, focus treatment, print rules, and reduced-motion behavior.
+- Added a design manifest and project-local QA/visual-verification records under `.planning/`.
 
-EP-CHW-017 remains clearly illustrative and does not include invented percentages. Representative application contexts are labeled as examples, not customer case studies.
+## Claims intentionally not added
 
-## Implemented response
-
-- Reordered the homepage to lead with the category, direct explanation, compact EP-CHW-017 finding, operational problem, capabilities, Historical Evaluation, security/read-only boundary, and next step.
-- Added the supported observation, threshold status, limitation, and illustrative-data disclaimer beside the hero.
-- Clarified the initial commercial focus while preserving broader infrastructure applicability.
-- Tightened Platform, Applications, Evaluation, Evidence, Security, Company, Contact, and Privacy content around process, proof, authority, and boundaries.
-- Rebuilt the public inquiry around five required scoping fields and three optional fields. It prepares a transparent email draft and requests no telemetry, credentials, diagrams, or confidential operational details.
-- Removed unsupported timing promises and the fixed 90-day requirement.
-- Standardized clean internal, canonical, Open Graph, structured-data, and sitemap URLs.
-- Added legacy redirects, Cloudflare security headers, custom 404 routing, and build-time validation/copying of deployment control files.
-- Removed external font dependencies and inline load handlers so the strict production content-security policy can remain usable.
-- Refined the visual system around Neraium teal `#007A74`, navy, restrained surfaces, smaller radii and shadows, a larger logo, and controlled mobile heading sizes.
+No customers, deployments, logos, testimonials, partnerships, facility counts, savings, ROI, avoided failures, uptime, integrations, certifications, or unsupported security controls were added. The site does not present Neraium as predictive maintenance, autonomous control, an alarm replacement, a digital twin, an AI copilot, a dashboard product, or a root-cause engine.
 
 ## External actions still required
 
-1. In Cloudflare DNS/Redirect Rules, redirect `http://neraium.com`, `https://neraium.com`, and HTTP `www` requests to `https://www.neraium.com` while preserving path and query.
-2. Deploy the revised `dist/` build, then verify headers, redirects, custom 404 behavior, sitemap, and contact-email preparation on production.
-3. Request recrawling of the homepage and sitemap in the applicable search-console account after deployment.
-4. If Neraium later adopts a verified server-side inquiry service, replace the email-draft flow only after confirming recipient, retention, spam controls, privacy disclosure, and production delivery.
-
-## Final production-readiness pass
-
-- Verified the committed build with Wrangler's Static Assets runtime instead of a generic file server, including clean routes, legacy redirects, response headers, and custom 404 status.
-- Corrected custom 404 assets to root-relative URLs so nested missing routes retain styling, navigation, and script behavior.
-- Removed dormant analytics scaffolding that was inactive, undisclosed, and incompatible with the strict production content-security policy.
-- Added a mobile evaluation link, predictable keyboard focus for the menu, larger touch targets, print-safe styles, bounded contact fields, and clearer form status focus.
-- Disabled public `workers.dev` and version-preview URLs in the deploy configuration, completed `security.txt` expiry metadata, and added complementary browser isolation headers.
+1. Deploy the revised `dist/` build and verify behavior on the production hostname.
+2. Confirm apex/HTTP-to-`https://www.neraium.com` redirect rules in the Cloudflare account.
+3. Request sitemap recrawling after deployment if search results retain older positioning.
+4. Replace the mail-draft contact path only if a verified server-side intake service, privacy disclosure, retention policy, and delivery workflow are approved.
+5. Document ownership or license evidence for retained repository image assets before making provenance claims.
