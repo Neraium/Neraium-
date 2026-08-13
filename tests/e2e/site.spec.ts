@@ -5,7 +5,7 @@ const publicPages = [
   { path: '/', purpose: /Know when the system/i, canonical: 'https://www.neraium.com/' },
   { path: '/platform', purpose: /Understand whether the system/i, canonical: 'https://www.neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://www.neraium.com/evidence' },
-  { path: '/technical', purpose: /Built first for complex facility infrastructure/i, canonical: 'https://www.neraium.com/technical' },
+  { path: '/technical', purpose: /Built first for interconnected facility infrastructure/i, canonical: 'https://www.neraium.com/technical' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://www.neraium.com/pilot' },
   { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://www.neraium.com/methodology' },
   { path: '/security', purpose: /Read-only by design/i, canonical: 'https://www.neraium.com/security' },

@@ -353,14 +353,14 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Systemic Infrastructure Intelligence",
             "Know when the system stops behaving like itself.",
-            "establishes how interconnected infrastructure normally behaves",
-            "even when individual measurements remain inside limits",
-            "Approved historical telemetry",
-            "Establish operating baseline",
-            "Learn signals, relationships, and context",
+            "learns the operating behavior of interconnected infrastructure",
+            "even when individual measurements remain within limits",
+            "Built first for central plants, pumping systems, water systems",
+            "Establish operating behavior",
+            "Learn relationships and context",
             "Identify persistent systemic change",
-            "Preserve evidence and limitations",
-            "Human engineering review",
+            "Preserve evidence for engineering review",
+            "bounded review question",
             "Insufficient evidence of meaningful persistent change",
             "Request an Evaluation",
             "Read-only",
@@ -371,7 +371,16 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertIn(phrase, text)
 
         self.assertIn("Evidence Packages are outputs of the analysis, not the product category.", text)
-        self.assertIn("Temporary abnormalities do not automatically redefine normal", text)
+        self.assertIn("Known transient or abnormal periods do not become the reference", text)
+        product_flow = re.search(r'<ol class="product-flow">(.*?)</ol>', self.index, re.DOTALL)
+        self.assertIsNotNone(product_flow)
+        self.assertEqual(product_flow.group(1).count("<li>"), 4)
+
+        methodology = (ROOT / "methodology.html").read_text(encoding="utf-8")
+        method_flow = re.search(r'<ol class="method-steps">(.*?)</ol>', methodology, re.DOTALL)
+        self.assertIsNotNone(method_flow)
+        self.assertEqual(method_flow.group(1).count("<li>"), 7)
+        self.assertIn("Known transient or abnormal operating periods do not automatically become the new normal.", methodology)
     def test_information_architecture_sections_exist(self):
         expected_home_sections = (
             "platform",
@@ -402,7 +411,8 @@ class TestPositioningAndExperience(unittest.TestCase):
 
         applications = self.normalized((ROOT / "technical.html").read_text(encoding="utf-8"))
         for phrase in (
-            "Built first for complex facility infrastructure.",
+            "Built first for interconnected facility infrastructure.",
+            "The initial focus is central plants, pumping systems, water systems",
             "Representative evaluation contexts, not claims of customer deployments.",
             "Central plants and chilled-water systems",
             "Pumping and water systems",
@@ -447,6 +457,10 @@ class TestPositioningAndExperience(unittest.TestCase):
             "What does it not mean?",
             "What should an operator do with it?",
             "What remains under human judgment?",
+            "What comes with a finding",
+            "Affected system",
+            "Strongest supporting relationships",
+            "Known limitations",
         ):
             self.assertIn(phrase, operator_text)
     def test_security_boundaries_are_clearly_distinguished(self):
@@ -457,9 +471,8 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Analysis beside operations, never inside the control path.",
             "No setpoint changes",
-            "No equipment control",
-            "No autonomous commands",
-            "Human judgment remains authoritative",
+            "There is no control arrow back to equipment.",
+            "Human review authoritative",
             "Begin with one system and no live connection.",
         ):
             self.assertIn(phrase, homepage)

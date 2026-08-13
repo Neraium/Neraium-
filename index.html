@@ -35,7 +35,7 @@
         <div class="hero-copy">
           <p class="eyebrow">Systemic Infrastructure Intelligence</p>
           <h1>Know when the system stops behaving like itself.</h1>
-          <p class="lead">Neraium establishes how interconnected infrastructure normally behaves from approved telemetry, then identifies persistent departures across signals, relationships, and operating context, even when individual measurements remain inside limits.</p>
+          <p class="lead">Neraium learns the operating behavior of interconnected infrastructure, then surfaces persistent departures in the relationships between signals, systems, and context, even when individual measurements remain within limits.</p>
           <div class="button-row"><a class="button primary" href="/contact">Request an Evaluation</a><a class="button secondary" href="/methodology">See how it works</a></div>
           <ul class="boundary-list" aria-label="Operating boundaries"><li>Read-only</li><li>Outside the control path</li><li>No setpoint changes</li><li>Human review authoritative</li></ul>
         </div>
@@ -68,26 +68,23 @@
 
     <section class="section problem" id="problem">
       <div class="container problem-layout">
-        <div class="section-statement"><p class="eyebrow">Beyond individual thresholds</p><h2>A system can change before any one signal crosses a limit.</h2><p>BAS, SCADA, alarms, and operators remain essential. Neraium complements them by evaluating whether the relationships that describe system response have persistently changed.</p></div>
+        <div class="section-statement"><p class="eyebrow">Beyond individual thresholds</p><h2>A system can change before any one signal crosses a limit.</h2><p>BAS, SCADA, alarms, and operators remain essential. Neraium complements them by evaluating whether the relationships that describe system response have persistently changed.</p><p>Built first for central plants, pumping systems, water systems, and other interconnected facility infrastructure.</p></div>
         <div class="question-compare">
           <div><span>Traditional monitoring often asks</span><blockquote>Did a signal cross a limit?</blockquote></div>
           <div class="neraium-question"><span>Neraium asks</span><blockquote>Did the way the system behaves persistently change?</blockquote></div>
-          <p>Pump power, flow, and differential pressure may each remain inside their operating ranges while power required per unit of delivered flow changes materially.</p>
+          <p>The result is a bounded review question: which relationship changed, under what conditions, and what deserves engineering attention?</p>
         </div>
       </div>
     </section>
 
     <section class="section band" id="how-it-works">
       <div class="container">
-        <div class="section-head wide"><p class="eyebrow">How Neraium works</p><h2>Establish the reference before judging later behavior.</h2><p>Historical telemetry is not treated as an instant anomaly feed. Neraium first determines whether the signals and operating context can support a defensible comparison.</p></div>
+        <div class="section-head wide"><p class="eyebrow">How Neraium works</p><h2>From approved history to a bounded engineering question.</h2><p>Neraium qualifies the reference first, then compares like conditions and retains the evidence behind any supported change.</p></div>
         <ol class="product-flow">
-          <li><span>01</span><h3>Approved historical telemetry</h3><p>Begin with a bounded system and customer-approved data.</p></li>
-          <li><span>02</span><h3>Establish operating baseline</h3><p>Evaluate timestamps, usability, quality, and suitable reference periods.</p></li>
-          <li><span>03</span><h3>Learn signals, relationships, and context</h3><p>Preserve load, mode, schedule, environment, and equipment state.</p></li>
-          <li><span>04</span><h3>Compare later behavior</h3><p>Use comparable conditions and expected operating response.</p></li>
-          <li><span>05</span><h3>Identify persistent systemic change</h3><p>Evaluate repeated behavior across multiple time scales, not isolated noise.</p></li>
-          <li><span>06</span><h3>Preserve evidence and limitations</h3><p>Keep support, uncertainty, provenance, and what telemetry cannot prove together.</p></li>
-          <li><span>07</span><h3>Human engineering review</h3><p>People who understand the site decide what the evidence means and what happens next.</p></li>
+          <li><span>01</span><h3>Establish operating behavior</h3><p>Qualify approved history and establish a usable reference where the data supports one.</p></li>
+          <li><span>02</span><h3>Learn relationships and context</h3><p>Characterize how signals and systems respond across load, mode, schedule, environment, and equipment state.</p></li>
+          <li><span>03</span><h3>Identify persistent systemic change</h3><p>Compare later behavior across relevant time scales and comparable conditions.</p></li>
+          <li><span>04</span><h3>Preserve evidence for engineering review</h3><p>Surface the relationships that changed, with support, provenance, uncertainty, and limitations intact.</p></li>
         </ol>
         <div class="outcome-branch" aria-label="Valid analysis outcomes"><div><span>Supported outcome</span><strong>Evidence of meaningful persistent change</strong></div><div><span>Equally valid outcome</span><strong>Insufficient evidence of meaningful persistent change</strong></div></div>
       </div>
@@ -95,22 +92,20 @@
 
     <section class="section" id="baseline">
       <div class="container baseline-layout">
-        <div><p class="eyebrow">Baseline learning</p><h2>Normal is established, not assumed.</h2><p>Neraium establishes an operating reference before judging later behavior. Temporary abnormalities do not automatically redefine normal, and every dataset does not automatically produce a finding.</p><a class="text-link arrow-link" href="/methodology">Explore the methodology</a></div>
+        <div><p class="eyebrow">A protected reference</p><h2>Normal is established, not assumed.</h2><p>Known transient or abnormal periods do not become the reference simply because they appear in history. If a responsible reference cannot be established, insufficient evidence is the result.</p><a class="text-link arrow-link" href="/methodology">Explore the methodology</a></div>
         <div class="baseline-matrix">
-          <div><span>Time integrity</span><p>Are timestamps complete, ordered, and suitable for comparison?</p></div>
-          <div><span>Signal usability</span><p>Do the available measurements describe the system question?</p></div>
-          <div><span>Operating context</span><p>Can load, mode, schedule, environment, and state be preserved?</p></div>
-          <div><span>Expected behavior</span><p>Are relationships repeatable enough to establish a reference?</p></div>
-          <div><span>Persistence</span><p>Does later behavior remain changed beyond a temporary disturbance?</p></div>
-          <div><span>Evidence boundary</span><p>What is supported, uncertain, unavailable, or not distinguishable?</p></div>
+          <div><span>Suitable history</span><p>Which periods are stable and relevant enough to support a reference?</p></div>
+          <div><span>Comparable context</span><p>Can later behavior be judged under relevant load, mode, schedule, and state?</p></div>
+          <div><span>Baseline protection</span><p>Are known transient and abnormal periods kept from redefining expected behavior?</p></div>
+          <div><span>Responsible outcome</span><p>What conclusion can the available telemetry support without overstating certainty?</p></div>
         </div>
       </div>
     </section>
 
     <section class="section evidence-section" id="evidence">
       <div class="container evidence-summary-grid">
-        <div class="evidence-intro"><p class="eyebrow">Downstream analysis output</p><h2>Findings arrive with their evidence boundary intact.</h2><p>Evidence Packages are outputs of the analysis, not the product category. Each artifact keeps the observation, comparison periods, context, supporting relationships, uncertainty, provenance, limitations, and review state together.</p><a class="button secondary" href="/evidence">Review the illustrative finding</a></div>
-        <article class="mini-evidence" aria-labelledby="example-finding-title"><header><div><span class="package-id">EP-CHW-017</span><h3 id="example-finding-title">Power relative to delivered flow remained changed.</h3></div><span class="stamp">Illustrative</span></header><dl><div><dt>Supported observation</dt><dd>Pump power increased relative to delivered flow across comparable operating periods.</dd></div><div><dt>Threshold status</dt><dd>No individual limit needed to be exceeded.</dd></div><div><dt>Limitation</dt><dd>Telemetry alone cannot distinguish hydraulic restriction from pump-performance degradation.</dd></div><div><dt>Provenance</dt><dd>Synthetic example structure. Not customer data.</dd></div></dl><p class="finding-disclaimer">Not a root-cause diagnosis. Human engineering review remains authoritative.</p></article>
+        <div class="evidence-intro"><p class="eyebrow">Downstream analysis output</p><h2>Findings arrive with their evidence boundary intact.</h2><p>Evidence Packages are outputs of the analysis, not the product category. Instead of an unexplained score, engineers receive a bounded observation, the relationships that support it, and the limits of what telemetry can establish.</p><a class="button secondary" href="/evidence">Review the illustrative finding</a></div>
+        <article class="mini-evidence" aria-labelledby="example-finding-title"><header><div><span class="package-id">EP-CHW-017</span><h3 id="example-finding-title">Power relative to delivered flow remained changed.</h3></div><span class="stamp">Illustrative</span></header><dl><div><dt>Supported observation</dt><dd>Pump power increased relative to delivered flow across comparable operating periods.</dd></div><div><dt>Comparable periods</dt><dd>Similar load band, operating mode, speed range, and pressure target.</dd></div><div><dt>Threshold status</dt><dd>No individual limit needed to be exceeded.</dd></div><div><dt>Limitation</dt><dd>Telemetry alone cannot distinguish hydraulic restriction from pump-performance degradation.</dd></div><div><dt>Provenance</dt><dd>Synthetic example structure. Not customer data.</dd></div></dl><p class="finding-disclaimer">Not a root-cause diagnosis. Human engineering review remains authoritative.</p></article>
       </div>
     </section>
 
@@ -124,14 +119,13 @@
           <i aria-hidden="true">→<small>evidence and limitations</small></i>
           <div class="stack-group"><span>Human review</span><div><b>Engineers</b><b>Operators</b><b>Maintenance</b><b>CMMS workflow</b></div></div>
         </div>
-        <ul class="boundary-band"><li>No setpoint changes</li><li>No equipment control</li><li>No autonomous commands</li><li>Human judgment remains authoritative</li></ul>
       </div>
     </section>
 
     <section class="section evaluation-section" id="evaluation">
       <div class="container evaluation-layout">
-        <div><p class="eyebrow">Historical Evaluation</p><h2>Begin with one system and no live connection.</h2><p>A bounded historical evaluation is the lowest-risk way to determine whether the available telemetry can support a meaningful behavioral review. Findings are not guaranteed; insufficient evidence is valid.</p><div class="button-row"><a class="button primary" href="/contact">Request an Evaluation</a><a class="button secondary" href="/pilot">Review the evaluation process</a></div></div>
-        <ol class="evaluation-steps"><li>Define the review question</li><li>Scope the system and available telemetry</li><li>Evaluate historical operating behavior</li><li>Determine whether persistent change is supported</li><li>Review findings and limitations together</li></ol>
+        <div><p class="eyebrow">Historical Evaluation</p><h2>Begin with one system and no live connection.</h2><p>A bounded evaluation determines what the available telemetry can responsibly support. It may establish a usable operating reference, support a persistent-change finding, or return insufficient evidence.</p><div class="button-row"><a class="button primary" href="/contact">Request an Evaluation</a><a class="button secondary" href="/pilot">Review the evaluation process</a></div></div>
+        <ol class="evaluation-steps"><li>Telemetry suitability for the bounded question</li><li>A usable operating reference, where possible</li><li>Assessment of meaningful persistent change</li><li>Evidence and limitations, or an insufficient-evidence outcome</li></ol>
       </div>
     </section>
   </main>

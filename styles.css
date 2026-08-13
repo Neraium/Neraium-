@@ -693,7 +693,7 @@ p {
 
 .product-flow {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   list-style: none;
 }
 
@@ -1043,7 +1043,7 @@ p {
 
 .architecture-track {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
@@ -1660,9 +1660,10 @@ p {
 
 .cta-slim {
   display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 1.25rem;
+  max-width: 900px;
 }
 
 .evaluation-cta {
