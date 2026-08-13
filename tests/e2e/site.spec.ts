@@ -73,7 +73,7 @@ for (const sitePage of publicPages) {
       await page.goto(sitePage.path, { waitUntil: 'networkidle' });
       const slug = sitePage.path.slice(1) || 'index';
       await page.screenshot({ path: path.join('playwright-screenshots', testInfo.project.name, `${slug}-full-page.png`), fullPage: true, animations: 'disabled' });
-      for (const [selector, name] of [['.hero, .page-hero','hero'],['#how-it-works','product-flow'],['#baseline','baseline'],['#evidence','evidence'],['#method-flow','method-flow'],['#maintenance','operator-view'],['#security','security'],['#applications','applications'],['#contact','contact']] as const) {
+      for (const [selector, name] of [['.hero, .page-hero','hero'],['#how-it-works','product-flow'],['#capabilities','capabilities'],['#method-concepts','method-concepts'],['#evidence','evidence'],['#evaluation','evaluation'],['#maintenance','operator-view'],['#security','security'],['#applications','applications'],['#founder','founder'],['#contact','contact']] as const) {
         const target = page.locator(selector).first();
         if (await target.count()) {
           await target.scrollIntoViewIfNeeded();

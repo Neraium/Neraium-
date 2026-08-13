@@ -10,7 +10,18 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ORIGIN = "https://www.neraium.com"
-HOMEPAGE_MAX_WORD_COUNT = 850
+HOMEPAGE_MAX_WORD_COUNT = 525
+PAGE_MAX_WORD_COUNTS = {
+    "platform.html": 330,
+    "methodology.html": 440,
+    "evidence.html": 335,
+    "technical.html": 335,
+    "security.html": 300,
+    "pilot.html": 315,
+    "operator-brief.html": 325,
+    "company.html": 260,
+    "contact.html": 270,
+}
 
 
 def is_external_url(value: str) -> bool:
@@ -361,7 +372,6 @@ class TestPositioningAndExperience(unittest.TestCase):
             "Identify persistent systemic change",
             "Preserve evidence for engineering review",
             "bounded review question",
-            "Insufficient evidence of meaningful persistent change",
             "Request an Evaluation",
             "Read-only",
             "Outside the control path",
@@ -370,11 +380,10 @@ class TestPositioningAndExperience(unittest.TestCase):
         ):
             self.assertIn(phrase, text)
 
-        self.assertIn("Evidence Packages are outputs of the analysis, not the product category.", text)
-        self.assertIn("Known transient or abnormal periods do not become the reference", text)
         product_flow = re.search(r'<ol class="product-flow">(.*?)</ol>', self.index, re.DOTALL)
         self.assertIsNotNone(product_flow)
         self.assertEqual(product_flow.group(1).count("<li>"), 4)
+        self.assertIn('href="/methodology">Explore the methodology</a>', self.index)
 
         methodology = (ROOT / "methodology.html").read_text(encoding="utf-8")
         method_flow = re.search(r'<ol class="method-steps">(.*?)</ol>', methodology, re.DOTALL)
@@ -386,9 +395,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             "platform",
             "problem",
             "how-it-works",
-            "baseline",
             "evidence",
-            "operating-stack",
             "evaluation",
         )
         for section_id in expected_home_sections:
@@ -413,14 +420,15 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Built first for interconnected facility infrastructure.",
             "The initial focus is central plants, pumping systems, water systems",
-            "Representative evaluation contexts, not claims of customer deployments.",
             "Central plants and chilled-water systems",
             "Pumping and water systems",
             "Resort and large-facility infrastructure",
-            "Applicability is defined by system characteristics.",
-            "No deployment or customer claim is implied.",
+            "Other bounded facility systems",
+            "Fit is established, not assumed.",
+            "A persistent-behavior question",
         ):
             self.assertIn(phrase, applications)
+        self.assertNotIn("Application boundary", applications)
     def test_evidence_package_and_maintenance_view_are_complete(self):
         homepage = self.normalized(self.index)
         evidence_text = self.normalized((ROOT / "evidence.html").read_text(encoding="utf-8"))
@@ -429,26 +437,23 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "EP-CHW-017",
             "Pump power increased relative to delivered flow across comparable operating periods.",
-            "No individual limit needed to be exceeded.",
+            "Power-to-flow behavior remained changed at similar load and operating mode.",
             "Telemetry alone cannot distinguish hydraulic restriction from pump-performance degradation.",
-            "Not a root-cause diagnosis.",
         ):
             self.assertIn(phrase, homepage)
         self.assertIn('href="/evidence">Review the illustrative finding</a>', self.index)
+        for deferred_field in ("Threshold status", "Provenance", "Review state"):
+            self.assertNotIn(f"<dt>{deferred_field}</dt>", self.index)
 
         for phrase in (
-            "Baseline period",
-            "Changed period",
-            "Operating context",
-            "Strongest relationships",
-            "Supporting signals",
-            "Time window",
-            "Evidence strength",
-            "Uncertainty",
-            "Limitation",
-            "Provenance",
-            "Review state",
-            "Insufficient evidence of meaningful persistent change.",
+            "What changed",
+            "Compared against what",
+            "What supports it",
+            "What remains uncertain",
+            "What telemetry cannot prove",
+            "What happens next",
+            "Insufficient evidence is explicit, not hidden.",
+            "Absence of support is not proof that the physical system did not change.",
         ):
             self.assertIn(phrase, evidence_text)
         for phrase in (
@@ -469,46 +474,41 @@ class TestPositioningAndExperience(unittest.TestCase):
         security_text = self.normalized((ROOT / "security.html").read_text(encoding="utf-8"))
 
         for phrase in (
-            "Analysis beside operations, never inside the control path.",
             "No setpoint changes",
-            "There is no control arrow back to equipment.",
             "Human review authoritative",
-            "Begin with one system and no live connection.",
+            "Begin with one bounded system and no live connection.",
         ):
             self.assertIn(phrase, homepage)
         for phrase in (
-            "Complements the operating stack.",
-            "does not replace alarms, control systems, or site knowledge",
-            "No autonomous action",
+            "Read-only. Outside the control path.",
+            "complements BAS, SCADA, historians, alarms, operators, engineers, and maintenance teams",
+            "No autonomous commands",
         ):
             self.assertIn(phrase, platform_text)
         for phrase in (
             "Read-only by design. Explicit at every boundary.",
             "No control path returns.",
             "Least privilege",
-            "Customer-approved telemetry",
-            "customer-hosted option",
-            "Deployment controls are verified for the selected environment.",
-            "No SOC 2 claim",
-            "No ISO 27001 claim",
-            "No FedRAMP claim",
+            "Customer-approved scope",
+            "Documented for the selected environment.",
+            "does not claim certifications, assessments, integrations, or controls",
         ):
-            if phrase == "Deployment controls are verified for the selected environment.":
-                phrase = "Controls are verified for the selected environment."
             self.assertIn(phrase, security_text)
+        for defensive_list_item in ("No SOC 2 claim", "No ISO 27001 claim", "No FedRAMP claim"):
+            self.assertNotIn(defensive_list_item, security_text)
     def test_homepage_reduction_regression_contract(self):
         text = self.normalized(self.index)
         expected_order = [
             'id="platform"',
             'id="problem"',
             'id="how-it-works"',
-            'id="baseline"',
             'id="evidence"',
-            'id="operating-stack"',
             'id="evaluation"',
         ]
         positions = [self.index.index(marker) for marker in expected_order]
         self.assertEqual(positions, sorted(positions))
+        self.assertNotIn('id="baseline"', self.index)
+        self.assertNotIn('id="operating-stack"', self.index)
         current_words = len(text.split())
         self.assertLessEqual(
             current_words,
@@ -532,6 +532,26 @@ class TestPositioningAndExperience(unittest.TestCase):
         ):
             self.assertIn(f'href="{href}"', self.index, f"missing route for {label}")
             self.assertTrue(resolve_site_path(href).exists(), f"missing target page for {label}")
+    def test_page_roles_remain_compressed_and_distinct(self):
+        for filename, maximum in PAGE_MAX_WORD_COUNTS.items():
+            text = self.normalized((ROOT / filename).read_text(encoding="utf-8"))
+            self.assertLessEqual(len(text.split()), maximum, f"{filename} exceeds {maximum} visible words")
+
+        platform = self.normalized((ROOT / "platform.html").read_text(encoding="utf-8"))
+        for phrase in ("Operating reference", "Relationship and context intelligence", "Persistent-change analysis", "Evidence-backed findings"):
+            self.assertIn(phrase, platform)
+
+        evaluation = self.normalized((ROOT / "pilot.html").read_text(encoding="utf-8"))
+        for phrase in ("Define the review question", "Scope available telemetry", "Establish a usable operating reference", "Evaluate persistent change", "Review the outcome"):
+            self.assertIn(phrase, evaluation)
+        self.assertNotIn("Before transfer", evaluation)
+
+        company = (ROOT / "company.html").read_text(encoding="utf-8")
+        self.assertIn('id="founder"', company)
+        self.assertIn('width="1320" height="1298"', company)
+        self.assertIn('class="founder-links"', company)
+        self.assertIn('aria-label="Craig Curtis on LinkedIn"', company)
+        self.assertIn('href="mailto:craig@neraium.com"', company)
     def test_mobile_typography_contract_remains_intact(self):
         self.assertRegex(self.styles, r"font-size:\s*clamp\(")
         self.assertRegex(self.styles, r"@media\s*\(max-width:\s*560px\)")
