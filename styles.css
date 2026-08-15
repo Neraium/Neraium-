@@ -1297,6 +1297,10 @@ p {
   border-left: 1px solid var(--line-soft);
 }
 
+.evidence-questions > div:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .evidence-questions dt {
   color: var(--cyan);
   font-family: var(--font-mono);
@@ -2351,6 +2355,10 @@ p {
     grid-template-columns: 1fr;
   }
 
+  .evidence-questions > div:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
   .product-flow li,
   .architecture-track > article {
     min-height: 0;
@@ -2379,6 +2387,36 @@ p {
   .no-finding-artifact dl > div {
     grid-template-columns: 1fr;
     gap: .35rem;
+  }
+
+  #evidence .section-head {
+    margin-bottom: 1.6rem;
+  }
+
+  .finding-artifact > header {
+    align-items: center;
+    padding: .9rem 1rem;
+  }
+
+  .evidence-questions > div {
+    min-height: 0;
+    padding: .9rem 1rem;
+  }
+
+  .insufficient-section .split {
+    gap: 1.6rem;
+  }
+
+  .no-finding-artifact {
+    padding: 1.15rem;
+  }
+
+  .no-finding-artifact dl {
+    margin-top: .9rem;
+  }
+
+  .no-finding-artifact dl > div {
+    padding: .6rem 0;
   }
 
   .method-factors li:nth-child(even),

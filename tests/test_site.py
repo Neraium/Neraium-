@@ -446,16 +446,28 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertNotIn(f"<dt>{deferred_field}</dt>", self.index)
 
         for phrase in (
+            "Each finding shows what changed, what supports it, and what the available evidence cannot prove.",
+            "Not customer data. Not a customer case study. Not a root-cause diagnosis.",
             "What changed",
-            "Compared against what",
-            "What supports it",
-            "What remains uncertain",
-            "What telemetry cannot prove",
-            "What happens next",
+            "Power-to-flow behavior shifted persistently across comparable operating periods.",
+            "Compared against",
+            "Similar load, operating mode, commanded speed, and pressure target.",
+            "Supporting evidence",
+            "Power-to-flow and differential-pressure-to-flow relationships.",
+            "What Neraium cannot prove",
+            "Engineering reviews the evidence and determines whether further analysis or a field check is warranted.",
             "Insufficient evidence is explicit, not hidden.",
-            "Absence of support is not proof that the physical system did not change.",
+            "The available telemetry does not support a defensible conclusion.",
+            "Insufficient evidence does not mean the physical system remained unchanged.",
+            "Refine the question or provide additional approved context.",
         ):
             self.assertIn(phrase, evidence_text)
+        for misleading_or_redundant_phrase in (
+            "No meaningful persistent change is supported by the available telemetry.",
+            "What remains uncertain",
+            "Power-to-flow behavior remained changed across comparable operating periods.",
+        ):
+            self.assertNotIn(misleading_or_redundant_phrase, evidence_text)
         for phrase in (
             "What does Neraium watch?",
             "What does a finding mean?",
