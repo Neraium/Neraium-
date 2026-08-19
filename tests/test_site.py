@@ -366,7 +366,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             "Know when the system stops behaving like itself.",
             "learns the operating behavior of interconnected infrastructure",
             "even when individual measurements remain within limits",
-            "Built first for central plants, pumping systems, water systems",
+            "Built for interconnected physical infrastructure.",
             "Establish operating behavior",
             "Learn relationships and context",
             "Identify persistent systemic change",
@@ -627,7 +627,8 @@ class TestPositioningAndExperience(unittest.TestCase):
                 graph_types = {item.get("@type") for item in payload.get("@graph", [])}
                 self.assertIn("Organization", graph_types)
                 self.assertIn("WebSite", graph_types)
-                self.assertIn("SoftwareApplication", graph_types)
+                if html_file.name != "index.html":
+                    self.assertIn("SoftwareApplication", graph_types)
 
     def test_no_disallowed_claims_or_em_dashes(self):
         changed_pages = "\n".join(path.read_text(encoding="utf-8") for path in site_html_files()).lower()

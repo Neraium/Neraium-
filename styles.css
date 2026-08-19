@@ -138,15 +138,15 @@ select:focus-visible,
 .brand {
   display: flex;
   align-items: center;
-  width: 158px;
-  height: 56px;
+  width: 194px;
+  height: 68px;
   overflow: hidden;
   text-decoration: none;
 }
 
 .brand img {
-  width: 158px;
-  height: 56px;
+  width: 194px;
+  height: 68px;
   object-fit: contain;
   object-position: left center;
 }
@@ -821,6 +821,170 @@ p {
 
 .evaluation-section {
   background: var(--surface-teal);
+}
+
+/* Homepage additions */
+
+.consequence-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-block: 1px solid var(--line);
+}
+
+.consequence-grid > div {
+  min-height: 136px;
+  padding: 1.15rem 1rem 1rem;
+  border-left: 1px solid var(--line-soft);
+}
+
+.consequence-grid > div:first-child {
+  border-left: 0;
+}
+
+.consequence-grid strong {
+  display: block;
+  color: var(--ink);
+  font-size: .9rem;
+}
+
+.consequence-grid p {
+  margin-top: .55rem;
+  font-size: .78rem;
+  line-height: 1.5;
+}
+
+.example-section {
+  background: var(--bg-deep);
+}
+
+.example-layout,
+.applications-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(390px, 1.18fr);
+  gap: clamp(3rem, 7vw, 7.5rem);
+  align-items: center;
+}
+
+.example-layout > div:first-child p:last-child,
+.applications-layout > div:first-child p:last-of-type {
+  max-width: 570px;
+}
+
+.example-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.example-signals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.example-signals span {
+  padding: 1rem;
+  border-left: 1px solid var(--line-soft);
+}
+
+.example-signals span:first-child {
+  border-left: 0;
+}
+
+.example-signals b,
+.example-signals small {
+  display: block;
+}
+
+.example-signals b {
+  color: var(--ink);
+  font-size: .78rem;
+}
+
+.example-signals small {
+  margin-top: .35rem;
+  color: var(--success);
+  font-family: var(--font-mono);
+  font-size: .61rem;
+  text-transform: uppercase;
+}
+
+.example-compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1rem;
+}
+
+.example-compare div {
+  display: grid;
+  gap: .35rem;
+}
+
+.example-compare span {
+  color: var(--muted-low);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  text-transform: uppercase;
+}
+
+.example-compare strong {
+  color: var(--ink);
+  font-size: .85rem;
+}
+
+.example-compare i {
+  color: var(--teal-bright);
+  font-style: normal;
+}
+
+.example-compare .changed {
+  padding-left: 1rem;
+  border-left: 2px solid var(--caution);
+}
+
+.applications-section {
+  background: var(--bg);
+}
+
+.application-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.application-list li {
+  padding: .9rem 1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: .88rem;
+}
+
+.application-list li:nth-child(odd) {
+  border-right: 1px solid var(--line-soft);
+}
+
+.boundary-section {
+  background: var(--surface);
+}
+
+.final-cta {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  background: var(--bg-deep);
+}
+
+.final-cta h2 {
+  max-width: 850px;
+}
+
+.final-cta p:not(.eyebrow) {
+  max-width: 620px;
+}
+
+.final-cta .button {
+  margin-top: 1.6rem;
 }
 
 .evaluation-steps,
@@ -2138,6 +2302,8 @@ p {
   .problem-layout,
   .evidence-summary-grid,
   .evaluation-layout,
+  .example-layout,
+  .applications-layout,
   .operator-example,
   .method-concept-list > article {
     grid-template-columns: 1fr;
@@ -2165,6 +2331,18 @@ p {
   .principle-grid,
   .application-focus-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .consequence-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .consequence-grid > div:nth-child(3) {
+    border-left: 0;
+  }
+
+  .consequence-grid > div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line-soft);
   }
 
   .security-path {
@@ -2224,6 +2402,11 @@ p {
     grid-template-columns: 1fr 1fr;
   }
 
+  .example-layout,
+  .applications-layout {
+    gap: 2.5rem;
+  }
+
   .method-steps,
   .context-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2279,8 +2462,8 @@ p {
 
   .brand,
   .brand img {
-    width: 142px;
-    height: 50px;
+    width: 166px;
+    height: 56px;
   }
 
   .nav {
@@ -2353,6 +2536,53 @@ p {
   .finding-questions,
   .evidence-questions {
     grid-template-columns: 1fr;
+  }
+
+  .consequence-grid,
+  .application-list {
+    grid-template-columns: 1fr;
+  }
+
+  .consequence-grid > div,
+  .consequence-grid > div:nth-child(3) {
+    min-height: 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .consequence-grid > div:last-child {
+    border-bottom: 0;
+  }
+
+  .example-signals {
+    grid-template-columns: 1fr;
+  }
+
+  .example-signals span,
+  .example-signals span:first-child {
+    border-left: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .example-signals span:last-child {
+    border-bottom: 0;
+  }
+
+  .example-compare {
+    grid-template-columns: 1fr;
+  }
+
+  .example-compare i {
+    justify-self: start;
+    transform: rotate(90deg);
+  }
+
+  .example-compare .changed {
+    padding-left: .8rem;
+  }
+
+  .application-list li:nth-child(odd) {
+    border-right: 0;
   }
 
   .evidence-questions > div:last-child:nth-child(odd) {
