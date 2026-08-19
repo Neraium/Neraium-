@@ -3,13 +3,13 @@ import path from 'node:path';
 
 const publicPages = [
   { path: '/', purpose: /Know when the system/i, canonical: 'https://www.neraium.com/' },
-  { path: '/platform', purpose: /Understand whether the system/i, canonical: 'https://www.neraium.com/platform' },
+  { path: '/platform', purpose: /product layer for seeing when system behavior/i, canonical: 'https://www.neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://www.neraium.com/evidence' },
-  { path: '/technical', purpose: /Built first for interconnected facility infrastructure/i, canonical: 'https://www.neraium.com/technical' },
+  { path: '/applications', purpose: /Practical questions for interconnected facility systems/i, canonical: 'https://www.neraium.com/applications' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://www.neraium.com/pilot' },
   { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://www.neraium.com/methodology' },
   { path: '/security', purpose: /Read-only by design/i, canonical: 'https://www.neraium.com/security' },
-  { path: '/company', purpose: /Infrastructure intelligence built around evidence/i, canonical: 'https://www.neraium.com/company' },
+  { path: '/company', purpose: /Built from the gap between what the dashboard/i, canonical: 'https://www.neraium.com/company' },
   { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://www.neraium.com/operator-brief' },
   { path: '/contact', purpose: /one system and one review question/i, canonical: 'https://www.neraium.com/contact' },
   { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://www.neraium.com/privacy' },
@@ -99,7 +99,7 @@ test('contact form validates practical fields and prepares an email without fake
   await page.locator('#review-question').fill('Has pumping response changed across comparable periods?');
   await page.locator('#contact-form button[type="submit"]').click();
   await expect(page.locator('#form-feedback')).toBeFocused();
-  await expect(page.locator('#form-feedback')).toContainText(/request is ready/i);
+  await expect(page.locator('#form-feedback')).toContainText(/email draft is ready/i);
   await expect(page.locator('#form-feedback a')).toHaveAttribute('href', /^mailto:craig@neraium[.]com[?]/);
   expect(posts).toEqual([]);
 });
@@ -145,6 +145,11 @@ test('Cloudflare preview enforces clean routes, redirects, security headers, and
   const retired = await request.get('/analysis', { maxRedirects: 0 });
   expect(retired.status()).toBe(301);
   expect(retired.headers().location).toBe('/platform');
+  const applications = await request.get('/applications');
+  expect(applications.status()).toBe(200);
+  const technical = await request.get('/technical', { maxRedirects: 0 });
+  expect(technical.status()).toBe(301);
+  expect(technical.headers().location).toBe('/applications');
 
   const response = await page.goto('/definitely-missing/nested/page', { waitUntil: 'networkidle' });
   expect(response?.status()).toBe(404);

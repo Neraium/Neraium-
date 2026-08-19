@@ -2,7 +2,9 @@
 /index.html / 301
 /platform.html /platform 301
 /evidence.html /evidence 301
-/technical.html /technical 301
+/applications.html /applications 301
+/technical /applications 301
+/technical.html /applications 301
 /security.html /security 301
 /pilot.html /pilot 301
 /company.html /company 301
@@ -17,7 +19,7 @@
 /index.html.html / 301
 /analysis /platform 301
 /analysis.html /platform 301
-/application /technical 301
-/application.html /technical 301
+/application /applications 301
+/application.html /applications 301
 /governance /security 301
 /governance.html /security 301

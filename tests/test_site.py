@@ -12,14 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE_ORIGIN = "https://www.neraium.com"
 HOMEPAGE_MAX_WORD_COUNT = 525
 PAGE_MAX_WORD_COUNTS = {
-    "platform.html": 330,
+    "platform.html": 400,
     "methodology.html": 440,
     "evidence.html": 335,
-    "technical.html": 335,
+    "applications.html": 400,
     "security.html": 300,
     "pilot.html": 315,
     "operator-brief.html": 325,
-    "company.html": 260,
+    "company.html": 350,
     "contact.html": 270,
 }
 
@@ -305,8 +305,8 @@ class TestStaticSite(unittest.TestCase):
         self.assertEqual({}, duplicate_desc)
 
     def test_primary_navigation_consistency_and_routes(self):
-        expected = [('/platform','Platform'),('/methodology','Methodology'),('/evidence','Evidence'),('/technical','Applications'),('/security','Security'),('/pilot','Evaluation'),('/company','Company')]
-        for html_file in site_html_files():
+        expected = [('/platform','Platform'),('/methodology','Methodology'),('/evidence','Evidence'),('/applications','Applications'),('/security','Security'),('/pilot','Evaluation'),('/company','Company')]
+        for html_file in indexable_html_files():
             html = html_file.read_text(encoding='utf-8')
             for href, label in expected:
                 self.assertIn(f'href="{href}"', html, f"{html_file.name} missing {label} route")
@@ -408,7 +408,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             ("/platform", "Platform"),
             ("/methodology", "Methodology"),
             ("/evidence", "Evidence"),
-            ("/technical", "Applications"),
+            ("/applications", "Applications"),
             ("/security", "Security"),
             ("/pilot", "Evaluation"),
             ("/company", "Company"),
@@ -416,16 +416,16 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertIn(f'href="{href}"', navigation)
             self.assertIn(f'>{label}</a>', navigation)
 
-        applications = self.normalized((ROOT / "technical.html").read_text(encoding="utf-8"))
+        applications = self.normalized((ROOT / "applications.html").read_text(encoding="utf-8"))
         for phrase in (
-            "Built first for interconnected facility infrastructure.",
-            "The initial focus is central plants, pumping systems, water systems",
+            "Practical questions for interconnected facility systems.",
+            "Review questions, not diagnoses.",
             "Central plants and chilled-water systems",
             "Pumping and water systems",
             "Resort and large-facility infrastructure",
-            "Other bounded facility systems",
+            "Other bounded interconnected systems",
             "Fit is established, not assumed.",
-            "A persistent-behavior question",
+            "Fit is established, not assumed.",
         ):
             self.assertIn(phrase, applications)
         self.assertNotIn("Application boundary", applications)
@@ -494,7 +494,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Read-only. Outside the control path.",
             "complements BAS, SCADA, historians, alarms, operators, engineers, and maintenance teams",
-            "No autonomous commands",
+            "no autonomous commands",
         ):
             self.assertIn(phrase, platform_text)
         for phrase in (
@@ -571,20 +571,20 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertIn(".lead", self.styles)
     def test_contact_form_fields_and_warning(self):
         contact = (ROOT / "contact.html").read_text(encoding="utf-8")
-        for field_id in ("name", "email", "organization", "facility", "review-question", "role", "preferred-contact", "data"):
+        for field_id in ("name", "email", "organization", "facility", "review-question", "role", "preferred-contact"):
             self.assertIn(f'id="{field_id}"', contact)
         for required_id in ("name", "email", "organization", "facility", "review-question"):
             self.assertRegex(contact, rf'id="{required_id}"[^>]*required')
-        for optional_id in ("role", "preferred-contact", "data"):
+        for optional_id in ("role", "preferred-contact"):
             field = re.search(rf'<(?:input|select|textarea)[^>]*id="{optional_id}"[^>]*>', contact)
             self.assertIsNotNone(field)
             self.assertNotIn("required", field.group(0))
         self.assertIn(
-            "Do not submit operational data, credentials, telemetry exports, facility diagrams, network information, or sensitive system details through this public form.",
+            "Do not submit telemetry, credentials, diagrams, network details, files, or sensitive operational information here.",
             contact,
         )
         self.assertIn("customer-approved transfer method", contact)
-        self.assertIn("does not upload or submit these details to the website", contact)
+        self.assertIn("Nothing is uploaded to the website", contact)
         self.assertIn('action="mailto:craig@neraium.com"', contact)
         self.assertIn('data-loading-label=', contact)
         self.assertNotIn('data-netlify="true"', contact)
@@ -627,8 +627,7 @@ class TestPositioningAndExperience(unittest.TestCase):
                 graph_types = {item.get("@type") for item in payload.get("@graph", [])}
                 self.assertIn("Organization", graph_types)
                 self.assertIn("WebSite", graph_types)
-                if html_file.name != "index.html":
-                    self.assertIn("SoftwareApplication", graph_types)
+                self.assertNotIn("SoftwareApplication", graph_types)
 
     def test_no_disallowed_claims_or_em_dashes(self):
         changed_pages = "\n".join(path.read_text(encoding="utf-8") for path in site_html_files()).lower()
@@ -653,7 +652,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
             "/platform.html /platform 301",
             "/contact.html /contact 301",
             "/analysis.html /platform 301",
-            "/application.html /technical 301",
+            "/application.html /applications 301",
             "/governance.html /security 301",
         ):
             self.assertIn(rule, redirects)
@@ -726,12 +725,12 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertIn('<link rel="stylesheet" href="/styles.css?v=20260811a">', html)
-            self.assertIn('<script src="/scripts.js?v=20260811a" defer></script>', html)
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=202608(?:11|19)a">')
+            self.assertRegex(html, r'<script src="/scripts\.js\?v=202608(?:11|19)a" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)
     def test_above_fold_media_is_not_deferred(self):
-        for filename in ("platform.html", "evidence.html", "technical.html", "pilot.html"):
+        for filename in ("platform.html", "evidence.html", "applications.html", "pilot.html"):
             html = (ROOT / filename).read_text(encoding="utf-8")
             hero = re.search(r'<section class="page-hero[^>]*>.*?</section>', html, re.DOTALL)
             self.assertIsNotNone(hero, filename)

@@ -96,14 +96,13 @@
             `Review question: ${value('review-question')}`,
             value('role') ? `Role: ${value('role')}` : '',
             value('preferred-contact') ? `Preferred contact method: ${value('preferred-contact')}` : '',
-            value('data') ? `General data availability or context: ${value('data')}` : '',
           ].filter(Boolean).join('\n\n');
           const emailLink = document.createElement('a');
           emailLink.className = 'button secondary prepared-email-link';
           emailLink.href = `mailto:craig@neraium.com?subject=${encodeURIComponent('Neraium Historical Evaluation')}&body=${encodeURIComponent(body)}`;
           emailLink.textContent = 'Open the prepared email';
           const status = document.createElement('span');
-          status.textContent = 'Your request is ready. Review it in your email application, then choose send.';
+          status.textContent = 'Your email draft is ready. Review it in your email application, then choose send.';
           feedback.dataset.state = 'success';
           feedback.append(status, emailLink);
         } catch {
