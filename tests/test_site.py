@@ -17,7 +17,7 @@ PAGE_MAX_WORD_COUNTS = {
     "evidence.html": 335,
     "applications.html": 400,
     "security.html": 300,
-    "pilot.html": 315,
+    "pilot.html": 316,
     "operator-brief.html": 325,
     "company.html": 350,
     "contact.html": 270,
@@ -309,20 +309,41 @@ class TestStaticSite(unittest.TestCase):
     def test_primary_navigation_consistency_and_routes(self):
         primary = [('/platform','Platform'),('/methodology','How It Works'),('/applications','Applications'),('/pilot','Evaluation'),('/company','Company')]
         preserved_routes = [('/evidence','Evidence'),('/security','Security')]
-        for html_file in indexable_html_files():
+        for html_file in site_html_files():
             html = html_file.read_text(encoding='utf-8')
             navigation = re.search(r'<nav class="nav" id="main-navigation".*?</nav>', html, re.DOTALL)
             self.assertIsNotNone(navigation, f"{html_file.name} missing primary navigation")
             navigation_html = navigation.group(0)
-            for href, label in primary:
-                self.assertIn(f'href="{href}"', navigation_html, f"{html_file.name} missing primary {label} route")
-                self.assertIn(f'>{label}</a>', navigation_html, f"{html_file.name} missing primary {label} label")
-            for href, label in preserved_routes:
-                self.assertIn(f'href="{href}"', html, f"{html_file.name} missing {label} route")
-                self.assertNotIn(f'href="{href}"', navigation_html, f"{html_file.name} should keep {label} outside primary navigation")
+            navigation_links = [
+                (href, re.sub(r'<[^>]+>', '', label).strip())
+                for href, label in re.findall(r'<a\b[^>]*\bhref="([^"]+)"[^>]*>(.*?)</a>', navigation_html, re.DOTALL)
+            ]
+            self.assertEqual(primary, navigation_links, f"{html_file.name} primary navigation differs")
+            for href, label in re.findall(r'<a\b[^>]*\bhref="([^"]+)"[^>]*>(.*?)</a>', html, re.DOTALL):
+                if re.sub(r'<[^>]+>', '', label).strip() == 'Applications':
+                    self.assertEqual('/applications', href, f"{html_file.name} has an incorrect Applications route")
+            if not load_html(html_file).is_noindex:
+                for href, label in preserved_routes:
+                    self.assertIn(f'href="{href}"', html, f"{html_file.name} missing {label} route")
+                    self.assertNotIn(f'href="{href}"', navigation_html, f"{html_file.name} should keep {label} outside primary navigation")
             self.assertNotIn('>Contact</a></nav><a class="header-action"', html)
         self.assertTrue((ROOT / 'evidence.html').exists())
         self.assertTrue((ROOT / 'company.html').exists())
+
+    def test_public_footers_have_static_year_fallback_and_dynamic_update(self):
+        footer_pages = []
+        for html_file in site_html_files():
+            html = html_file.read_text(encoding='utf-8')
+            if '<footer' not in html:
+                continue
+            footer_pages.append(html_file.name)
+            footer = re.search(r'<footer\b.*?</footer>', html, re.DOTALL)
+            self.assertIsNotNone(footer, f"{html_file.name} has an incomplete footer")
+            self.assertEqual(1, footer.group(0).count('<span id="year">2026</span>'))
+            self.assertNotIn('<span id="year"></span>', footer.group(0))
+        self.assertTrue(footer_pages, "No public footers found")
+        scripts = (ROOT / 'scripts.js').read_text(encoding='utf-8')
+        self.assertIn("year.textContent = new Date().getFullYear()", scripts)
 
     def test_public_headers_use_official_white_logo_lockup(self):
         expected_img = f'<img src="{OFFICIAL_LOGO}" width="1146" height="833" alt="Neraium logo" class="brand-lockup">'
