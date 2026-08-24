@@ -277,8 +277,10 @@ class TestStaticSite(unittest.TestCase):
         root = ET.parse(sitemap_path).getroot()
         namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
         sitemap_urls = {node.text.strip() for node in root.findall("sm:url/sm:loc", namespace) if node.text}
+        sitemap_lastmods = {node.text.strip() for node in root.findall("sm:url/sm:lastmod", namespace) if node.text}
         expected_urls = {html_file_to_public_url(path) for path in indexable_html_files()}
         self.assertEqual(expected_urls, sitemap_urls)
+        self.assertEqual({"2026-08-24"}, sitemap_lastmods)
 
 
     def test_every_public_page_has_exactly_one_h1(self):
@@ -305,12 +307,19 @@ class TestStaticSite(unittest.TestCase):
         self.assertEqual({}, duplicate_desc)
 
     def test_primary_navigation_consistency_and_routes(self):
-        expected = [('/platform','Platform'),('/methodology','Methodology'),('/evidence','Evidence'),('/applications','Applications'),('/security','Security'),('/pilot','Evaluation'),('/company','Company')]
+        primary = [('/platform','Platform'),('/methodology','How It Works'),('/applications','Applications'),('/pilot','Evaluation'),('/company','Company')]
+        preserved_routes = [('/evidence','Evidence'),('/security','Security')]
         for html_file in indexable_html_files():
             html = html_file.read_text(encoding='utf-8')
-            for href, label in expected:
+            navigation = re.search(r'<nav class="nav" id="main-navigation".*?</nav>', html, re.DOTALL)
+            self.assertIsNotNone(navigation, f"{html_file.name} missing primary navigation")
+            navigation_html = navigation.group(0)
+            for href, label in primary:
+                self.assertIn(f'href="{href}"', navigation_html, f"{html_file.name} missing primary {label} route")
+                self.assertIn(f'>{label}</a>', navigation_html, f"{html_file.name} missing primary {label} label")
+            for href, label in preserved_routes:
                 self.assertIn(f'href="{href}"', html, f"{html_file.name} missing {label} route")
-            self.assertNotIn('>How It Works</a>', html)
+                self.assertNotIn(f'href="{href}"', navigation_html, f"{html_file.name} should keep {label} outside primary navigation")
             self.assertNotIn('>Contact</a></nav><a class="header-action"', html)
         self.assertTrue((ROOT / 'evidence.html').exists())
         self.assertTrue((ROOT / 'company.html').exists())
@@ -364,9 +373,10 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Systemic Infrastructure Intelligence",
             "Know when the system stops behaving like itself.",
-            "learns the operating behavior of interconnected infrastructure",
-            "even when individual measurements remain within limits",
-            "Built for interconnected physical infrastructure.",
+            "learns expected behavior across facility-system signals",
+            "persistent relationship changes that thresholds can miss",
+            "while individual measurements remain within limits",
+            "Engineers receive evidence to decide what to review next.",
             "Establish operating behavior",
             "Learn relationships and context",
             "Identify persistent systemic change",
@@ -377,6 +387,18 @@ class TestPositioningAndExperience(unittest.TestCase):
             "Outside the control path",
             "No setpoint changes",
             "Human review authoritative",
+        ):
+            self.assertIn(phrase, text)
+
+        for phrase in (
+            "Individual signals remain within limits. System behavior does not.",
+            "A threshold checks one signal against a limit.",
+            "Degraded delivery",
+            "Rising resource demand",
+            "Operator burden",
+            "Maintenance ambiguity",
+            "Historical Evaluation",
+            "Continued Analysis",
         ):
             self.assertIn(phrase, text)
 
@@ -406,10 +428,8 @@ class TestPositioningAndExperience(unittest.TestCase):
         navigation = re.search(r'<nav class="nav" id="main-navigation".*?</nav>', self.index, re.DOTALL).group(0)
         for href, label in (
             ("/platform", "Platform"),
-            ("/methodology", "Methodology"),
-            ("/evidence", "Evidence"),
+            ("/methodology", "How It Works"),
             ("/applications", "Applications"),
-            ("/security", "Security"),
             ("/pilot", "Evaluation"),
             ("/company", "Company"),
         ):
@@ -450,11 +470,11 @@ class TestPositioningAndExperience(unittest.TestCase):
             "Not customer data. Not a customer case study. Not a root-cause diagnosis.",
             "What changed",
             "Power-to-flow behavior shifted persistently across comparable operating periods.",
-            "Compared against",
+            "Comparison basis",
             "Similar load, operating mode, commanded speed, and pressure target.",
-            "Supporting evidence",
+            "Supporting relationships",
             "Power-to-flow and differential-pressure-to-flow relationships.",
-            "What Neraium cannot prove",
+            "Known limitations",
             "Engineering reviews the evidence and determines whether further analysis or a field check is warranted.",
             "Insufficient evidence is explicit, not hidden.",
             "The available telemetry does not support a defensible conclusion.",
@@ -465,6 +485,9 @@ class TestPositioningAndExperience(unittest.TestCase):
         for misleading_or_redundant_phrase in (
             "No meaningful persistent change is supported by the available telemetry.",
             "What remains uncertain",
+            "Review window",
+            "Affected system",
+            "Evidence support level",
             "Power-to-flow behavior remained changed across comparable operating periods.",
         ):
             self.assertNotIn(misleading_or_redundant_phrase, evidence_text)
@@ -488,7 +511,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "No setpoint changes",
             "Human review authoritative",
-            "Begin with one bounded system and no live connection.",
+            "No live connection is required",
         ):
             self.assertIn(phrase, homepage)
         for phrase in (
@@ -550,7 +573,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertLessEqual(len(text.split()), maximum, f"{filename} exceeds {maximum} visible words")
 
         platform = self.normalized((ROOT / "platform.html").read_text(encoding="utf-8"))
-        for phrase in ("Operating reference", "Relationship and context intelligence", "Persistent-change analysis", "Evidence-backed findings"):
+        for phrase in ("Operating reference", "What supports the observation", "What remains uncertain", "What happens next"):
             self.assertIn(phrase, platform)
 
         evaluation = self.normalized((ROOT / "pilot.html").read_text(encoding="utf-8"))
@@ -681,7 +704,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20260811a', '/scripts.js?v=20260811a', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20260824a', '/scripts.js?v=20260819a', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
@@ -725,7 +748,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=202608(?:11|19)a">')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20260824a">')
             self.assertRegex(html, r'<script src="/scripts\.js\?v=202608(?:11|19)a" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)

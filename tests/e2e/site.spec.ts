@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const publicPages = [
   { path: '/', purpose: /Know when the system/i, canonical: 'https://www.neraium.com/' },
-  { path: '/platform', purpose: /product layer for seeing when system behavior/i, canonical: 'https://www.neraium.com/platform' },
+  { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://www.neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://www.neraium.com/evidence' },
   { path: '/applications', purpose: /Practical questions for interconnected facility systems/i, canonical: 'https://www.neraium.com/applications' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://www.neraium.com/pilot' },
@@ -15,7 +15,7 @@ const publicPages = [
   { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://www.neraium.com/privacy' },
 ] as const;
 
-const navLinks = ['Platform','Methodology','Evidence','Applications','Security','Evaluation','Company'] as const;
+const navLinks = ['Platform','How It Works','Applications','Evaluation','Company'] as const;
 
 async function openPrimaryNavigation(page: Page) {
   const toggle = page.locator('.nav-toggle');

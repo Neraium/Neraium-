@@ -605,14 +605,14 @@ p {
 }
 
 .visual-finding {
-  margin: 0 1.2rem 1rem;
-  padding: .8rem 1rem;
+  margin: 1rem 1.2rem .2rem;
+  padding: .9rem 1rem;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 128px 1fr;
   gap: .75rem;
   align-items: center;
   border-left: 2px solid var(--caution);
-  background: rgba(213, 168, 95, .065);
+  background: rgba(213, 168, 95, .085);
 }
 
 .visual-finding span {
@@ -624,7 +624,13 @@ p {
 }
 
 .visual-finding p {
-  font-size: .72rem;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.45;
+}
+
+.visual-finding strong {
+  color: var(--caution);
 }
 
 .behavior-visual figcaption {
@@ -821,6 +827,70 @@ p {
 
 .evaluation-section {
   background: var(--surface-teal);
+}
+
+.lifecycle-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: 1.25rem;
+}
+
+.lifecycle-grid > article {
+  padding: clamp(1.25rem, 2.5vw, 1.8rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(3, 11, 14, .3);
+}
+
+.lifecycle-grid > i {
+  align-self: center;
+  color: var(--cyan);
+  font-style: normal;
+}
+
+.lifecycle-stage {
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.lifecycle-grid h3 {
+  margin-top: .7rem;
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+}
+
+.lifecycle-grid ul {
+  margin-top: 1rem;
+  display: grid;
+  gap: .6rem;
+  list-style: none;
+}
+
+.lifecycle-grid li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.5;
+}
+
+.lifecycle-grid li::before {
+  content: "";
+  position: absolute;
+  top: .65em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.lifecycle-actions {
+  margin-top: 1.5rem;
 }
 
 /* Homepage additions */
@@ -1168,8 +1238,23 @@ p {
 
 .continuity-panel > div {
   min-height: 125px;
-  padding: 1.25rem 0;
+  padding: 1.25rem 1rem;
   border-block: 1px solid var(--line);
+}
+
+.continuity-panel .established-behavior {
+  border-left: 2px solid var(--cyan);
+  background: rgba(105, 221, 216, .035);
+}
+
+.continuity-panel .later-behavior {
+  border-left: 2px solid var(--caution);
+  background: rgba(213, 168, 95, .045);
+}
+
+.continuity-panel .evidence-output {
+  border-left: 2px solid var(--success);
+  background: rgba(119, 216, 171, .045);
 }
 
 .continuity-panel span {
@@ -2360,6 +2445,15 @@ p {
 
   .continuity-panel i {
     text-align: center;
+    transform: rotate(90deg);
+  }
+
+  .lifecycle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lifecycle-grid > i {
+    justify-self: center;
     transform: rotate(90deg);
   }
 

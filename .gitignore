@@ -26,6 +26,7 @@ desktop.ini
 node_modules/
 playwright-report/
 playwright-screenshots/
+.planning/screenshots/
 test-results/
 
 dist/
