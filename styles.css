@@ -2300,7 +2300,8 @@ p {
 
 @media (max-width: 1120px) {
   .nav-shell {
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr auto;
+    gap: .75rem;
   }
 
   .header-action {
@@ -2556,8 +2557,13 @@ p {
 
   .brand,
   .brand img {
-    width: 166px;
-    height: 56px;
+    width: 96px;
+    height: 64px;
+  }
+
+  .brand img {
+    object-fit: cover;
+    object-position: left center;
   }
 
   .nav {

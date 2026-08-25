@@ -725,7 +725,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20260824a', '/scripts.js?v=20260819a', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20260825a', '/scripts.js?v=20260819a', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
@@ -769,7 +769,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20260824a">')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20260825a">')
             self.assertRegex(html, r'<script src="/scripts\.js\?v=202608(?:11|19)a" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)

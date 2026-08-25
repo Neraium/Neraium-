@@ -132,6 +132,46 @@ test('mobile navigation exposes the contact path and moves keyboard focus predic
   }
 });
 
+test('header logo and controls stay proportionate and aligned across viewports', async ({ page }) => {
+  await page.goto('/');
+  const header = page.locator('.site-header');
+  const brand = page.locator('.brand');
+  const logo = page.locator('.brand-lockup');
+  const toggle = page.locator('.nav-toggle');
+  const viewport = page.viewportSize();
+
+  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-lockup.svg');
+  await expect.poll(() => logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
+
+  const headerBox = await header.boundingBox();
+  const brandBox = await brand.boundingBox();
+  const logoBox = await logo.boundingBox();
+  expect(headerBox).not.toBeNull();
+  expect(brandBox).not.toBeNull();
+  expect(logoBox).not.toBeNull();
+  expect(logoBox?.width).toBe(brandBox?.width);
+  expect(logoBox?.height).toBe(brandBox?.height);
+
+  if ((viewport?.width ?? 0) <= 560) {
+    expect(headerBox?.height).toBeLessThanOrEqual(70);
+    expect(brandBox?.width).toBe(96);
+    expect(brandBox?.height).toBe(64);
+  }
+
+  if (await toggle.isVisible()) {
+    const toggleBox = await toggle.boundingBox();
+    expect(toggleBox?.width).toBeGreaterThanOrEqual(44);
+    expect(toggleBox?.height).toBeGreaterThanOrEqual(44);
+    expect((brandBox?.x ?? 0) + (brandBox?.width ?? 0)).toBeLessThan(toggleBox?.x ?? 0);
+    const brandCenter = (brandBox?.y ?? 0) + (brandBox?.height ?? 0) / 2;
+    const toggleCenter = (toggleBox?.y ?? 0) + (toggleBox?.height ?? 0) / 2;
+    expect(Math.abs(brandCenter - toggleCenter)).toBeLessThanOrEqual(1);
+  } else {
+    const navBox = await page.locator('.nav').boundingBox();
+    expect((brandBox?.x ?? 0) + (brandBox?.width ?? 0)).toBeLessThanOrEqual(navBox?.x ?? 0);
+  }
+});
+
 test('Cloudflare preview enforces clean routes, redirects, security headers, and the nested custom 404', async ({ page, request }, testInfo) => {
   const clean = await request.get('/platform');
   expect(clean.status()).toBe(200);
