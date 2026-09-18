@@ -462,6 +462,42 @@ p {
 
 .home-hero {
   padding-top: clamp(3.75rem, 6.5vw, 6.25rem);
+  isolation: isolate;
+  background: var(--bg-deep);
+}
+
+.home-hero::before {
+  z-index: 1;
+}
+
+.home-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 11, 14, .98) 0%, rgba(3, 11, 14, .88) 38%, rgba(3, 11, 14, .48) 72%, rgba(3, 11, 14, .68) 100%),
+    linear-gradient(0deg, var(--bg) 0%, transparent 28%, rgba(3, 11, 14, .2) 100%);
+  pointer-events: none;
+}
+
+.hero-atmosphere {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+}
+
+.hero-atmosphere img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.68) contrast(1.05);
+}
+
+.home-hero > .container {
+  position: relative;
+  z-index: 2;
 }
 
 .hero-copy {
@@ -473,7 +509,8 @@ p {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(145deg, rgba(13, 34, 41, .98), rgba(3, 11, 14, .96));
+  background: linear-gradient(145deg, rgba(13, 34, 41, .96), rgba(3, 11, 14, .94));
+  backdrop-filter: blur(14px);
   box-shadow: var(--shadow);
 }
 
@@ -747,6 +784,78 @@ p {
 .question-compare > p {
   margin-top: 1.15rem;
   font-size: .9rem;
+}
+
+/* Physical infrastructure context */
+
+.infrastructure-context {
+  overflow: hidden;
+  border-block: 1px solid var(--line-soft);
+  background:
+    radial-gradient(circle at 12% 30%, rgba(0, 150, 141, .09), transparent 27rem),
+    var(--bg-deep);
+}
+
+.infrastructure-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(280px, .65fr);
+  grid-template-rows: repeat(2, minmax(240px, 1fr));
+  gap: clamp(.8rem, 1.5vw, 1.15rem);
+}
+
+.infrastructure-photo {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.infrastructure-photo:first-child {
+  grid-row: 1 / -1;
+}
+
+.infrastructure-photo picture,
+.infrastructure-photo img {
+  width: 100%;
+  height: 100%;
+}
+
+.infrastructure-photo picture {
+  display: block;
+}
+
+.infrastructure-photo img {
+  object-fit: cover;
+  filter: saturate(.68) contrast(1.06) brightness(.82);
+  transition: filter 300ms ease, transform 500ms cubic-bezier(.2, .75, .25, 1);
+}
+
+.water-photo img {
+  object-position: 47% center;
+}
+
+.industrial-photo img {
+  object-position: center;
+}
+
+.engineer-photo img {
+  object-position: 52% 42%;
+}
+
+.infrastructure-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(105, 221, 216, .055), transparent 42%, rgba(3, 11, 14, .42) 100%);
+  pointer-events: none;
+}
+
+.infrastructure-photo:hover img {
+  filter: saturate(.78) contrast(1.05) brightness(.88);
+  transform: scale(1.015);
 }
 
 .product-flow {
@@ -2571,6 +2680,12 @@ p {
     width: min(100%, 680px);
   }
 
+  .home-hero::after {
+    background:
+      linear-gradient(90deg, rgba(3, 11, 14, .97), rgba(3, 11, 14, .62)),
+      linear-gradient(0deg, var(--bg) 0%, transparent 40%);
+  }
+
   .contact-intro {
     position: static;
   }
@@ -2660,6 +2775,16 @@ p {
     grid-template-columns: 1fr 1fr;
   }
 
+  .infrastructure-gallery {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(300px, 52vh) minmax(220px, 34vh);
+  }
+
+  .infrastructure-photo:first-child {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
   .example-layout,
   .applications-layout {
     gap: 2.5rem;
@@ -2738,6 +2863,29 @@ p {
 
   .home-hero {
     padding-top: 3rem;
+  }
+
+  .home-hero::after {
+    background:
+      linear-gradient(180deg, rgba(3, 11, 14, .88) 0%, rgba(3, 11, 14, .72) 36%, var(--bg) 100%),
+      linear-gradient(90deg, rgba(3, 11, 14, .82), rgba(3, 11, 14, .42));
+  }
+
+  .hero-atmosphere {
+    height: 49rem;
+  }
+
+  .hero-atmosphere img {
+    object-position: 61% center;
+  }
+
+  .infrastructure-gallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, minmax(245px, 58vw));
+  }
+
+  .infrastructure-photo:first-child {
+    grid-column: auto;
   }
 
   .hero-grid,
