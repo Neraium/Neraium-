@@ -1222,6 +1222,37 @@ p {
   margin-top: 1.6rem;
 }
 
+.credibility-line {
+  width: fit-content;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  padding: .75rem 0;
+  display: flex;
+  align-items: center;
+  gap: .7rem 1rem;
+  border-block: 1px solid var(--line);
+}
+
+.credibility-line span {
+  color: var(--muted-low);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.credibility-line strong {
+  color: var(--ink);
+  font-size: .78rem;
+  font-weight: 650;
+  letter-spacing: .01em;
+}
+
+.credibility-line i {
+  margin-inline: .3rem;
+  color: var(--cyan);
+  font-style: normal;
+}
+
 .evaluation-steps,
 .evaluation-process,
 .method-steps {
@@ -2187,6 +2218,38 @@ p {
   margin-top: 0;
 }
 
+.ecosystem-section {
+  background: var(--surface);
+}
+
+.ecosystem-card {
+  max-width: 980px;
+  padding: clamp(1.5rem, 3.5vw, 2.35rem);
+  display: grid;
+  grid-template-columns: minmax(240px, .72fr) minmax(0, 1.28fr);
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--cyan);
+  border-radius: var(--radius);
+  background: linear-gradient(115deg, rgba(105, 221, 216, .045), transparent 58%), var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.ecosystem-card .eyebrow {
+  margin-bottom: .65rem;
+}
+
+.ecosystem-card h2 {
+  margin-bottom: 0;
+  font-size: clamp(1.55rem, 2.6vw, 2.35rem);
+}
+
+.ecosystem-card > p {
+  max-width: 58ch;
+  font-size: .92rem;
+}
+
 .company-links {
   background: var(--bg-deep);
 }
@@ -2832,6 +2895,11 @@ p {
   .link-panels {
     grid-template-columns: 1fr;
   }
+
+  .ecosystem-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 560px) {
@@ -2863,6 +2931,12 @@ p {
 
   .home-hero {
     padding-top: 3rem;
+  }
+
+  .credibility-line {
+    width: 100%;
+    display: grid;
+    gap: .3rem;
   }
 
   .home-hero::after {
