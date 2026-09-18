@@ -153,9 +153,12 @@ test('header logo and controls stay proportionate and aligned across viewports',
   expect(logoBox?.height).toBe(brandBox?.height);
 
   if ((viewport?.width ?? 0) <= 560) {
-    expect(headerBox?.height).toBeLessThanOrEqual(70);
-    expect(brandBox?.width).toBe(96);
-    expect(brandBox?.height).toBe(64);
+    expect(headerBox?.height).toBeLessThanOrEqual(126);
+    expect(brandBox?.width).toBe(160);
+    expect(brandBox?.height).toBeCloseTo(160 * 833 / 1146, 0);
+    expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1146 / 833, 2);
+  } else {
+    expect(brandBox?.width).toBe(128);
   }
 
   if (await toggle.isVisible()) {

@@ -132,9 +132,9 @@ select:focus-visible,
 }
 
 .nav-shell {
-  min-height: 76px;
+  min-height: 104px;
   display: grid;
-  grid-template-columns: 170px 1fr auto auto;
+  grid-template-columns: 140px 1fr auto auto;
   align-items: center;
   gap: 1.5rem;
 }
@@ -142,17 +142,13 @@ select:focus-visible,
 .brand {
   display: flex;
   align-items: center;
-  width: 194px;
-  height: 68px;
-  overflow: hidden;
+  width: 128px;
   text-decoration: none;
 }
 
 .brand img {
-  width: 194px;
-  height: 68px;
-  object-fit: contain;
-  object-position: left center;
+  width: 100%;
+  height: auto;
 }
 
 .nav {
@@ -2908,18 +2904,11 @@ p {
   }
 
   .nav-shell {
-    min-height: 68px;
+    min-height: 124px;
   }
 
-  .brand,
-  .brand img {
-    width: 96px;
-    height: 64px;
-  }
-
-  .brand img {
-    object-fit: cover;
-    object-position: left center;
+  .brand {
+    width: 160px;
   }
 
   .nav {
