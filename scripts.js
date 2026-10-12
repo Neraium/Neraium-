@@ -71,6 +71,7 @@
   if (!form || !feedback) return;
   const button = form.querySelector('button[type="submit"]');
   button.disabled = true;
+  button.textContent = 'Checking availability…';
   let online = false;
   let token = '';
   let widget;
@@ -80,6 +81,18 @@
     feedback.textContent = message;
     feedback.focus();
   };
+  const useEmailDraft = () => {
+    online = false;
+    button.textContent = 'Prepare email draft';
+    document.getElementById('intake-description').textContent = 'Online verification is unavailable. You can prepare an email draft instead.';
+  };
+  form.addEventListener('input', () => {
+    // An edited inquiry must never open an outdated prepared draft.
+    if (feedback.dataset.state === 'ready') {
+      feedback.replaceChildren();
+      delete feedback.dataset.state;
+    }
+  });
   const context = { 'water-wastewater': 'Municipal water / wastewater', hospitality: 'Hospitality / resorts / attractions infrastructure', infrastructure: 'Broader infrastructure' };
   const industry = new URLSearchParams(window.location.search).get('industry');
   if (Object.hasOwn(context, industry)) document.getElementById('facility').value = context[industry];
@@ -89,7 +102,7 @@
     .then(async (response) => response.ok ? response.json() : { enabled: false })
     .then((config) => {
       if (config.enabled !== true || typeof config.siteKey !== 'string' || !config.siteKey.trim()) {
-        document.getElementById('intake-description').textContent = 'Online submission is currently unavailable. Please email craig@neraium.com.';
+        document.getElementById('intake-description').textContent = 'Online submission is currently unavailable. Prepare an email draft with your details, then send it from your email app.';
         return;
       }
       online = true;
@@ -111,24 +124,27 @@
             'error-callback': () => { token = ''; showStatus('error', 'Security verification is unavailable. Please retry or email craig@neraium.com.'); },
           });
         } catch {
-          online = false;
+          useEmailDraft();
           showStatus('error', 'Security verification could not start. Please reload or email craig@neraium.com.');
         }
       };
-      script.onerror = () => showStatus('error', 'Security verification could not load. Please email craig@neraium.com.');
+      script.onerror = () => {
+        useEmailDraft();
+        showStatus('error', 'Security verification could not load. Please email craig@neraium.com.');
+      };
       document.head.appendChild(script);
     }).catch(() => {
-      document.getElementById('intake-description').textContent = 'Online submission could not be checked. Please retry or email craig@neraium.com.';
+      document.getElementById('intake-description').textContent = 'Online submission could not be checked. You can prepare an email draft instead.';
     })
-    .finally(() => { clearTimeout(timeout); button.disabled = false; });
+    .finally(() => {
+      clearTimeout(timeout);
+      if (!online) button.textContent = 'Prepare email draft';
+      button.disabled = false;
+    });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (form.getAttribute('aria-busy') === 'true') return;
-    if (!online) {
-      showStatus('error', 'Online submission is unavailable. Your details have not been sent. Please email craig@neraium.com.');
-      return;
-    }
     if (!form.reportValidity()) return;
     const value = (id) => document.getElementById(id)?.value.trim() || '';
     const keys = ['name', 'email', 'organization', 'facility', 'review-question', 'role', 'preferred-contact'];
@@ -140,6 +156,17 @@
       showStatus('error', 'Please enter a valid work email address.'); return;
     }
     if (value('website')) { showStatus('error', 'The request could not be accepted. Please email Neraium directly.'); return; }
+    if (!online) {
+      const labels = ['Name', 'Work email', 'Organization', 'System or facility type', 'Review question', 'Role', 'Preferred contact method'];
+      const body = keys.map((key, index) => `${labels[index]}: ${data[key] || 'Not specified'}`).join('\r\n');
+      showStatus('ready', 'Your email draft is ready. Your details have not been sent. Open the draft in your email app, review it, and send it when ready.');
+      const draft = document.createElement('a');
+      draft.className = 'button secondary prepared-email-link';
+      draft.textContent = 'Open email draft';
+      draft.href = `mailto:craig@neraium.com?subject=${encodeURIComponent('Neraium Historical Evaluation')}&body=${encodeURIComponent(body)}`;
+      feedback.appendChild(draft);
+      return;
+    }
     if (online && !token) { showStatus('error', 'Please complete the security verification before sending.'); return; }
     const idleLabel = 'Send evaluation request';
     form.setAttribute('aria-busy', 'true');
@@ -170,7 +197,7 @@
       button.textContent = idleLabel;
       if (online && window.turnstile && widget !== undefined) {
         try { window.turnstile.reset(widget); } catch {
-          online = false;
+          useEmailDraft();
           if (feedback.dataset.state !== 'success') showStatus('error', 'Security verification could not be restarted. Your details are preserved. Please reload or email craig@neraium.com.');
         }
       }

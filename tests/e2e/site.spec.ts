@@ -4,7 +4,7 @@ import path from 'node:path';
 const publicPages = [
   { path: '/', purpose: /See degradation/i, canonical: 'https://neraium.com/' },
   { path: '/platform', purpose: /Integrated infrastructure intelligence/i, canonical: 'https://neraium.com/platform' },
-  { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
+  { path: '/evidence', purpose: /More effort for comparable flow/i, canonical: 'https://neraium.com/evidence' },
   { path: '/applications', purpose: /Applications/i, canonical: 'https://neraium.com/applications' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://neraium.com/pilot' },
   { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://neraium.com/methodology' },
@@ -94,7 +94,7 @@ for (const sitePage of publicPages) {
   });
 }
 
-test('disabled contact form preserves details and never prepares a draft or submits', async ({ page }) => {
+test('disabled contact form prepares a reviewable email draft without submitting or clearing details', async ({ page }) => {
   const posts: string[] = [];
   page.on('request', (request) => {
     if (request.method() === 'POST') posts.push(request.url());
@@ -108,11 +108,25 @@ test('disabled contact form preserves details and never prepares a draft or subm
   await page.locator('#review-question').fill('Has pumping response changed across comparable periods?');
   await page.locator('#contact-form button[type="submit"]').click();
   await expect(page.locator('#form-feedback')).toBeFocused();
-  await expect(page.locator('#form-feedback')).toContainText('Online submission is unavailable');
-  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'error');
+  await expect(page.locator('#contact-form button[type="submit"]')).toHaveText('Prepare email draft');
+  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'ready');
   await expect(page.locator('#form-feedback')).toContainText('Your details have not been sent.');
   await expect(page.locator('#name')).toHaveValue('Alex Morgan');
-  await expect(page.locator('#form-feedback a')).toHaveCount(0);
+  const draft = page.getByRole('link', { name: 'Open email draft' });
+  await expect(draft).toHaveAttribute('href', /^mailto:craig@neraium.com\?subject=/);
+  const draftUrl = new URL((await draft.getAttribute('href'))!);
+  expect(draftUrl.searchParams.get('body')).toContain('Name: Alex Morgan');
+  expect(draftUrl.searchParams.get('body')).toContain('Work email: alex@example.com');
+  expect(draftUrl.searchParams.get('body')).toContain('Has pumping response changed across comparable periods?');
+  await page.locator('#review-question').fill('Flow & pressure? <script>private</script> + café #1');
+  await expect(draft).toHaveCount(0);
+  await page.locator('#contact-form button[type="submit"]').click();
+  const revised = new URL((await draft.getAttribute('href'))!);
+  expect(revised.searchParams.get('body')).toContain('Flow & pressure? <script>private</script> + café #1');
+  await expect(page.locator('#form-feedback script')).toHaveCount(0);
+  await page.locator('#form-feedback').focus();
+  await page.keyboard.press('Tab');
+  await expect(draft).toBeFocused();
   expect(posts).toEqual([]);
 });
 
@@ -294,16 +308,16 @@ test('online intake retains the privacy link and blocks expired challenges', asy
   const compact = await page.locator('#contact-challenge').evaluate(element => element.clientWidth < 300);
   expect(await page.evaluate(() => (window as any).testChallenge.size)).toBe(compact ? 'compact' : 'flexible');
 });
-test('failed configuration lookup never sends details or prepares a draft', async ({ page }) => {
+test('failed configuration lookup permits only a user-opened email draft', async ({ page }) => {
   await page.route('**/api/contact-config', route => route.abort());
   let posts = 0;
   page.on('request', request => { if (request.method() === 'POST') posts++; });
   await page.goto('/contact'); await fillInquiry(page);
   await page.locator('#contact-form button[type="submit"]').click();
   await expect(page.locator('#form-feedback')).toContainText('Your details have not been sent');
-  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'error');
+  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'ready');
   await expect(page.locator('#name')).toHaveValue('Alex Morgan');
-  await expect(page.locator('#form-feedback a')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Open email draft' })).toHaveAttribute('href', /^mailto:craig@neraium.com/);
   expect(posts).toBe(0);
 });
 for (const status of [200, 502]) {
@@ -329,6 +343,7 @@ test('online intake reports a challenge initialization failure without sending',
   page.on('request', request => { if (request.method() === 'POST') posts++; });
   await page.goto('/contact');
   await expect(page.locator('#form-feedback')).toContainText('Security verification could not start');
+  await expect(page.locator('#contact-form button[type="submit"]')).toHaveText('Prepare email draft');
   await fillInquiry(page);
   await page.locator('#contact-form button[type="submit"]').click();
   await expect(page.locator('#name')).toHaveValue('Alex Morgan');
@@ -413,10 +428,10 @@ test('illustrative product explanation leads to traceable engineering review', a
   await expect(limitations).toContainText('does not establish root cause or failure timing');
   await demo.getByRole('link', { name: 'Follow the walkthrough' }).click();
   await expect(page).toHaveURL(/\/evidence#walkthrough$/);
-  const review = page.locator('#walkthrough details');
+  const review = page.locator('#walkthrough details').filter({ hasText: 'Operating-context considerations' });
   await review.locator('summary').focus();
   await page.keyboard.press('Enter');
   await expect(review).toHaveAttribute('open', '');
-  await expect(review.locator('p')).toBeVisible();
+  await expect(review.getByText('Incomplete comparable history may instead yield insufficient evidence. Partial comparability must remain explicit.')).toBeVisible();
   await expect(review).toContainText('insufficient evidence');
 });

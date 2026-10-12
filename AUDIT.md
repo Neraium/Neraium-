@@ -262,3 +262,78 @@ Outstanding dependencies are approved current product captures; owner-supplied S
 - Final production GETs still return `neraium-71200c4a6eaa6b2b` and `{"enabled":false}`. No production release was performed.
 
 The completed implementation is committed locally for review. Authenticated remote configuration comparison and authorized deployment remain separate future actions; use the retained `npm run deploy` workflow when authorized.
+
+## Enterprise completion from production HEAD — 2026-10-12
+
+### Current state and preserved work
+
+Started from `a88c9b6` on `codex/neraium-phase-2`. No tracked edits were present; the independent untracked nested `Neraium-/` was clean at `2e18a9f8fc6e44b625815db6b0d29d25e806be72` and remains untouched. Recent commits, existing audits/captures, asset provenance, all public source, contact safeguards, and deployment guards were inspected before modification.
+
+Fresh production inspection returned release `neraium-6a0f9ea1e90f79db`, revision `20261012quality4`, and `{"enabled":false}`. All 14 primary pages, CSS, and JavaScript matched baseline source byte-for-byte when requested through their clean routes. Production and local baseline captures covered every primary page at 1440×1000, 768×1024, and 390×844, with HTTP 200, loaded images, no overflow, and no page errors. Read-only inspection of [production](https://neraium.com/) confirmed the live release, rather than treating old audit findings as current defects.
+
+Already satisfactory and preserved: the original logo composition and responsive/sticky header; exact homepage headline and photographic hero; equal initial-market prominence; distinct water and hospitality layouts and infrastructure imagery; all six subordinate expansion markets; buyer-specific investigation and maintenance copy; current Company story, authentic founder biography and qualified affiliations; guarded Cloudflare configuration and disabled contact delivery. No new slogans, industry sections, invented findings, numerical performance claims, or product readiness claims were introduced.
+
+### Verified deficiencies and implemented corrections
+
+| Deficiency observed in the baseline | Completed correction |
+| --- | --- |
+| Homepage demonstration placed its finding after the chart in mobile reading order, and repeated the observation as a secondary heading. | The finding is the figure's primary heading and appears before evidence in source/mobile order. The initial copy explains the relationship change and the next signal/context checks. Evidence and limitations remain keyboard-accessible. Existing schematic, imagery, and hero are preserved. |
+| Evidence opened with a large abstract heading and repeated one pumping example across a text artifact and a separate long walkthrough. The fictional package ID could look like an actual evidence record. | Opens with the illustrative finding and a qualitative comparison. Six ordered disclosures provide finding summary, physical behavior/system diagram, telemetry relationships, operating context, qualification/traceability, and engineering review. Removed the invented package ID and duplicate chart. Explicit insufficient-evidence example and scientifically important limitations remain. |
+| Platform explained the same layers in its architecture and then five lengthy capability rows. | Preserved the integrated architecture, clarified cross-system/context connections, and replaced repeated rows with a separate compact qualification section. Current analytical capability, current memory foundations/developing integration, and exploratory OET status remain visible before expansion. Detailed limits are retained. Removed the generic closing CTA; practical integration links the evaluation process. |
+| Contact process copy preceded the form on phones; the form heading repeated the page purpose; disabled intake left entered details without a populated draft. | Removed the repeated three-step process and form heading, enlarged the form's share of desktop space, and moved required fields into the mobile opening. A validated, user-opened email draft contains all entered fields and makes no POST. Draft state never claims delivery or clears inputs, and edits remove stale draft links. Unknown configuration or challenge initialization/reset failure safely permits the same manual email path. Native required/email validation, feedback focus, optional fields, prefill, and direct-email fallback remain. |
+| Contact availability text changed the field positions while loading. | Reserved responsive space for the availability message. Final mobile Lighthouse measured CLS 0. |
+| Historical Evaluation emphasized boundary/process detail before describing the deliverable and useful data. | The opening now pairs a concise scope explanation with what the customer receives. Existing five steps form a desktop sequence. Effort/response/context data guidance and technical export requirements reuse the prior outcomes section. Scope-dependent requirements, insufficient evidence, human review, historical Continued Analysis, and approved transfer remain explicit. Removed the competing closing email CTA. |
+| Security repeated read-only principles across separate sections; its diagram gave the analysis boundary little visual differentiation. | Highlighted the existing read-only analysis stage, removed repeated principle cards, and made actual deployment controls expandable. Least privilege, customer-approved scope, data protection/auditability, public inquiry limits, and the certification qualification remain. |
+| Company's mobile opening deferred a 582,575-byte portrait with lazy loading. | Added 480px/960px WebP delivery copies of the same full authentic photograph and eager/high-priority selection. Source JPEG is unchanged; no generative processing or retouching. The 480px copy is 29,756 bytes. Local mobile Company performance improved from 84 to 98; this is a lab result, not field performance. |
+
+Substantive page changes: **Home, Platform, Evidence, Company, Security, Historical Evaluation (`pilot`), Contact, and Privacy**. Privacy wording now explicitly describes the user-opened draft. Applications, Water & Wastewater, Hospitality/Resorts/Attractions, Broader Infrastructure, Methodology, Operator Brief, 404, and the retained Technical entry receive only the consistent shared asset revision. Their completed content/layout work was not repeated.
+
+### Product assets and commercial experience
+
+The approved asset register, product repository instructions, capture verification record, later “validated” capture, and `ui-review` screenshot inventory were reviewed read-only. Existing original captures fail grouped-persistence and comparability requirements; the later evidence capture still displays unqualified “Comparable” context and lacks reviewed public-use/source records. Filenames do not establish validation or permission. No product repository, operational dataset, customer information, credential, or product screenshot was modified or published.
+
+The website therefore retains an explicitly labeled illustration, with the precise approved system/finding/context/evidence/investigation capture requirements in `ASSET_PROVENANCE.md`. The new presentation makes the hypothetical observation, why it warrants investigation, and the engineering next step easier to find without presenting simulated output as validated software results.
+
+Commercial improvements concentrate on a clearer evidence journey, explicit evaluation deliverables/data expectations, and a usable inquiry path while direct delivery remains disabled. Existing buyer-specific utility and resort/attraction content is preserved. No conversion lift, savings, diagnosis, confidence, detection performance, or deployment validation is claimed.
+
+### Before-and-after review package
+
+Local artifacts are outside the public build and ignored by Git, under `artifacts/final-enterprise/`:
+
+- `before/`: current HEAD captures; `live/`: current production captures; `after/`: completed implementation.
+- `review.html`: before-and-after gallery for all 14 primary pages and all three primary resolutions.
+- Each page has opening and full-page captures; Home additionally has product captures, Platform architecture captures, and Company founder captures. `390-navigation.png` captures the open mobile navigation.
+- Expanded Platform/Evidence/Security/Evaluation captures cover 320, 390, 768, and 1440px. Contact draft-state captures use fictional review details and send nothing.
+- Three full-page review sheets (`review-1440.png`, `review-768.png`, `review-390.png`) and native opening/section/expanded screenshots were visually inspected.
+- `verification.json`, `live-source-comparison.json`, `preservation.json`, test logs, and Lighthouse reports retain verification evidence.
+
+Representative direct comparison paths:
+
+| View | Before | After |
+| --- | --- | --- |
+| Desktop Home | `before/1440-home-opening.png` | `after/1440-home-opening.png` |
+| Tablet Home | `before/768-home-opening.png` | `after/768-home-opening.png` |
+| Mobile Home | `before/390-home-opening.png` | `after/390-home-opening.png` |
+| Desktop product review | `before/1440-home-product.png` | `after/1440-home-product.png` |
+| Desktop Evidence | `before/1440-evidence-opening.png` | `after/1440-evidence-opening.png` |
+| Mobile Contact | `before/390-contact-opening.png` | `after/390-contact-opening.png` |
+
+The closed mobile page heights illustrate the reduced initial reading burden: Platform 6349 → 4356px; Evidence 5362 → 3285px; Security 3583 → 2508px; Contact 2269 → 1906px. All important technical content remains reachable through disclosures. These are screenshot dimensions, not commercial performance measures.
+
+### Completed verification and remaining dependencies
+
+Final build is `neraium-e784c7bfb68e39e3`, asset revision `20261012enterprise5`.
+
+- Production build and JavaScript/Worker syntax checks pass.
+- All **49** repository/static tests pass.
+- All **24** contact-service tests and **5** Cloudflare configuration-guard tests pass.
+- All **684** existing browser checks pass across nine viewports, 320–1920px. Coverage includes routes, metadata, links, loaded images, overflow, responsive/keyboard navigation, sticky header, release identity, product walkthrough, and mocked contact/challenge/failure behavior. Updated draft checks verify encoded fields, keyboard access, stale-link removal, preserved inputs, and zero POSTs. An initial old single-paragraph locator was corrected to assert the explicit comparability/insufficient-evidence paragraph in the new disclosure.
+- All **42** final primary page/viewport captures returned 200 with loaded images, no overflow, and no page errors. All **60** expanded-disclosure checks across four widths were visible and free of overflow.
+- Mobile Lighthouse on all 14 primary routes: **97–100 performance**; **100 accessibility, best practices, and SEO** on every route; **CLS 0** on every route. Company and Contact were rerun after their observed loading/layout issues were fixed; the combined summary records their final results. Scores are local laboratory measurements, not production guarantees.
+- Local production Worker dry-run and `git diff --check` pass.
+- Preservation hashes confirm the original logos/portrait, both Wrangler configurations, Worker modules, production/staging deployment guards, headers, redirects, and Netlify compatibility are unchanged. Both production domains, EMAIL, rate limiter, Turnstile configuration/secret declaration, sender/destination, and rollback workflow remain intact. `CONTACT_ENABLED=false` and `CONTACT_RETENTION_APPROVED=false` remain unchanged.
+- Authenticated `npm run config:check` cannot compare the remote account because the existing Cloudflare API token is unavailable in this environment. Local guard tests and dry-run pass; authenticated comparison remains required before an explicitly approved release.
+
+Remaining external dependencies: approved current product screenshots and reviewed redactions/provenance; official Scott role/biography/authentic approved portrait if inclusion is desired; retained brand/portrait rights documentation; real email delivery and approved retention before contact activation; authenticated Cloudflare configuration verification and explicit deployment approval; and engineering qualification before stronger memory/OET claims.
+
+This implementation is committed locally. No deployment, push, merge, DNS/service/secret change, purchase, or billing change occurred. Future approved deployment must use the existing `npm run deploy` workflow. Final commit identity is supplied with the handoff; documentation changes do not alter the deterministic public content identifier.

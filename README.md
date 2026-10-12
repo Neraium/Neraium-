@@ -36,7 +36,7 @@ Do not rebuild `dist/` while browser tests use it: the build deliberately remove
 
 ## Inquiry behavior
 
-The form uses the existing same-origin Cloudflare Worker at `/api/contact`; it no longer prepares email drafts. An explicit direct email link remains available, including without JavaScript. Until all server dependencies are configured, the form displays an unavailable message, preserves entered details, and sends no inquiry. The default configuration remains `CONTACT_ENABLED=false`.
+The form checks the existing same-origin Cloudflare Worker configuration before offering direct submission. While intake is disabled or verification cannot start, **Prepare email draft** validates the fields and creates a user-opened `mailto:` link containing the entered details. It makes no POST, does not open the mail app automatically, does not claim delivery, and does not clear fields. Editing any field removes a stale prepared link. The visitor opens, reviews, and sends the draft in their own email app. An explicit blank email link remains available, including without JavaScript. `CONTACT_ENABLED=false` and `CONTACT_RETENTION_APPROVED=false` remain mandatory until delivery and retention are verified and authorized.
 
 Name, work email, organization, and system/facility are required. Review question, role, and contact preference are optional. Industry links prefill general system context. When `/api/contact-config` confirms availability, the form loads Turnstile, using a compact widget when the form is narrower than 300px, and sends JSON. Configuration/challenge loading failures, expired challenges, rate limits, network errors, and delivery failures never produce success or erase fields. Success requires `accepted: true` from the Worker and clears the submitted fields. Challenge initialization/reset errors are contained: the form exits its busy state, failed-submission details remain, and an accepted delivery result is preserved.
 
@@ -81,7 +81,7 @@ Cloudflare references: [Workers email API](https://developers.cloudflare.com/ema
 
 `wrangler.jsonc` routes only `/api/*` through the Worker first and leaves normal static routing, headers, and redirects intact. `netlify.toml` retains static hosting compatibility; on Netlify direct submission remains unavailable and the explicit direct email link remains available. The canonical origin is `https://neraium.com`, aligned with the observed account-level `www` → apex redirect. Domain routing remains account-managed.
 
-The earlier redesign was local-only. The final refinement assignment authorizes publication to the existing production deployment after account and route verification. The Worker dry-run bundles locally without deployment.
+This refinement is local-only. Production publication requires explicit deployment approval and the existing `npm run deploy` workflow after account and route verification. The Worker dry-run bundles locally without deployment.
 
 ### Retained legacy artifacts
 
@@ -227,6 +227,6 @@ Remaining corrections clarify software delivery and practical buyer value, give 
 
 Fresh screenshots and test/lab reports are retained in ignored `artifacts/production-pass/`, outside the public build. `before/` and `live/` cover all 14 routes at desktop, tablet, and mobile widths; `after/` contains the completed local implementation. Full browser screenshots are also in `playwright-screenshots/`.
 
-The actual current fallback is the retained explicit `mailto:` link, which opens the visitor’s email client. The disabled form preserves details and sends nothing; it does not automatically populate an email draft. Earlier audit references to an automatic email-draft workflow are historical/inaccurate for this HEAD. This review does not rebuild or change the contact system. Both activation and retention flags remain false.
+The current fallback is a user-opened email draft prepared from validated form details, plus the retained blank `mailto:` link. The disabled form preserves details and makes no POST. See Inquiry behavior above for the current draft workflow; earlier audit entries describe their respective baseline commits. Both activation and retention flags remain false.
 
 This assignment is local-only. No production release, push, merge, domain/binding change, or real inquiry was made. A future authorized release must use `npm run deploy`. Live configuration comparison requires the existing account credential; local configuration guard tests and a Worker dry-run remain available without it.
