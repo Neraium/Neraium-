@@ -134,7 +134,9 @@ for (const file of [...await packageFiles(outputDir), 'worker/index.mjs', 'worke
   releaseHash.update(file).update('\0').update(await readFile(file)).update('\0');
 }
 const version = `neraium-${releaseHash.digest('hex').slice(0, 16)}`;
-await writeFile(path.join(outputDir, 'release.json'), JSON.stringify({ version, canonical: 'https://neraium.com', assetRevision: '20261012visual2' }) + '\n');
+const assetRevision = (await readFile(path.join(outputDir, 'index.html'), 'utf8')).match(/href="\/styles\.css\?v=([^"]+)"/)?.[1];
+if (!assetRevision) throw new Error('Homepage stylesheet revision is missing; release metadata cannot be generated.');
+await writeFile(path.join(outputDir, 'release.json'), JSON.stringify({ version, canonical: 'https://neraium.com', assetRevision }) + '\n');
 const headersPath = path.join(outputDir, '_headers');
 await writeFile(headersPath, (await readFile(headersPath, 'utf8')).replace('/*\n', `/*\n  X-Neraium-Release: ${version}\n`));
 console.log(`Release: ${version}`);

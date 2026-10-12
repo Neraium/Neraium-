@@ -392,6 +392,8 @@ test('public package identity agrees with the served homepage', async ({ request
   expect(release.version).toMatch(/^neraium-[a-f0-9]{16}$/);
   expect(release.canonical).toBe('https://neraium.com');
   const homepage = await request.get('/');
+  expect(release.assetRevision).toMatch(/^[a-zA-Z0-9._-]+$/);
+  expect(await homepage.text()).toContain(`/styles.css?v=${release.assetRevision}`);
   expect(homepage.headers()['x-neraium-release']).toBe(release.version);
   expect(manifestResponse.headers()['cache-control']).toBe('no-store');
 });
