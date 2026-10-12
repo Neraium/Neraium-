@@ -662,7 +662,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012enterprise5', '/scripts.js?v=20261012enterprise5', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012premium1', '/scripts.js?v=20261012enterprise5', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
         assert_generated_site_output()
@@ -689,11 +689,13 @@ class TestPerformanceOptimizations(unittest.TestCase):
         cls.index = load_html(ROOT / "index.html")
         cls.index_html = (ROOT / "index.html").read_text(encoding="utf-8")
 
-    def test_home_hero_uses_responsive_infrastructure_and_links_to_platform(self):
+    def test_home_hero_uses_responsive_infrastructure_and_one_primary_action(self):
         hero = re.search(r'<section class="hero.*?</section>', self.index_html, re.DOTALL).group(0)
         self.assertIn('fetchpriority="high"', hero)
         self.assertIn('hero-central-plant-900.webp', hero)
-        self.assertIn('href="/platform"', hero)
+        self.assertIn('href="/contact"', hero)
+        self.assertEqual(hero.count('class="button primary"'), 1)
+        self.assertNotIn('class="text-link"', hero)
         self.assertIn('comparison-title', self.index_html)
         self.assertIn('Conceptual scenario', self.index_html)
         self.assertNotIn('class="behavior-visual"', self.index_html)
@@ -717,7 +719,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012enterprise5">')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012premium1">')
             revision = '20261012enterprise5'
             self.assertRegex(html, rf'<script src="/scripts\.js\?v={revision}" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)

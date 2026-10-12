@@ -101,3 +101,9 @@ Chromium canvas generated responsive WebP delivery copies directly from the uplo
 Company is the only current public page that displays a founder portrait. Its responsive sources and original-JPEG fallback all use the new upload. The previous portrait assets remain available for historical rollback and are no longer referenced by current public pages. Biography, contact links, affiliations, branding, and Cloudflare configuration are unchanged.
 
 Validation passed: production build, JavaScript syntax checks, 49 repository tests, 24 server tests, and 684 Playwright checks across nine viewport sizes (320–1920px). Desktop and mobile founder screenshots were visually reviewed. Additional browser checks verified proportional rendering without overflow, WebP selection at 1×/2×/3× pixel densities, and the original-JPEG fallback. No deployment was performed.
+
+## Supplied-reference visual refinement (2026-10-12)
+
+The owner-supplied `/home/ubuntu/IMG_4908.jpg` (Hypercubic) and `/home/ubuntu/IMG_4909.jpg` (PYXON) were inspected as visual-direction references only. Their logos, wording, graphics, and photographs were not copied into the website. No new raster asset was generated or downloaded.
+
+The homepage and industry openings now display the existing documented infrastructure photographs in immersive compositions with CSS legibility masks. Responsive selection accounts for the tall mobile crop and uses the existing full-resolution originals where appropriate. Image bytes remain unchanged; the photographs remain representative infrastructure imagery, not customer/deployment evidence. The founder headshot and its responsive derivatives remain byte-for-byte unchanged, with full vertical framing, automatic height, and no filters or facial processing. The explanatory SVG curves retain their geometry and qualitative meaning; only their colors were adjusted for dark surfaces. All illustrative disclosures and capability limitations remain attached.
