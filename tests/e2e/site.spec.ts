@@ -2,17 +2,20 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /Know when the system/i, canonical: 'https://www.neraium.com/' },
-  { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://www.neraium.com/platform' },
+  { path: '/', purpose: /See degradation/i, canonical: 'https://www.neraium.com/' },
+  { path: '/platform', purpose: /Understand how the whole system changes/i, canonical: 'https://www.neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://www.neraium.com/evidence' },
-  { path: '/applications', purpose: /Practical questions for interconnected facility systems/i, canonical: 'https://www.neraium.com/applications' },
+  { path: '/applications', purpose: /One systemic perspective/i, canonical: 'https://www.neraium.com/applications' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://www.neraium.com/pilot' },
   { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://www.neraium.com/methodology' },
   { path: '/security', purpose: /Read-only by design/i, canonical: 'https://www.neraium.com/security' },
-  { path: '/company', purpose: /Built from the gap between what the dashboard/i, canonical: 'https://www.neraium.com/company' },
+  { path: '/company', purpose: /Intelligence for the infrastructure/i, canonical: 'https://www.neraium.com/company' },
   { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://www.neraium.com/operator-brief' },
-  { path: '/contact', purpose: /one system and one review question/i, canonical: 'https://www.neraium.com/contact' },
+  { path: '/contact', purpose: /Bring your infrastructure into focus/i, canonical: 'https://www.neraium.com/contact' },
   { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://www.neraium.com/privacy' },
+  { path: '/water-wastewater', purpose: /community depends on/i, canonical: 'https://www.neraium.com/water-wastewater' },
+  { path: '/hospitality', purpose: /every guest experience/i, canonical: 'https://www.neraium.com/hospitality' },
+  { path: '/infrastructure', purpose: /Follow the relationships/i, canonical: 'https://www.neraium.com/infrastructure' },
 ] as const;
 
 const navLinks = ['Platform','How It Works','Applications','Evaluation','Company'] as const;
@@ -72,6 +75,9 @@ for (const sitePage of publicPages) {
     test('captures visual review screenshots', async ({ page }, testInfo) => {
       await page.goto(sitePage.path, { waitUntil: 'networkidle' });
       const slug = sitePage.path.slice(1) || 'index';
+      await page.locator('footer').scrollIntoViewIfNeeded();
+      await page.waitForFunction(() => Array.from(document.images).every(img => img.complete && img.naturalWidth > 0));
+      await page.evaluate(() => window.scrollTo(0,0));
       await page.screenshot({ path: path.join('playwright-screenshots', testInfo.project.name, `${slug}-full-page.png`), fullPage: true, animations: 'disabled' });
       for (const [selector, name] of [['.hero, .page-hero','hero'],['#how-it-works','product-flow'],['#capabilities','capabilities'],['#method-concepts','method-concepts'],['#evidence','evidence'],['#evaluation','evaluation'],['#maintenance','operator-view'],['#security','security'],['#applications','applications'],['#founder','founder'],['#contact','contact']] as const) {
         const target = page.locator(selector).first();
@@ -202,4 +208,51 @@ test('Cloudflare preview enforces clean routes, redirects, security headers, and
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
   await expect(page.getByRole('banner')).toHaveCSS('position', 'sticky');
   await page.screenshot({ path: path.join('playwright-screenshots', testInfo.project.name, '404-nested-full-page.png'), fullPage: true, animations: 'disabled' });
+});
+
+async function fillInquiry(page: Page) {
+  await page.locator('#name').fill('Alex Morgan');
+  await page.locator('#email').fill('alex@example.com');
+  await page.locator('#organization').fill('Example Facilities');
+  await page.locator('#facility').fill('Central plant');
+}
+async function mockOnlineIntake(page: Page) {
+  await page.route('**/api/contact-config', route => route.fulfill({ json: { enabled: true, siteKey: 'test-site-key' } }));
+  await page.route('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', route => route.fulfill({ contentType: 'application/javascript', body: 'window.turnstile = { render: (element, options) => { window.testChallenge = options; return 1; }, reset: () => {} };' }));
+  await page.goto('/contact');
+  await expect(page.locator('#contact-form button[type="submit"]')).toHaveText('Send evaluation request');
+  await page.waitForFunction(() => Boolean((window as any).testChallenge));
+}
+test('online intake requires a challenge and reports accepted email delivery only after server acknowledgement', async ({ page }) => {
+  let posts = 0;
+  await page.route('**/api/contact', route => {
+    posts += 1;
+    expect(route.request().postDataJSON()).toMatchObject({ email: 'alex@example.com', token: 'test-token' });
+    return route.fulfill({ json: { accepted: true } });
+  });
+  await mockOnlineIntake(page); await fillInquiry(page);
+  await page.locator('#contact-form button[type="submit"]').click();
+  await expect(page.locator('#form-feedback')).toContainText('complete the security verification');
+  expect(posts).toBe(0);
+  await page.evaluate(() => (window as any).testChallenge.callback('test-token'));
+  await page.locator('#contact-form button[type="submit"]').click();
+  await expect(page.locator('#form-feedback')).toContainText('accepted for email delivery');
+  expect(posts).toBe(1); await expect(page.locator('#name')).toHaveValue('');
+});
+test('online intake preserves entered details and never shows success after provider failure', async ({ page }) => {
+  await page.route('**/api/contact', route => route.fulfill({ status: 502, json: { error: 'Delivery unavailable' } }));
+  await mockOnlineIntake(page); await fillInquiry(page);
+  await page.evaluate(() => (window as any).testChallenge.callback('test-token'));
+  await page.locator('#contact-form button[type="submit"]').click();
+  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'error');
+  await expect(page.locator('#form-feedback')).toContainText('could not be confirmed');
+  await expect(page.locator('#name')).toHaveValue('Alex Morgan');
+  await expect(page.locator('#contact-form button[type="submit"]')).toBeEnabled();
+});
+test('industry evaluation links prefill system context and optional review question does not block an inquiry', async ({ page }) => {
+  await page.goto('/contact?industry=water-wastewater');
+  await expect(page.locator('#facility')).toHaveValue('Municipal water / wastewater');
+  await fillInquiry(page);
+  await page.locator('#contact-form button[type="submit"]').click();
+  await expect(page.locator('#form-feedback')).toContainText('email draft is ready');
 });

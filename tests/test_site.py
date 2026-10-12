@@ -10,17 +10,17 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ORIGIN = "https://www.neraium.com"
-HOMEPAGE_MAX_WORD_COUNT = 540
+HOMEPAGE_MAX_WORD_COUNT = 650
 PAGE_MAX_WORD_COUNTS = {
-    "platform.html": 400,
+    "platform.html": 900,
     "methodology.html": 440,
     "evidence.html": 335,
     "applications.html": 400,
     "security.html": 300,
     "pilot.html": 316,
     "operator-brief.html": 325,
-    "company.html": 375,
-    "contact.html": 270,
+    "company.html": 430,
+    "contact.html": 360,
 }
 
 
@@ -280,7 +280,7 @@ class TestStaticSite(unittest.TestCase):
         sitemap_lastmods = {node.text.strip() for node in root.findall("sm:url/sm:lastmod", namespace) if node.text}
         expected_urls = {html_file_to_public_url(path) for path in indexable_html_files()}
         self.assertEqual(expected_urls, sitemap_urls)
-        self.assertEqual({"2026-08-24"}, sitemap_lastmods)
+        self.assertEqual({"2026-10-12"}, sitemap_lastmods)
 
 
     def test_every_public_page_has_exactly_one_h1(self):
@@ -308,7 +308,7 @@ class TestStaticSite(unittest.TestCase):
 
     def test_primary_navigation_consistency_and_routes(self):
         primary = [('/platform','Platform'),('/methodology','How It Works'),('/applications','Applications'),('/pilot','Evaluation'),('/company','Company')]
-        preserved_routes = [('/evidence','Evidence'),('/security','Security')]
+        preserved_routes = [('/security','Security')]
         for html_file in site_html_files():
             html = html_file.read_text(encoding='utf-8')
             navigation = re.search(r'<nav class="nav" id="main-navigation".*?</nav>', html, re.DOTALL)
@@ -391,100 +391,37 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     def test_core_positioning_and_ctas(self):
         text = self.normalized(self.index)
-        for phrase in (
-            "Systemic Infrastructure Intelligence",
-            "Know when the system stops behaving like itself.",
-            "learns expected behavior across facility-system signals",
-            "persistent relationship changes that thresholds can miss",
-            "while individual measurements remain within limits",
-            "Engineers receive evidence to decide what to review next.",
-            "Establish operating behavior",
-            "Learn relationships and context",
-            "Identify persistent systemic change",
-            "Preserve evidence for engineering review",
-            "bounded review question",
-            "Request an Evaluation",
-            "Read-only",
-            "Outside the control path",
-            "No setpoint changes",
-            "Human review authoritative",
-        ):
+        for phrase in ("Systemic Infrastructure Intelligence", "See degradation before systems fail.", "existing operational data", "interconnected infrastructure systems", "municipal water and wastewater", "Las Vegas hospitality", "Traceable evidence", "Prioritize maintenance", "potential cost avoidance"):
             self.assertIn(phrase, text)
-
-        for phrase in (
-            "Individual signals remain within limits. System behavior does not.",
-            "A threshold checks one signal against a limit.",
-            "Degraded delivery",
-            "Rising resource demand",
-            "Operator burden",
-            "Maintenance ambiguity",
-            "Historical Evaluation",
-            "Continued Analysis",
-        ):
-            self.assertIn(phrase, text)
-
-        product_flow = re.search(r'<ol class="product-flow">(.*?)</ol>', self.index, re.DOTALL)
-        self.assertIsNotNone(product_flow)
-        self.assertEqual(product_flow.group(1).count("<li>"), 4)
-        self.assertIn('href="/methodology">Explore the methodology</a>', self.index)
-
-        methodology = (ROOT / "methodology.html").read_text(encoding="utf-8")
+        platform = self.normalized((ROOT / "platform.html").read_text())
+        for phrase in ("Systemic Degradation Intelligence", "Continuous Analytical Memory", "Operational Evidence Testing", "not production-qualified", "Exploratory", "root cause", "insufficient evidence", "source windows"):
+            self.assertIn(phrase, platform)
+        self.assertNotIn("Passive Challenge Synthesis", platform)
+        methodology = (ROOT / "methodology.html").read_text()
         method_flow = re.search(r'<ol class="method-steps">(.*?)</ol>', methodology, re.DOTALL)
         self.assertIsNotNone(method_flow)
         self.assertEqual(method_flow.group(1).count("<li>"), 7)
         self.assertIn("Known transient or abnormal operating periods do not automatically become the new normal.", methodology)
+
     def test_information_architecture_sections_exist(self):
-        expected_home_sections = (
-            "platform",
-            "problem",
-            "how-it-works",
-            "evidence",
-            "evaluation",
-        )
-        for section_id in expected_home_sections:
-            self.assertIn(f'id="{section_id}"', self.index)
-        positions = [self.index.index(f'id="{section_id}"') for section_id in expected_home_sections]
+        sections = ("problem", "how-it-works", "capabilities", "applications", "value")
+        positions = [self.index.index(f'id="{section}"') for section in sections]
         self.assertEqual(positions, sorted(positions))
+        applications = (ROOT / "applications.html").read_text()
+        for route in ("water-wastewater", "hospitality", "infrastructure"):
+            self.assertIn(f'href="/{route}"', applications)
+            page = (ROOT / f"{route}.html").read_text()
+            self.assertIn("existing telemetry", self.normalized(page).lower().replace("telemetry you already have", "existing telemetry"))
+            self.assertIn("not verified customer deployments", page)
+            self.assertIn(f'/contact?industry={route}', page)
 
-        navigation = re.search(r'<nav class="nav" id="main-navigation".*?</nav>', self.index, re.DOTALL).group(0)
-        for href, label in (
-            ("/platform", "Platform"),
-            ("/methodology", "How It Works"),
-            ("/applications", "Applications"),
-            ("/pilot", "Evaluation"),
-            ("/company", "Company"),
-        ):
-            self.assertIn(f'href="{href}"', navigation)
-            self.assertIn(f'>{label}</a>', navigation)
-
-        applications = self.normalized((ROOT / "applications.html").read_text(encoding="utf-8"))
-        for phrase in (
-            "Practical questions for interconnected facility systems.",
-            "Review questions, not diagnoses.",
-            "Central plants and chilled-water systems",
-            "Pumping and water systems",
-            "Resort and large-facility infrastructure",
-            "Other bounded interconnected systems",
-            "Fit is established, not assumed.",
-            "Fit is established, not assumed.",
-        ):
-            self.assertIn(phrase, applications)
-        self.assertNotIn("Application boundary", applications)
     def test_evidence_package_and_maintenance_view_are_complete(self):
         homepage = self.normalized(self.index)
         evidence_text = self.normalized((ROOT / "evidence.html").read_text(encoding="utf-8"))
         operator_text = self.normalized((ROOT / "operator-brief.html").read_text(encoding="utf-8"))
 
-        for phrase in (
-            "EP-CHW-017",
-            "Pump power increased relative to delivered flow across comparable operating periods.",
-            "Power-to-flow behavior remained changed at similar load and operating mode.",
-            "Telemetry alone cannot distinguish hydraulic restriction from pump-performance degradation.",
-        ):
-            self.assertIn(phrase, homepage)
-        self.assertIn('href="/evidence">Review the illustrative finding</a>', self.index)
-        for deferred_field in ("Threshold status", "Provenance", "Review state"):
-            self.assertNotIn(f"<dt>{deferred_field}</dt>", self.index)
+        self.assertIn('href="/evidence"', (ROOT / "platform.html").read_text())
+        self.assertIn('href="/evidence"', (ROOT / "water-wastewater.html").read_text())
 
         for phrase in (
             "Each finding shows what changed, what supports it, and what the available evidence cannot prove.",
@@ -529,18 +466,11 @@ class TestPositioningAndExperience(unittest.TestCase):
         platform_text = self.normalized((ROOT / "platform.html").read_text(encoding="utf-8"))
         security_text = self.normalized((ROOT / "security.html").read_text(encoding="utf-8"))
 
-        for phrase in (
-            "No setpoint changes",
-            "Human review authoritative",
-            "No live connection is required",
-        ):
-            self.assertIn(phrase, homepage)
-        for phrase in (
-            "Read-only. Outside the control path.",
-            "complements BAS, SCADA, historians, alarms, operators, engineers, and maintenance teams",
-            "no autonomous commands",
-        ):
-            self.assertIn(phrase, platform_text)
+        for phrase in ("Read-only. Human-reviewed.", "BAS, SCADA, historians, alarms", "no autonomous commands", "No initial live connection" ):
+            if phrase == "No initial live connection":
+                self.assertIn(phrase, (ROOT / "water-wastewater.html").read_text())
+            else:
+                self.assertIn(phrase, platform_text)
         for phrase in (
             "Read-only by design. Explicit at every boundary.",
             "No control path returns.",
@@ -555,11 +485,11 @@ class TestPositioningAndExperience(unittest.TestCase):
     def test_homepage_reduction_regression_contract(self):
         text = self.normalized(self.index)
         expected_order = [
-            'id="platform"',
             'id="problem"',
             'id="how-it-works"',
-            'id="evidence"',
-            'id="evaluation"',
+            'id="capabilities"',
+            'id="applications"',
+            'id="value"',
         ]
         positions = [self.index.index(marker) for marker in expected_order]
         self.assertEqual(positions, sorted(positions))
@@ -583,7 +513,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         for href, label in (
             ("/contact", "Request an Evaluation"),
             ("/methodology", "See how it works"),
-            ("/evidence", "Review the illustrative finding"),
+            ("/platform", "Explore the platform"),
             ("/pilot", "Review the evaluation process"),
         ):
             self.assertIn(f'href="{href}"', self.index, f"missing route for {label}")
@@ -594,7 +524,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertLessEqual(len(text.split()), maximum, f"{filename} exceeds {maximum} visible words")
 
         platform = self.normalized((ROOT / "platform.html").read_text(encoding="utf-8"))
-        for phrase in ("Operating reference", "What supports the observation", "What remains uncertain", "What happens next"):
+        for phrase in ("Expected behavior", "Evidence qualification", "Operational Evidence Testing", "Continuous Analytical Memory"):
             self.assertIn(phrase, platform)
 
         evaluation = self.normalized((ROOT / "pilot.html").read_text(encoding="utf-8"))
@@ -617,9 +547,9 @@ class TestPositioningAndExperience(unittest.TestCase):
         contact = (ROOT / "contact.html").read_text(encoding="utf-8")
         for field_id in ("name", "email", "organization", "facility", "review-question", "role", "preferred-contact"):
             self.assertIn(f'id="{field_id}"', contact)
-        for required_id in ("name", "email", "organization", "facility", "review-question"):
+        for required_id in ("name", "email", "organization", "facility"):
             self.assertRegex(contact, rf'id="{required_id}"[^>]*required')
-        for optional_id in ("role", "preferred-contact"):
+        for optional_id in ("review-question", "role", "preferred-contact"):
             field = re.search(rf'<(?:input|select|textarea)[^>]*id="{optional_id}"[^>]*>', contact)
             self.assertIsNotNone(field)
             self.assertNotIn("required", field.group(0))
@@ -725,7 +655,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20260918d', '/scripts.js?v=20260819a', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012a', '/scripts.js?v=20261012a', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
@@ -745,14 +675,15 @@ class TestPerformanceOptimizations(unittest.TestCase):
         cls.index = load_html(ROOT / "index.html")
         cls.index_html = (ROOT / "index.html").read_text(encoding="utf-8")
 
-    def test_home_hero_prioritizes_structured_proof_over_decorative_media(self):
-        self.assertIn('class="behavior-visual"', self.index_html)
-        self.assertIn('aria-labelledby="behavior-visual-title behavior-visual-caption"', self.index_html)
-        self.assertIn("Power relative to delivered flow", self.index_html)
-        self.assertIn("Inside limit", self.index_html)
-        self.assertIn("Persistent departure", self.index_html)
-        self.assertIn("Illustrative technical representation, not customer data.", self.index_html)
-        self.assertNotIn('class="hero-visual product-hero"', self.index_html)
+    def test_home_hero_uses_responsive_infrastructure_and_links_to_platform(self):
+        hero = re.search(r'<section class="hero.*?</section>', self.index_html, re.DOTALL).group(0)
+        self.assertIn('fetchpriority="high"', hero)
+        self.assertIn('hero-central-plant-900.webp', hero)
+        self.assertIn('href="/platform"', hero)
+        self.assertIn('network-title', self.index_html)
+        self.assertIn('Conceptual architecture', self.index_html)
+        self.assertNotIn('class="behavior-visual"', self.index_html)
+
     def test_below_fold_images_are_lazy_loaded_when_appropriate(self):
         eager_allowlist = {
             "/assets/images/neraium-logo-lockup.svg",
@@ -772,8 +703,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20260918d">')
-            self.assertRegex(html, r'<script src="/scripts\.js\?v=202608(?:11|19)a" defer></script>')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012a">')
+            self.assertRegex(html, r'<script src="/scripts\.js\?v=20261012a" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)
     def test_above_fold_media_is_not_deferred(self):

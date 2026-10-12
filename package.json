@@ -11,7 +11,9 @@
     "test:e2e": "playwright test",
     "build": "node scripts/build-static-site.mjs",
     "deploy": "npm run build && wrangler deploy",
-    "preview": "npm run build && wrangler dev"
+    "preview": "npm run build && wrangler dev",
+    "test:server": "node --test tests/contact.test.mjs",
+    "check": "node --check scripts.js && node --check worker/index.mjs && node --check worker/contact.mjs"
   },
   "repository": {
     "type": "git",
@@ -28,9 +30,9 @@
     "@playwright/test": "^1.62.1",
     "lighthouse": "^13.4.1",
     "playwright": "^1.62.1",
-    "wrangler": "4.118.0"
+    "wrangler": "4.149.0"
   },
   "overrides": {
-    "undici": "7.29.0"
+    "undici": "7.30.0"
   }
 }

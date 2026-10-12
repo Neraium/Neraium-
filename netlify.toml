@@ -21,7 +21,7 @@
     #   fonts    – system fonts only
     #   images   – self + data URIs (no external image embeds)
     #   forms    – self + mailto: action (contact page)
-    Content-Security-Policy    = "default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self'; style-src 'self'; upgrade-insecure-requests"
+    Content-Security-Policy    = "default-src 'self'; base-uri 'self'; connect-src 'self' https://challenges.cloudflare.com; font-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; frame-src https://challenges.cloudflare.com; img-src 'self' data:; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; upgrade-insecure-requests"
 
 # ── Cache-control rules ──────────────────────────────────────────────────────
 

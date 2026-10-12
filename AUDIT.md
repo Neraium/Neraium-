@@ -1,69 +1,90 @@
-# Neraium public website audit
+# Neraium website — Phase 2 audit and implementation
 
-Audit date: 2026-08-11
+Audit date: 2026-10-12. Website repository baseline: `ac774b1` (`main`). Work branch: `codex/neraium-phase-2`.
 
-Audited source: current local `main` of `git@github.com:Neraium/Neraium-.git`
+## Repository and live-site audit
 
-Production comparison: `https://www.neraium.com`
+Inspected root repository status, local and remote branch inventory, recent eight commits, public HTML pages, shared CSS/JavaScript, assets/provenance, build pipeline, Worker/Netlify settings, redirects, headers, sitemap, and both existing test suites. The only pre-existing uncommitted item was an untracked nested `Neraium-/` directory. It remains untouched and excluded from the commit. Previous work on branding, imagery, read-only boundaries, historical evaluation, evidence, navigation, and deployment controls was preserved where useful.
 
-Deployment model: Cloudflare Workers Static Assets at `www.neraium.com`
+Live `https://neraium.com` was loaded in Chromium at 1440×1000, 768×1024, and 390×844. Before screenshots covered Home, Platform, Methodology, Applications, Evaluation, Company, Evidence, Security, Operator Brief, Contact, and Privacy. Browser tooling was available through the repository’s installed Playwright tooling. No production writes or customer submissions were performed.
 
-## Production and repository baseline
+The live homepage matched the root baseline’s visible narrative: “Know when the system stops behaving like itself,” facility-system relationship analysis, a large illustrative chilled-water chart, repeated dark sections, and email-draft conversion. The site technically named Systemic Infrastructure Intelligence but did not make its horizontal scope or the two commercial beachheads clear enough.
 
-The production HTML matched the repository baseline across the public routes at the start of this audit. The site was already a lightweight static implementation with clean deployment controls, dedicated product pages, disciplined claims, consistent dark navy/teal identity, and a transparent mail-draft contact path.
+Primary weaknesses:
 
-The existing structure already had distinct pages for Platform, Evidence, Applications, Evaluation, Methodology, Security, Company, Operator Brief, Contact, Privacy, and 404 handling. Metadata, canonical URLs, structured data, sitemap coverage, redirects, security headers, reduced-motion support, and foundational accessibility were also present.
+- The main promise required visitors to translate abstract system-behavior language into business value.
+- Long supporting copy and boundary badges competed with the primary message.
+- A chart resembling an application interface dominated the first impression.
+- Repetitive cards and similar dark sections flattened hierarchy.
+- Applications focused on equipment categories rather than distinct municipal and hospitality buying contexts.
+- Platform lacked the integrated 2.0 capability narrative and explicit newer-capability maturity.
+- The footer duplicated most navigation and technical routes.
+- Contact required five practical fields and could only prepare a mail draft.
+- The old Open Graph image retained a simulated dashboard with numerical timing, evidence counts, and “after repair” language. It was unsuitable for the revised claims boundary.
 
-## What was already strong and preserved
+## Technical claims review
 
-- Static HTML, CSS, SVG, and vanilla JavaScript architecture
-- Cloudflare clean routes, redirects, security headers, and custom 404 behavior
-- Read-only and outside-control-path operating boundaries
-- Human-authority, uncertainty, and root-cause limitations
-- Historical Evaluation as a lower-risk starting point
-- EP-CHW-017 as a clearly illustrative evidence structure
-- Official brand assets, founder information, and dark navy/teal identity
-- Transparent `mailto:` inquiry mechanism with no fake server submission
-- Existing URLs, sitemap routes, manifest, favicon, and security contact
+Read-only inspection of adjacent engineering repositories supplied the implementation evidence absent from the website checkout. No secrets, production systems, customer datasets, or operational telemetry were accessed. No tests in those repositories were rerun and no product production qualification was performed. The following source documents were read as implementation records, not proof of current live deployment.
 
-## What was outdated or incomplete
+Inspected checkout identities:
 
-- The product story was too close to telemetry-to-relationship-change-to-Evidence-Package.
-- Baseline qualification, signal usability, data quality, operating context, multiscale persistence, provenance, continued comparison, and insufficient-evidence outcomes were not prominent enough.
-- Evidence Packages carried too much of the category definition.
-- The homepage lacked a concrete visual explanation of systemic change inside individual limits.
-- Methodology was too brief for a technical buyer.
-- Applications implied a broader market posture than the strongest current facility-infrastructure wedge justified.
-- Several pages used uniform cards, oversized display type, small supporting text, and document-like layouts.
-- The Operator Brief did not answer the practical operator questions directly enough.
-- Contact behavior needed clearer loading, success, validation, and error states.
-- Shared navigation did not expose Methodology despite its importance.
+- `Neraium-1.0`: `8049aabf40e76f69fc3ebee99d7f1c7932c7f1e3`.
+- `Neraium-2-integration`: `c4060a14074f403b07011c2191bf485132c504d2`.
 
-## Selective modernization implemented
+| Website subject | Engineering source | Public boundary applied |
+| --- | --- | --- |
+| Systemic relationship assessment | `Neraium-1.0/docs/sii_architecture.md`; authoritative `backend/app/engine/sii_engine.py` call path | Persistent relationship change, like-mode/context assessment, data quality, supported time horizons. Behavioral change does not independently establish physical degradation or cause. |
+| Analytical memory foundations | Architecture Phase 4 behavioral-model/store, graph, snapshot and event-memory contracts | Describe retained versioned models and evidence, not universal continuous live service. |
+| New Continuous Analytical Memory integration | `Neraium-2-integration/docs/design/m2-analytical-memory.md`, `m8-resolution-20261010.md`, `m8-authoritative-candidate-20261010.md` | New durable continuation and assessment-lifecycle integration is in development and not production-qualified. No established recovery confirmation or uninterrupted live-memory claim. |
+| Operational Evidence Testing | `Neraium-2-integration/research/pcs/README.md`, `research/pcs/oet/NATIVE_INTEGRATION_STATUS.md` | Exploratory, read-only evidence testing. Authentic authorized inputs, native positive-path integration, and physical/context policies remain dependencies. Customer-facing name is Operational Evidence Testing. |
+| Cross-system relationships | SII architecture and `docs/SII_AUTHORITY_BOUNDARIES.md` | Connected relationships within an approved analysis scope; no cross-facility, fleet, causal propagation, or universal integration claim. |
+| Traceability and qualification | `docs/PRODUCT_EVIDENCE_BOUNDARY.md`, `docs/EVIDENCE_PACKAGE_V1.md`, authority boundaries | Source windows, methods, evidence support, limitations, and explicit insufficient evidence. No diagnosis, prescribed repairs, or exact failure prediction. |
+| Measurable consequence | `docs/CONSEQUENCE_QUANTIFICATION.md` | Conditional on exact resource mapping, units, supported context and timestamps. No public numbers, monetary savings, or guaranteed cost avoidance. |
+| Connectivity | `docs/TELEMETRY_CONNECTIONS.md`, `docs/data_connectors.md`, existing historical-evaluation boundaries | Approved historical exports first; later connectivity scoped during evaluation, not guaranteed plug-and-play integration. |
 
-- Reframed the homepage around establishing operating behavior before judging later change.
-- Added a lightweight SVG/HTML chilled-water relationship artifact showing individual signals inside limits while power-to-flow behavior changes persistently.
-- Replaced the generic three-step explanation with the seven-stage current product flow and two valid outcome branches.
-- Made baseline learning, data readiness, comparable context, expected behavior, multiscale persistence, provenance, and limitations visible across Home, Platform, and Methodology.
-- Positioned Evidence Packages as downstream analysis outputs and expanded the illustrative evidence artifact without fake precision.
-- Added an explicit insufficient-evidence artifact and reinforced that absence of support is not proof of absence.
-- Focused Applications on central plants, chilled water, pumping, water, resorts, and large facilities while defining broader fit by system characteristics rather than deployment claims.
-- Clarified the read-only path alongside BAS, SCADA, historians, PLC-derived telemetry, CMMS workflows, operators, engineers, and maintenance teams without a return control arrow.
-- Reworked Historical Evaluation around one system, one question, approved history, no initial live connection, and no guaranteed finding.
-- Strengthened Security while retaining only already-supported customer-hosted language and explicitly declining unsupported certification claims.
-- Rewrote the Operator Brief as five direct operational questions with printable styling.
-- Preserved the contact mechanism while adding explicit public-form boundaries and visible interaction states.
-- Consolidated the visual system in one stylesheet with refined type scale, spacing, restrained surfaces, evidence patterns, responsive recomposition, focus treatment, print rules, and reduced-motion behavior.
-- Added a design manifest and project-local QA/visual-verification records under `.planning/`.
+The M8 records explicitly state NOT QUALIFIED and do not establish a live integrated M1→M2→M7 production chain. The website therefore separates current analytical foundations from the new integrated development paths. Security operational certification does not substitute for analytical qualification.
 
-## Claims intentionally not added
+NVIDIA Inception, AWS Activate, and Innovation Henderson LaunchLab are presented as program participation, based on the owner’s supplied verified affiliations and the existing LaunchLab repository record. No investor, product endorsement, certification, customer validation, Zero Labs selection, partnership, deployment, or validated evaluation-result claim was added. No supported pricing record was found, so pricing advantages and numerical prices are not asserted.
 
-No customers, deployments, logos, testimonials, partnerships, facility counts, savings, ROI, avoided failures, uptime, integrations, certifications, or unsupported security controls were added. The site does not present Neraium as predictive maintenance, autonomous control, an alarm replacement, a digital twin, an AI copilot, a dashboard product, or a root-cause engine.
+## Implemented experience
 
-## External actions still required
+Home now leads with the owner’s requested “See degradation before systems fail” positioning and a documented representative central-plant image. A concise problem statement, conceptual relationship diagram, four differentiation rows, two commercial application paths, operational-value section, and focused evaluation conversion replace the prior chart and repeated lifecycle/evidence explanations.
 
-1. Deploy the revised `dist/` build and verify behavior on the production hostname.
-2. Confirm apex/HTTP-to-`https://www.neraium.com` redirect rules in the Cloudflare account.
-3. Request sitemap recrawling after deployment if search results retain older positioning.
-4. Replace the mail-draft contact path only if a verified server-side intake service, privacy disclosure, retention policy, and delivery workflow are approved.
-5. Document ownership or license evidence for retained repository image assets before making provenance claims.
+Platform presents telemetry → qualified reference → contextual persistent assessment → traceable evidence as one architecture. Capability maturity is visible alongside each detailed description. Methodology and Evidence retain the deeper technical material for interested readers.
+
+Applications now leads to three dedicated pages: Municipal Water & Wastewater, Las Vegas Hospitality & Resorts, and Broader Infrastructure. Each uses specific relationships, an illustrative review question, operational relevance, suitability limits, and a context-prefilled inquiry link.
+
+Company has a simpler purpose, authentic unchanged founder portrait, approved existing biographical context, program-participation presentation, and links to technical evidence. Shared styling introduces navy/near-black foundations, aqua accents, larger readable text, restrained transitions, light editorial sections, spacious compositions, and responsive recomposition. Existing logo assets are untouched. Mobile diagrams use readable HTML rather than miniature SVG labels.
+
+All public pages receive consistent typography, navigation/footer styling, metadata cache versions, and a new 1200×630 infrastructure/brand social image without simulated results. The footer is reduced to six essential links. Operator guidance, security, evidence, and evaluation routes remain available through relevant pages.
+
+## Conversion implementation
+
+Four required fields, optional review question, accessible labels, autofill, validation, focused live status messages, direct email fallback, and prefilled industry context reduce inquiry friction.
+
+A Cloudflare Worker implements configuration discovery and same-origin server intake. It requires an approved retention attestation, native restricted email binding, Turnstile site/secret keys, rate-limiter binding, sending identity, recipient, allowed hostnames, and enable flag. It enforces field allowlisting, body-size bounds, validation, honeypot, origin, edge-IP rate limiting, challenge hostname/action verification, and confirmed provider acceptance. It logs no submitted contents or secrets and adds no submission database.
+
+The committed configuration leaves online intake disabled. A public visitor sees an honest email-draft workflow until dependencies are complete. Email-service acceptance is explicitly distinguished from inbox receipt. No fake submission success, unapproved third-party form service, or production infrastructure change occurred. Exact activation requirements and real-delivery verification steps are in README.
+
+## Verification evidence
+
+- Production static build passes; public assets are allowlisted and image signatures validated.
+- Worker dry-run bundles successfully without deployment.
+- 46 Python contracts pass: metadata, links, assets, sitemap, headings, positioning/maturity, preserved technical evidence, deployment rules, branding, and form structure.
+- 22 Node server tests pass: dependency gates, valid acceptance, field/type/length validation, injection, unknown fields, honeypot, malformed/oversized body, origin, rate limits, challenge failures, provider failures, and missing acknowledgement.
+- 576 Playwright tests pass across 320, 375, 390, 402, 430, 768, 1024, 1440, and 1920px viewports. Coverage includes all 14 primary public pages plus nested 404, keyboard navigation, mobile-menu focus, responsive overflow, image loading, metadata, errors, routing/security controls, draft conversion, mocked online success/failure, and industry-prefilled context.
+- Desktop, mobile, and tablet full-page screenshots were captured and visually inspected for every major page. A mobile headline whitespace issue, unreadable small diagram labels, and a tablet security-connector overlap were corrected.
+- Local mobile Lighthouse: Home 99 performance / 100 accessibility / 100 best practices / 100 SEO; Platform and Contact 100 in all four categories; Water & Wastewater 99 / 100 / 100 / 100. These are local lab results, not field-performance guarantees. Small image-compression/responsive-size and stylesheet suggestions remain; no blocking audit defect was found.
+- After the social-metadata update and tablet connector fix, 189 focused browser checks passed, including every page’s metadata/error checks and the contact and security workflows. The corrected tablet diagram was inspected again.
+- JavaScript syntax checks and `git diff --check` pass. No lint or application TypeScript configuration exists.
+- Dependency audit is clean after updating Wrangler and its Undici override; no runtime dependency was added.
+
+An early browser run was interrupted by rebuilding the served `dist/` directory during tests, causing transient missing-asset responses. The suite was rerun against a stable build and all 576 tests passed. README records that builds must not run concurrently with browser verification.
+
+Screenshots and detailed test/Lighthouse artifacts remain locally under `playwright-screenshots/`, `playwright-report/`, and `/tmp/neraium-phase2/`. They are intentionally not deployed as public assets.
+
+## Remaining external dependencies
+
+Online intake requires the configuration and mailbox/privacy decisions in README plus staging verification of real challenge and email delivery. No credentials or production binding IDs were invented. New 2.0 memory integration and Operational Evidence Testing require their engineering qualification gates before stronger public claims. Existing founder/logo ownership documentation should remain in the owner’s asset register. Cloudflare account-level hostname redirects and any production rollout remain outside this task.
+
+The implementation is ready for human design/code review. The website can be deployed with the disclosed email-draft path; online lead delivery is not ready for activation until the documented dependencies are satisfied. Nothing was pushed, merged, or deployed.

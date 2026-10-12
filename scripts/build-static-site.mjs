@@ -9,6 +9,9 @@ const publicAssets = [
   '_redirects',
   '404.html',
   'applications.html',
+  'water-wastewater.html',
+  'hospitality.html',
+  'infrastructure.html',
   'assets/images',
   'company.html',
   'contact.html',
@@ -91,7 +94,7 @@ for (const asset of publicAssets) {
 }
 
 const referencedImages = new Set();
-for (const file of ['404.html', 'applications.html', 'company.html', 'contact.html', 'evidence.html', 'index.html', 'methodology.html', 'operator-brief.html', 'pilot.html', 'platform.html', 'privacy.html', 'security.html', 'site.webmanifest', 'styles.css', 'technical.html']) {
+for (const file of ['404.html', 'applications.html', 'water-wastewater.html', 'hospitality.html', 'infrastructure.html', 'company.html', 'contact.html', 'evidence.html', 'index.html', 'methodology.html', 'operator-brief.html', 'pilot.html', 'platform.html', 'privacy.html', 'security.html', 'site.webmanifest', 'styles.css', 'technical.html']) {
   const text = await readFile(file, 'utf8');
   for (const ref of collectReferencedImages(text)) referencedImages.add(ref);
 }

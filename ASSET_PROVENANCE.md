@@ -21,3 +21,9 @@ Other image files remain in `assets/images/` for compatibility and rollback but 
 ## Documentation requirement
 
 Before making any public ownership or licensing claim, retain the purchase record, creator release, generation record, or license text in an approved asset register and update this file.
+
+## Phase 2 reuse and social preview (2026-10-12)
+
+The Phase 2 website reuses the documented project-generated water, central-plant, and industrial WebP assets on Home, Applications, and dedicated industry pages. They represent infrastructure contexts; they are not photographs of Neraium customers or deployments. The existing logo and Craig Curtis portrait are unchanged.
+
+`/assets/images/neraium-social.jpg` is a 1200 × 630 browser-rendered brand composition created locally from the existing official logo, documented project-generated central-plant image, and website typography. It replaces the old simulated dashboard social preview across public metadata. It includes no metrics or customer results. The prior preview remains available for rollback but is no longer referenced publicly.
