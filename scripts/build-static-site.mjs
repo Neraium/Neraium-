@@ -1,4 +1,5 @@
-import { cp, mkdir, rm, stat, lstat, readdir, readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { cp, mkdir, rm, stat, lstat, readdir, readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
@@ -74,7 +75,7 @@ function collectReferencedImages(text) {
     for (const match of text.matchAll(pattern)) {
       for (const candidate of match[1].split(',')) {
         let value = candidate.trim().split(/\s+/, 1)[0];
-        if (value.startsWith('https://www.neraium.com/')) value = value.replace('https://www.neraium.com', '');
+        if (value.startsWith('https://neraium.com/')) value = value.replace('https://neraium.com', '');
         if (!value.startsWith('/assets/images/')) continue;
         refs.add(value.split(/[?#]/, 1)[0]);
       }
@@ -117,3 +118,23 @@ for (const ref of referencedImages) {
 }
 
 console.log(`Copied ${publicAssets.length} public assets to ${outputDir}/ and validated ${referencedImages.size} image references.`);
+
+// Identify the actual public package, including its Worker, without exposing account data.
+async function packageFiles(directory) {
+  const files = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) files.push(...await packageFiles(file));
+    else files.push(file);
+  }
+  return files;
+}
+const releaseHash = createHash('sha256');
+for (const file of [...await packageFiles(outputDir), 'worker/index.mjs', 'worker/contact.mjs', 'wrangler.jsonc'].sort()) {
+  releaseHash.update(file).update('\0').update(await readFile(file)).update('\0');
+}
+const version = `neraium-${releaseHash.digest('hex').slice(0, 16)}`;
+await writeFile(path.join(outputDir, 'release.json'), JSON.stringify({ version, canonical: 'https://neraium.com', assetRevision: '20261012d' }) + '\n');
+const headersPath = path.join(outputDir, '_headers');
+await writeFile(headersPath, (await readFile(headersPath, 'utf8')).replace('/*\n', `/*\n  X-Neraium-Release: ${version}\n`));
+console.log(`Release: ${version}`);

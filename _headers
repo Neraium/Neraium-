@@ -1,4 +1,5 @@
 /*
+  Cache-Control: public, max-age=0, must-revalidate
   Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://challenges.cloudflare.com; font-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; frame-src https://challenges.cloudflare.com; img-src 'self' data:; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; upgrade-insecure-requests
   Cross-Origin-Opener-Policy: same-origin
   Permissions-Policy: camera=(), geolocation=(), microphone=()
@@ -9,16 +10,25 @@
   X-Permitted-Cross-Domain-Policies: none
 
 /styles.css
+  ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
 
 /scripts.js
+  ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
 
 /assets/images/*
+  ! Cache-Control
   Cache-Control: public, max-age=2592000
 
 /sitemap.xml
+  ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
 
 /robots.txt
+  ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
+
+/release.json
+  ! Cache-Control
+  Cache-Control: no-store

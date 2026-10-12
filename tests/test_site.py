@@ -9,12 +9,12 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SITE_ORIGIN = "https://www.neraium.com"
-HOMEPAGE_MAX_WORD_COUNT = 650
+SITE_ORIGIN = "https://neraium.com"
+HOMEPAGE_MAX_WORD_COUNT = 500
 PAGE_MAX_WORD_COUNTS = {
     "platform.html": 900,
     "methodology.html": 440,
-    "evidence.html": 335,
+    "evidence.html": 750,
     "applications.html": 400,
     "security.html": 300,
     "pilot.html": 316,
@@ -307,7 +307,7 @@ class TestStaticSite(unittest.TestCase):
         self.assertEqual({}, duplicate_desc)
 
     def test_primary_navigation_consistency_and_routes(self):
-        primary = [('/platform','Platform'),('/methodology','How It Works'),('/applications','Applications'),('/pilot','Evaluation'),('/company','Company')]
+        primary = [('/platform','Platform'),('/methodology','How It Works'),('/applications','Applications'),('/company','Company')]
         preserved_routes = [('/security','Security')]
         for html_file in site_html_files():
             html = html_file.read_text(encoding='utf-8')
@@ -391,7 +391,7 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     def test_core_positioning_and_ctas(self):
         text = self.normalized(self.index)
-        for phrase in ("Systemic Infrastructure Intelligence", "See degradation before systems fail.", "existing operational data", "interconnected infrastructure systems", "municipal water and wastewater", "Las Vegas hospitality", "Traceable evidence", "Prioritize maintenance", "potential cost avoidance"):
+        for phrase in ("Systemic Infrastructure Intelligence", "See degradation before systems fail.", "telemetry you already have", "system understanding", "municipal water and wastewater", "Las Vegas hospitality", "Traceable evidence", "Prioritize maintenance", "Use the telemetry you already have"):
             self.assertIn(phrase, text)
         platform = self.normalized((ROOT / "platform.html").read_text())
         for phrase in ("Systemic Degradation Intelligence", "Continuous Analytical Memory", "Operational Evidence Testing", "not production-qualified", "Exploratory", "root cause", "insufficient evidence", "source windows"):
@@ -635,13 +635,13 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         security_txt = (ROOT / ".well-known" / "security.txt").read_text(encoding="utf-8")
         self.assertIn("Contact: mailto:craig@neraium.com", security_txt)
         self.assertRegex(security_txt, r"(?m)^Expires: 20\d{2}-\d{2}-\d{2}T")
-        self.assertIn("Canonical: https://www.neraium.com/.well-known/security.txt", security_txt)
+        self.assertIn("Canonical: https://neraium.com/.well-known/security.txt", security_txt)
 
     def test_custom_404_uses_root_assets_without_a_false_canonical(self):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012b', '/scripts.js?v=20261012b', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012d', '/scripts.js?v=20261012d', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
         assert_generated_site_output()
@@ -673,8 +673,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
         self.assertIn('fetchpriority="high"', hero)
         self.assertIn('hero-central-plant-900.webp', hero)
         self.assertIn('href="/platform"', hero)
-        self.assertIn('network-title', self.index_html)
-        self.assertIn('Conceptual architecture', self.index_html)
+        self.assertIn('comparison-title', self.index_html)
+        self.assertIn('Conceptual scenario', self.index_html)
         self.assertNotIn('class="behavior-visual"', self.index_html)
 
     def test_below_fold_images_are_lazy_loaded_when_appropriate(self):
@@ -696,8 +696,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012b">')
-            self.assertRegex(html, r'<script src="/scripts\.js\?v=20261012b" defer></script>')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012d">')
+            self.assertRegex(html, r'<script src="/scripts\.js\?v=20261012d" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)
     def test_above_fold_media_is_not_deferred(self):

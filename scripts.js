@@ -145,7 +145,7 @@
         showStatus('success', 'Your request has been accepted for email delivery. This does not confirm inbox receipt.');
         form.reset();
       } else {
-        showStatus('success', 'Your email draft is ready. Review it in your email application, then choose send.');
+        showStatus('ready', 'Your email draft is ready. Open it below, review it, and send it from your email application. No inquiry has been sent yet.');
         const emailLink = document.createElement('a');
         emailLink.className = 'button secondary prepared-email-link';
         emailLink.href = `mailto:craig@neraium.com?subject=${encodeURIComponent('Neraium Evaluation Request')}&body=${encodeURIComponent(Object.entries(data).filter(([,v])=>v).map(([k,v])=>`${k}: ${v}`).join('\n\n'))}`;

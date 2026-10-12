@@ -35,3 +35,7 @@ The Phase 2 website reuses the documented project-generated water, central-plant
 `/assets/fonts/manrope-latin-variable.woff2` is the Latin variable Manrope font, downloaded from Google Fonts (`https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2`). It is served locally, without Google Fonts requests at runtime. The SIL Open Font License is retained at `assets/fonts/OFL.txt`, from `https://github.com/google/fonts/blob/main/ofl/manrope/OFL.txt`.
 
 Infrastructure imagery and the authentic founder portrait are reused without generating new imagery. The infrastructure images retain their existing representative, project-generated status; this redesign does not turn them into customer or documentary photographs.
+
+## Final product explanation (2026-10-12)
+
+The homepage's `product-demo` figure is a repository-native HTML/CSS/SVG explanatory composition. Its qualitative power-to-flow curves are schematic, with no measured values or customer outcomes. It is labeled “Illustrative product explanation” and explicitly discloses that it is neither customer data nor a live interface nor a diagnosis. No approved real product screenshot was found in the public asset register. The detailed pre-existing operating study is preserved on Evidence at `/evidence#walkthrough`. No new raster asset or third-party imagery was introduced.

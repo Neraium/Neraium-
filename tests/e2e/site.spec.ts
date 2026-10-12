@@ -2,23 +2,23 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /See degradation/i, canonical: 'https://www.neraium.com/' },
-  { path: '/platform', purpose: /Understand how the whole system changes/i, canonical: 'https://www.neraium.com/platform' },
-  { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://www.neraium.com/evidence' },
-  { path: '/applications', purpose: /One systemic perspective/i, canonical: 'https://www.neraium.com/applications' },
-  { path: '/pilot', purpose: /Start with history/i, canonical: 'https://www.neraium.com/pilot' },
-  { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://www.neraium.com/methodology' },
-  { path: '/security', purpose: /Read-only by design/i, canonical: 'https://www.neraium.com/security' },
-  { path: '/company', purpose: /Intelligence for the infrastructure/i, canonical: 'https://www.neraium.com/company' },
-  { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://www.neraium.com/operator-brief' },
-  { path: '/contact', purpose: /Bring your infrastructure into focus/i, canonical: 'https://www.neraium.com/contact' },
-  { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://www.neraium.com/privacy' },
-  { path: '/water-wastewater', purpose: /community depends on/i, canonical: 'https://www.neraium.com/water-wastewater' },
-  { path: '/hospitality', purpose: /every guest experience/i, canonical: 'https://www.neraium.com/hospitality' },
-  { path: '/infrastructure', purpose: /Follow the relationships/i, canonical: 'https://www.neraium.com/infrastructure' },
+  { path: '/', purpose: /See degradation/i, canonical: 'https://neraium.com/' },
+  { path: '/platform', purpose: /Understand how the whole system changes/i, canonical: 'https://neraium.com/platform' },
+  { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
+  { path: '/applications', purpose: /One systemic perspective/i, canonical: 'https://neraium.com/applications' },
+  { path: '/pilot', purpose: /Start with history/i, canonical: 'https://neraium.com/pilot' },
+  { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://neraium.com/methodology' },
+  { path: '/security', purpose: /Read-only by design/i, canonical: 'https://neraium.com/security' },
+  { path: '/company', purpose: /Intelligence for the infrastructure/i, canonical: 'https://neraium.com/company' },
+  { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://neraium.com/operator-brief' },
+  { path: '/contact', purpose: /Bring your infrastructure into focus/i, canonical: 'https://neraium.com/contact' },
+  { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://neraium.com/privacy' },
+  { path: '/water-wastewater', purpose: /community depends on/i, canonical: 'https://neraium.com/water-wastewater' },
+  { path: '/hospitality', purpose: /every guest experience/i, canonical: 'https://neraium.com/hospitality' },
+  { path: '/infrastructure', purpose: /Follow the relationships/i, canonical: 'https://neraium.com/infrastructure' },
 ] as const;
 
-const navLinks = ['Platform','How It Works','Applications','Evaluation','Company'] as const;
+const navLinks = ['Platform','How It Works','Applications','Company'] as const;
 
 async function openPrimaryNavigation(page: Page) {
   const toggle = page.locator('.nav-toggle');
@@ -110,6 +110,8 @@ test('contact form validates practical fields and prepares an email without fake
   await page.locator('#contact-form button[type="submit"]').click();
   await expect(page.locator('#form-feedback')).toBeFocused();
   await expect(page.locator('#form-feedback')).toContainText(/email draft is ready/i);
+  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'ready');
+  await expect(page.locator('#form-feedback')).toContainText('No inquiry has been sent yet.');
   await expect(page.locator('#form-feedback a')).toHaveAttribute('href', /^mailto:craig@neraium[.]com[?]/);
   expect(posts).toEqual([]);
 });
@@ -302,4 +304,32 @@ test('sticky header stays stable and mobile navigation contains focus and restor
     await expect(page.locator('main')).not.toHaveAttribute('inert');
     await expect(page.locator('body')).not.toHaveClass(/navigation-open/);
   }
+});
+
+test('public package identity agrees with the served homepage', async ({ request }) => {
+  const manifestResponse = await request.get('/release.json');
+  expect(manifestResponse.ok()).toBe(true);
+  const release = await manifestResponse.json();
+  expect(release.version).toMatch(/^neraium-[a-f0-9]{16}$/);
+  expect(release.canonical).toBe('https://neraium.com');
+  const homepage = await request.get('/');
+  expect(homepage.headers()['x-neraium-release']).toBe(release.version);
+  expect(manifestResponse.headers()['cache-control']).toBe('no-store');
+});
+
+test('illustrative product explanation leads to traceable engineering review', async ({ page }) => {
+  await page.goto('/#operating-example');
+  const demo = page.locator('.product-demo');
+  await expect(demo).toContainText('Illustrative product explanation');
+  await expect(demo).toContainText('Not customer data');
+  await expect(demo).toContainText('not measured values');
+  await expect(demo.getByRole('img')).toHaveAccessibleName('More effort for comparable delivered flow');
+  await demo.getByRole('link', { name: 'Follow the walkthrough' }).click();
+  await expect(page).toHaveURL(/\/evidence#walkthrough$/);
+  const review = page.locator('#walkthrough details');
+  await review.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(review).toHaveAttribute('open', '');
+  await expect(review.locator('p')).toBeVisible();
+  await expect(review).toContainText('insufficient evidence');
 });
