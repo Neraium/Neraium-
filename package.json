@@ -13,7 +13,11 @@
     "deploy": "npm run build && wrangler deploy",
     "preview": "npm run build && wrangler dev",
     "test:server": "node --test tests/contact.test.mjs",
-    "check": "node --check scripts.js && node --check worker/index.mjs && node --check worker/contact.mjs"
+    "check": "node --check scripts.js && node --check worker/index.mjs && node --check worker/contact.mjs",
+    "build:staging": "npm run build && node scripts/prepare-staging.mjs",
+    "staging:dry-run": "wrangler deploy --config wrangler.staging.jsonc --dry-run --outdir artifacts/staging/worker",
+    "preview:staging": "wrangler dev --config wrangler.staging.jsonc --port 4180 --ip 127.0.0.1",
+    "verify:staging": "node scripts/verify-staging.mjs"
   },
   "repository": {
     "type": "git",

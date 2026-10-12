@@ -64,3 +64,50 @@ This task is local-only. No push, merge, deploy, DNS update, external registrati
 ### Retained legacy artifacts
 
 The old unlinked `sample-finding-pack.pdf` and `assets/images/neraium-brand-preview.png` remain in source for historical preservation. They are excluded from deployment output because their earlier diagnosis/simulated-results language does not meet the current public claims boundary. The live social metadata uses `neraium-social.jpg`. Do not restore those legacy artifacts to the public package without a new content review.
+
+## Isolated Phase 2 staging
+
+The approved website content/Worker release is `1f2b51c312e299f590c5d79338ca0a2e7a67178c` on `codex/neraium-phase-2`. Staging preparation does not change the production `wrangler.jsonc`, Worker implementation, domain routes, DNS, or bindings.
+
+Production configuration targets Worker `website`, with Workers.dev and preview URLs disabled. Website metadata names `https://www.neraium.com` as the canonical origin. `npm run deploy` is the existing production deployment command; do **not** use it for staging. GitHub Actions currently tests main/claude pushes and PRs to main; it does not deploy. The Netlify file remains a static alternative. Actual Cloudflare account identity, custom-domain mapping, and account-managed deployment triggers require authenticated read-only inspection; they cannot be inferred from repository configuration alone.
+
+`wrangler.staging.jsonc` is a standalone configuration for **`neraium-phase2-staging-1f2b51c`**, using only Workers.dev, an empty custom-route list, the static `ASSETS` binding, and disabled contact/retention flags. It has no account ID, mail, rate-limit, database, service, or production binding. A remote staging URL exists only after a successful deployment to the approved existing account; no URL or account subdomain is invented here.
+
+### Prepare and validate
+
+```bash
+npm run build:staging
+npm run check
+node --check scripts/prepare-staging.mjs
+node --check scripts/verify-staging.mjs
+python3 -m unittest discover -s tests -v
+npm run test:server
+npm test -- --workers=4
+npm run staging:dry-run
+npm run preview:staging
+```
+
+In a second terminal, run `npm run verify:staging`. Stop the local preview afterward. Do not rebuild either served directory while its browser checks are running.
+
+Preparation checks staging isolation, preserves the production configuration, and compares every emitted public file and both Worker modules against the exact approved release using Git-object SHA-256 hashes. Only the staging copy of `_headers` and `robots.txt` changes: it adds `X-Robots-Tag: noindex, nofollow, noarchive` and blocks crawling. Canonical URLs stay on production. The source production files are unchanged. Release evidence is written to ignored `artifacts/staging/manifest.json`, outside public assets.
+
+The verifier checks all 14 major routes at desktop, tablet, and mobile sizes, image loading, overflow, relative navigation, security/noindex headers, redirects, 404s, retired-artifact exclusion, and the email-draft fallback. It checks that contact intake is disabled before interacting with the form. Remote verification accepts only this staging Worker’s Workers.dev hostname. It is not a production-release test script. Reports and screenshots stay in `artifacts/staging/`.
+
+### Deploy staging only after account access is available
+
+1. Authenticate Wrangler to the approved **existing** Cloudflare account using approved login or a scoped API token supplied through the environment/credential store. Never paste secrets into this repository or commands. `wrangler whoami` must identify the intended account. Do not use `--temporary` or create a substitute account.
+2. Inspect that account’s existing Workers.dev subdomain and staging Worker identity. If `neraium-phase2-staging-1f2b51c` already exists, verify it is this isolated staging target with no production domains, routes, service bindings, or sensitive data before reusing it. Stop if its purpose is uncertain. Do not enable/create an account-wide subdomain or touch DNS/custom domains as a workaround without separate authorization.
+3. Verify the 61 static files and both Worker modules, review the manifest and the standalone configuration, and rerun the dry-run. If multiple accounts are accessible, explicitly select the approved account through `CLOUDFLARE_ACCOUNT_ID` in the deployment environment.
+4. Use the explicit standalone config, never the default production deployment script:
+
+   ```bash
+   ./node_modules/.bin/wrangler deploy --config wrangler.staging.jsonc
+   ```
+
+5. Record the returned staging URL and deployment/version ID. Run `NERAIUM_STAGING_URL='<actual returned staging URL>' npm run verify:staging`. Do not substitute an assumed account subdomain. Inspect the resulting desktop/mobile screenshots and verify that the email draft does not send a request.
+
+Staging remains public on an unlisted Workers.dev URL unless separately protected with approved staging access controls; noindex is not authentication. It contains marketing content only and has no operational-data or public submission backend enabled.
+
+### Safe production release after staging approval
+
+Production is a separate authorized action. Review the final local commits and open a PR to main only when authorized; this preparation does not push or merge. Run remote CI plus the explicit syntax/server suites, preserve the approved source/package hashes, inspect the actual production account/Worker/domain configuration read-only, and retain the current deployed version and rollback procedure. Build production with `npm run build`, never use `dist-staging` or `wrangler.staging.jsonc` for production, and keep contact disabled unless the earlier intake requirements and real-delivery tests have all passed. Only then use the approved production deployment workflow. Verify production URLs, redirects, headers, assets, responsive navigation, and contact behavior after that separately approved release.

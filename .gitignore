@@ -30,3 +30,5 @@ playwright-screenshots/
 test-results/
 
 dist/
+
+dist-staging/
