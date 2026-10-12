@@ -5,17 +5,17 @@ const publicPages = [
   { path: '/', purpose: /See degradation/i, canonical: 'https://neraium.com/' },
   { path: '/platform', purpose: /Understand how the whole system changes/i, canonical: 'https://neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
-  { path: '/applications', purpose: /One systemic perspective/i, canonical: 'https://neraium.com/applications' },
+  { path: '/applications', purpose: /Applications/i, canonical: 'https://neraium.com/applications' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://neraium.com/pilot' },
   { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://neraium.com/methodology' },
   { path: '/security', purpose: /Read-only by design/i, canonical: 'https://neraium.com/security' },
-  { path: '/company', purpose: /Intelligence for the infrastructure/i, canonical: 'https://neraium.com/company' },
+  { path: '/company', purpose: /Company/i, canonical: 'https://neraium.com/company' },
   { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://neraium.com/operator-brief' },
-  { path: '/contact', purpose: /Bring your infrastructure into focus/i, canonical: 'https://neraium.com/contact' },
-  { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://neraium.com/privacy' },
-  { path: '/water-wastewater', purpose: /community depends on/i, canonical: 'https://neraium.com/water-wastewater' },
-  { path: '/hospitality', purpose: /every guest experience/i, canonical: 'https://neraium.com/hospitality' },
-  { path: '/infrastructure', purpose: /Follow the relationships/i, canonical: 'https://neraium.com/infrastructure' },
+  { path: '/contact', purpose: /Request an evaluation/i, canonical: 'https://neraium.com/contact' },
+  { path: '/privacy', purpose: /Privacy/i, canonical: 'https://neraium.com/privacy' },
+  { path: '/water-wastewater', purpose: /Municipal water & wastewater/i, canonical: 'https://neraium.com/water-wastewater' },
+  { path: '/hospitality', purpose: /Las Vegas hospitality & resorts/i, canonical: 'https://neraium.com/hospitality' },
+  { path: '/infrastructure', purpose: /Broader infrastructure/i, canonical: 'https://neraium.com/infrastructure' },
 ] as const;
 
 const navLinks = ['Platform','How It Works','Applications','Company'] as const;
@@ -208,7 +208,7 @@ test('Cloudflare preview enforces clean routes, redirects, security headers, and
 
   const response = await page.goto('/definitely-missing/nested/page', { waitUntil: 'networkidle' });
   expect(response?.status()).toBe(404);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/outside the current site map/i);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/404 \/ Not found/i);
   await expect(page.locator('link[rel="stylesheet"]')).toHaveAttribute('href', /^\/styles[.]css[?]/);
   await expect(page.locator('script[src]')).toHaveAttribute('src', /^\/scripts[.]js[?]/);
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
@@ -320,7 +320,7 @@ test('public package identity agrees with the served homepage', async ({ request
 test('illustrative product explanation leads to traceable engineering review', async ({ page }) => {
   await page.goto('/#operating-example');
   const demo = page.locator('.product-demo');
-  await expect(demo).toContainText('Illustrative product explanation');
+  await expect(demo).toContainText('Conceptual scenario.');
   await expect(demo).toContainText('Not customer data');
   await expect(demo).toContainText('not measured values');
   await expect(demo.getByRole('img')).toHaveAccessibleName('More effort for comparable delivered flow');
