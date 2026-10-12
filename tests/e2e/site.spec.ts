@@ -14,7 +14,7 @@ const publicPages = [
   { path: '/contact', purpose: /Request an evaluation/i, canonical: 'https://neraium.com/contact' },
   { path: '/privacy', purpose: /Privacy/i, canonical: 'https://neraium.com/privacy' },
   { path: '/water-wastewater', purpose: /Municipal water & wastewater/i, canonical: 'https://neraium.com/water-wastewater' },
-  { path: '/hospitality', purpose: /Las Vegas hospitality & resorts/i, canonical: 'https://neraium.com/hospitality' },
+  { path: '/hospitality', purpose: /Hospitality, resorts & attractions/i, canonical: 'https://neraium.com/hospitality' },
   { path: '/infrastructure', purpose: /Broader infrastructure/i, canonical: 'https://neraium.com/infrastructure' },
 ] as const;
 

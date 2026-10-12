@@ -415,6 +415,21 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertIn("not verified customer deployments", page)
             self.assertIn(f'/contact?industry={route}', page)
 
+    def test_initial_and_expansion_market_boundaries(self):
+        for filename in ("index.html", "applications.html", "infrastructure.html"):
+            text = self.normalized((ROOT / filename).read_text())
+            self.assertIn("Potential expansion markets", text)
+            for market in ("Cruise &amp; Maritime", "Aviation", "Energy &amp; Utilities", "Manufacturing", "Data Centers", "Healthcare &amp; Campuses"):
+                self.assertIn(market, text)
+        hospitality = self.normalized((ROOT / "hospitality.html").read_text())
+        for phrase in ("Las Vegas resorts", "water parks", "amusement and theme parks", "Aquatic circulation", "Park-wide utilities", "not validated Neraium applications"):
+            self.assertIn(phrase, hospitality)
+        water = self.normalized((ROOT / "water-wastewater.html").read_text())
+        self.assertIn("Henderson evaluation pathway", water)
+        self.assertIn("not a completed customer validation, awarded contract, or established deployment", water)
+        for filename in ("index.html", "platform.html", "water-wastewater.html", "hospitality.html", "infrastructure.html"):
+            self.assertIn("Neraium-installed hardware", (ROOT / filename).read_text())
+
     def test_evidence_package_and_maintenance_view_are_complete(self):
         homepage = self.normalized(self.index)
         evidence_text = self.normalized((ROOT / "evidence.html").read_text(encoding="utf-8"))
@@ -641,7 +656,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012visual2', '/scripts.js?v=20261012e', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012market3', '/scripts.js?v=20261012market3', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
         assert_generated_site_output()
@@ -696,8 +711,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012visual2">')
-            revision = '20261012contact1' if html_file.name == 'contact.html' else '20261012e'
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012market3">')
+            revision = '20261012market3'
             self.assertRegex(html, rf'<script src="/scripts\.js\?v={revision}" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)

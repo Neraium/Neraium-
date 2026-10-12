@@ -52,3 +52,9 @@ The original founder portrait and both original logo assets are byte-for-byte un
 ## Resort cooling context (2026-10-12)
 
 `resort-cooling-1440.webp` and `resort-cooling-720.webp` are responsive derivatives of a new image generated with the OpenAI image generation tool for this refinement. The prompt specified an illustrative resort rooftop with cooling towers, connected chilled-water headers, valves, service catwalks and distant desert mountains, in restrained natural morning light. It excluded recognizable facilities, logos, people, text, screens and watermarks. The original generation is retained at `/home/ubuntu/.codex/generated_images/01a130d8-feb5-72e3-a116-abb8b8e7da97/exec-4ebbaf48-3bca-4227-a5a7-7e78e153b566.png`; Chromium canvas created the 1440×960 and 720×480 WebP derivatives (quality 0.84). They are used on Home, Applications, and Hospitality to distinguish the resort context from the original central-plant hero. This is generated context imagery, not customer or deployment photography. Existing applicability disclosures remain. The original hero, logo, social image, water imagery and founder portrait are unchanged.
+
+## Market-alignment refinement (2026-10-12)
+
+No image asset was added or altered. Existing representative water, resort cooling and industrial imagery remains distinct from actual customer photographs. The unchanged founder portrait and original logos retain their prior provenance.
+
+Adjacent authentic interface captures were found under `Neraium-1.0/artifacts/product-screenshots/`. Their `authentic-screenshot-verification.json` identifies synthetic fixtures and explicitly rejects grouped-persistence/comparability presentation. They are not approved public product assets and were not copied to this website. The main explanatory figure now visibly labels itself “Illustrative evidence review,” retaining the schematic-only/customer-data/interface disclosure and introducing no numerical outcome.

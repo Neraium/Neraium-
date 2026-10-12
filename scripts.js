@@ -80,7 +80,7 @@
     feedback.textContent = message;
     feedback.focus();
   };
-  const context = { 'water-wastewater': 'Municipal water / wastewater', hospitality: 'Hospitality / resort infrastructure', infrastructure: 'Broader infrastructure' };
+  const context = { 'water-wastewater': 'Municipal water / wastewater', hospitality: 'Hospitality / resorts / attractions infrastructure', infrastructure: 'Broader infrastructure' };
   const industry = new URLSearchParams(window.location.search).get('industry');
   if (Object.hasOwn(context, industry)) document.getElementById('facility').value = context[industry];
   const controller = new AbortController();
