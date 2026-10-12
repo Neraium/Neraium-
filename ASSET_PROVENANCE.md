@@ -5,7 +5,8 @@ This document covers image and icon assets referenced by the current public Nera
 | File path | Source record | Status | Current use |
 | --- | --- | --- | --- |
 | `/assets/images/neraium-logo-lockup.svg` | Not included in repository. | Existing brand asset; ownership documentation should be retained. | Retained original stacked source; the documented horizontal derivative appears in public headers and footers. |
-| `/assets/images/founder-contact.jpg` | Not included in repository. | Existing founder portrait; permission or ownership should be documented. | Founder portrait on `company.html`; alt text identifies Craig Curtis. |
+| `/assets/images/founder-contact.jpg` and `founder-contact-{480,960}.webp` | Historical source record below. | Previous founder portrait and delivery copies, retained for rollback. | No longer displayed by current public pages. |
+| `/assets/images/founder-headshot-original.jpeg` and `founder-headshot-{480,960,1320}.webp` | Owner-supplied `/home/ubuntu/Craig Headshot.JPEG`, uploaded 2026-10-12 at 21:09 UTC; preservation and processing record below. | User requested website replacement with this upload; original preserved byte for byte. | Founder portrait on `company.html`; alt text identifies Craig Curtis. |
 | `/assets/images/neraium-brand-preview.png` | Not included in repository. | Existing social preview; derivation or ownership should be documented. | Retained legacy preview; excluded from the public build. Current metadata uses the documented `neraium-social.jpg`. |
 | `favicon.ico` | Not included in repository. | Existing brand icon. | Browser favicon. |
 | `/assets/images/apple-touch-icon.png` | Not included in repository. | Existing brand icon. | Apple touch-icon metadata. |
@@ -84,3 +85,19 @@ A fresh read-only review included the authentic-capture verification record, the
 `founder-contact-480.webp` (480 × 472, 29,756 bytes) and `founder-contact-960.webp` (960 × 944, 69,494 bytes) are responsive delivery copies of the existing authentic `founder-contact.jpg` (1320 × 1298, 582,575 bytes). Chromium canvas uniformly resized the full, uncropped photograph and encoded WebP at quality 0.90. No generative processing, retouching, compositing, or alteration of facial features was performed. The original JPEG remains byte-for-byte unchanged and is retained as the fallback source. Responsive selection and eager/high-priority loading address the portrait appearing within the mobile opening. The existing approval/provenance status of the original photograph applies to these delivery copies; no new rights claim is made.
 
 Original logos, all existing infrastructure imagery, and the original founder photograph remain unchanged. Scott remains omitted pending an official role, approved biography, and authentic approved photograph. Existing affiliation wording and membership qualifications are preserved.
+
+## Uploaded founder headshot replacement (2026-10-12)
+
+The preceding portrait-preservation entries describe earlier revisions. The current Company page uses the newly uploaded `/home/ubuntu/Craig Headshot.JPEG`, copied byte for byte to `assets/images/founder-headshot-original.jpeg` (1320 × 1784, 268,691 bytes). Both files have SHA-256 `014e78c5d47870b960b5ea49cfb66e25d390414842b038f3472fbd4169f2c3a0`. The home directory, Downloads, temporary/upload locations, and existing website assets were searched. Visual inspection distinguished this vertical suit-and-tie photograph from the older tight portrait crops in `founder-contact.jpg`, `craig.jpg`, and `craig-duplicate.jpg`; the newer temporary founder PNG is a screenshot of the previous website portrait. No second plausible new headshot upload was found.
+
+Chromium canvas generated responsive WebP delivery copies directly from the uploaded JPEG. Each copy draws the entire decoded photograph at its original proportions, using high-quality uniform resizing and WebP quality 0.94. No AI generation, retouching, sharpening, color adjustment, facial modification, compositing, or additional cropping was applied. The original professional vertical framing is retained, and the page renders the image with automatic height. Unique asset names avoid reusing cached copies of the previous photograph.
+
+| Delivery file | Dimensions | Bytes |
+| --- | --- | --- |
+| `founder-headshot-480.webp` | 480 × 649 | 50,072 |
+| `founder-headshot-960.webp` | 960 × 1297 | 126,092 |
+| `founder-headshot-1320.webp` | 1320 × 1784 | 192,314 |
+
+Company is the only current public page that displays a founder portrait. Its responsive sources and original-JPEG fallback all use the new upload. The previous portrait assets remain available for historical rollback and are no longer referenced by current public pages. Biography, contact links, affiliations, branding, and Cloudflare configuration are unchanged.
+
+Validation passed: production build, JavaScript syntax checks, 49 repository tests, 24 server tests, and 684 Playwright checks across nine viewport sizes (320–1920px). Desktop and mobile founder screenshots were visually reviewed. Additional browser checks verified proportional rendering without overflow, WebP selection at 1×/2×/3× pixel densities, and the original-JPEG fallback. No deployment was performed.

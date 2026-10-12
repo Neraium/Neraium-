@@ -555,7 +555,7 @@ class TestPositioningAndExperience(unittest.TestCase):
 
         company = (ROOT / "company.html").read_text(encoding="utf-8")
         self.assertIn('id="founder"', company)
-        self.assertIn('width="1320" height="1298"', company)
+        self.assertIn('width="1320" height="1784"', company)
         self.assertIn('class="founder-links"', company)
         self.assertIn('aria-label="Craig Curtis on LinkedIn"', company)
         self.assertIn('href="mailto:craig@neraium.com"', company)
