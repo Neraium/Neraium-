@@ -149,7 +149,7 @@ def site_html_files() -> list[Path]:
     return sorted([p for p in ROOT.glob("*.html") if p.is_file()])
 
 
-OFFICIAL_LOGO = "/assets/images/neraium-logo-official-768.png"
+OFFICIAL_LOGO = "/assets/images/neraium-horizontal-official-910.png"
 
 
 def indexable_html_files() -> list[Path]:
@@ -355,9 +355,9 @@ class TestStaticSite(unittest.TestCase):
                 continue
             header = header_match.group(0)
             logo_pattern = re.compile(
-                rf'<img src="{re.escape(OFFICIAL_LOGO)}" srcset="/assets/images/neraium-logo-official-384[.]png 384w, '
-                r'/assets/images/neraium-logo-official-768[.]png 768w, /assets/images/neraium-logo-official-1536[.]png 1536w" '
-                r'sizes="\(max-width: 600px\) 96px, 112px" width="1536" height="1024" '
+                rf'<img src="{re.escape(OFFICIAL_LOGO)}" srcset="/assets/images/neraium-horizontal-official-910[.]png 910w, '
+                r'/assets/images/neraium-horizontal-official-1820[.]png 1820w" '
+                r'sizes="\(max-width: 600px\) 208px, 240px" width="1820" height="362" '
                 r'alt="Neraium logo" class="brand-lockup">'
             )
             if not logo_pattern.search(header):
@@ -667,14 +667,14 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012official-logo1', '/scripts.js?v=20261012enterprise5', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012horizontal-logo2', '/scripts.js?v=20261012enterprise5', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
         assert_generated_site_output()
         for relative in ("sample-finding-pack.pdf", "assets/images/neraium-brand-preview.png"):
             self.assertTrue((ROOT / relative).is_file())
             self.assertFalse((ROOT / "dist" / relative).exists())
-        self.assertTrue((ROOT / "dist" / "assets/images/neraium-social.jpg").is_file())
+        self.assertTrue((ROOT / "dist" / "assets/images/neraium-social-horizontal.png").is_file())
 
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
@@ -724,7 +724,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012official-logo1">')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012horizontal-logo2">')
             revision = '20261012enterprise5'
             self.assertRegex(html, rf'<script src="/scripts\.js\?v={revision}" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
@@ -823,22 +823,23 @@ class TestImageDeploymentPipeline(unittest.TestCase):
         for root in (ROOT, self.DIST):
             logo = root / OFFICIAL_LOGO.lstrip("/")
             self.assertTrue(logo.is_file(), str(logo))
-            self.assertEqual("neraium-logo-official-768.png", logo.name)
+            self.assertEqual("neraium-horizontal-official-910.png", logo.name)
             self.assertTrue(logo.read_bytes().startswith(b"\x89PNG\r\n\x1a\n"))
 
     def test_responsive_logos_preserve_official_source_and_aspect_ratio(self):
         import struct
-        source = ROOT / "3B3FC0B4-80A8-4569-817C-22E67DD3BD40.png"
-        original = source.read_bytes()
-        self.assertEqual(original, (ROOT / "assets/images/neraium-logo-official-1536.png").read_bytes())
-        for width in (384, 768, 1536):
-            asset = ROOT / f"assets/images/neraium-logo-official-{width}.png"
-            self.assertTrue(asset.is_file(), str(asset))
+        import hashlib
+        source = ROOT / "brand-source/neraium-horizontal-original.png"
+        self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(),
+                         "326db293b921fd1898c8d00054a6c8678d8a75af410eb9691450fea540ac3803")
+        for width, height in ((910, 181), (1820, 362)):
+            asset = ROOT / f"assets/images/neraium-horizontal-official-{width}.png"
             data = asset.read_bytes()
-            image_width, image_height = struct.unpack(">II", data[16:24])
-            self.assertEqual(width, image_width)
-            self.assertEqual(width * 2 // 3, image_height)
-            self.assertEqual(image_width / image_height, 1536 / 1024)
+            self.assertEqual(struct.unpack(">II", data[16:24]), (width, height))
+            self.assertEqual(data[25], 6, "Logo must be RGBA, with transparency")
+            self.assertEqual(width / height, 1820 / 362)
+        for html_file in site_html_files():
+            self.assertNotIn("neraium-logo-official-", html_file.read_text())
 
     def test_every_visible_logo_has_required_alt_text(self):
         for html_file in site_html_files():

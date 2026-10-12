@@ -168,10 +168,10 @@ test('header logo and controls stay proportionate and aligned across viewports',
   const initialHeaderBox = await header.boundingBox();
   const initialLogoBox = await logo.boundingBox();
 
-  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-official-768.png');
-  await expect(logo).toHaveAttribute('srcset', /neraium-logo-official-384[.]png 384w/);
-  await expect(logo).toHaveAttribute('width', '1536');
-  await expect(logo).toHaveAttribute('height', '1024');
+  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-horizontal-official-910.png');
+  await expect(logo).toHaveAttribute('srcset', /neraium-horizontal-official-910[.]png 910w/);
+  await expect(logo).toHaveAttribute('width', '1820');
+  await expect(logo).toHaveAttribute('height', '362');
   await expect.poll(() => logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
 
   const headerBox = await header.boundingBox();
@@ -182,17 +182,18 @@ test('header logo and controls stay proportionate and aligned across viewports',
   expect(logoBox).not.toBeNull();
   expect(logoBox?.width).toBe(brandBox?.width);
   expect(logoBox?.height).toBe(brandBox?.height);
-  expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1536 / 1024, 3);
+  // CSS layout rounds automatic image height to a 1/64px layout unit.
+  expect(Math.abs((logoBox?.height ?? 0) - (logoBox?.width ?? 0) * 362 / 1820)).toBeLessThanOrEqual(1 / 64);
   expect(headerBox?.height).toBe(initialHeaderBox?.height);
   expect(logoBox?.width).toBe(initialLogoBox?.width);
   expect(logoBox?.height).toBe(initialLogoBox?.height);
 
   if ((viewport?.width ?? 0) <= 600) {
-    expect(headerBox?.height).toBe(80);
-    expect(brandBox?.width).toBe(96);
+    expect(headerBox?.height).toBe(72);
+    expect(brandBox?.width).toBe(208);
   } else {
     expect(headerBox?.height).toBe(92);
-    expect(brandBox?.width).toBe(112);
+    expect(brandBox?.width).toBe(240);
   }
 
   if (await toggle.isVisible()) {
@@ -370,9 +371,9 @@ test('retired claim artifacts are unavailable while the current social image rem
     const response = await request.get(route);
     expect(response.status()).toBe(404);
   }
-  const current = await request.get('/assets/images/neraium-social.jpg');
+  const current = await request.get('/assets/images/neraium-social-horizontal.png');
   expect(current.status()).toBe(200);
-  expect(current.headers()['content-type']).toContain('image/jpeg');
+  expect(current.headers()['content-type']).toContain('image/png');
 });
 
 test('sticky header stays stable and mobile navigation contains focus and restores the page', async ({ page }) => {
