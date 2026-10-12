@@ -56,6 +56,10 @@
   const form = document.getElementById('contact-form');
   const feedback = document.getElementById('form-feedback');
   if (form && feedback) {
+    form.addEventListener('input', () => {
+      feedback.replaceChildren();
+      feedback.removeAttribute('data-state');
+    });
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       feedback.replaceChildren();
@@ -104,7 +108,25 @@
           const status = document.createElement('span');
           status.textContent = 'Your email draft is ready. Review it in your email application, then choose send.';
           feedback.dataset.state = 'success';
-          feedback.append(status, emailLink);
+          const fallback = document.createElement('details');
+          fallback.className = 'email-fallback';
+          const summary = document.createElement('summary');
+          summary.textContent = 'No email application? Copy the request';
+          const instructions = document.createElement('p');
+          instructions.textContent = 'Send the text below to craig@neraium.com with the subject “Neraium Historical Evaluation”. This website has not sent your request.';
+          const draft = document.createElement('textarea');
+          draft.id = 'prepared-request';
+          draft.readOnly = true;
+          draft.rows = 8;
+          draft.value = body;
+          draft.setAttribute('aria-label', 'Prepared evaluation request to copy');
+          const select = document.createElement('button');
+          select.type = 'button';
+          select.className = 'button secondary';
+          select.textContent = 'Select request text';
+          select.addEventListener('click', () => { draft.focus(); draft.select(); });
+          fallback.append(summary, instructions, draft, select);
+          feedback.append(status, emailLink, fallback);
         } catch {
           feedback.dataset.state = 'error';
           feedback.textContent = 'The request could not be prepared. Please email craig@neraium.com directly.';

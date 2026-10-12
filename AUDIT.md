@@ -1,3 +1,40 @@
+# Neraium 2.0 public website redesign
+
+Review date: 2026-10-12. Local branch: `redesign/neraium-systemic-intelligence`.
+
+## Implementation
+
+- Retained plain HTML, CSS, SVG, vanilla JavaScript, and the static production build. No runtime dependencies, server endpoints, production bindings, or deployment services were added.
+- Rebuilt the homepage, Platform, and Industries (`/applications`) with outcome-led copy, responsive editorial layouts, a conceptual equipment-relationship diagram, and labeled contextual infrastructure illustrations.
+- Revised Company positioning around a horizontal infrastructure platform while retaining the repository-supported founder biography and LaunchLab affiliation. No customer validation, financial results, certifications, or performance claims were added.
+- Presented Systemic Degradation Intelligence, Continuous Analytical Memory, and Operational Evidence Testing as intended capability direction; evidence testing is explicitly in development.
+- Reworked shared navigation/footer, typography, color tokens, CTA hierarchy, and mobile layouts across the public experience. Kept methodology, evidence, evaluation, security, operator, privacy, and legacy pages available.
+- Kept established canonical URLs and redirects. Added `/industries` as an alias for `/applications`, updated sitemap dates and primary-page social metadata, and replaced the legacy simulated-results social card with brand-only artwork.
+- Improved contact draft handling with an accessible selectable-text fallback, safe text construction, explicit manual delivery, and stale-draft clearing. The site makes no transmission or delivery claim.
+- Preserved navigation without JavaScript using a conditional fallback stylesheet. Normal cold loads do not incur a fallback-menu layout shift.
+
+## Local validation
+
+- Production build passed: 25 public asset entries copied and 11 image references validated.
+- JavaScript syntax checks and `git diff --check` passed. The repository has no dedicated lint or typecheck configuration.
+- Python site suite: 46 passed, covering metadata, local assets, clean-route anchors, navigation consistency, evidence boundaries, and deployment controls.
+- Playwright: 459 passed across nine viewports from 320px to 1920px, covering all 11 indexable pages, form validation, draft fallback, HTML-like user text, no-JavaScript navigation, reduced motion, clean routes, legacy redirects, security headers, custom 404, and image loading.
+- Axe WCAG A/AA scan: zero violations across 33 page/viewport combinations (390px, 768px, 1440px). The audit package was installed outside the repository for QA only.
+- Local mobile Lighthouse: performance 99, accessibility 100, best practices 100, SEO 100. Largest contentful paint approximately 2.0s, cumulative layout shift 0, total blocking time 0ms. These are local synthetic checks, not field Core Web Vitals or product performance measurements.
+- Reviewed desktop/mobile homepage, Platform, Company/founder, and inquiry layouts plus automated screenshots of every public page. Browser test artifacts remain ignored local files.
+
+## Remaining review and launch dependencies
+
+- Review product capability maturity and commercial copy with the product owner. Repository documentation supports the analytical approach, but does not establish externally validated customer outcomes or specific deployed connectors.
+- Generated infrastructure imagery is explicitly labeled as illustration. Verified product captures and commissioned/licensed photographs would strengthen a later asset pass. Existing brand/portrait licensing documentation remains an asset-register requirement; see `ASSET_PROVENANCE.md`.
+- The inquiry remains a user-sent email request to the existing `craig@neraium.com` address. Confirm mailbox operations before launch. Automatic intake requires approved delivery, server-side validation, abuse controls, rate limiting, retention, secrets configuration, and failure tests as documented in `README.md`.
+- `npm ci` reported four pre-existing high-severity development-tool advisories in Wrangler/Miniflare, Sharp, and Undici. These tools are not included in the public static runtime; package inputs were preserved. Review and update the tooling separately before using affected tooling for release work.
+- Production CDN/DNS consolidation and field performance were not examined or changed. No push, merge, deployment, live-data access, or production infrastructure changes occurred.
+
+---
+
+# Historical audit (retained for context)
+
 # Neraium public website audit
 
 Audit date: 2026-08-11

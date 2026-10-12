@@ -23,3 +23,7 @@
 /application.html /applications 301
 /governance /security 301
 /governance.html /security 301
+
+# Visitor-facing industry alias retains established SEO canonical.
+/industries /applications 301
+/industries.html /applications 301

@@ -27,6 +27,7 @@ const publicAssets = [
   'site.webmanifest',
   'sitemap.xml',
   'styles.css',
+  'no-script.css',
   'technical.html',
 ];
 const imageDir = path.join('assets', 'images');

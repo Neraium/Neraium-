@@ -2,20 +2,20 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /Know when the system/i, canonical: 'https://www.neraium.com/' },
-  { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://www.neraium.com/platform' },
+  { path: '/', purpose: /See degradation/i, canonical: 'https://www.neraium.com/' },
+  { path: '/platform', purpose: /Understand the system/i, canonical: 'https://www.neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://www.neraium.com/evidence' },
-  { path: '/applications', purpose: /Practical questions for interconnected facility systems/i, canonical: 'https://www.neraium.com/applications' },
+  { path: '/applications', purpose: /Different infrastructure/i, canonical: 'https://www.neraium.com/applications' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://www.neraium.com/pilot' },
   { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://www.neraium.com/methodology' },
   { path: '/security', purpose: /Read-only by design/i, canonical: 'https://www.neraium.com/security' },
-  { path: '/company', purpose: /Built from the gap between what the dashboard/i, canonical: 'https://www.neraium.com/company' },
+  { path: '/company', purpose: /Infrastructure deserves/i, canonical: 'https://www.neraium.com/company' },
   { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://www.neraium.com/operator-brief' },
   { path: '/contact', purpose: /one system and one review question/i, canonical: 'https://www.neraium.com/contact' },
   { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://www.neraium.com/privacy' },
 ] as const;
 
-const navLinks = ['Platform','How It Works','Applications','Evaluation','Company'] as const;
+const navLinks = ['Platform','How It Works','Industries','Evaluation','Company'] as const;
 
 async function openPrimaryNavigation(page: Page) {
   const toggle = page.locator('.nav-toggle');
@@ -71,6 +71,11 @@ for (const sitePage of publicPages) {
 
     test('captures visual review screenshots', async ({ page }, testInfo) => {
       await page.goto(sitePage.path, { waitUntil: 'networkidle' });
+      for (const image of await page.locator('img[loading="lazy"]').all()) {
+        await image.scrollIntoViewIfNeeded();
+        await expect.poll(() => image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+      }
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
       const slug = sitePage.path.slice(1) || 'index';
       await page.screenshot({ path: path.join('playwright-screenshots', testInfo.project.name, `${slug}-full-page.png`), fullPage: true, animations: 'disabled' });
       for (const [selector, name] of [['.hero, .page-hero','hero'],['#how-it-works','product-flow'],['#capabilities','capabilities'],['#method-concepts','method-concepts'],['#evidence','evidence'],['#evaluation','evaluation'],['#maintenance','operator-view'],['#security','security'],['#applications','applications'],['#founder','founder'],['#contact','contact']] as const) {
@@ -154,11 +159,11 @@ test('header logo and controls stay proportionate and aligned across viewports',
 
   if ((viewport?.width ?? 0) <= 560) {
     expect(headerBox?.height).toBeLessThanOrEqual(126);
-    expect(brandBox?.width).toBe(160);
-    expect(brandBox?.height).toBeCloseTo(160 * 833 / 1146, 0);
+    expect(brandBox?.width).toBe(100);
+    expect(brandBox?.height).toBeCloseTo(100 * 833 / 1146, 0);
     expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1146 / 833, 2);
   } else {
-    expect(brandBox?.width).toBe(128);
+    expect(brandBox?.width).toBe(108);
   }
 
   if (await toggle.isVisible()) {
@@ -190,6 +195,9 @@ test('Cloudflare preview enforces clean routes, redirects, security headers, and
   expect(retired.headers().location).toBe('/platform');
   const applications = await request.get('/applications');
   expect(applications.status()).toBe(200);
+  const industries = await request.get('/industries', { maxRedirects: 0 });
+  expect(industries.status()).toBe(301);
+  expect(industries.headers().location).toBe('/applications');
   const technical = await request.get('/technical', { maxRedirects: 0 });
   expect(technical.status()).toBe(301);
   expect(technical.headers().location).toBe('/applications');
@@ -202,4 +210,38 @@ test('Cloudflare preview enforces clean routes, redirects, security headers, and
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
   await expect(page.getByRole('banner')).toHaveCSS('position', 'sticky');
   await page.screenshot({ path: path.join('playwright-screenshots', testInfo.project.name, '404-nested-full-page.png'), fullPage: true, animations: 'disabled' });
+});
+
+
+test('email fallback preserves entered text safely and clears a stale draft after editing', async ({ page }) => {
+  await page.goto('/contact');
+  await page.locator('#name').fill('Alex & <script>alert(1)</script>');
+  await page.locator('#email').fill('alex@example.com');
+  await page.locator('#organization').fill('Water operations');
+  await page.locator('#facility').fill('Municipal wastewater');
+  await page.locator('#review-question').fill('Has power changed relative to delivered flow?');
+  await page.getByRole('button', { name: 'Prepare email request' }).click();
+  const feedback = page.locator('#form-feedback');
+  await expect(feedback).toContainText('email draft is ready');
+  const href = await feedback.locator('a').getAttribute('href');
+  const body = new URL(href!).searchParams.get('body');
+  expect(body).toContain('Alex & <script>alert(1)</script>');
+  await page.getByText('No email application? Copy the request').click();
+  await expect(feedback).toContainText('has not sent your request');
+  await page.getByRole('button', { name: 'Select request text' }).click();
+  await expect(page.locator('#prepared-request')).toBeFocused();
+  await expect(page.locator('#prepared-request')).toHaveValue(body!);
+  expect(await page.locator('#prepared-request').evaluate((field: HTMLTextAreaElement) => field.selectionEnd - field.selectionStart)).toBe(body!.length);
+  await page.locator('#organization').fill('Updated organization');
+  await expect(feedback).toBeEmpty();
+});
+
+test('navigation remains available without JavaScript on mobile', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4179/');
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Industries' })).toBeVisible();
+  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Industries' }).click();
+  await expect(page).toHaveURL(/applications/);
+  await context.close();
 });

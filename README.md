@@ -6,11 +6,12 @@ Neraium is presented as Systemic Infrastructure Intelligence: read-only analysis
 
 ## Public pages
 
-- `index.html` - baseline-led product overview and system-behavior visualization
-- `platform.html` - product architecture, analytical layers, continued analysis, and operating boundary
+- `index.html` - outcome-led overview, conceptual relationship visualization, and initial industry focus
+- `platform.html` - architecture, Neraium 2.0 capability direction, integration approach, and operating boundary
 - `methodology.html` - baseline learning, context, multiscale persistence, evidence construction, and valid outcomes
 - `evidence.html` - illustrative finding and explicit insufficient-evidence result
-- `technical.html` - current facility-infrastructure focus and suitability characteristics
+- `applications.html` - municipal water/wastewater, Las Vegas hospitality, and broader intended infrastructure applications (visitor-facing Industries)
+- `technical.html` - preserved legacy redirect to Applications/Industries
 - `pilot.html` - bounded Historical Evaluation scope and process
 - `security.html` - read-only architecture, least privilege, and deployment boundaries
 - `operator-brief.html` - concise, printable guidance for operators and engineering leaders
@@ -18,7 +19,7 @@ Neraium is presented as Systemic Infrastructure Intelligence: read-only analysis
 - `contact.html` - low-risk evaluation inquiry
 - `privacy.html` and `404.html` - privacy and not-found pages
 
-The contact page prepares a draft in the visitor's email application. It does not transmit form contents to the website and must not be used to send operational data, credentials, telemetry, diagrams, network information, files, or sensitive system details.
+The contact page prepares a draft for the visitor’s email application, with a selectable-text fallback for webmail users. It explicitly requires the visitor to send the email. Editing any field clears the previous draft. It does not transmit form contents to the website and must not be used to send operational data, credentials, telemetry, diagrams, network information, files, or sensitive system details.
 
 ### Why the inquiry remains email-based
 
@@ -61,3 +62,15 @@ npm test
 ```
 
 The Python suite checks product-positioning contracts, links, assets, metadata, accessibility basics, sitemap coverage, and deployment files. Playwright runs against Wrangler's Static Assets runtime to exercise clean URLs, redirects, headers, the nested custom 404, interactions, responsive layouts, navigation, console behavior, and screenshots across configured viewports.
+
+## Neraium 2.0 redesign
+
+The 2026-10-12 redesign keeps the static stack, established canonicals, deployment integrations, security headers, and deeper technical documents. Public navigation labels `/applications` as Industries; `/industries` redirects to that established route. Technical resources are grouped in the footer.
+
+Capability names describe the intended Neraium 2.0 analytical direction, grounded in the repository’s methodology. Operational Evidence Testing is explicitly a development direction. The site does not present customer validation or measured performance outcomes.
+
+Infrastructure visuals are existing generated illustrations and are labeled as such. The social preview is brand-only code-rendered artwork; regenerate it with `node scripts/generate-social-preview.mjs` (requires the development Playwright browser). See `ASSET_PROVENANCE.md` for source records and remaining asset requirements.
+
+The existing test suite was updated for the revised copy and composition. Browser tests now also cover selectable email text, safe handling of HTML-like entries, stale draft clearing, and navigation without JavaScript. There is no dedicated linter or typechecking configuration; the public runtime is vanilla JavaScript.
+
+See `AUDIT.md` for local validation results and remaining launch dependencies. No deployment is part of this redesign workflow.

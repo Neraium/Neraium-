@@ -1,0 +1,5 @@
+/* Loaded only when JavaScript is disabled. Keep navigation fully usable. */
+@media (max-width: 1120px) {
+  .nav { position: static; display: grid; grid-column: 1 / -1; }
+  .nav-toggle { display: none; }
+}
