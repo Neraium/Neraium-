@@ -391,7 +391,7 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     def test_core_positioning_and_ctas(self):
         text = self.normalized(self.index)
-        for phrase in ("Systemic Infrastructure Intelligence", "See degradation before systems fail.", "telemetry you already have", "compares behavior over time", "municipal water and wastewater", "Las Vegas hospitality", "Traceable evidence", "Prioritize maintenance"):
+        for phrase in ("Systemic Infrastructure Intelligence", "See degradation before systems fail.", "telemetry you already have", "compares behavior over time", "municipal water and wastewater", "Las Vegas hospitality", "Traceable evidence", "Prioritize inspections and maintenance"):
             self.assertIn(phrase, text)
         platform = self.normalized((ROOT / "platform.html").read_text())
         for phrase in ("Systemic Degradation Intelligence", "Continuous Analytical Memory", "Operational Evidence Testing", "not production-qualified", "Exploratory", "root cause", "insufficient evidence", "source windows"):
@@ -413,7 +413,12 @@ class TestPositioningAndExperience(unittest.TestCase):
             page = (ROOT / f"{route}.html").read_text()
             self.assertIn("existing telemetry", self.normalized(page).lower().replace("telemetry you already have", "existing telemetry"))
             self.assertIn("not verified customer deployments", page)
-            self.assertIn(f'/contact?industry={route}', page)
+            if route in ('water-wastewater', 'hospitality'):
+                self.assertIn(f'/contact?industry={route}', page)
+                self.assertIn('href="/pilot"', page)
+            else:
+                self.assertIn('href="/applications"', page)
+                self.assertIn('href="/contact"', page)
 
     def test_initial_and_expansion_market_boundaries(self):
         for filename in ("index.html", "applications.html", "infrastructure.html"):
@@ -427,7 +432,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         water = self.normalized((ROOT / "water-wastewater.html").read_text())
         self.assertIn("Henderson evaluation pathway", water)
         self.assertIn("not a completed customer validation, awarded contract, or established deployment", water)
-        for filename in ("index.html", "platform.html", "water-wastewater.html", "hospitality.html", "infrastructure.html"):
+        for filename in ("index.html", "platform.html"):
             self.assertIn("Neraium-installed hardware", (ROOT / filename).read_text())
 
     def test_evidence_package_and_maintenance_view_are_complete(self):
@@ -481,11 +486,12 @@ class TestPositioningAndExperience(unittest.TestCase):
         platform_text = self.normalized((ROOT / "platform.html").read_text(encoding="utf-8"))
         security_text = self.normalized((ROOT / "security.html").read_text(encoding="utf-8"))
 
-        for phrase in ("Read-only. Human-reviewed.", "BAS, SCADA, historians, alarms", "no autonomous commands", "No initial live connection" ):
-            if phrase == "No initial live connection":
-                self.assertIn(phrase, (ROOT / "water-wastewater.html").read_text())
-            else:
-                self.assertIn(phrase, platform_text)
+        for phrase in ("Read-only. Human-reviewed.", "BAS, SCADA, historians, alarms", "no autonomous commands"):
+            self.assertIn(phrase, platform_text)
+        # Industry pages link the shared evaluation boundary instead of duplicating it.
+        self.assertIn("No live connection initially", (ROOT / "pilot.html").read_text())
+        for filename in ("water-wastewater.html", "hospitality.html"):
+            self.assertIn('href="/pilot"', (ROOT / filename).read_text())
         for phrase in (
             "Read-only by design.",
             "No control path returns.",
@@ -656,7 +662,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012market3', '/scripts.js?v=20261012market3', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012quality4', '/scripts.js?v=20261012quality4', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
         assert_generated_site_output()
@@ -711,8 +717,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012market3">')
-            revision = '20261012market3'
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012quality4">')
+            revision = '20261012quality4'
             self.assertRegex(html, rf'<script src="/scripts\.js\?v={revision}" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)

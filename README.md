@@ -1,10 +1,10 @@
 # Neraium public website
 
-Neraium’s public website presents Systemic Infrastructure Intelligence across connected infrastructure. Municipal water/wastewater and Las Vegas hospitality/resorts are the initial commercial focus. Source is plain HTML, CSS, SVG, and vanilla JavaScript. A small Cloudflare Worker adds configuration-gated inquiry handling; no new runtime dependency or form service is introduced.
+Neraium’s public website presents Systemic Infrastructure Intelligence across connected infrastructure. Municipal water/wastewater and hospitality, resorts, and attractions (including Las Vegas integrated resorts) are the initial commercial focus. Source is plain HTML, CSS, SVG, and vanilla JavaScript. A small Cloudflare Worker adds configuration-gated inquiry handling; no new runtime dependency or form service is introduced.
 
 ## Pages and navigation
 
-Home introduces the problem, systemic intelligence, platform differentiation, initial applications, operational value, and evaluation. Platform explains the integrated architecture and capability maturity. Applications leads to dedicated Water & Wastewater, Hospitality & Resorts, and Broader Infrastructure pages. Company preserves the authentic founder portrait and presents program participation with explicit boundaries.
+Home introduces the problem, systemic intelligence, platform differentiation, initial applications, operational value, and evaluation. Platform explains the integrated architecture and capability maturity. Applications leads to dedicated Water & Wastewater, Hospitality, Resorts & Attractions, and Broader Infrastructure pages. Company preserves the authentic founder portrait and presents program participation with explicit boundaries.
 
 Methodology, Evidence, Security, Historical Evaluation (`/pilot`), Operator Brief, Privacy, Contact, and the custom 404 remain available. Legacy redirects and clean URLs are preserved. The footer contains six essential links; deeper material is linked from relevant pages.
 
@@ -218,3 +218,15 @@ Live Chromium verification also passed: homepage rendered, contact displayed the
 The local follow-up builds on `49bbc62` and its completed visual/contact/configuration work. It improves tablet header access, mobile controls and spacing, conceptual-chart emphasis and evidence disclosures, responsive image selection, and distinct resort infrastructure imagery, while removing a few remaining redundant labels and descriptions. The original headline, branding, current architecture presentation, and complete Cloudflare/contact configuration are preserved. See [AUDIT.md](AUDIT.md) and [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md) for the review and image source record. Screenshots and preservation evidence are in ignored `artifacts/current-head-refinement/`. This is a local-only refinement; the production release remains `neraium-222c60bb952b8669`.
 
 Validation: build and syntax checks, 48 static tests, 24 contact tests, five configuration-guard tests, all 684 browser checks, and read-only live configuration comparison passed. The local package is `neraium-6308ede48cfd1637`; no deployment was performed.
+
+## Final comprehensive review — 2026-10-12
+
+The current production release was verified as `neraium-71200c4a6eaa6b2b`, matching the pre-edit build at `985555d`. All 14 primary production pages and both shared CSS/JS assets matched the baseline source byte-for-byte. The final pass preserves the completed market hierarchy, product illustration, maturity distinctions, contact service, deployment safeguards, logos, portrait, and independent nested repository.
+
+Remaining corrections clarify software delivery and practical buyer value, give each initial market a specific evaluation entry point, remove five repetitive closing bands, and make Company’s technical links useful. Shared evaluation documentation replaces repeated industry integration boilerplate. See the final review in [AUDIT.md](AUDIT.md) and the exact approved-product-capture requirements in [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md).
+
+Fresh screenshots and test/lab reports are retained in ignored `artifacts/production-pass/`, outside the public build. `before/` and `live/` cover all 14 routes at desktop, tablet, and mobile widths; `after/` contains the completed local implementation. Full browser screenshots are also in `playwright-screenshots/`.
+
+The actual current fallback is the retained explicit `mailto:` link, which opens the visitor’s email client. The disabled form preserves details and sends nothing; it does not automatically populate an email draft. Earlier audit references to an automatic email-draft workflow are historical/inaccurate for this HEAD. This review does not rebuild or change the contact system. Both activation and retention flags remain false.
+
+This assignment is local-only. No production release, push, merge, domain/binding change, or real inquiry was made. A future authorized release must use `npm run deploy`. Live configuration comparison requires the existing account credential; local configuration guard tests and a Worker dry-run remain available without it.

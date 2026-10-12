@@ -141,6 +141,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .scope-summary { display: grid; grid-template-columns: 1fr 1fr; column-gap: 88px; row-gap: 20px; }
 .scope-summary h2 { grid-row: 1/4; max-width: 16ch; margin: 0; }
 .scope-summary p, .scope-summary .text-link { grid-column: 2; margin: 0; }
+.scope-summary > .button-row { grid-column: 2; margin-top: 12px; }
 .capability-detail article { display: grid; grid-template-columns: 1fr 1.2fr; gap: 88px; padding-block: 40px; border-top: 1px solid var(--line); }
 .capability-detail article:last-child { border-bottom: 1px solid var(--line); }
 .capability-detail h3 { margin-top: 16px; font-size: 30px; max-width: 23ch; }
@@ -726,6 +727,7 @@ h2 { font-size: clamp(32px, 3.4vw, 50px); }
 .company-intro { display: grid; grid-template-columns: .7fr 1.3fr; gap: 100px; }
 .company-intro h1 { font-size: clamp(60px, 6.4vw, 88px); }
 .company-intro .lead { margin-top: 0; max-width: 680px; font-size: 20px; }
+.company-intro > div > p + p { max-width: 680px; font-size: 16px; }
 .founder-block { grid-template-columns: .8fr 1.2fr; gap: 112px; }
 .founder-block img { max-width: 460px; }
 .founder-block h2 { font-size: clamp(40px, 4.2vw, 60px); }
@@ -736,7 +738,7 @@ h2 { font-size: clamp(32px, 3.4vw, 50px); }
 .affiliation-list p + p { margin-top: 10px; max-width: 290px; }
 .company-page .link-panels a { display: flex; flex-direction: column; gap: 12px; }
 .company-page .link-panels strong { font-size: 24px; }
-.company-page .link-panels span { font-size: 14px; }
+.company-page .link-panels span, .company-page .link-panels p { font-size: 14px; }
 .contact-form { border-top: 2px solid #6fa89f; }
 .form-note { padding-top: 20px; border-top: 1px solid var(--line); font-size: 12px; }
 .form-transparency { font-size: 12px; }
