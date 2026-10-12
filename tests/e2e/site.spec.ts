@@ -159,14 +159,19 @@ test('mobile navigation exposes the contact path and moves keyboard focus predic
 });
 
 test('header logo and controls stay proportionate and aligned across viewports', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   const header = page.locator('.site-header');
   const brand = page.locator('.brand');
   const logo = page.locator('.brand-lockup');
   const toggle = page.locator('.nav-toggle');
   const viewport = page.viewportSize();
+  const initialHeaderBox = await header.boundingBox();
+  const initialLogoBox = await logo.boundingBox();
 
-  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-horizontal.svg');
+  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-official-768.png');
+  await expect(logo).toHaveAttribute('srcset', /neraium-logo-official-384[.]png 384w/);
+  await expect(logo).toHaveAttribute('width', '1536');
+  await expect(logo).toHaveAttribute('height', '1024');
   await expect.poll(() => logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
 
   const headerBox = await header.boundingBox();
@@ -177,14 +182,17 @@ test('header logo and controls stay proportionate and aligned across viewports',
   expect(logoBox).not.toBeNull();
   expect(logoBox?.width).toBe(brandBox?.width);
   expect(logoBox?.height).toBe(brandBox?.height);
+  expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1536 / 1024, 3);
+  expect(headerBox?.height).toBe(initialHeaderBox?.height);
+  expect(logoBox?.width).toBe(initialLogoBox?.width);
+  expect(logoBox?.height).toBe(initialLogoBox?.height);
 
   if ((viewport?.width ?? 0) <= 600) {
-    expect(headerBox?.height).toBe(72);
-    expect(brandBox?.width).toBe(160);
-    expect(brandBox?.height).toBeCloseTo(160 * 40 / 188, 0);
-    expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(188 / 40, 2);
+    expect(headerBox?.height).toBe(80);
+    expect(brandBox?.width).toBe(96);
   } else {
-    expect(brandBox?.width).toBe(188);
+    expect(headerBox?.height).toBe(92);
+    expect(brandBox?.width).toBe(112);
   }
 
   if (await toggle.isVisible()) {

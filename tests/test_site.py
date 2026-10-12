@@ -149,7 +149,7 @@ def site_html_files() -> list[Path]:
     return sorted([p for p in ROOT.glob("*.html") if p.is_file()])
 
 
-OFFICIAL_LOGO = "/assets/images/neraium-logo-horizontal.svg"
+OFFICIAL_LOGO = "/assets/images/neraium-logo-official-768.png"
 
 
 def indexable_html_files() -> list[Path]:
@@ -346,7 +346,6 @@ class TestStaticSite(unittest.TestCase):
         self.assertIn("year.textContent = new Date().getFullYear()", scripts)
 
     def test_public_headers_use_official_white_logo_lockup(self):
-        expected_img = f'<img src="{OFFICIAL_LOGO}" width="188" height="40" alt="Neraium logo" class="brand-lockup">'
         errors = []
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
@@ -355,7 +354,13 @@ class TestStaticSite(unittest.TestCase):
                 errors.append(f"{html_file.name}: missing site header")
                 continue
             header = header_match.group(0)
-            if expected_img not in header:
+            logo_pattern = re.compile(
+                rf'<img src="{re.escape(OFFICIAL_LOGO)}" srcset="/assets/images/neraium-logo-official-384[.]png 384w, '
+                r'/assets/images/neraium-logo-official-768[.]png 768w, /assets/images/neraium-logo-official-1536[.]png 1536w" '
+                r'sizes="\(max-width: 600px\) 96px, 112px" width="1536" height="1024" '
+                r'alt="Neraium logo" class="brand-lockup">'
+            )
+            if not logo_pattern.search(header):
                 errors.append(f"{html_file.name}: missing official logo img")
             if 'href="/"' not in header:
                 errors.append(f"{html_file.name}: logo/header does not link home")
@@ -662,7 +667,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012premium1', '/scripts.js?v=20261012enterprise5', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012official-logo1', '/scripts.js?v=20261012enterprise5', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
         assert_generated_site_output()
@@ -702,7 +707,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
 
     def test_below_fold_images_are_lazy_loaded_when_appropriate(self):
         eager_allowlist = {
-            "/assets/images/neraium-logo-horizontal.svg",
+            OFFICIAL_LOGO,
             "/assets/images/hero-central-plant.webp",
         }
         errors = []
@@ -719,7 +724,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012premium1">')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012official-logo1">')
             revision = '20261012enterprise5'
             self.assertRegex(html, rf'<script src="/scripts\.js\?v={revision}" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
@@ -818,16 +823,22 @@ class TestImageDeploymentPipeline(unittest.TestCase):
         for root in (ROOT, self.DIST):
             logo = root / OFFICIAL_LOGO.lstrip("/")
             self.assertTrue(logo.is_file(), str(logo))
-            self.assertEqual("neraium-logo-horizontal.svg", logo.name)
-            self.assertRegex(logo.name, r"^[a-z0-9][a-z0-9.-]*\.svg$")
-            data = logo.read_text(encoding="utf-8")
-            self.assertTrue(data.lstrip().startswith("<svg"))
+            self.assertEqual("neraium-logo-official-768.png", logo.name)
+            self.assertTrue(logo.read_bytes().startswith(b"\x89PNG\r\n\x1a\n"))
 
-    def test_horizontal_logo_preserves_original_artwork(self):
-        original = (ROOT / "assets/images/neraium-logo-lockup.svg").read_text(encoding="utf-8")
-        horizontal = (ROOT / OFFICIAL_LOGO.lstrip("/")).read_text(encoding="utf-8")
-        original_artwork = re.search(r"<defs>.*?</defs>", original, re.DOTALL).group(0)
-        self.assertIn(original_artwork, horizontal)
+    def test_responsive_logos_preserve_official_source_and_aspect_ratio(self):
+        import struct
+        source = ROOT / "3B3FC0B4-80A8-4569-817C-22E67DD3BD40.png"
+        original = source.read_bytes()
+        self.assertEqual(original, (ROOT / "assets/images/neraium-logo-official-1536.png").read_bytes())
+        for width in (384, 768, 1536):
+            asset = ROOT / f"assets/images/neraium-logo-official-{width}.png"
+            self.assertTrue(asset.is_file(), str(asset))
+            data = asset.read_bytes()
+            image_width, image_height = struct.unpack(">II", data[16:24])
+            self.assertEqual(width, image_width)
+            self.assertEqual(width * 2 // 3, image_height)
+            self.assertEqual(image_width / image_height, 1536 / 1024)
 
     def test_every_visible_logo_has_required_alt_text(self):
         for html_file in site_html_files():

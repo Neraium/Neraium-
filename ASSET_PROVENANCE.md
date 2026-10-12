@@ -31,7 +31,7 @@ The Phase 2 website reuses the documented project-generated water, central-plant
 
 ## Premium visual redesign (2026-10-12)
 
-`/assets/images/neraium-logo-horizontal.svg` reuses the exact image mask and filter from the existing original `neraium-logo-lockup.svg`. Two SVG viewports arrange the original emblem and original wordmark side by side; neither is redrawn or replaced with typeset lettering. The original stacked asset remains unchanged in source and build output. The horizontal composition is used in the header and footer.
+`/assets/images/neraium-logo-horizontal.svg` reuses the exact image mask and filter from the existing original `neraium-logo-lockup.svg`. Two SVG viewports arrange the original emblem and original wordmark side by side; neither is redrawn or replaced with typeset lettering. The original stacked asset and its horizontal derivative are retained unchanged for history. The horizontal derivative is no longer referenced by current public pages.
 
 `/assets/fonts/manrope-latin-variable.woff2` is the Latin variable Manrope font, downloaded from Google Fonts (`https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2`). It is served locally, without Google Fonts requests at runtime. The SIL Open Font License is retained at `assets/fonts/OFL.txt`, from `https://github.com/google/fonts/blob/main/ofl/manrope/OFL.txt`.
 
@@ -107,3 +107,10 @@ Validation passed: production build, JavaScript syntax checks, 49 repository tes
 The owner-supplied `/home/ubuntu/IMG_4908.jpg` (Hypercubic) and `/home/ubuntu/IMG_4909.jpg` (PYXON) were inspected as visual-direction references only. Their logos, wording, graphics, and photographs were not copied into the website. No new raster asset was generated or downloaded.
 
 The homepage and industry openings now display the existing documented infrastructure photographs in immersive compositions with CSS legibility masks. Responsive selection accounts for the tall mobile crop and uses the existing full-resolution originals where appropriate. Image bytes remain unchanged; the photographs remain representative infrastructure imagery, not customer/deployment evidence. The founder headshot and its responsive derivatives remain byte-for-byte unchanged, with full vertical framing, automatic height, and no filters or facial processing. The explanatory SVG curves retain their geometry and qualitative meaning; only their colors were adjusted for dark surfaces. All illustrative disclosures and capability limitations remain attached.
+
+
+## Uploaded official logo replacement (2026-10-12)
+
+The owner-uploaded `/3B3FC0B4-80A8-4569-817C-22E67DD3BD40.png` (1536 × 1024, RGBA) is the approved official stacked Neraium logo. The exact source bytes are copied to `assets/images/neraium-logo-official-1536.png`; responsive 768 × 512 and 384 × 256 transparent PNG delivery copies are uniformly scaled from that source with browser canvas. No trimming, cropping, recoloring, filtering, sharpening, or composition changes were applied. The source’s 3:2 aspect ratio is retained in markup dimensions and CSS sizing.
+
+All active page header and footer references use the responsive official logo with explicit intrinsic dimensions and `srcset`; CSS scales it proportionally. The legacy horizontal SVG and original lockup remain available in source but are not referenced by current page markup. Favicon assets are separate small-format brand icons.
