@@ -77,7 +77,11 @@ for (const sitePage of publicPages) {
       const slug = sitePage.path.slice(1) || 'index';
       await page.locator('footer').scrollIntoViewIfNeeded();
       await page.waitForFunction(() => Array.from(document.images).every(img => img.complete && img.naturalWidth > 0));
-      await page.evaluate(() => window.scrollTo(0,0));
+      await page.evaluate(async () => {
+        await Promise.all(Array.from(document.images).map(image => image.decode()));
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      });
       await page.screenshot({ path: path.join('playwright-screenshots', testInfo.project.name, `${slug}-full-page.png`), fullPage: true, animations: 'disabled' });
       for (const [selector, name] of [['.hero, .page-hero','hero'],['#how-it-works','product-flow'],['#capabilities','capabilities'],['#method-concepts','method-concepts'],['#evidence','evidence'],['#evaluation','evaluation'],['#maintenance','operator-view'],['#security','security'],['#applications','applications'],['#founder','founder'],['#contact','contact']] as const) {
         const target = page.locator(selector).first();
@@ -146,7 +150,7 @@ test('header logo and controls stay proportionate and aligned across viewports',
   const toggle = page.locator('.nav-toggle');
   const viewport = page.viewportSize();
 
-  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-lockup.svg');
+  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-horizontal.svg');
   await expect.poll(() => logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
 
   const headerBox = await header.boundingBox();
@@ -158,13 +162,13 @@ test('header logo and controls stay proportionate and aligned across viewports',
   expect(logoBox?.width).toBe(brandBox?.width);
   expect(logoBox?.height).toBe(brandBox?.height);
 
-  if ((viewport?.width ?? 0) <= 560) {
-    expect(headerBox?.height).toBeLessThanOrEqual(126);
+  if ((viewport?.width ?? 0) <= 600) {
+    expect(headerBox?.height).toBe(72);
     expect(brandBox?.width).toBe(160);
-    expect(brandBox?.height).toBeCloseTo(160 * 833 / 1146, 0);
-    expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1146 / 833, 2);
+    expect(brandBox?.height).toBeCloseTo(160 * 40 / 188, 0);
+    expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(188 / 40, 2);
   } else {
-    expect(brandBox?.width).toBe(128);
+    expect(brandBox?.width).toBe(188);
   }
 
   if (await toggle.isVisible()) {
@@ -265,4 +269,37 @@ test('retired claim artifacts are unavailable while the current social image rem
   const current = await request.get('/assets/images/neraium-social.jpg');
   expect(current.status()).toBe(200);
   expect(current.headers()['content-type']).toContain('image/jpeg');
+});
+
+test('sticky header stays stable and mobile navigation contains focus and restores the page', async ({ page }) => {
+  await page.goto('/platform');
+  await expect(page.locator('.nav a[aria-current="page"]')).toHaveText('Platform');
+  const before = await page.locator('.site-header').boundingBox();
+  await page.evaluate(() => window.scrollTo({ top: 500, behavior: 'instant' }));
+  await expect(page.locator('.site-header')).toHaveClass(/is-scrolled/);
+  const after = await page.locator('.site-header').boundingBox();
+  expect(after?.y).toBe(0);
+  expect(after?.height).toBe(before?.height);
+  const toggle = page.locator('.nav-toggle');
+  if (await toggle.isVisible()) {
+    const toggleBounds = await toggle.boundingBox();
+    // Click its visible viewport position; locator.click scrolls sticky elements into their original flow position.
+    await page.mouse.click(toggleBounds!.x + toggleBounds!.width / 2, toggleBounds!.y + toggleBounds!.height / 2);
+    await expect(page.locator('main')).toHaveAttribute('inert', '');
+    await expect(page.locator('html')).toHaveCSS('overflow-y', 'hidden');
+    await toggle.focus();
+    await page.keyboard.press('Tab');
+    await expect(page.locator('.brand')).toBeFocused();
+    await page.keyboard.press('Shift+Tab');
+    await expect(toggle).toBeFocused();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('main')).not.toHaveAttribute('inert');
+    await expect(toggle).toBeFocused();
+    expect(await page.evaluate(() => window.scrollY)).toBe(500);
+    await page.mouse.click(toggleBounds!.x + toggleBounds!.width / 2, toggleBounds!.y + toggleBounds!.height / 2);
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator('main')).not.toHaveAttribute('inert');
+    await expect(page.locator('body')).not.toHaveClass(/navigation-open/);
+  }
 });

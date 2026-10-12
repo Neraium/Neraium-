@@ -149,7 +149,7 @@ def site_html_files() -> list[Path]:
     return sorted([p for p in ROOT.glob("*.html") if p.is_file()])
 
 
-OFFICIAL_LOGO = "/assets/images/neraium-logo-lockup.svg"
+OFFICIAL_LOGO = "/assets/images/neraium-logo-horizontal.svg"
 
 
 def indexable_html_files() -> list[Path]:
@@ -346,7 +346,7 @@ class TestStaticSite(unittest.TestCase):
         self.assertIn("year.textContent = new Date().getFullYear()", scripts)
 
     def test_public_headers_use_official_white_logo_lockup(self):
-        expected_img = f'<img src="{OFFICIAL_LOGO}" width="1146" height="833" alt="Neraium logo" class="brand-lockup">'
+        expected_img = f'<img src="{OFFICIAL_LOGO}" width="188" height="40" alt="Neraium logo" class="brand-lockup">'
         errors = []
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
@@ -540,7 +540,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertIn('href="mailto:craig@neraium.com"', company)
     def test_mobile_typography_contract_remains_intact(self):
         self.assertRegex(self.styles, r"font-size:\s*clamp\(")
-        self.assertRegex(self.styles, r"@media\s*\(max-width:\s*560px\)")
+        self.assertRegex(self.styles, r"@media\s*\(max-width:\s*600px\)")
         self.assertIn("h1 {", self.styles)
         self.assertIn(".lead", self.styles)
     def test_contact_form_fields_and_warning(self):
@@ -565,26 +565,12 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertNotIn("business day", contact.lower())
     def test_design_tokens_and_responsive_contract(self):
         for token in (
-            "--bg",
-            "--bg-deep",
-            "--surface",
-            "--surface-raised",
-            "--surface-teal",
-            "--teal",
-            "--teal-bright",
-            "--cyan",
-            "--ink",
-            "--muted",
-            "--line",
-            "--success",
-            "--caution",
-            "--danger",
-            "--section",
-            "--radius",
-            "--shadow",
+            "--bg", "--bg-deep", "--surface", "--cyan", "--ink",
+            "--muted", "--muted-low", "--line", "--line-soft", "--caution",
+            "--font-body", "--font-mono", "--section",
         ):
             self.assertIn(token, self.styles)
-        for width in ("1120px", "900px", "760px", "560px"):
+        for width in ("1120px", "900px", "600px"):
             self.assertIn(f"@media (max-width: {width})", self.styles)
         self.assertIn("prefers-reduced-motion", self.styles)
         self.assertIn(".nav.open", self.styles)
@@ -655,7 +641,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012a', '/scripts.js?v=20261012a', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012b', '/scripts.js?v=20261012b', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
         assert_generated_site_output()
@@ -693,7 +679,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
 
     def test_below_fold_images_are_lazy_loaded_when_appropriate(self):
         eager_allowlist = {
-            "/assets/images/neraium-logo-lockup.svg",
+            "/assets/images/neraium-logo-horizontal.svg",
             "/assets/images/hero-central-plant.webp",
         }
         errors = []
@@ -710,8 +696,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012a">')
-            self.assertRegex(html, r'<script src="/scripts\.js\?v=20261012a" defer></script>')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012b">')
+            self.assertRegex(html, r'<script src="/scripts\.js\?v=20261012b" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)
     def test_above_fold_media_is_not_deferred(self):
@@ -731,7 +717,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
             html = html_file.read_text(encoding="utf-8")
             self.assertNotIn("fonts.googleapis.com", html)
             self.assertNotIn("fonts.gstatic.com", html)
-        self.assertIn('"Segoe UI"', (ROOT / "styles.css").read_text(encoding="utf-8"))
+        self.assertIn("'Segoe UI'", (ROOT / "styles.css").read_text(encoding="utf-8"))
 
     def test_no_public_asset_exceeds_cloudflare_limit(self):
         for path in [p for p in ROOT.rglob("*") if p.is_file() and ".git" not in p.parts and "node_modules" not in p.parts]:
@@ -808,10 +794,16 @@ class TestImageDeploymentPipeline(unittest.TestCase):
         for root in (ROOT, self.DIST):
             logo = root / OFFICIAL_LOGO.lstrip("/")
             self.assertTrue(logo.is_file(), str(logo))
-            self.assertEqual("neraium-logo-lockup.svg", logo.name)
+            self.assertEqual("neraium-logo-horizontal.svg", logo.name)
             self.assertRegex(logo.name, r"^[a-z0-9][a-z0-9.-]*\.svg$")
             data = logo.read_text(encoding="utf-8")
             self.assertTrue(data.lstrip().startswith("<svg"))
+
+    def test_horizontal_logo_preserves_original_artwork(self):
+        original = (ROOT / "assets/images/neraium-logo-lockup.svg").read_text(encoding="utf-8")
+        horizontal = (ROOT / OFFICIAL_LOGO.lstrip("/")).read_text(encoding="utf-8")
+        original_artwork = re.search(r"<defs>.*?</defs>", original, re.DOTALL).group(0)
+        self.assertIn(original_artwork, horizontal)
 
     def test_every_visible_logo_has_required_alt_text(self):
         for html_file in site_html_files():
@@ -819,7 +811,7 @@ class TestImageDeploymentPipeline(unittest.TestCase):
                 img for img in load_html(html_file).imgs
                 if (img.get("src") or "").strip() == OFFICIAL_LOGO
             ]
-            self.assertEqual(1, len(logos), html_file.name)
+            self.assertEqual(1 if html_file.name == "technical.html" else 2, len(logos), html_file.name)
             self.assertEqual("Neraium logo", logos[0].get("alt"), html_file.name)
 
     def test_images_are_non_empty_valid_and_cloudflare_safe(self):

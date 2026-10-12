@@ -27,3 +27,11 @@ Before making any public ownership or licensing claim, retain the purchase recor
 The Phase 2 website reuses the documented project-generated water, central-plant, and industrial WebP assets on Home, Applications, and dedicated industry pages. They represent infrastructure contexts; they are not photographs of Neraium customers or deployments. The existing logo and Craig Curtis portrait are unchanged.
 
 `/assets/images/neraium-social.jpg` is a 1200 × 630 browser-rendered brand composition created locally from the existing official logo, documented project-generated central-plant image, and website typography. It replaces the old simulated dashboard social preview across public metadata. It includes no metrics or customer results. The prior preview remains available for rollback but is no longer referenced publicly.
+
+## Premium visual redesign (2026-10-12)
+
+`/assets/images/neraium-logo-horizontal.svg` reuses the exact image mask and filter from the existing original `neraium-logo-lockup.svg`. Two SVG viewports arrange the original emblem and original wordmark side by side; neither is redrawn or replaced with typeset lettering. The original stacked asset remains unchanged in source and build output. The horizontal composition is used in the header and footer.
+
+`/assets/fonts/manrope-latin-variable.woff2` is the Latin variable Manrope font, downloaded from Google Fonts (`https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2`). It is served locally, without Google Fonts requests at runtime. The SIL Open Font License is retained at `assets/fonts/OFL.txt`, from `https://github.com/google/fonts/blob/main/ofl/manrope/OFL.txt`.
+
+Infrastructure imagery and the authentic founder portrait are reused without generating new imagery. The infrastructure images retain their existing representative, project-generated status; this redesign does not turn them into customer or documentary photographs.

@@ -2,6 +2,19 @@
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
+  const header = document.querySelector('.site-header');
+  if (header) {
+    let pending = false;
+    const updateHeader = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 16);
+      pending = false;
+    };
+    updateHeader();
+    window.addEventListener('scroll', () => {
+      if (!pending) { pending = true; requestAnimationFrame(updateHeader); }
+    }, { passive: true });
+  }
+
   const nav = document.getElementById('main-navigation');
   const toggleButton = document.querySelector('.nav-toggle');
   if (nav && toggleButton) {
@@ -10,44 +23,44 @@
       const mobileAction = headerAction.cloneNode(true);
       mobileAction.classList.remove('header-action');
       mobileAction.classList.add('nav-contact');
-      if (/^\/contact(?:\.html)?\/?$/.test(window.location.pathname)) {
-        mobileAction.setAttribute('aria-current', 'page');
-      }
       nav.appendChild(mobileAction);
     }
-
+    const pathname = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+    const activePath = ['/water-wastewater', '/hospitality', '/infrastructure'].includes(pathname) ? '/applications' : pathname;
+    nav.querySelectorAll('a').forEach(link => {
+      if (link.getAttribute('href') === activePath) link.setAttribute('aria-current', 'page');
+    });
+    const mobileViewport = window.matchMedia('(max-width: 1120px)');
+    const background = document.querySelectorAll('main, footer, .skip-link');
     const setExpanded = (expanded) => {
+      nav.classList.toggle('open', expanded);
       toggleButton.setAttribute('aria-expanded', String(expanded));
       toggleButton.setAttribute('aria-label', expanded ? 'Close navigation' : 'Open navigation');
+      document.body.classList.toggle('navigation-open', expanded);
+      document.documentElement.classList.toggle('navigation-open', expanded);
+      background.forEach(element => { element.inert = expanded; });
     };
     toggleButton.addEventListener('click', (event) => {
-      event.stopPropagation();
-      const isOpen = nav.classList.toggle('open');
-      setExpanded(isOpen);
-      if (isOpen && event.detail === 0) nav.querySelector('a')?.focus();
+      const expanded = toggleButton.getAttribute('aria-expanded') !== 'true';
+      setExpanded(expanded);
+      if (expanded && event.detail === 0) nav.querySelector('a')?.focus({ preventScroll: true });
     });
-    nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-      nav.classList.remove('open');
-      setExpanded(false);
-    }));
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setExpanded(false)));
     document.addEventListener('click', (event) => {
-      if (!nav.classList.contains('open')) return;
-      if (nav.contains(event.target) || toggleButton.contains(event.target)) return;
-      nav.classList.remove('open');
-      setExpanded(false);
+      if (nav.classList.contains('open') && !header.contains(event.target)) setExpanded(false);
     });
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        setExpanded(false);
-        toggleButton.focus();
+      if (!nav.classList.contains('open')) return;
+      if (event.key === 'Escape') { setExpanded(false); toggleButton.focus({ preventScroll: true }); }
+      if (event.key === 'Tab') {
+        const focusable = [...header.querySelectorAll('a, button')].filter(element => element.getClientRects().length);
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus({ preventScroll: true }); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus({ preventScroll: true }); }
       }
     });
-    window.matchMedia('(min-width: 1121px)').addEventListener('change', (event) => {
-      if (!event.matches) return;
-      nav.classList.remove('open');
-      setExpanded(false);
-    });
+    mobileViewport.addEventListener('change', () => setExpanded(false));
   }
 
   const printButton = document.querySelector('[data-print-brief]');

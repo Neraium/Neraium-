@@ -13,6 +13,7 @@ const publicAssets = [
   'hospitality.html',
   'infrastructure.html',
   'assets/images',
+  'assets/fonts',
   'company.html',
   'contact.html',
   'evidence.html',
