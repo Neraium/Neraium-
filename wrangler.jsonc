@@ -17,15 +17,46 @@
   "send_email": [
     {
       "name": "EMAIL",
-      "allowed_destination_addresses": ["craig@neraium.com"]
+      "allowed_destination_addresses": [
+        "craig@neraium.com"
+      ]
     }
   ],
   "vars": {
     "CONTACT_ENABLED": "false",
     "CONTACT_RETENTION_APPROVED": "false",
+    "CONTACT_FROM": "website@neraium.com",
     "CONTACT_TO": "craig@neraium.com",
     "CONTACT_HOSTNAMES": "neraium.com,www.neraium.com",
-    "CONTACT_FROM": "",
-    "TURNSTILE_SITE_KEY": ""
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFU0ZCXIu-qT_E9P"
+  },
+  "routes": [
+    {
+      "pattern": "www.neraium.com/*",
+      "zone_name": "neraium.com"
+    },
+    {
+      "pattern": "neraium.com",
+      "zone_name": "neraium.com",
+      "custom_domain": true,
+      "enabled": true,
+      "previews_enabled": false
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "CONTACT_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
+  "account_id": "9820361c238dcdeef0b72b24ec3734db",
+  "secrets": {
+    "required": [
+      "TURNSTILE_SECRET_KEY"
+    ]
   }
 }

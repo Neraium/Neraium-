@@ -14,6 +14,8 @@ See [AUDIT.md](AUDIT.md) for the repository/live-site audit, source references, 
 
 Existing approved logo and founder assets are preserved. Documented generated infrastructure imagery is representative, not customer imagery. See [ASSET_PROVENANCE.md](ASSET_PROVENANCE.md).
 
+Current production configuration and deployment instructions are in [Authoritative production deployment process](#authoritative-production-deployment-process--2026-10-12); older release notes below are historical.
+
 ## Local development and checks
 
 ```bash
@@ -170,3 +172,42 @@ Audited all 16 HTML pages: Home, Platform, Methodology, Evidence, Applications, 
 Validation: production build, syntax checks, 22 contact-service tests, 48 static-site tests, and the production Worker dry-run passed. The browser matrix passed 603 checks; its nine evidence-navigation checks passed on rerun after changing the assertion from the deleted decorative label to the retained conceptual-scenario disclosure. Desktop and mobile screenshots are in ignored `playwright-screenshots/`.
 
 Production publication was attempted with the existing `wrangler.jsonc` targeting Worker `website`. Wrangler reported that this non-interactive environment requires `CLOUDFLARE_API_TOKEN`; `wrangler whoami` also reported no authentication, and no Cloudflare environment credentials were present. Deployment and post-deployment verification remain blocked by account access. Live GET checks still identify the preceding release `neraium-10e71ab7d9761fcd` with contact intake disabled. The authorized release must use the existing account-managed production route once authentication is available.
+
+
+### Authoritative production deployment process — 2026-10-12
+
+This section supersedes the historical authentication blockers and production deployment instructions above. Website content and visual refinement remain unchanged. The approved production account is `9820361c238dcdeef0b72b24ec3734db`, Worker `website`. Wrangler is pinned to **4.149.0** in the lockfile.
+
+`wrangler.jsonc` is the source of truth for every public production variable, resource binding, and route. Keep its syntax valid JSON for the configuration checker. Production uses the apex custom domain `neraium.com` and the existing zone route `www.neraium.com/*`; Workers.dev and preview URLs stay disabled. Do not replace those mappings, modify DNS, recreate the Worker, or reset Dashboard settings.
+
+The inspected Dashboard configuration contained `CONTACT_ENABLED=false`, sender `website@neraium.com`, recipient `craig@neraium.com`, public Turnstile site key, rate limiter namespace `1001` (5 requests per 60 seconds), `ASSETS`, and `TURNSTILE_SECRET_KEY`. The imported local file had an empty `vars` object, so a normal deployment could remove Dashboard variables. The live Worker also lacked `CONTACT_RETENTION_APPROVED` and `CONTACT_HOSTNAMES`, and its `EMAIL` binding was unrestricted. A narrow settings patch added `CONTACT_RETENTION_APPROVED=false` and `CONTACT_HOSTNAMES=neraium.com,www.neraium.com`, constrained EMAIL to `craig@neraium.com`, and inherited every other binding, including the existing secret. The local configuration now records the complete matching public settings. Sender/domain and recipient verification resources were not changed; the available token cannot independently read Email Routing recipient verification (HTTP 403). No delivery test was performed and direct contact stays disabled.
+
+Secrets belong only in Cloudflare or the external credential store. `secrets.required` declares the existing Turnstile secret by name; the preflight checks its presence without retrieving or printing its value. Normal Wrangler deployments preserve existing secrets. Do not put secret names into `vars`, use `--secrets-file` during website releases, or log credential files. `keep_vars` is intentionally absent: all public variables are tracked and compared, avoiding split ownership with the Dashboard.
+
+Use one production workflow from this repository root:
+
+```bash
+# Load existing credentials outside Git; never display the file or enable shell tracing.
+set -a
+source /home/ubuntu/.config/neraium/cloudflare.env
+set +a
+npm ci
+npm run config:check
+npm run check
+npm run test:server
+node --test tests/cloudflare-config.test.mjs
+npm run deploy
+```
+
+`npm run deploy` checks the actual remote configuration, builds production, runs the Wrangler dry-run, compares remote configuration again immediately before upload, then runs `wrangler deploy --config wrangler.jsonc --strict` with `CI=true`. Strict noninteractive mode aborts on Dashboard override conflicts instead of accepting them automatically. A final comparison checks public settings, routes, and the complete before/after secret-name inventory. The explicit production account prevents accidental deployment to another account. Do not bypass this wrapper with bare `wrangler deploy`, remove `--strict`, pipe confirmation input, or run the staging config for production.
+
+If Dashboard settings change, the checker reports the affected binding names without printing values and stops before upload. Inspect the change read-only, reconcile the specific authorized setting while preserving unrelated resources, and update this configuration before retrying. Do not repeatedly import an incomplete configuration or accept an override warning. Extra remote resource bindings and cron schedules also block deployment until represented and reviewed. Additional existing secrets remain managed remotely and are preserved.
+
+Record the deployment/version IDs returned by the wrapper and compare `https://neraium.com/release.json` with `dist/release.json`. Verify homepage/contact responses, disabled `/api/contact-config`, and the direct email fallback without sending an inquiry. Verify `www` redirects preserve paths. Before the one-time reconciliation the active version was `7f508d1a-f5f0-4fd4-9b47-3ce75ddefe0c` (deployment `49e3ca56-eeb8-4153-a1fd-528f31c0f830`); ignored local evidence is in `artifacts/production/`. For later rollback, prefer the preceding website version with the reconciled settings and confirm its binding inventory before rolling back.
+
+
+Production release result: the one-time settings PATCH changed Cloudflare's deployment provenance to `api`. The first noninteractive strict upload correctly stopped on its generic script-API warning, despite the matching configuration. Selecting the same current version through Wrangler did not change this marker. After explicitly reviewing the full matching remote binding/domain inventory, the one-time interactive strict upload confirmed the generic provenance prompt; no Dashboard configuration-difference warning was accepted and no confirmation was automatically piped. A subsequent `npm run deploy` completed with `CI=true --strict`, no override warning, and a successful post-deployment comparison. Future releases use only the guarded wrapper above; any new warning blocks automated deployment.
+
+Final verified Worker version: `b521e884-c242-4bd0-8160-8ab6a37d39fe`; deployment: `53b45145-f04d-41e1-8eb2-a799c541bf7c`. Live `/release.json` reports `neraium-222c60bb952b8669` (asset revision `20261012visual1`), matching the production build. Homepage and contact HTML match `dist/` exactly with HTTP 200 and matching release headers. Both `www` redirects preserve paths and queries; `/api/contact-config` reports `enabled:false`. The remote comparison verifies EMAIL restrictions, public settings, both mappings, rate limiter, and the existing Turnstile secret name without accessing its value. Validation passed: production build, Wrangler dry-run, JavaScript syntax checks, 24 contact-service tests, and five configuration-drift guard tests. Website content and layout files were not edited for this configuration fix.
+
+Live Chromium verification also passed: homepage rendered, contact displayed the unavailable message, entered details were preserved, the direct email link remained available, zero POST requests occurred, and no browser errors were observed. Evidence and screenshots are in ignored `artifacts/production/`.
