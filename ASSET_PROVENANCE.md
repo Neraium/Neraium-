@@ -39,3 +39,11 @@ Infrastructure imagery and the authentic founder portrait are reused without gen
 ## Final product explanation (2026-10-12)
 
 The homepage's `product-demo` figure is a repository-native HTML/CSS/SVG explanatory composition. Its qualitative power-to-flow curves are schematic, with no measured values or customer outcomes. It is labeled “Illustrative product explanation” and explicitly discloses that it is neither customer data nor a live interface nor a diagnosis. No approved real product screenshot was found in the public asset register. The detailed pre-existing operating study is preserved on Evidence at `/evidence#walkthrough`. No new raster asset or third-party imagery was introduced.
+
+## Visual and product experience refinement (2026-10-12)
+
+The asset register and all existing raster assets were inspected, including the historical analytical plots and laptop/tablet compositions. No approved current product interface screenshot with documented source, dataset context, and public-use permission was found. Unregistered historical plots and generated screen imagery were not promoted as real product screenshots.
+
+The homepage retains the repository-native schematic and now labels it “Illustrative evidence review.” The larger comparison and expandable evidence/limitations are explanatory website content, not a production dashboard, customer result, or claim of live product functionality. No numerical telemetry or new raster asset was introduced. The full engineering walkthrough remains on Evidence.
+
+The original founder portrait and both original logo assets are byte-for-byte unchanged. Documented representative infrastructure imagery is reused with responsive source selection and revised CSS crops; it remains representative project-generated imagery rather than customer photography.

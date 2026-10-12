@@ -114,3 +114,33 @@ Wrangler `whoami` reports unauthenticated, and the usual Cloudflare API-token/ac
 A standalone `wrangler.staging.jsonc` targets `neraium-phase2-staging-1f2b51c`, with no custom routes, no shared service/delivery/storage bindings, and both contact and retention flags false. Preparation pins the website content and Worker files to release `1f2b51c312e299f590c5d79338ca0a2e7a67178c`; all 61 static inputs and both Worker modules were verified by hash. Only staging crawling/noindex behavior differs. Nine deliberately unsafe staging configurations were rejected before package generation, covering production name/routes, contact enablement, service/email bindings, asset path, runtime date, main module, and Workers.dev behavior.
 
 The complete local suite passed: build, JavaScript syntax, 47 static tests, 22 server tests, 585 browser tests, clean dependency audit, and staging Worker dry-run. Local staging verification covers 14 routes across three viewports, assets, security/noindex headers, redirects, 404s, and email-draft conversion without sending inquiries. Deployment artifacts and verification records remain outside the public directory under `artifacts/staging/`. README contains the exact staging-only deployment and verification commands, manual account requirements, and the separately authorized production-release sequence.
+
+## Website visual and product experience refinement (2026-10-12)
+
+The production site and the local baseline were rendered read-only at 1440×1000, 768×1024, and 390×844 for Home, Platform, Methodology, Evidence, Applications, Water & Wastewater, Hospitality, Broader Infrastructure, Company, and Contact. Before screenshots showed repetitive heading/copy compositions, equal-weight industry grids, an undersized product comparison, excessive separation between Company purpose and leadership, and tall industry-image crops driven by fixed HTML dimensions. The source asset register and a visual inventory were also reviewed; there is no approved current product interface screenshot to publish.
+
+The existing implementation was refined rather than replaced:
+
+- Home retains “See degradation before systems fail.” A larger headline overlaps a controlled photographic composition. A larger illustrative evidence review pairs the qualitative comparison with keyboard-accessible evidence and limitation disclosures. Infrastructure imagery uses an asymmetric composition instead of identical tiles.
+- Platform replaces the small generic relationship diagram with an architecture view linking approved telemetry/context, systemic analysis, analytical memory, evidence testing, and qualified findings. Current foundations, developing integration, and exploratory work remain explicitly distinguished. The detailed capability explanations and their qualification boundaries remain below it.
+- Company combines the purpose copy with its opening, removes the redundant “Our purpose” section heading, and gives the unchanged founder portrait and leadership copy a stronger light-surface treatment. Original affiliations and the program-participation disclosure are preserved; repeated provider names are removed.
+- Applications uses alternating image/text compositions. The dedicated industry pages use landscape crops and responsive image sources. Methodology drops four redundant boundary slogans while retaining the seven-step sequence and detailed engineering explanations. Evidence retains its full walkthrough.
+- Shared header, type scale, spacing, buttons, and footer are refined. Other pages receive the same stylesheet cache revision, without rewriting their content. No new dependency, external font request, raster asset, or animation is added.
+
+Visual correction passes removed an overlapping chart annotation, restored a full-width founder presentation on phones, and corrected industry image heights. Final desktop/tablet/mobile screenshots were inspected in addition to automated testing. Detail-only captures temporarily hide the sticky header/skip link through the screenshot harness to avoid capture artifacts; the opening/full-page captures retain the actual site chrome. CSP and website runtime behavior are unchanged.
+
+Contact JavaScript, Worker modules, production/staging Wrangler configuration, and original founder/logo assets were checked byte-for-byte against baseline commit `f0c3455`. Contact HTML changes only its shared stylesheet URL. `CONTACT_ENABLED` remains `false`; no email-provider, dashboard, DNS, route, binding, credential, or deployment change was made. The existing unrelated untracked `Neraium-/` directory is preserved.
+
+Validation passed: production build, JavaScript syntax checks, 48 repository tests, 24 contact-service tests, all 684 browser tests across nine viewport sizes (320–1920px), and Wrangler production dry-run. Existing checks cover clean routes, redirects, canonical/structured metadata, headers, images, keyboard navigation, responsive overflow, contact states, and release identity. The product review test now also opens limitations with the keyboard before following the full Evidence walkthrough.
+
+Local Lighthouse homepage scores (performance / accessibility / best practices / SEO): desktop **100 / 100 / 100 / 100**; mobile **99 / 100 / 100 / 100**. These are local laboratory checks, not production measurements. The review package identifies build `neraium-8e987d5cf795ea49`.
+
+Review artifacts are intentionally outside the public build and ignored by Git:
+
+- `artifacts/visual-refinement/before/local/` — local baseline screenshots.
+- `artifacts/visual-refinement/before/live/` — actual production screenshots.
+- `artifacts/visual-refinement/after/` — final local screenshots, including opening, full-page, product, architecture, founder, and mobile navigation views.
+- `artifacts/visual-refinement/assets-review.jpg` — inspected asset inventory.
+- `artifacts/visual-refinement/verification.json`, test logs, and Lighthouse HTML/JSON reports — checks and preservation hashes.
+
+Files use viewport prefixes (`1440`, `768`, `390`), then route and view, for example `1440-home-opening.png`, `390-home-product.png`, and `768-platform-architecture.png`. No production publication was performed. Remaining limitations: authentic product interface imagery needs a documented approved screenshot, and direct contact submission still awaits verified Cloudflare account activation and real delivery/spam-protection verification.

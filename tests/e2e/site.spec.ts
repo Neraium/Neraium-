@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const publicPages = [
   { path: '/', purpose: /See degradation/i, canonical: 'https://neraium.com/' },
-  { path: '/platform', purpose: /Understand how the whole system changes/i, canonical: 'https://neraium.com/platform' },
+  { path: '/platform', purpose: /Integrated infrastructure intelligence/i, canonical: 'https://neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
   { path: '/applications', purpose: /Applications/i, canonical: 'https://neraium.com/applications' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://neraium.com/pilot' },
@@ -396,6 +396,12 @@ test('illustrative product explanation leads to traceable engineering review', a
   await expect(demo).toContainText('Not customer data');
   await expect(demo).toContainText('not measured values');
   await expect(demo.getByRole('img')).toHaveAccessibleName('More effort for comparable delivered flow');
+  const limitations = demo.locator('details').filter({ hasText: 'Known limitations' });
+  await limitations.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(limitations).toHaveAttribute('open', '');
+  await expect(limitations.locator('p')).toBeVisible();
+  await expect(limitations).toContainText('does not establish root cause or failure timing');
   await demo.getByRole('link', { name: 'Follow the walkthrough' }).click();
   await expect(page).toHaveURL(/\/evidence#walkthrough$/);
   const review = page.locator('#walkthrough details');

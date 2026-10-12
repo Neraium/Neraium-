@@ -641,7 +641,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012e', '/scripts.js?v=20261012e', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012visual1', '/scripts.js?v=20261012e', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
         assert_generated_site_output()
@@ -696,7 +696,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012e">')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012visual1">')
             revision = '20261012contact1' if html_file.name == 'contact.html' else '20261012e'
             self.assertRegex(html, rf'<script src="/scripts\.js\?v={revision}" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
