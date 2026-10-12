@@ -10,12 +10,13 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ORIGIN = "https://www.neraium.com"
-HOMEPAGE_MAX_WORD_COUNT = 540
+# Budgets include the relationship illustration and priority-market evaluation examples.
+HOMEPAGE_MAX_WORD_COUNT = 600
 PAGE_MAX_WORD_COUNTS = {
-    "platform.html": 480,
+    "platform.html": 600,
     "methodology.html": 440,
     "evidence.html": 335,
-    "applications.html": 400,
+    "applications.html": 800,
     "security.html": 300,
     "pilot.html": 350,
     "operator-brief.html": 325,
@@ -676,7 +677,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012a', '/scripts.js?v=20261012a', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261012b', '/scripts.js?v=20261012b', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
@@ -723,8 +724,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012a">')
-            self.assertRegex(html, r'<script src="/scripts\.js\?v=20261012a" defer></script>')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012b">')
+            self.assertRegex(html, r'<script src="/scripts\.js\?v=20261012b" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)
     def test_above_fold_media_is_not_deferred(self):

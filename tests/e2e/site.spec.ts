@@ -245,3 +245,47 @@ test('navigation remains available without JavaScript on mobile', async ({ brows
   await expect(page).toHaveURL(/applications/);
   await context.close();
 });
+
+for (const market of [
+  { sector: 'water', link: 'Discuss a water infrastructure evaluation', facility: 'Municipal water / wastewater' },
+  { sector: 'hospitality', link: 'Discuss a hospitality evaluation', facility: 'Las Vegas hospitality / resort infrastructure' },
+]) {
+  test(`${market.sector} inquiry preserves market context and allows a narrower system`, async ({ page }) => {
+    await page.goto('/applications');
+    await page.getByRole('link', { name: market.link }).click();
+    await expect(page).toHaveURL(new RegExp(`/contact\\?sector=${market.sector}$`));
+    await expect(page.locator('#facility')).toHaveValue(market.facility);
+    await expect(page.locator('#sector-context')).toBeVisible();
+    await page.locator('#name').fill('Alex Morgan');
+    await page.locator('#email').fill('alex@example.com');
+    await page.locator('#organization').fill('Example Operations');
+    await page.locator('#facility').fill('Pump system');
+    await page.locator('#review-question').fill('Has the response changed under comparable demand?');
+    await page.getByRole('button', { name: 'Prepare email request' }).click();
+    await expect(page.locator('#form-feedback')).toContainText('Your email draft is ready');
+    const draftLink = await page.locator('.prepared-email-link').getAttribute('href');
+    expect(decodeURIComponent(draftLink || '')).toContain('System or facility type: Pump system');
+    expect(decodeURIComponent(draftLink || '')).not.toContain(market.facility);
+  });
+}
+
+test('unrecognized sector parameters do not populate or render user-controlled content', async ({ page }) => {
+  for (const sector of ['unknown', '__proto__', 'constructor', '<img src=x onerror=alert(1)>']) {
+    await page.goto(`/contact?sector=${encodeURIComponent(sector)}`);
+    await expect(page.locator('#facility')).toHaveValue('');
+    await expect(page.locator('#sector-context')).toBeHidden();
+    await expect(page.locator('#sector-context')).toBeEmpty();
+  }
+});
+
+test('illustrative analysis is readable and explicitly separated from measured results', async ({ page }) => {
+  for (const route of ['/', '/platform']) {
+    await page.goto(route);
+    const preview = page.locator('#analysis-preview');
+    await preview.scrollIntoViewIfNeeded();
+    await expect(preview.getByRole('img', { name: 'An illustrative change in pumping response' })).toBeVisible();
+    await expect(preview).toContainText('not a product screenshot, measured result, or diagnostic conclusion');
+    await preview.getByRole('link', { name: 'Explore a complete illustrative finding' }).click();
+    await expect(page).toHaveURL(/\/evidence$/);
+  }
+});

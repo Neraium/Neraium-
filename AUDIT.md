@@ -2,6 +2,19 @@
 
 Review date: 2026-10-12. Local branch: `redesign/neraium-systemic-intelligence`.
 
+## Redesign continuation — 2026-10-12
+
+Repository inspection found the prior redesign at `401ee51` in the nested checkout `/home/ubuntu/Neraium-/Neraium-`, on `redesign/neraium-systemic-intelligence`, with a clean working tree. The outer checkout remains on the earlier `main`; its untracked nested repository was preserved. Work continued on the existing redesign branch without resetting, copying over, or discarding either checkout.
+
+- Added an accessible SVG/HTML relationship illustration to Home and Platform. Conceptual power/flow curves, a reference/observation legend, operating context, and evidence questions make the analytical approach concrete. Labels explicitly distinguish the illustration from customer data, product UI, measured results, and diagnosis.
+- Expanded municipal water/wastewater evaluation examples across pumping/distribution, lift stations, and treatment processes. Added Las Vegas hospitality examples across central cooling, HVAC/distribution, and domestic water, while retaining the broader infrastructure story.
+- Industry inquiry links now carry recognized market context into the editable system field. Unknown query values are ignored; narrowed visitor input is retained in the prepared email. The existing user-sent email mechanism remains intact.
+- Updated shared asset versions so cached browsers receive the revised styling and behavior. Kept concise copy budgets with explicit allowance for the new analytical illustration and market examples.
+- Production build, JavaScript syntax, and diff checks passed. All 46 Python tests and all 495 Playwright tests passed across nine viewports (320–1920px). Browser coverage includes market inquiries, editable prefill, unknown/prototype-like/HTML-like parameters, and the illustrative evidence path.
+- Accessibility checks found zero WCAG A/AA violations across 15 changed-page/viewport combinations. Desktop and mobile layouts were visually reviewed. Chart axis labels were enlarged on phones after review; final focused layout checks and accessibility checks passed.
+
+No push, merge, deployment, or production configuration change was performed. Prior launch dependencies below remain applicable.
+
 ## Implementation
 
 - Retained plain HTML, CSS, SVG, vanilla JavaScript, and the static production build. No runtime dependencies, server endpoints, production bindings, or deployment services were added.

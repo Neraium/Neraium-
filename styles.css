@@ -3530,3 +3530,45 @@ h1 em { color: var(--cyan); font-style: normal; }
 @media (max-width: 1120px) {
   .nav .nav-contact { background: var(--cyan); }
 }
+
+/* Illustrative relationship analysis and market-specific evaluation pathways. */
+.intelligence-preview { background: linear-gradient(135deg, #0b1927, #102a32); }
+.analysis-layout { display: grid; grid-template-columns: 1.35fr 1fr; gap: 3.5rem; align-items: center; }
+.analysis-artifact { min-width: 0; margin: 0; padding: 2rem; background: #08121f; border: 1px solid #34515e; }
+.analysis-artifact figcaption { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+.analysis-artifact h3 { margin-top: .8rem; font-size: 1.2rem; }
+.artifact-label { max-width: 120px; font: .65rem/1.6 var(--font-mono); color: var(--muted); text-align: right; }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; font-size: .75rem; color: var(--muted); }
+.chart-legend span { display: inline-flex; align-items: center; gap: .5rem; }
+.chart-legend i { width: 22px; border-top: 2px solid var(--cyan); }
+.chart-legend .legend-reference { border-top: 2px dashed #a5b7c7; }
+.relationship-chart { display: block; width: 100%; height: auto; margin-block: 1.5rem; overflow: visible; }
+.relationship-chart text { fill: #b8c9d6; font: 13px var(--font-mono); }
+.chart-grid path { fill: none; stroke: #273f4f; stroke-width: 1; }
+.chart-reference, .chart-observed { fill: none; stroke-width: 3; }
+.chart-reference { stroke: #a5b7c7; stroke-dasharray: 8 6; }
+.chart-observed { stroke: var(--cyan); }
+.chart-comparison { stroke: var(--cyan); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.chart-point { fill: var(--cyan); }
+.reference-point { fill: #a5b7c7; }
+.artifact-context { display: flex; flex-wrap: wrap; gap: .6rem 1rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.artifact-context span { color: #b8c9d6; font: .65rem/1.6 var(--font-mono); }
+.analysis-narrative h3 { font-size: clamp(1.5rem, 2.5vw, 2.1rem); margin-bottom: 1rem; }
+.evidence-summary { margin-block: 1.5rem 2rem; }
+.evidence-summary div { border-top: 1px solid var(--line); padding-block: 1rem; }
+.evidence-summary dt { color: var(--cyan); font: .7rem/1.6 var(--font-mono); margin-bottom: .4rem; }
+.evidence-summary dd { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.6; }
+.market-scenarios .v2-value-grid { margin-bottom: 1.5rem; }
+.sector-context { border-left: 2px solid var(--cyan); padding-left: 1rem; color: var(--ink); margin-block: 1.5rem; }
+.sector-context[hidden] { display: none; }
+@media (max-width: 900px) {
+  .analysis-layout { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media (max-width: 560px) {
+  .analysis-artifact { padding: 1rem; }
+  .analysis-artifact figcaption { display: block; }
+  .artifact-label { display: block; max-width: none; text-align: left; margin-top: .7rem; }
+  .analysis-artifact h3 { font-size: 1.05rem; }
+  .chart-legend { margin-top: 1.2rem; }
+  .relationship-chart text { font-size: 30px; }
+}

@@ -71,6 +71,8 @@ Capability names describe the intended Neraium 2.0 analytical direction, grounde
 
 Infrastructure visuals are existing generated illustrations and are labeled as such. The social preview is brand-only code-rendered artwork; regenerate it with `node scripts/generate-social-preview.mjs` (requires the development Playwright browser). See `ASSET_PROVENANCE.md` for source records and remaining asset requirements.
 
+The continuation adds a code-native, accessible relationship illustration on Home and Platform, plus bounded evaluation examples for municipal water/wastewater and Las Vegas hospitality. The curves contain no measured values and are explicitly distinguished from a product screenshot or diagnostic conclusion. Industry inquiry links use `/contact?sector=water` and `/contact?sector=hospitality`; only these recognized labels initialize the editable system field. Unknown parameters are ignored, and direct contact and no-JavaScript email paths remain available.
+
 The existing test suite was updated for the revised copy and composition. Browser tests now also cover selectable email text, safe handling of HTML-like entries, stale draft clearing, and navigation without JavaScript. There is no dedicated linter or typechecking configuration; the public runtime is vanilla JavaScript.
 
 See `AUDIT.md` for local validation results and remaining launch dependencies. No deployment is part of this redesign workflow.

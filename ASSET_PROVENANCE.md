@@ -25,3 +25,5 @@ Other image files remain in `assets/images/` for compatibility and rollback but 
 Before making any public ownership or licensing claim, retain the purchase record, creator release, generation record, or license text in an approved asset register and update this file.
 
 The redesign labels generated infrastructure visuals as illustrations. These assets do not depict customer sites. Original photographs and verified product screenshots remain launch asset opportunities.
+
+The inline relationship charts in `index.html` and `platform.html` were authored as SVG/HTML on 2026-10-12. They use conceptual curves without measured values, third-party assets, customer data, or product captures. Visible labels and accessible descriptions identify their illustrative status.

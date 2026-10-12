@@ -56,6 +56,20 @@
   const form = document.getElementById('contact-form');
   const feedback = document.getElementById('form-feedback');
   if (form && feedback) {
+    // Only recognized public market labels can initialize this editable field.
+    const sectors = {
+      water: { facility: 'Municipal water / wastewater', context: 'Water & wastewater evaluation. Start with one pumping, treatment, lift, or distribution system.' },
+      hospitality: { facility: 'Las Vegas hospitality / resort infrastructure', context: 'Hospitality evaluation. Start with one cooling, HVAC, or domestic water system.' },
+    };
+    const sectorKey = new URLSearchParams(window.location.search).get('sector');
+    const sector = Object.hasOwn(sectors, sectorKey) ? sectors[sectorKey] : null;
+    const facility = document.getElementById('facility');
+    const sectorContext = document.getElementById('sector-context');
+    if (sector && facility && sectorContext) {
+      if (!facility.value) facility.value = sector.facility;
+      sectorContext.textContent = sector.context;
+      sectorContext.hidden = false;
+    }
     form.addEventListener('input', () => {
       feedback.replaceChildren();
       feedback.removeAttribute('data-state');
