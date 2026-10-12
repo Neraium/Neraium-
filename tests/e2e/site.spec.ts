@@ -177,6 +177,13 @@ test('header logo and controls stay proportionate and aligned across viewports',
     const toggleBox = await toggle.boundingBox();
     expect(toggleBox?.width).toBeGreaterThanOrEqual(44);
     expect(toggleBox?.height).toBeGreaterThanOrEqual(44);
+    if ((viewport?.width ?? 0) >= 701) {
+      const action = page.locator('.header-action');
+      await expect(action).toBeVisible();
+      const actionBox = await action.boundingBox();
+      expect(actionBox!.x).toBeGreaterThanOrEqual(brandBox!.x + brandBox!.width);
+      expect(actionBox!.x + actionBox!.width).toBeLessThanOrEqual(toggleBox!.x);
+    }
     expect((brandBox?.x ?? 0) + (brandBox?.width ?? 0)).toBeLessThan(toggleBox?.x ?? 0);
     const brandCenter = (brandBox?.y ?? 0) + (brandBox?.height ?? 0) / 2;
     const toggleCenter = (toggleBox?.y ?? 0) + (toggleBox?.height ?? 0) / 2;
