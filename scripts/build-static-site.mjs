@@ -24,7 +24,6 @@ const publicAssets = [
   'platform.html',
   'privacy.html',
   'robots.txt',
-  'sample-finding-pack.pdf',
   'scripts.js',
   'security.html',
   'site.webmanifest',
@@ -90,7 +89,11 @@ for (const asset of publicAssets) {
   assertSafeAssetPath(asset);
   if (!existsSync(asset)) throw new Error(`Expected public asset is missing: ${asset}`);
   await assertNoSymlinks(asset);
-  await cp(asset, path.join(outputDir, asset), { recursive: true });
+  await cp(asset, path.join(outputDir, asset), {
+    recursive: true,
+    // Retain the prior simulated social graphic in source for rollback only.
+    filter: (source) => path.basename(source) !== 'neraium-brand-preview.png',
+  });
 }
 
 const referencedImages = new Set();

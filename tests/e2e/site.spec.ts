@@ -256,3 +256,13 @@ test('industry evaluation links prefill system context and optional review quest
   await page.locator('#contact-form button[type="submit"]').click();
   await expect(page.locator('#form-feedback')).toContainText('email draft is ready');
 });
+
+test('retired claim artifacts are unavailable while the current social image remains accessible', async ({ request }) => {
+  for (const route of ['/sample-finding-pack.pdf', '/assets/images/neraium-brand-preview.png']) {
+    const response = await request.get(route);
+    expect(response.status()).toBe(404);
+  }
+  const current = await request.get('/assets/images/neraium-social.jpg');
+  expect(current.status()).toBe(200);
+  expect(current.headers()['content-type']).toContain('image/jpeg');
+});

@@ -657,6 +657,13 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         self.assertNotIn('rel="canonical"', not_found)
         for asset in ('/styles.css?v=20261012a', '/scripts.js?v=20261012a', '/site.webmanifest'):
             self.assertIn(asset, not_found)
+    def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
+        assert_generated_site_output()
+        for relative in ("sample-finding-pack.pdf", "assets/images/neraium-brand-preview.png"):
+            self.assertTrue((ROOT / relative).is_file())
+            self.assertFalse((ROOT / "dist" / relative).exists())
+        self.assertTrue((ROOT / "dist" / "assets/images/neraium-social.jpg").is_file())
+
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
         for filename in ("_headers", "_redirects"):

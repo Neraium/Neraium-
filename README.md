@@ -60,3 +60,7 @@ Cloudflare references: [native email sending](https://developers.cloudflare.com/
 `wrangler.jsonc` routes only `/api/*` through the Worker first and leaves normal static routing, headers, and redirects intact. `netlify.toml` retains static hosting compatibility; on Netlify the email-draft path remains available and the Cloudflare intake does not run. The canonical origin remains `https://www.neraium.com`; apex/HTTP consolidation is an account-level setting outside this change.
 
 This task is local-only. No push, merge, deploy, DNS update, external registration, or production infrastructure modification is authorized. The Worker dry-run bundles locally without deployment.
+
+### Retained legacy artifacts
+
+The old unlinked `sample-finding-pack.pdf` and `assets/images/neraium-brand-preview.png` remain in source for historical preservation. They are excluded from deployment output because their earlier diagnosis/simulated-results language does not meet the current public claims boundary. The live social metadata uses `neraium-social.jpg`. Do not restore those legacy artifacts to the public package without a new content review.
