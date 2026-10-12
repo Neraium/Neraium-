@@ -1,8 +1,11 @@
 const EMAIL = /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+// Cloudflare's documented dummy keys must never activate public intake.
+const TEST_TURNSTILE_KEY = /^[123]x0{20,}(?:AA|AB|BB|FF)$/;
+const realChallengeKey = value => typeof value === 'string' && Boolean(value.trim()) && value === value.trim() && !TEST_TURNSTILE_KEY.test(value);
 const fields = { name: [100, true], email: [254, true], organization: [160, true], facility: [160, true], 'review-question': [600, false], role: [120, false], 'preferred-contact': [30, false] };
 const json = (body, status = 200, extra = {}) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', ...extra } });
 export function configured(env) {
-  return env.CONTACT_ENABLED === 'true' && env.CONTACT_RETENTION_APPROVED === 'true' && typeof env.EMAIL?.send === 'function' && typeof env.CONTACT_RATE_LIMITER?.limit === 'function' && Boolean(env.TURNSTILE_SITE_KEY && env.TURNSTILE_SECRET_KEY) && EMAIL.test(env.CONTACT_FROM || '') && EMAIL.test(env.CONTACT_TO || '') && Boolean(env.CONTACT_HOSTNAMES);
+  return env.CONTACT_ENABLED === 'true' && env.CONTACT_RETENTION_APPROVED === 'true' && typeof env.EMAIL?.send === 'function' && typeof env.CONTACT_RATE_LIMITER?.limit === 'function' && realChallengeKey(env.TURNSTILE_SITE_KEY) && realChallengeKey(env.TURNSTILE_SECRET_KEY) && EMAIL.test(env.CONTACT_FROM || '') && EMAIL.test(env.CONTACT_TO || '') && typeof env.CONTACT_HOSTNAMES === 'string' && env.CONTACT_HOSTNAMES.split(',').some(host => host.trim());
 }
 function validPayload(data) {
   if (!data || typeof data !== 'object' || Array.isArray(data)) return null;
@@ -52,7 +55,7 @@ export async function handleContact(request, env, verifyFetch = fetch) {
     const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
     const key = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
     const limit = await env.CONTACT_RATE_LIMITER.limit({ key: `contact:${key}` });
-    if (!limit.success) return json({ error: 'Too many requests. Please try again later.' }, 429, { 'Retry-After': '60' });
+    if (limit?.success !== true) return json({ error: 'Too many requests. Please try again later.' }, 429, { 'Retry-After': '60' });
     let data;
     try { data = await boundedBody(request); } catch (error) { return json({ error: error instanceof RangeError ? 'Request too large.' : 'Invalid request.' }, error instanceof RangeError ? 413 : 400); }
     const values = validPayload(data);
@@ -64,10 +67,10 @@ export async function handleContact(request, env, verifyFetch = fetch) {
     });
     if (!verification.ok) return json({ error: 'Security verification unavailable. Please try again.' }, 503);
     const result = await verification.json();
-    if (!result.success || result.hostname !== url.hostname || result.action !== 'evaluation') return json({ error: 'Security verification expired or failed. Please try again.' }, 400);
+    if (result?.success !== true || result.hostname !== url.hostname || result.action !== 'evaluation') return json({ error: 'Security verification expired or failed. Please try again.' }, 400);
     const text = Object.entries(values).filter(([,value]) => value).map(([label,value]) => `${label}: ${value}`).join('\n\n');
     const receipt = await env.EMAIL.send({ from: env.CONTACT_FROM, to: env.CONTACT_TO, replyTo: values.email, subject: 'Neraium evaluation inquiry', text });
-    if (!receipt?.messageId) return json({ error: 'Submission could not be confirmed. Please email craig@neraium.com.' }, 502);
+    if (typeof receipt?.messageId !== 'string' || !receipt.messageId.trim()) return json({ error: 'Submission could not be confirmed. Please email craig@neraium.com.' }, 502);
     return json({ accepted: true, message: 'Your request has been accepted for email delivery. This does not confirm inbox receipt.' });
   } catch {
     // Never log submitted fields, IP addresses, provider errors, or secrets.

@@ -558,8 +558,8 @@ class TestPositioningAndExperience(unittest.TestCase):
             contact,
         )
         self.assertIn("customer-approved transfer method", contact)
-        self.assertIn("Nothing is uploaded to the website", contact)
-        self.assertIn('action="mailto:craig@neraium.com"', contact)
+        self.assertIn("processed through Cloudflare", contact)
+        self.assertIn('action="/api/contact"', contact)
         self.assertIn('data-loading-label=', contact)
         self.assertNotIn('data-netlify="true"', contact)
         self.assertNotIn("business day", contact.lower())
@@ -697,7 +697,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
             self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012e">')
-            self.assertRegex(html, r'<script src="/scripts\.js\?v=20261012e" defer></script>')
+            revision = '20261012contact1' if html_file.name == 'contact.html' else '20261012e'
+            self.assertRegex(html, rf'<script src="/scripts\.js\?v={revision}" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)
     def test_above_fold_media_is_not_deferred(self):

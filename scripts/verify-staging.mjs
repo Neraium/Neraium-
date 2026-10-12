@@ -43,8 +43,8 @@ for (const viewport of [{width:1440,height:1000}, {width:768,height:1024}, {widt
  await page.locator('#facility').fill('Representative infrastructure');
  let posts=0;page.on('request',r=>{if(r.method()==='POST')posts++;});
  await page.locator('#contact-form button[type="submit"]').click();
- assert.match(await page.locator('#form-feedback').innerText(),/email draft is ready/);
- assert.match(await page.locator('#form-feedback a').getAttribute('href'),/^mailto:/);
+ assert.match(await page.locator('#form-feedback').innerText(),/Your details have not been sent/);
+ assert.equal(await page.locator('#form-feedback a').count(),0);
  assert.equal(posts,0);
  const config=await page.request.get(origin+'/api/contact-config');
  assert.deepEqual(await config.json(),{enabled:false});
@@ -55,6 +55,6 @@ for (const viewport of [{width:1440,height:1000}, {width:768,height:1024}, {widt
  await page.close();
 }
 assert.deepEqual(errors,[]);
-const result={origin,route_viewport_checks:checks,viewports:[1440,768,390],contact:'email draft only; no POST',indexing:'noindex header and robots disallow',console_errors:errors,passed:true};
+const result={origin,route_viewport_checks:checks,viewports:[1440,768,390],contact:'direct submission disabled; no draft or POST',indexing:'noindex header and robots disallow',console_errors:errors,passed:true};
 fs.writeFileSync('artifacts/staging/qa.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));
 }finally{await browser.close();}

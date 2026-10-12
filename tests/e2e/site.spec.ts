@@ -94,14 +94,13 @@ for (const sitePage of publicPages) {
   });
 }
 
-test('contact form validates practical fields and prepares an email without fake submission', async ({ page }) => {
+test('disabled contact form preserves details and never prepares a draft or submits', async ({ page }) => {
   const posts: string[] = [];
   page.on('request', (request) => {
     if (request.method() === 'POST') posts.push(request.url());
   });
   await page.goto('/contact');
-  await page.locator('#contact-form button[type="submit"]').click();
-  await expect(page.locator('#name')).toBeFocused();
+  await expect(page.locator('#contact-form button[type="submit"]').first()).toBeEnabled();
   await page.locator('#name').fill('Alex Morgan');
   await page.locator('#email').fill('alex@example.com');
   await page.locator('#organization').fill('Example Facilities');
@@ -109,10 +108,11 @@ test('contact form validates practical fields and prepares an email without fake
   await page.locator('#review-question').fill('Has pumping response changed across comparable periods?');
   await page.locator('#contact-form button[type="submit"]').click();
   await expect(page.locator('#form-feedback')).toBeFocused();
-  await expect(page.locator('#form-feedback')).toContainText(/email draft is ready/i);
-  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'ready');
-  await expect(page.locator('#form-feedback')).toContainText('No inquiry has been sent yet.');
-  await expect(page.locator('#form-feedback a')).toHaveAttribute('href', /^mailto:craig@neraium[.]com[?]/);
+  await expect(page.locator('#form-feedback')).toContainText('Online submission is unavailable');
+  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'error');
+  await expect(page.locator('#form-feedback')).toContainText('Your details have not been sent.');
+  await expect(page.locator('#name')).toHaveValue('Alex Morgan');
+  await expect(page.locator('#form-feedback a')).toHaveCount(0);
   expect(posts).toEqual([]);
 });
 
@@ -255,12 +255,84 @@ test('online intake preserves entered details and never shows success after prov
   await expect(page.locator('#name')).toHaveValue('Alex Morgan');
   await expect(page.locator('#contact-form button[type="submit"]')).toBeEnabled();
 });
+for (const [status, json, message] of [
+  [200, { accepted: 'true' }, 'could not be confirmed'],
+  [429, { error: 'Rate limited' }, 'wait a minute'],
+  [503, { error: 'Unavailable' }, 'Online submission is unavailable'],
+] as const) {
+  test(`online intake preserves details after ${status} without acceptance`, async ({ page }) => {
+    await page.route('**/api/contact', route => route.fulfill({ status, json }));
+    await mockOnlineIntake(page); await fillInquiry(page);
+    await page.evaluate(() => (window as any).testChallenge.callback('test-token'));
+    await page.locator('#contact-form button[type="submit"]').click();
+    await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'error');
+    await expect(page.locator('#form-feedback')).toContainText(message);
+    await expect(page.locator('#email')).toHaveValue('alex@example.com');
+    await expect(page.locator('#contact-form button[type="submit"]')).toBeEnabled();
+  });
+}
+test('online intake retains the privacy link and blocks expired challenges', async ({ page }) => {
+  let posts = 0;
+  page.on('request', request => { if (request.method() === 'POST') posts++; });
+  await mockOnlineIntake(page); await fillInquiry(page);
+  await expect(page.locator('#form-transparency a')).toHaveAttribute('href', '/privacy');
+  await page.evaluate(() => {
+    (window as any).testChallenge.callback('test-token');
+    (window as any).testChallenge['expired-callback']();
+  });
+  await page.locator('#contact-form button[type="submit"]').click();
+  await expect(page.locator('#form-feedback')).toContainText('complete the security verification');
+  await expect(page.locator('#name')).toHaveValue('Alex Morgan');
+  expect(posts).toBe(0);
+  const compact = await page.locator('#contact-challenge').evaluate(element => element.clientWidth < 300);
+  expect(await page.evaluate(() => (window as any).testChallenge.size)).toBe(compact ? 'compact' : 'flexible');
+});
+test('failed configuration lookup never sends details or prepares a draft', async ({ page }) => {
+  await page.route('**/api/contact-config', route => route.abort());
+  let posts = 0;
+  page.on('request', request => { if (request.method() === 'POST') posts++; });
+  await page.goto('/contact'); await fillInquiry(page);
+  await page.locator('#contact-form button[type="submit"]').click();
+  await expect(page.locator('#form-feedback')).toContainText('Your details have not been sent');
+  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'error');
+  await expect(page.locator('#name')).toHaveValue('Alex Morgan');
+  await expect(page.locator('#form-feedback a')).toHaveCount(0);
+  expect(posts).toBe(0);
+});
+for (const status of [200, 502]) {
+  test(`online intake exits busy state if challenge reset throws after ${status}`, async ({ page }) => {
+    await page.route('**/api/contact', route => route.fulfill({ status, json: status === 200 ? { accepted: true } : { error: 'Unavailable' } }));
+    await mockOnlineIntake(page); await fillInquiry(page);
+    await page.evaluate(() => {
+      (window as any).turnstile.reset = () => { throw Error('Reset failed'); };
+      (window as any).testChallenge.callback('test-token');
+    });
+    await page.locator('#contact-form button[type="submit"]').click();
+    await expect(page.locator('#contact-form')).not.toHaveAttribute('aria-busy', 'true');
+    await expect(page.locator('#contact-form button[type="submit"]')).toBeEnabled();
+    await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', status === 200 ? 'success' : 'error');
+    await expect(page.locator('#name')).toHaveValue(status === 200 ? '' : 'Alex Morgan');
+    await expect(page.locator('#form-feedback')).toContainText(status === 200 ? 'accepted for email delivery' : 'Your details are preserved');
+  });
+}
+test('online intake reports a challenge initialization failure without sending', async ({ page }) => {
+  await page.route('**/api/contact-config', route => route.fulfill({ json: { enabled: true, siteKey: 'test-site-key' } }));
+  await page.route('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', route => route.fulfill({ contentType: 'application/javascript', body: 'window.turnstile = { render: () => { throw Error("Initialization failed"); } };' }));
+  let posts = 0;
+  page.on('request', request => { if (request.method() === 'POST') posts++; });
+  await page.goto('/contact');
+  await expect(page.locator('#form-feedback')).toContainText('Security verification could not start');
+  await fillInquiry(page);
+  await page.locator('#contact-form button[type="submit"]').click();
+  await expect(page.locator('#name')).toHaveValue('Alex Morgan');
+  expect(posts).toBe(0);
+});
 test('industry evaluation links prefill system context and optional review question does not block an inquiry', async ({ page }) => {
   await page.goto('/contact?industry=water-wastewater');
   await expect(page.locator('#facility')).toHaveValue('Municipal water / wastewater');
   await fillInquiry(page);
   await page.locator('#contact-form button[type="submit"]').click();
-  await expect(page.locator('#form-feedback')).toContainText('email draft is ready');
+  await expect(page.locator('#form-feedback')).toContainText('Your details have not been sent');
 });
 
 test('retired claim artifacts are unavailable while the current social image remains accessible', async ({ request }) => {

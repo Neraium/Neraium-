@@ -14,7 +14,18 @@
     ]
   },
   "main": "worker/index.mjs",
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "allowed_destination_addresses": ["craig@neraium.com"]
+    }
+  ],
   "vars": {
-    "CONTACT_ENABLED": "false"
+    "CONTACT_ENABLED": "false",
+    "CONTACT_RETENTION_APPROVED": "false",
+    "CONTACT_TO": "craig@neraium.com",
+    "CONTACT_HOSTNAMES": "neraium.com,www.neraium.com",
+    "CONTACT_FROM": "",
+    "TURNSTILE_SITE_KEY": ""
   }
 }

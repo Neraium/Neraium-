@@ -18,6 +18,19 @@ test('configuration fails closed for each missing dependency and discloses no se
     assert.deepEqual(await config.json(), { enabled: false }); assert.equal(sent.length, 0);
   }
 });
+test('configuration rejects dummy challenge keys and malformed settings', async () => {
+  const dummyKeys = ['1x00000000000000000000AA', '2x00000000000000000000AB', '1x00000000000000000000BB', '2x00000000000000000000BB', '3x00000000000000000000FF', '1x0000000000000000000000000000000AA', '2x0000000000000000000000000000000AA', '3x0000000000000000000000000000000AA'];
+  for (const key of ['TURNSTILE_SITE_KEY', 'TURNSTILE_SECRET_KEY', 'CONTACT_HOSTNAMES']) {
+    for (const value of [false, true, {}, [], ' ', ...(key !== 'CONTACT_HOSTNAMES' ? dummyKeys : [', ,'])]) {
+      const { env, sent, verify } = fixture(); env[key] = value;
+      assert.equal(configured(env), false);
+      assert.equal((await handleContact(request(), env, verify)).status, 503);
+      const config = await handleContact(new Request('https://www.neraium.com/api/contact-config'), env, verify);
+      assert.deepEqual(await config.json(), { enabled: false });
+      assert.equal(sent.length, 0);
+    }
+  }
+});
 test('success follows provider acceptance and keeps destination server-owned', async () => {
   const { env, sent, verify } = fixture();
   const response = await handleContact(request(), env, verify);
@@ -58,16 +71,24 @@ test('rate limit, rate service failure and missing edge IP never send', async ()
 });
 test('failed, mismatched, expired or unavailable challenges never send', async () => {
   const { env, sent } = fixture();
-  for (const result of [{ success: false }, { success: true, hostname: 'attacker.example', action: 'evaluation' }, { success: true, hostname: 'www.neraium.com', action: 'other' }]) assert.equal((await handleContact(request(), env, async () => Response.json(result))).status, 400);
+  for (const result of [null, { success: 'true', hostname: 'www.neraium.com', action: 'evaluation' }, { success: false }, { success: true, hostname: 'attacker.example', action: 'evaluation' }, { success: true, hostname: 'www.neraium.com', action: 'other' }]) assert.equal((await handleContact(request(), env, async () => Response.json(result))).status, 400);
   assert.equal((await handleContact(request(), env, async () => new Response('', { status: 503 }))).status, 503);
   assert.equal((await handleContact(request(), env, async () => { throw Error('secret'); })).status, 502); assert.equal(sent.length, 0);
 });
 test('delivery failure and missing provider acknowledgement cannot return success', async () => {
   const { env, verify } = fixture();
-  for (const send of [async () => { throw Error('secret provider response'); }, async () => undefined]) {
+  for (const send of [async () => { throw Error('secret provider response'); }, ...[undefined, {}, { messageId: '' }, { messageId: ' ' }, { messageId: true }, { messageId: 123 }].map(receipt => async () => receipt)]) {
     env.EMAIL.send = send; const response = await handleContact(request(), env, verify); assert.equal(response.status, 502);
     const text = await response.text(); assert.doesNotMatch(text, /accepted|secret provider/);
   }
+});
+test('malformed rate limiter acknowledgements never reach verification or delivery', async () => {
+  const { env, sent } = fixture();
+  for (const result of [undefined, null, {}, { success: 'true' }, { success: 1 }]) {
+    env.CONTACT_RATE_LIMITER.limit = async () => result;
+    assert.equal((await handleContact(request(), env, async () => { assert.fail('Verification must not run'); })).status, 429);
+  }
+  assert.equal(sent.length, 0);
 });
 test('method and unknown API route have explicit responses', async () => {
   const { env, verify } = fixture();

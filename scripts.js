@@ -70,6 +70,7 @@
   const feedback = document.getElementById('form-feedback');
   if (!form || !feedback) return;
   const button = form.querySelector('button[type="submit"]');
+  button.disabled = true;
   let online = false;
   let token = '';
   let widget;
@@ -87,32 +88,47 @@
   fetch('/api/contact-config', { signal: controller.signal, cache: 'no-store' })
     .then(async (response) => response.ok ? response.json() : { enabled: false })
     .then((config) => {
-      if (!config.enabled || typeof config.siteKey !== 'string') return;
+      if (config.enabled !== true || typeof config.siteKey !== 'string' || !config.siteKey.trim()) {
+        document.getElementById('intake-description').textContent = 'Online submission is currently unavailable. Please email craig@neraium.com.';
+        return;
+      }
       online = true;
       button.textContent = 'Send evaluation request';
       document.getElementById('intake-description').textContent = 'Send a business inquiry directly to Neraium.';
-      document.getElementById('form-transparency').textContent = 'Your inquiry is processed through Cloudflare and sent to Neraium by email. Please review our privacy information before sending.';
+      document.getElementById('form-transparency').firstChild.textContent = 'Your inquiry is processed through Cloudflare and sent to Neraium by email. See our ';
       const challenge = document.getElementById('contact-challenge');
       challenge.hidden = false;
       const script = document.createElement('script');
       script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
       script.async = true;
       script.onload = () => {
-        widget = window.turnstile.render(challenge, {
-          sitekey: config.siteKey, action: 'evaluation', theme: 'dark', size: 'flexible',
-          callback: (value) => { token = value; },
-          'expired-callback': () => { token = ''; },
-          'error-callback': () => { token = ''; showStatus('error', 'Security verification is unavailable. Please retry or email craig@neraium.com.'); },
-        });
+        try {
+          widget = window.turnstile.render(challenge, {
+            sitekey: config.siteKey, action: 'evaluation', theme: 'dark', size: challenge.clientWidth < 300 ? 'compact' : 'flexible',
+            callback: (value) => { token = value; },
+            'expired-callback': () => { token = ''; },
+            'timeout-callback': () => { token = ''; },
+            'error-callback': () => { token = ''; showStatus('error', 'Security verification is unavailable. Please retry or email craig@neraium.com.'); },
+          });
+        } catch {
+          online = false;
+          showStatus('error', 'Security verification could not start. Please reload or email craig@neraium.com.');
+        }
       };
       script.onerror = () => showStatus('error', 'Security verification could not load. Please email craig@neraium.com.');
       document.head.appendChild(script);
-    }).catch(() => { /* Static hosts retain the disclosed email-draft path. */ })
-    .finally(() => clearTimeout(timeout));
+    }).catch(() => {
+      document.getElementById('intake-description').textContent = 'Online submission could not be checked. Please retry or email craig@neraium.com.';
+    })
+    .finally(() => { clearTimeout(timeout); button.disabled = false; });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (form.getAttribute('aria-busy') === 'true') return;
+    if (!online) {
+      showStatus('error', 'Online submission is unavailable. Your details have not been sent. Please email craig@neraium.com.');
+      return;
+    }
     if (!form.reportValidity()) return;
     const value = (id) => document.getElementById(id)?.value.trim() || '';
     const keys = ['name', 'email', 'organization', 'facility', 'review-question', 'role', 'preferred-contact'];
@@ -125,42 +141,39 @@
     }
     if (value('website')) { showStatus('error', 'The request could not be accepted. Please email Neraium directly.'); return; }
     if (online && !token) { showStatus('error', 'Please complete the security verification before sending.'); return; }
-    const idleLabel = online ? 'Send evaluation request' : 'Prepare email request';
+    const idleLabel = 'Send evaluation request';
     form.setAttribute('aria-busy', 'true');
     button.disabled = true;
-    button.textContent = online ? 'Sending request…' : 'Preparing request…';
+    button.textContent = 'Sending request…';
     try {
-      if (online) {
-        const response = await fetch('/api/contact', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...data, website: '', token }), signal: AbortSignal.timeout(15000),
-        });
-        const result = await response.json();
-        if (!response.ok || result.accepted !== true) {
-          const messages = { 400: 'Please check the fields and complete a new security verification.', 429: 'Too many requests. Please wait a minute before trying again.', 503: 'Online submission is unavailable. Please email craig@neraium.com.' };
-          const error = new Error(messages[response.status] || 'Submission could not be confirmed. Please email craig@neraium.com.');
-          error.publicMessage = true;
-          throw error;
-        }
-        showStatus('success', 'Your request has been accepted for email delivery. This does not confirm inbox receipt.');
-        form.reset();
-      } else {
-        showStatus('ready', 'Your email draft is ready. Open it below, review it, and send it from your email application. No inquiry has been sent yet.');
-        const emailLink = document.createElement('a');
-        emailLink.className = 'button secondary prepared-email-link';
-        emailLink.href = `mailto:craig@neraium.com?subject=${encodeURIComponent('Neraium Evaluation Request')}&body=${encodeURIComponent(Object.entries(data).filter(([,v])=>v).map(([k,v])=>`${k}: ${v}`).join('\n\n'))}`;
-        emailLink.textContent = 'Open the prepared email';
-        feedback.appendChild(emailLink);
+      const response = await fetch('/api/contact', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, website: '', token }), signal: AbortSignal.timeout(15000),
+      });
+      const result = await response.json();
+      if (!response.ok || result.accepted !== true) {
+        const messages = { 400: 'Please check the fields and complete a new security verification.', 429: 'Too many requests. Please wait a minute before trying again.', 503: 'Online submission is unavailable. Please email craig@neraium.com.' };
+        const error = new Error(messages[response.status] || 'Submission could not be confirmed. Please email craig@neraium.com.');
+        error.publicMessage = true;
+        throw error;
       }
+      showStatus('success', 'Your request has been accepted for email delivery. This does not confirm inbox receipt.');
+      form.reset();
     } catch (error) {
       const message = error.name === 'TimeoutError' || error.name === 'AbortError' ? 'Delivery could not be confirmed. Please email craig@neraium.com before retrying.' : 'Submission could not be confirmed. Please retry or email craig@neraium.com.';
       // Only display a known server response; never interpolate arbitrary HTML.
       showStatus('error', error.publicMessage ? error.message : message);
     } finally {
-      if (online && window.turnstile && widget !== undefined) { token = ''; window.turnstile.reset(widget); }
+      token = '';
       form.removeAttribute('aria-busy');
       button.disabled = false;
       button.textContent = idleLabel;
+      if (online && window.turnstile && widget !== undefined) {
+        try { window.turnstile.reset(widget); } catch {
+          online = false;
+          if (feedback.dataset.state !== 'success') showStatus('error', 'Security verification could not be restarted. Your details are preserved. Please reload or email craig@neraium.com.');
+        }
+      }
     }
   });
 })();

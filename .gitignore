@@ -19,6 +19,10 @@
 .idea/
 .vscode/
 .wrangler/
+.env
+.env.*
+.dev.vars
+.dev.vars.*
 Thumbs.db
 __pycache__/
 artifacts/
