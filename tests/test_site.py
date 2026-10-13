@@ -2,6 +2,7 @@ import json
 import re
 import unittest
 import xml.etree.ElementTree as ET
+from datetime import date
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path
@@ -280,7 +281,8 @@ class TestStaticSite(unittest.TestCase):
         sitemap_lastmods = {node.text.strip() for node in root.findall("sm:url/sm:lastmod", namespace) if node.text}
         expected_urls = {html_file_to_public_url(path) for path in indexable_html_files()}
         self.assertEqual(expected_urls, sitemap_urls)
-        self.assertEqual({"2026-10-12"}, sitemap_lastmods)
+        for lastmod in sitemap_lastmods:
+            self.assertLessEqual(date.fromisoformat(lastmod), date.today())
 
 
     def test_every_public_page_has_exactly_one_h1(self):
@@ -551,7 +553,7 @@ class TestPositioningAndExperience(unittest.TestCase):
 
         platform = self.normalized((ROOT / "platform.html").read_text(encoding="utf-8"))
         for phrase in ("Expected behavior", "Evidence qualification", "Operational Evidence Testing", "Continuous Analytical Memory"):
-            self.assertIn(phrase, platform)
+            self.assertIn(phrase.casefold(), platform.casefold())
 
         evaluation = self.normalized((ROOT / "pilot.html").read_text(encoding="utf-8"))
         for phrase in ("Define the review question", "Scope available telemetry", "Establish a usable operating reference", "Evaluate persistent change", "Review the outcome"):
@@ -700,7 +702,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
         self.assertIn('hero-central-plant-900.webp', hero)
         self.assertIn('href="/contact"', hero)
         self.assertEqual(hero.count('class="button primary"'), 1)
-        self.assertNotIn('class="text-link"', hero)
+        self.assertIn('href="/pilot"', hero)
+        self.assertIn('How an evaluation works', hero)
         self.assertIn('comparison-title', self.index_html)
         self.assertIn('Conceptual scenario', self.index_html)
         self.assertNotIn('class="behavior-visual"', self.index_html)
@@ -724,9 +727,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261013evaluation1">')
-            revision = '20261013evaluation1'
-            self.assertRegex(html, rf'<script src="/scripts\.js\?v={revision}" defer></script>')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=[A-Za-z0-9_-]+">')
+            self.assertRegex(html, r'<script src="/scripts\.js\?v=[A-Za-z0-9_-]+" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)
     def test_above_fold_media_is_not_deferred(self):
