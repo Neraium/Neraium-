@@ -111,5 +111,17 @@
     "live_tail_session": 87080,
     "live_capture_verified_at": "2026-10-13T13:42:43.585Z",
     "collector_running_at_verification": true
+  },
+  "live_end_to_end_delivery": {
+    "confirmed": true,
+    "evidence_source": "Owner report in Codex",
+    "recorded_at": "2026-10-13T13:51:25.039Z",
+    "submission_url": "https://neraium.com/contact",
+    "real_inquiry_submitted": true,
+    "receipt_folder": "Zoho Inbox",
+    "reported_received_local_time": "2026-10-13 6:49 AM Las Vegas",
+    "sender": "website@neraium.com",
+    "complete_inquiry_received": true,
+    "all_submitted_fields_received": true
   }
 }
