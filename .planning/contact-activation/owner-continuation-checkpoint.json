@@ -1,19 +1,19 @@
 {
-  "recorded_at": "2026-10-13T05:38:24.578Z",
+  "recorded_at": "2026-10-13T05:39:32.732Z",
   "campaign": "contact-activation-20261013",
   "phase": "corrected-panel-deployed-and-automated-auth-qualified; awaiting-final-owner-human-turnstile-and-copy-inventory",
   "worktree": "/home/ubuntu/Neraium-",
-  "head": "1fd117be949ccea2a9cbbb78296f2bb8cce9fa2e",
+  "head": "70294e28871f42784fcc0a840782a06f42c0fa06",
   "branch": "codex/neraium-phase-2",
   "dirty_tree_digest": "fe7a0c40722afb489e168892271417546cb2f1e48bbe5a78e9a00ce9901df9af",
   "production_deployment": "dadee20f-ee83-4fc2-8a6c-e066e5d9f3ea",
   "production_version": "20601fa6-ae7a-4543-bd05-da4d0355c9e1",
   "blockers": [
-    "Owner completes remaining human Turnstile sequence using final private one-time link",
-    "Owner/admin reports all six forwarding/copy/retention surfaces and named deletion ownership",
-    "After qualification, retire temporary route/secret/Durable Object; validate evidence; activate only through guarded workflow; live smoke; commit and memory sync"
+    "Human Turnstile test evidence incomplete: correlated success/replay, fresh-token recovery, unused-token expiry, field validation after cooldown. Prior provider-failure and invalid-token results are preserved.",
+    "Mailbox forwarding/filter, organization-copy/archive, endpoint/client copies and deletion owners are not fully inventoried.",
+    "CONTACT_ENABLED and CONTACT_RETENTION_APPROVED remain false; activation and verifier cleanup are held."
   ],
-  "next_action": "Owner retrieves final link privately in Termius, completes the five request sequence, and answers bundled copy inventory questions. Do not activate or remove temporary verifier before qualification.",
+  "next_action": "Owner retrieves the current private one-time link in Termius; completes the five human test submissions in iphone-testing.md; and supplies the bundled six-surface copy inventory. Then retire temporary verification through the guard, verify evidence, activate, live-smoke, commit final changes, and sync Citadel memory.",
   "recovery": "No stash, reset, commit, or unrelated repository changes. Existing dirty tree preserved; current HEAD/branch/worktree identity rechecked.",
   "tracked_diff_sha256": "f9a06e54b5fc559599a342b5ba441b3459a5d4250ae92ae6149fe62babac1ae8",
   "task_source_sha256": {
@@ -38,5 +38,6 @@
     "public_contact_enabled": false,
     "retention_flag": false,
     "focused_tests": "17/17 activation, config, and private panel tests; 29/29 contact service tests; npm run check; git diff --check"
-  }
+  },
+  "preceding_commit": "70294e28871f42784fcc0a840782a06f42c0fa06"
 }
