@@ -307,7 +307,7 @@ class TestStaticSite(unittest.TestCase):
         self.assertEqual({}, duplicate_desc)
 
     def test_primary_navigation_consistency_and_routes(self):
-        primary = [('/platform','Platform'),('/methodology','How It Works'),('/applications','Applications'),('/company','Company')]
+        primary = [('/platform','Platform'),('/methodology','How It Works'),('/applications','Applications'),('/company','Company'),('/contact','Request an Evaluation')]
         preserved_routes = [('/security','Security')]
         for html_file in site_html_files():
             html = html_file.read_text(encoding='utf-8')
@@ -318,7 +318,7 @@ class TestStaticSite(unittest.TestCase):
                 (href, re.sub(r'<[^>]+>', '', label).strip())
                 for href, label in re.findall(r'<a\b[^>]*\bhref="([^"]+)"[^>]*>(.*?)</a>', navigation_html, re.DOTALL)
             ]
-            self.assertEqual(primary, navigation_links, f"{html_file.name} primary navigation differs")
+            self.assertEqual(primary if 'class="header-action"' in html else primary[:-1], navigation_links, f"{html_file.name} primary navigation differs")
             for href, label in re.findall(r'<a\b[^>]*\bhref="([^"]+)"[^>]*>(.*?)</a>', html, re.DOTALL):
                 if re.sub(r'<[^>]+>', '', label).strip() == 'Applications':
                     self.assertEqual('/applications', href, f"{html_file.name} has an incorrect Applications route")
@@ -667,7 +667,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261012horizontal-logo2', '/scripts.js?v=20261012enterprise5', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261013evaluation1', '/scripts.js?v=20261013evaluation1', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_retired_claim_artifacts_are_preserved_but_not_deployed(self):
         assert_generated_site_output()
@@ -724,8 +724,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261012horizontal-logo2">')
-            revision = '20261012enterprise5'
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261013evaluation1">')
+            revision = '20261013evaluation1'
             self.assertRegex(html, rf'<script src="/scripts\.js\?v={revision}" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)

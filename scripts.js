@@ -18,13 +18,6 @@
   const nav = document.getElementById('main-navigation');
   const toggleButton = document.querySelector('.nav-toggle');
   if (nav && toggleButton) {
-    const headerAction = document.querySelector('.header-action');
-    if (headerAction) {
-      const mobileAction = headerAction.cloneNode(true);
-      mobileAction.classList.remove('header-action');
-      mobileAction.classList.add('nav-contact');
-      nav.appendChild(mobileAction);
-    }
     const pathname = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
     const activePath = ['/water-wastewater', '/hospitality', '/infrastructure'].includes(pathname) ? '/applications' : pathname;
     nav.querySelectorAll('a').forEach(link => {
