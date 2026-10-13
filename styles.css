@@ -531,7 +531,7 @@ dd { color: #c7d3df; font-size: 16px; }
   h2 { font-size: clamp(30px, 8vw, 38px); }
   h3 { font-size: 23px; }
   .lead { font-size: 16px; margin-top: 24px; }
-  .home-page .phase2-hero { min-height: max(700px, calc(100svh - 72px)); padding-block: 64px 220px; align-items: start; }
+  .home-page .phase2-hero { min-height: 0; padding-block: 64px; align-items: start; }
   .home-page .phase2-hero h1 { font-size: clamp(38px, 10.8vw, 56px); max-width: 18ch; }
   .home-page .phase2-hero .lead { max-width: 420px; font-size: 16px; line-height: 1.8; margin-top: 28px; }
   .home-page .phase2-hero .button-row { margin-top: 32px; }
