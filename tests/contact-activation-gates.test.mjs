@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { validateGateRecords, validateHumanPanelExport, validateActivationTransition, inventorySurfaces, securityConfigurationFingerprint } from '../scripts/contact-activation-gates.mjs';
+import { validateGateRecords, validateHumanPanelExport, validateActivationTransition, inventorySurfaces, securityConfigurationFingerprint, verifyHistoricalSecurityEvidence } from '../scripts/contact-activation-gates.mjs';
 const before = JSON.parse(await readFile(new URL('../wrangler.jsonc',import.meta.url)));
 // Production activation is modeled after the guarded temporary-verifier retirement.
 before.vars.CONTACT_ENABLED='false';
@@ -32,6 +32,11 @@ test('owner panel export validates all six original scenarios verbatim',async()=
   assert.equal(validateHumanPanelExport(panel).times.expiry,Date.parse('2026-10-13T05:58:31.753Z'));
   assert.equal(panel.results.find(x=>x.scenario==='expiry').duplicate_or_expired,false);
   assert.throws(()=>validateHumanPanelExport({...panel,results:panel.results.filter(x=>x.scenario!=='recovery')}),/exactly the six/);
+});
+test('delivery-only source changes retain human verification only when security controls match the tested revision',async()=>{
+  const human=JSON.parse(await readFile(new URL('../.planning/contact-activation/human-security.json',import.meta.url),'utf8'));
+  assert.equal(await verifyHistoricalSecurityEvidence(human.code_fingerprint),human.code_fingerprint);
+  await assert.rejects(verifyHistoricalSecurityEvidence('unrecognized-human-test-source'),/no matching repository revision/);
 });
 test('expiry proof does not depend on the provider duplicate-or-expired diagnostic',()=>{
   const r=records();

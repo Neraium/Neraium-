@@ -69,6 +69,34 @@ test('rate limit, rate service failure and missing edge IP never send', async ()
   assert.equal((await handleContact(request(), env, verify)).status, 502);
   assert.equal((await handleContact(request(valid, { 'CF-Connecting-IP': '' }), env, verify)).status, 503); assert.equal(sent.length, 0);
 });
+test('stage diagnostics distinguish limiter, Turnstile and Zoho failures without private data', async () => {
+  const original = console.info; const events = [];
+  console.info = line => events.push(JSON.parse(line));
+  try {
+    {
+      const { env, verify } = fixture(); env.CONTACT_RATE_LIMITER.limit = async () => ({ success: false });
+      assert.equal((await handleContact(request(), env, verify)).status, 429);
+    }
+    {
+      const { env } = fixture();
+      assert.equal((await handleContact(request(), env, async () => { throw Error('private inquiry and provider details'); })).status, 502);
+    }
+    {
+      const { env, verify } = zohoFixture(); let calls = 0;
+      assert.equal((await handleContact(request(), env, verify, async () => {
+        calls++; return new Response('', { status: calls === 1 ? 403 : 200 });
+      })).status, 502);
+    }
+  } finally { console.info = original; }
+  assert.deepEqual(events.map(({ stage, category }) => [stage, category]), [
+    ['rate_limit', 'rejected'],
+    ['turnstile_server_verification', 'network_error'],
+    ['zoho_oauth_refresh', 'http_rejected'],
+  ]);
+  const serialized = JSON.stringify(events);
+  assert.doesNotMatch(serialized, /Alex Morgan|alex@example\.com|192\.0\.2\.1|private inquiry|provider details|test-secret|test-refresh/);
+  assert.equal(events[2].httpStatus, 403);
+});
 test('failed, mismatched, expired or unavailable challenges never send', async () => {
   const { env, sent } = fixture();
   for (const result of [null, { success: 'true', hostname: 'www.neraium.com', action: 'evaluation' }, { success: false }, { success: true, hostname: 'attacker.example', action: 'evaluation' }, { success: true, hostname: 'www.neraium.com', action: 'other' }]) assert.equal((await handleContact(request(), env, async () => Response.json(result))).status, 400);
@@ -160,23 +188,47 @@ test('Zoho OAuth is never called when retention, validation, Turnstile or limite
   }
 });
 
-test('Zoho caches per environment and refreshes after auth rejection without retrying mail', async () => {
+test('Zoho retries once after an explicit HTTP or API 401, but never after ambiguous send outcomes', async () => {
+  const { sendZoho } = await import('../worker/zoho-mail.mjs');
+  for (const unauthorized of [
+    new Response('', { status: 401 }),
+    Response.json({ status: { code: 401 } }),
+  ]) {
+    const { env } = zohoFixture(); let tokens = 0; let sends = 0; const usedTokens = [];
+    const fakeFetch = async (url, options) => {
+      if (url.includes('/oauth/')) { tokens++; return Response.json({ access_token: `token-${tokens}`, expires_in: 3600 }); }
+      sends++; usedTokens.push(options.headers.Authorization);
+      return sends === 1 ? unauthorized : Response.json({ status: { code: 200 } });
+    };
+    const receipt = await sendZoho(env, 'test inquiry', fakeFetch);
+    assert.deepEqual(receipt, { httpStatus: 200, providerCode: 200, authRetry: true });
+    assert.equal(tokens, 2); assert.equal(sends, 2);
+    assert.notEqual(usedTokens[0], usedTokens[1]);
+  }
+
+  {
+    const { env } = zohoFixture(); let tokens = 0; let sends = 0;
+    const fakeFetch = async url => {
+      if (url.includes('/oauth/')) { tokens++; return Response.json({ access_token: 'one-token', expires_in: 3600 }); }
+      sends++; throw new DOMException('private provider details', 'TimeoutError');
+    };
+    await assert.rejects(sendZoho(env, 'test inquiry', fakeFetch), error => error.stage === 'zoho_api_send' && error.category === 'timeout');
+    assert.equal(tokens, 1); assert.equal(sends, 1);
+  }
+});
+
+test('Zoho access token remains cached per Worker environment', async () => {
   const { sendZoho } = await import('../worker/zoho-mail.mjs');
   const originalFetch = globalThis.fetch;
   try {
-    for (const failure of [() => new Response('', { status: 401 }), () => Response.json({ status: { code: 401 } })]) {
-      const { env } = zohoFixture(); let tokens = 0; let sends = 0;
-      globalThis.fetch = async url => {
-        if (url.includes('/oauth/')) { tokens++; return Response.json({ access_token: `token-${tokens}`, expires_in: 3600 }); }
-        sends++; return sends === 2 ? failure() : Response.json({ status: { code: 200 } });
-      };
-      await sendZoho(env, 'test inquiry');
-      await assert.rejects(sendZoho(env, 'test inquiry'));
-      assert.equal(tokens, 1); assert.equal(sends, 2);
-      await sendZoho(env, 'test inquiry');
-      assert.equal(tokens, 2); assert.equal(sends, 3);
-      await sendZoho({ ...env }, 'distinct environment');
-      assert.equal(tokens, 3);
-    }
+    const { env } = zohoFixture(); let tokens = 0; let sends = 0;
+    globalThis.fetch = async url => {
+      if (url.includes('/oauth/')) { tokens++; return Response.json({ access_token: `token-${tokens}`, expires_in: 3600 }); }
+      sends++; return Response.json({ status: { code: 200 } });
+    };
+    await sendZoho(env, 'test inquiry');
+    await sendZoho(env, 'test inquiry');
+    await sendZoho({ ...env }, 'distinct environment');
+    assert.equal(tokens, 2); assert.equal(sends, 3);
   } finally { globalThis.fetch = originalFetch; }
 });

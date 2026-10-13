@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
+import { execFileSync } from 'node:child_process';
 
 export const inventorySurfaces = ['mailbox-forwarding','mailbox-filter-actions','organization-routing-copies','organization-archives-journaling','clients-exports-integrations','provider-backups'];
 const requireGate = (passed, message) => { if (!passed) throw Error(`Contact activation held: ${message}`); };
@@ -10,6 +11,68 @@ export async function securityCodeFingerprint() {
   const hash=createHash('sha256');
   for(const path of ['worker/contact.mjs','worker/zoho-mail.mjs','.planning/contact-activation/human-probe.mjs']) hash.update(path).update('\0').update(await readFile(path)).update('\0');
   return hash.digest('hex');
+}
+
+function extractSecurityControls(source) {
+  const constants = source.match(/const EMAIL = [\s\S]*?(?=const json = )/);
+  const configured = source.match(/export function configured\(env\) \{[\s\S]*?\n\}/);
+  const payload = source.match(/function validPayload\(data\) \{[\s\S]*?(?=\nasync function boundedBody\()/);
+  const body = source.match(/async function boundedBody\(request\) \{[\s\S]*?(?=\nexport async function handleContact\()/);
+  const origin = source.match(/if \(!allowed\.includes\(url\.hostname\)[^\n]+/);
+  const mediaType = source.match(/if \(request\.headers\.get\('content-type'\)[^\n]+/);
+  const contentLength = source.match(/if \(Number\(request\.headers\.get\('content-length'\)\)[^\n]+/);
+  const rateKey = source.match(/const digest = await crypto\.subtle\.digest\('SHA-256',[^\n]+/);
+  const limiter = source.match(/const limit = await env\.CONTACT_RATE_LIMITER\.limit\([^\n]+/);
+  const limitCheck = source.match(/limit\?\.success !== true/);
+  const turnstileCall = source.match(/verifyFetch\('https:\/\/challenges\.cloudflare\.com\/turnstile\/v0\/siteverify',[\s\S]*?\n\s*\}\);/);
+  const challengeCheck = source.match(/if \(result\?\.success !== true \|\| result\.hostname !== url\.hostname \|\| result\.action !== 'evaluation'\)/);
+  const parts = [constants,configured,payload,body,origin,mediaType,contentLength,rateKey,limiter,limitCheck,turnstileCall,challengeCheck];
+  if (parts.some(part => !part)) throw Error('Security-control fingerprint source is incomplete.');
+  return parts.map(part => part[0].split('\n').map(line => line.trim()).join('\n')).join('\0');
+}
+
+function revisionSource(revision, path) {
+  if (!revision || path.startsWith('.planning/')) return readFile(path, 'utf8');
+  return execFileSync('git',['show',`${revision}:${path}`],{encoding:'utf8',stdio:['ignore','pipe','ignore']});
+}
+
+async function sourceFingerprint(revision) {
+  const hash=createHash('sha256');
+  for(const path of ['worker/contact.mjs','worker/zoho-mail.mjs','.planning/contact-activation/human-probe.mjs']) {
+    const content=await revisionSource(revision,path);
+    hash.update(path).update('\0').update(content).update('\0');
+  }
+  return hash.digest('hex');
+}
+
+async function securityControlsFingerprint(revision) {
+  const [contact,zoho,probe]=await Promise.all([
+    revisionSource(revision,'worker/contact.mjs'),
+    revisionSource(revision,'worker/zoho-mail.mjs'),
+    revisionSource(revision,'.planning/contact-activation/human-probe.mjs'),
+  ]);
+  const hash=createHash('sha256');
+  hash.update(extractSecurityControls(contact)).update('\0').update(probe).update('\0');
+  // The sender and authorization boundaries are fixed independently from mail handling.
+  hash.update(zoho.match(/export function zohoConfigured\(env\) \{[\s\S]*?\n\}/)?.[0] ?? 'missing-zoho-authorization-boundary');
+  return hash.digest('hex');
+}
+
+export async function verifyHistoricalSecurityEvidence(humanCodeFingerprint) {
+  const current=await securityCodeFingerprint();
+  if(current===humanCodeFingerprint)return humanCodeFingerprint;
+  const revisions=execFileSync('git',['log','--format=%H','-n','40'],{encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim().split('\n').filter(Boolean);
+  let testedRevision;
+  for(const revision of revisions) {
+    try { if(await sourceFingerprint(revision)===humanCodeFingerprint){testedRevision=revision;break;} }
+    catch { /* Older revisions may predate one of the fingerprinted files. */ }
+  }
+  requireGate(Boolean(testedRevision),'human verification code has no matching repository revision');
+  const [testedControls,currentControls]=await Promise.all([
+    securityControlsFingerprint(testedRevision),securityControlsFingerprint(null),
+  ]);
+  requireGate(testedControls===currentControls,'human verification security controls changed; fresh human verification required');
+  return humanCodeFingerprint;
 }
 export function validateHumanPanelExport(human, now = Date.now()) {
   requireGate(human?.human_operated === true && ['neraium.com','www.neraium.com'].includes(human.hostname), 'human-operated panel export missing');
@@ -92,10 +155,11 @@ export function validateGateRecords({ owner, inventory, human, live, privacyHash
 export async function validateActivationEvidence(config) {
   const base = '.planning/contact-activation/';
   const parse = async name => JSON.parse(await readFile(base+name,'utf8'));
-  const [owner,inventory,humanMetadata,panelExport,live,privacy,codeHash] = await Promise.all([parse('owner-confirmations.json'),parse('forwarding-inventory.json'),parse('human-security.json'),parse('owner-reported-panel-export.json'),parse('live-security.json'),readFile('privacy.html'),securityCodeFingerprint()]);
+  const [owner,inventory,humanMetadata,panelExport,live,privacy] = await Promise.all([parse('owner-confirmations.json'),parse('forwarding-inventory.json'),parse('human-security.json'),parse('owner-reported-panel-export.json'),parse('live-security.json'),readFile('privacy.html')]);
   // Keep the owner's panel observations authoritative and verbatim. The companion
   // record supplies operator confirmation, fingerprints and cleanup attestations.
   const human = { ...humanMetadata, ...panelExport };
+  const codeHash=await verifyHistoricalSecurityEvidence(human.code_fingerprint);
   validateGateRecords({owner,inventory,human,live,config,codeHash,privacyHash:createHash('sha256').update(privacy).digest('hex')});
 }
 export function validateActivationTransition(before, after) {

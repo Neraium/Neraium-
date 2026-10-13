@@ -292,6 +292,25 @@ test('online intake preserves entered details and never shows success after prov
   expect(new URL((await draft.getAttribute('href'))!).searchParams.get('body')).toContain('Work email: alex@example.com');
   expect(posts).toBe(1);
 });
+
+test('online intake diagnoses malformed response handling without losing inquiry fields', async ({ page }) => {
+  const diagnostics: Record<string, unknown>[] = [];
+  page.on('console', message => {
+    try {
+      const entry = JSON.parse(message.text());
+      if (entry.event === 'contact_frontend_diagnostic') diagnostics.push(entry);
+    } catch { /* Ignore ordinary browser console output. */ }
+  });
+  await page.route('**/api/contact', route => route.fulfill({ status: 200, contentType: 'application/json', body: '{' }));
+  await mockOnlineIntake(page); await fillInquiry(page);
+  await page.evaluate(() => (window as any).testChallenge.callback('test-token'));
+  await page.locator('#contact-form button[type="submit"]').click();
+  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'error');
+  await expect(page.locator('#form-feedback')).toContainText('delivery response could not be read');
+  await expect(page.locator('#name')).toHaveValue('Alex Morgan');
+  await expect(page.locator('#contact-form button[type="submit"]')).toHaveText('Prepare email draft');
+  expect(diagnostics).toContainEqual({ event: 'contact_frontend_diagnostic', stage: 'response_decode', category: 'invalid_json', responseStatus: 200 });
+});
 for (const [status, json, message] of [
   [200, { accepted: 'true' }, 'could not be confirmed'],
   [429, { error: 'Rate limited' }, 'wait a minute'],
