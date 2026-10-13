@@ -18,7 +18,8 @@
     "staging:dry-run": "wrangler deploy --config wrangler.staging.jsonc --dry-run --outdir artifacts/staging/worker",
     "preview:staging": "wrangler dev --config wrangler.staging.jsonc --port 4180 --ip 127.0.0.1",
     "verify:staging": "node scripts/verify-staging.mjs",
-    "config:check": "node scripts/check-cloudflare-config.mjs"
+    "config:check": "node scripts/check-cloudflare-config.mjs",
+    "test:public-writing": "node --test tests/public-writing.test.mjs"
   },
   "repository": {
     "type": "git",

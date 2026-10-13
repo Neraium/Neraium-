@@ -398,7 +398,7 @@ class TestPositioningAndExperience(unittest.TestCase):
 
     def test_core_positioning_and_ctas(self):
         text = self.normalized(self.index)
-        for phrase in ("Systemic Infrastructure Intelligence", "See degradation before systems fail.", "telemetry you already have", "compares behavior over time", "municipal water and wastewater", "Las Vegas hospitality", "Traceable evidence", "Prioritize inspections and maintenance"):
+        for phrase in ("Systemic Infrastructure Intelligence", "See degradation before systems fail.", "existing telemetry", "compares behavior over time", "municipal water and wastewater", "Las Vegas hospitality", "Traceable evidence", "Prioritize inspections and maintenance"):
             self.assertIn(phrase, text)
         platform = self.normalized((ROOT / "platform.html").read_text())
         for phrase in ("Systemic Degradation Intelligence", "Continuous Analytical Memory", "Operational Evidence Testing", "not production-qualified", "Exploratory", "root cause", "insufficient evidence", "source windows"):
@@ -617,12 +617,10 @@ class TestPositioningAndExperience(unittest.TestCase):
                 self.assertIn("WebSite", graph_types)
                 self.assertNotIn("SoftwareApplication", graph_types)
 
-    def test_no_disallowed_claims_or_em_dashes(self):
+    def test_no_disallowed_claims(self):
         changed_pages = "\n".join(path.read_text(encoding="utf-8") for path in site_html_files()).lower()
         for claim in ("ai-powered", "predictive failure", "predicts failures", "guarantees savings", "diagnoses root cause", "replaces engineers", "autonomously controls"):
             self.assertNotIn(claim, changed_pages)
-        for source_file in [*site_html_files(), ROOT / "styles.css", ROOT / "scripts.js"]:
-            self.assertNotIn("", source_file.read_text(encoding="utf-8"))
 
 
 class TestDeploymentAndIndexing(unittest.TestCase):
