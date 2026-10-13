@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { validateGateRecords, validateHumanPanelExport, validateActivationTransition, inventorySurfaces, securityConfigurationFingerprint, verifyHistoricalSecurityEvidence } from '../scripts/contact-activation-gates.mjs';
+import { validateGateRecords, validateHumanPanelExport, validateActivationTransition, validateContactDisableTransition, inventorySurfaces, securityConfigurationFingerprint, verifyHistoricalSecurityEvidence } from '../scripts/contact-activation-gates.mjs';
 const before = JSON.parse(await readFile(new URL('../wrangler.jsonc',import.meta.url)));
 // Production activation is modeled after the guarded temporary-verifier retirement.
 before.vars.CONTACT_ENABLED='false';
@@ -25,6 +25,15 @@ test('permits only an approved transition preserving every resource',()=>{
   for(const mutate of [c=>c.routes.pop(),c=>c.ratelimits[0].namespace_id='2000',c=>c.send_email[0].allowed_destination_addresses.push('other@example.com'),c=>c.vars.TURNSTILE_SITE_KEY='changed',c=>c.assets.run_worker_first=[],c=>c.secrets.required.pop()]){
     const changed=structuredClone(after);mutate(changed);assert.throws(()=>validateActivationTransition(before,changed),/changes existing resources/);
   }
+});
+test('contact disable transition allows only both contact flags to be turned off',()=>{
+  const live=structuredClone(after);
+  const disabled=structuredClone(live);
+  disabled.vars.CONTACT_ENABLED='false';
+  disabled.vars.CONTACT_RETENTION_APPROVED='false';
+  assert.doesNotThrow(()=>validateContactDisableTransition(live,disabled));
+  disabled.vars.CONTACT_TO='elsewhere@example.com';
+  assert.throws(()=>validateContactDisableTransition(live,disabled),/unrelated configuration/);
 });
 test('complete synthetic fixture passes without authorizing real activation',()=>assert.doesNotThrow(()=>validateGateRecords(records())));
 test('owner panel export validates all six original scenarios verbatim',async()=>{

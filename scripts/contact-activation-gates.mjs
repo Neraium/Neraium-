@@ -171,6 +171,12 @@ export function validateActivationTransition(before, after) {
   const omit = config => ({...config,vars:Object.fromEntries(Object.entries(config.vars).filter(([key])=>!['CONTACT_ENABLED','CONTACT_RETENTION_APPROVED','CONTACT_DELIVERY','ZOHO_DATA_CENTER'].includes(key)))});
   requireGate(isDeepStrictEqual(omit(before),omit(after)), 'transition changes existing resources or unrelated configuration');
 }
+export function validateContactDisableTransition(before, after) {
+  requireGate(before.vars.CONTACT_ENABLED === 'true' && before.vars.CONTACT_RETENTION_APPROVED === 'true', 'disable baseline must be live and retention-approved');
+  requireGate(after.vars.CONTACT_ENABLED === 'false' && after.vars.CONTACT_RETENTION_APPROVED === 'false', 'disable transition must turn off both contact flags');
+  const omitFlags = config => ({...config,vars:Object.fromEntries(Object.entries(config.vars).filter(([key])=>!['CONTACT_ENABLED','CONTACT_RETENTION_APPROVED'].includes(key)))});
+  requireGate(isDeepStrictEqual(omitFlags(before),omitFlags(after)), 'disable transition changes existing resources or unrelated configuration');
+}
 export function validateProbeProvisionTransition(before, after) {
   requireGate(before.vars.CONTACT_ENABLED === 'false' && before.vars.CONTACT_RETENTION_APPROVED === 'false', 'private test provisioning requires disabled public contact');
   requireGate(!before.durable_objects && !before.migrations, 'unexpected pre-existing Durable Object state');
