@@ -4,9 +4,9 @@ import { sanitizedContactDiagnostics } from '../scripts/tail-contact-diagnostics
 
 test('sanitizes direct Wrangler diagnostic events, including JSON-string envelopes', () => {
   const id = '550e8400-e29b-41d4-a716-446655440000';
-  const event = { event: 'contact_diagnostic', diagnosticId: id, stage: 'zoho_api_send', category: 'http_rejected', responseStatus: 502, providerCode: 451, email: 'private@example.com', message: 'private inquiry' };
+  const event = { event: 'contact_diagnostic', diagnosticId: id, stage: 'zoho_api_send', category: 'http_rejected', responseStatus: 502, providerCode: 451, retryAttempted: true, email: 'private@example.com', message: 'private inquiry' };
   const receivedAt = '2026-10-13T12:00:00.000Z';
-  assert.deepEqual(sanitizedContactDiagnostics(JSON.stringify(JSON.stringify(event)), receivedAt), [{ receivedAt, event: 'contact_diagnostic', diagnosticId: id, stage: 'zoho_api_send', category: 'http_rejected', responseStatus: 502, providerCode: 451 }]);
+  assert.deepEqual(sanitizedContactDiagnostics(JSON.stringify(JSON.stringify(event)), receivedAt), [{ receivedAt, event: 'contact_diagnostic', diagnosticId: id, stage: 'zoho_api_send', category: 'http_rejected', responseStatus: 502, providerCode: 451, retryAttempted: true }]);
 });
 
 test('extracts supported wrapped log messages and discards unrelated content', () => {

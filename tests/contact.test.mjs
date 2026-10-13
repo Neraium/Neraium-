@@ -88,13 +88,22 @@ test('stage diagnostics distinguish limiter, Turnstile and Zoho failures without
         calls++; return new Response('', { status: calls === 1 ? 403 : 200 });
       })).status, 502);
     }
+    {
+      const { env, verify } = zohoFixture(); let calls = 0;
+      assert.equal((await handleContact(request(), env, verify, async () => {
+        calls++; throw new TypeError('private network detail');
+      })).status, 502);
+      assert.equal(calls, 2);
+    }
   } finally { console.info = original; }
   assert.deepEqual(events.map(({ stage, category }) => [stage, category]), [
     ['rate_limit', 'rejected'],
     ['turnstile_server_verification', 'network_error'],
     ['zoho_oauth_refresh', 'http_rejected'],
+    ['zoho_oauth_refresh', 'network_error'],
   ]);
-  assert.equal(new Set(events.map(event => event.diagnosticId)).size, 3);
+  assert.equal(events[3].retryAttempted, true);
+  assert.equal(new Set(events.map(event => event.diagnosticId)).size, 4);
   assert.ok(events.every(event => /^[0-9a-f-]{36}$/.test(event.diagnosticId)));
   const serialized = JSON.stringify(events);
   assert.doesNotMatch(serialized, /Alex Morgan|alex@example\.com|192\.0\.2\.1|private inquiry|provider details|test-secret|test-refresh/);
@@ -218,7 +227,7 @@ test('Zoho retries once after an explicit HTTP or API 401, but never after ambig
       return sends === 1 ? unauthorized : Response.json({ status: { code: 200 } });
     };
     const receipt = await sendZoho(env, 'test inquiry', fakeFetch);
-    assert.deepEqual(receipt, { httpStatus: 200, providerCode: 200, authRetry: true });
+    assert.deepEqual(receipt, { httpStatus: 200, providerCode: 200, authRetry: true, oauthRetryAttempted: false });
     assert.equal(tokens, 2); assert.equal(sends, 2);
     assert.notEqual(usedTokens[0], usedTokens[1]);
   }
@@ -232,6 +241,47 @@ test('Zoho retries once after an explicit HTTP or API 401, but never after ambig
     await assert.rejects(sendZoho(env, 'test inquiry', fakeFetch), error => error.stage === 'zoho_api_send' && error.category === 'timeout');
     assert.equal(tokens, 1); assert.equal(sends, 1);
   }
+});
+
+test('Zoho retries one transient OAuth network error before sending exactly once', async () => {
+  const { sendZoho } = await import('../worker/zoho-mail.mjs');
+  const { env } = zohoFixture(); let refreshes = 0; let sends = 0;
+  const fakeFetch = async url => {
+    if (url.includes('/oauth/')) {
+      refreshes++;
+      if (refreshes === 1) throw new TypeError('private network detail');
+      return Response.json({ access_token: 'one-use-test-token', expires_in: 3600 });
+    }
+    sends++;
+    return Response.json({ status: { code: 200 } });
+  };
+  const receipt = await sendZoho(env, 'test inquiry', fakeFetch);
+  assert.deepEqual(receipt, { httpStatus: 200, providerCode: 200, authRetry: false, oauthRetryAttempted: true });
+  assert.equal(refreshes, 2);
+  assert.equal(sends, 1);
+});
+
+test('repeated OAuth network failure stops before any mail send and logs no exception detail', async () => {
+  const { sendZoho } = await import('../worker/zoho-mail.mjs');
+  const { env } = zohoFixture(); let refreshes = 0; let sends = 0;
+  await assert.rejects(sendZoho(env, 'private inquiry', async url => {
+    if (url.includes('/oauth/')) { refreshes++; throw new TypeError('secret or endpoint details'); }
+    sends++; return Response.json({ status: { code: 200 } });
+  }), error => error.stage === 'zoho_oauth_refresh' && error.category === 'network_error' && error.retryAttempted === true
+    && !/secret|endpoint|private inquiry/i.test(error.message));
+  assert.equal(refreshes, 2);
+  assert.equal(sends, 0);
+});
+
+test('OAuth timeout is not retried and does not reach Zoho Mail send', async () => {
+  const { sendZoho } = await import('../worker/zoho-mail.mjs');
+  const { env } = zohoFixture(); let refreshes = 0; let sends = 0;
+  await assert.rejects(sendZoho(env, 'test inquiry', async url => {
+    if (url.includes('/oauth/')) { refreshes++; throw new DOMException('private timeout detail', 'TimeoutError'); }
+    sends++; return Response.json({ status: { code: 200 } });
+  }), error => error.stage === 'zoho_oauth_refresh' && error.category === 'timeout' && error.retryAttempted !== true);
+  assert.equal(refreshes, 1);
+  assert.equal(sends, 0);
 });
 
 test('Zoho access token remains cached per Worker environment', async () => {

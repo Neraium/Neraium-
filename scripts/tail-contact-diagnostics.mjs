@@ -31,6 +31,7 @@ export function sanitizedContactDiagnostics(line, receivedAt = new Date().toISOS
     if (typeof item.diagnosticId === 'string' && /^[0-9a-f-]{36}$/.test(item.diagnosticId)) safe.diagnosticId = item.diagnosticId;
     for (const key of ['stage', 'category']) if (typeof item[key] === 'string' && /^[a-z_]{1,48}$/.test(item[key])) safe[key] = item[key];
     for (const key of numericFields) if (Number.isInteger(item[key]) && item[key] >= 100 && item[key] <= 599) safe[key] = item[key];
+    if (item.retryAttempted === true) safe.retryAttempted = true;
     return safe;
   });
 }

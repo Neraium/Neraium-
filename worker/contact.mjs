@@ -14,6 +14,7 @@ function diagnostic(stage, category, details = {}, diagnosticId) {
     const value = details[key];
     if (Number.isInteger(value) && value >= 100 && value <= 599) event[key] = value;
   }
+  if (details.retryAttempted === true) event.retryAttempted = true;
   console.info(JSON.stringify(event));
 }
 function exceptionCategory(error) {
@@ -127,7 +128,10 @@ export async function handleContact(request, env, verifyFetch = fetch, deliveryF
     const text = Object.entries(values).filter(([,value]) => value).map(([label,value]) => `${label}: ${value}`).join('\n\n');
     if (env.CONTACT_DELIVERY === 'zoho') {
       const receipt = await sendZoho(env, `Visitor email (reply to this address): ${values.email}\n\n${text}`, deliveryFetch);
-      log('zoho_api_send', receipt.authRetry ? 'accepted_after_auth_refresh' : 'accepted', receipt);
+      const acceptedCategory = receipt.oauthRetryAttempted && receipt.authRetry ? 'accepted_after_oauth_retry_and_auth_refresh'
+        : receipt.oauthRetryAttempted ? 'accepted_after_oauth_retry'
+          : receipt.authRetry ? 'accepted_after_auth_refresh' : 'accepted';
+      log('zoho_api_send', acceptedCategory, receipt);
     } else {
       stage = 'email_provider_send';
       const receipt = await env.EMAIL.send({ from: env.CONTACT_FROM, to: env.CONTACT_TO, replyTo: values.email, subject: 'Neraium evaluation inquiry', text });
@@ -140,7 +144,7 @@ export async function handleContact(request, env, verifyFetch = fetch, deliveryF
     return respond({ accepted: true, message: 'Your request has been accepted for email delivery. This does not confirm inbox receipt.' });
   } catch (error) {
     if (error instanceof ZohoDeliveryError) {
-      log(error.stage, error.category, { httpStatus: error.httpStatus, providerCode: error.providerCode, responseStatus: 502 });
+      log(error.stage, error.category, { httpStatus: error.httpStatus, providerCode: error.providerCode, responseStatus: 502, retryAttempted: error.retryAttempted });
     } else {
       log(stage, exceptionCategory(error), { responseStatus: 502 });
     }

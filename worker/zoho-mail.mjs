@@ -14,13 +14,14 @@ const caches = new WeakMap();
 const present = value => typeof value === 'string' && Boolean(value.trim()) && value === value.trim();
 
 export class ZohoDeliveryError extends Error {
-  constructor(stage, category, { httpStatus, providerCode } = {}) {
+  constructor(stage, category, { httpStatus, providerCode, retryAttempted = false } = {}) {
     super('Zoho delivery could not be confirmed.');
     this.name = 'ZohoDeliveryError';
     this.stage = stage;
     this.category = category;
     if (Number.isInteger(httpStatus) && httpStatus >= 100 && httpStatus <= 599) this.httpStatus = httpStatus;
     if (Number.isInteger(providerCode) && providerCode >= 100 && providerCode <= 599) this.providerCode = providerCode;
+    if (retryAttempted === true) this.retryAttempted = true;
   }
 }
 
@@ -43,29 +44,39 @@ export function zohoConfigured(env) {
 async function accessToken(env, fetchImpl, accountsOrigin) {
   // Cache only in memory, scoped to this environment. Never log or persist tokens.
   const cached = fetchImpl === fetch ? caches.get(env) : undefined;
-  if (cached?.expiresAt > Date.now()) return cached.value;
+  if (cached?.expiresAt > Date.now()) return { token: cached.value, retryAttempted: false };
   if (cached?.pending) return cached.pending;
   const pending = (async () => {
     let response;
+    let retryAttempted = false;
+    const refresh = () => fetchImpl(`${accountsOrigin}/oauth/v2/token`, {
+      method: 'POST', redirect: 'error', signal: AbortSignal.timeout(10000),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+      body: new URLSearchParams({ grant_type: 'refresh_token', client_id: env.ZOHO_CLIENT_ID,
+        client_secret: env.ZOHO_CLIENT_SECRET, refresh_token: env.ZOHO_REFRESH_TOKEN }),
+    });
     try {
-      response = await fetchImpl(`${accountsOrigin}/oauth/v2/token`, {
-        method: 'POST', redirect: 'error', signal: AbortSignal.timeout(10000),
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-        body: new URLSearchParams({ grant_type: 'refresh_token', client_id: env.ZOHO_CLIENT_ID,
-          client_secret: env.ZOHO_CLIENT_SECRET, refresh_token: env.ZOHO_REFRESH_TOKEN }),
-      });
+      response = await refresh();
     } catch (error) {
-      throw new ZohoDeliveryError('zoho_oauth_refresh', exceptionCategory(error));
+      // A single classified network error is safe to retry here: no mail API send has
+      // happened yet. Do not retry timeouts, HTTP errors, or any mail send.
+      if (exceptionCategory(error) !== 'network_error') throw new ZohoDeliveryError('zoho_oauth_refresh', exceptionCategory(error));
+      retryAttempted = true;
+      await new Promise(resolve => setTimeout(resolve, 200));
+      try { response = await refresh(); }
+      catch (retryError) {
+        throw new ZohoDeliveryError('zoho_oauth_refresh', exceptionCategory(retryError), { retryAttempted: true });
+      }
     }
-    if (!response.ok) throw new ZohoDeliveryError('zoho_oauth_refresh', 'http_rejected', { httpStatus: response.status });
+    if (!response.ok) throw new ZohoDeliveryError('zoho_oauth_refresh', 'http_rejected', { httpStatus: response.status, retryAttempted });
     let result;
     try { result = await response.json(); }
-    catch { throw new ZohoDeliveryError('zoho_oauth_refresh', 'invalid_json', { httpStatus: response.status }); }
+    catch { throw new ZohoDeliveryError('zoho_oauth_refresh', 'invalid_json', { httpStatus: response.status, retryAttempted }); }
     if (result?.error || !present(result?.access_token) || !Number.isFinite(result.expires_in) || result.expires_in <= 60) {
-      throw new ZohoDeliveryError('zoho_oauth_refresh', 'invalid_token_response', { httpStatus: response.status });
+      throw new ZohoDeliveryError('zoho_oauth_refresh', 'invalid_token_response', { httpStatus: response.status, retryAttempted });
     }
     if (fetchImpl === fetch) caches.set(env, { value: result.access_token, expiresAt: Date.now() + (Math.min(result.expires_in, 3600) - 60) * 1000 });
-    return result.access_token;
+    return { token: result.access_token, retryAttempted };
   })();
   if (fetchImpl === fetch) caches.set(env, { pending });
   try { return await pending; } catch (error) { if (fetchImpl === fetch) caches.delete(env); throw error; }
@@ -98,20 +109,22 @@ export async function sendZoho(env, text, fetchImpl = fetch) {
     return { accepted: true, httpStatus: response.status, providerCode: code };
   };
 
-  let token = await accessToken(env, fetchImpl, accountsOrigin);
-  let result = await sendOnce(token);
+  let tokenResult = await accessToken(env, fetchImpl, accountsOrigin);
+  let oauthRetryAttempted = tokenResult.retryAttempted;
+  let result = await sendOnce(tokenResult.token);
   let authRetry = false;
   if (result.rejected) {
     // Zoho explicitly rejected the message as unauthorized, so it was not accepted.
     // Refresh once and retry only this definitive rejection. Ambiguous outcomes never retry.
     authRetry = true;
     caches.delete(env);
-    token = await accessToken(env, fetchImpl, accountsOrigin);
-    result = await sendOnce(token);
+    tokenResult = await accessToken(env, fetchImpl, accountsOrigin);
+    oauthRetryAttempted ||= tokenResult.retryAttempted;
+    result = await sendOnce(tokenResult.token);
   }
   if (!result.accepted) {
     if (authRetry) caches.delete(env);
     throw new ZohoDeliveryError('zoho_api_send', authRetry ? 'authorization_rejected_after_refresh' : 'authorization_rejected', result);
   }
-  return { httpStatus: result.httpStatus, providerCode: result.providerCode, authRetry };
+  return { httpStatus: result.httpStatus, providerCode: result.providerCode, authRetry, oauthRetryAttempted };
 }
