@@ -6,10 +6,10 @@ const TEST_TURNSTILE_KEY = /^[123]x0{20,}(?:AA|AB|BB|FF)$/;
 const realChallengeKey = value => typeof value === 'string' && Boolean(value.trim()) && value === value.trim() && !TEST_TURNSTILE_KEY.test(value);
 const fields = { name: [100, true], email: [254, true], organization: [160, true], facility: [160, true], 'review-question': [600, false], role: [120, false], 'preferred-contact': [30, false] };
 const json = (body, status = 200, extra = {}) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', ...extra } });
-function diagnostic(stage, category, details = {}) {
+function diagnostic(stage, category, details = {}, diagnosticId) {
   // Only fixed categories and numeric statuses are allowed here. Never pass inquiry,
   // token, IP, provider payload, exception message, URL, or arbitrary header data.
-  const event = { event: 'contact_diagnostic', stage, category };
+  const event = { event: 'contact_diagnostic', stage, category, diagnosticId };
   for (const key of ['httpStatus', 'providerCode', 'responseStatus']) {
     const value = details[key];
     if (Number.isInteger(value) && value >= 100 && value <= 599) event[key] = value;
@@ -64,33 +64,38 @@ export async function handleContact(request, env, verifyFetch = fetch, deliveryF
   }
   if (url.pathname !== '/api/contact') return json({ error: 'Not found.' }, 404);
   if (request.method !== 'POST') return json({ error: 'Use POST.' }, 405, { Allow: 'POST' });
-  if (!configured(env)) return json({ error: 'Online submission is unavailable. Please email craig@neraium.com.' }, 503);
+  const suppliedId = request.headers.get('X-Contact-Diagnostic-Id') || '';
+  const diagnosticId = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(suppliedId)
+    ? suppliedId.toLowerCase() : crypto.randomUUID();
+  const respond = (body, status = 200, extra = {}) => json(body, status, { ...extra, 'X-Contact-Diagnostic-Id': diagnosticId });
+  const log = (stage, category, details = {}) => diagnostic(stage, category, details, diagnosticId);
+  if (!configured(env)) return respond({ error: 'Online submission is unavailable. Please email craig@neraium.com.' }, 503);
   const allowed = env.CONTACT_HOSTNAMES.split(',').map(host => host.trim());
-  if (!allowed.includes(url.hostname) || request.headers.get('origin') !== url.origin) return json({ error: 'Request origin rejected.' }, 403);
-  if (request.headers.get('content-type')?.split(';')[0].trim() !== 'application/json') return json({ error: 'Use JSON.' }, 415);
-  if (Number(request.headers.get('content-length')) > 8192) return json({ error: 'Request too large.' }, 413);
+  if (!allowed.includes(url.hostname) || request.headers.get('origin') !== url.origin) return respond({ error: 'Request origin rejected.' }, 403);
+  if (request.headers.get('content-type')?.split(';')[0].trim() !== 'application/json') return respond({ error: 'Use JSON.' }, 415);
+  if (Number(request.headers.get('content-length')) > 8192) return respond({ error: 'Request too large.' }, 413);
   let stage = 'rate_limit';
   try {
     const ip = request.headers.get('CF-Connecting-IP');
-    if (!ip) { diagnostic('rate_limit', 'client_ip_missing'); return json({ error: 'Submission verification unavailable.' }, 503); }
+    if (!ip) { log('rate_limit', 'client_ip_missing'); return respond({ error: 'Submission verification unavailable.' }, 503); }
     const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
     const key = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
     const limit = await env.CONTACT_RATE_LIMITER.limit({ key: `contact:${key}` });
     if (limit?.success !== true) {
-      diagnostic('rate_limit', 'rejected', { responseStatus: 429 });
-      return json({ error: 'Too many requests. Please try again later.' }, 429, { 'Retry-After': '60' });
+      log('rate_limit', 'rejected', { responseStatus: 429 });
+      return respond({ error: 'Too many requests. Please try again later.' }, 429, { 'Retry-After': '60' });
     }
     stage = 'payload_validation';
     let data;
     try { data = await boundedBody(request); } catch (error) {
       const status = error instanceof RangeError ? 413 : 400;
-      diagnostic(stage, error instanceof RangeError ? 'body_too_large' : 'invalid_body', { responseStatus: status });
-      return json({ error: error instanceof RangeError ? 'Request too large.' : 'Invalid request.' }, status);
+      log(stage, error instanceof RangeError ? 'body_too_large' : 'invalid_body', { responseStatus: status });
+      return respond({ error: error instanceof RangeError ? 'Request too large.' : 'Invalid request.' }, status);
     }
     const values = validPayload(data);
     if (!values) {
-      diagnostic(stage, 'field_rejected', { responseStatus: 400 });
-      return json({ error: 'Please check the fields and complete the security verification.' }, 400);
+      log(stage, 'field_rejected', { responseStatus: 400 });
+      return respond({ error: 'Please check the fields and complete the security verification.' }, 400);
     }
     stage = 'turnstile_server_verification';
     let verification;
@@ -102,42 +107,43 @@ export async function handleContact(request, env, verifyFetch = fetch, deliveryF
       });
     } catch (error) {
       const category = exceptionCategory(error);
-      diagnostic(stage, category, { responseStatus: 502 });
-      return json({ error: 'Security verification could not be confirmed. Please try again.' }, 502);
+      log(stage, category, { responseStatus: 502 });
+      return respond({ error: 'Security verification could not be confirmed. Please try again.' }, 502);
     }
     if (!verification.ok) {
-      diagnostic(stage, 'http_rejected', { httpStatus: verification.status, responseStatus: 503 });
-      return json({ error: 'Security verification unavailable. Please try again.' }, 503);
+      log(stage, 'http_rejected', { httpStatus: verification.status, responseStatus: 503 });
+      return respond({ error: 'Security verification unavailable. Please try again.' }, 503);
     }
     let result;
     try { result = await verification.json(); }
     catch {
-      diagnostic(stage, 'invalid_response', { httpStatus: verification.status, responseStatus: 502 });
-      return json({ error: 'Security verification could not be confirmed. Please try again.' }, 502);
+      log(stage, 'invalid_response', { httpStatus: verification.status, responseStatus: 502 });
+      return respond({ error: 'Security verification could not be confirmed. Please try again.' }, 502);
     }
     if (result?.success !== true || result.hostname !== url.hostname || result.action !== 'evaluation') {
-      diagnostic(stage, 'challenge_rejected', { httpStatus: verification.status, responseStatus: 400 });
-      return json({ error: 'Security verification expired or failed. Please try again.' }, 400);
+      log(stage, 'challenge_rejected', { httpStatus: verification.status, responseStatus: 400 });
+      return respond({ error: 'Security verification expired or failed. Please try again.' }, 400);
     }
     const text = Object.entries(values).filter(([,value]) => value).map(([label,value]) => `${label}: ${value}`).join('\n\n');
     if (env.CONTACT_DELIVERY === 'zoho') {
       const receipt = await sendZoho(env, `Visitor email (reply to this address): ${values.email}\n\n${text}`, deliveryFetch);
-      diagnostic('zoho_api_send', receipt.authRetry ? 'accepted_after_auth_refresh' : 'accepted', receipt);
+      log('zoho_api_send', receipt.authRetry ? 'accepted_after_auth_refresh' : 'accepted', receipt);
     } else {
       stage = 'email_provider_send';
       const receipt = await env.EMAIL.send({ from: env.CONTACT_FROM, to: env.CONTACT_TO, replyTo: values.email, subject: 'Neraium evaluation inquiry', text });
       if (typeof receipt?.messageId !== 'string' || !receipt.messageId.trim()) {
-        diagnostic(stage, 'missing_receipt', { responseStatus: 502 });
-        return json({ error: 'Submission could not be confirmed. Please email craig@neraium.com.' }, 502);
+        log(stage, 'missing_receipt', { responseStatus: 502 });
+        return respond({ error: 'Submission could not be confirmed. Please email craig@neraium.com.' }, 502);
       }
     }
-    return json({ accepted: true, message: 'Your request has been accepted for email delivery. This does not confirm inbox receipt.' });
+    log('contact_response', 'accepted_for_delivery', { responseStatus: 200 });
+    return respond({ accepted: true, message: 'Your request has been accepted for email delivery. This does not confirm inbox receipt.' });
   } catch (error) {
     if (error instanceof ZohoDeliveryError) {
-      diagnostic(error.stage, error.category, { httpStatus: error.httpStatus, providerCode: error.providerCode, responseStatus: 502 });
+      log(error.stage, error.category, { httpStatus: error.httpStatus, providerCode: error.providerCode, responseStatus: 502 });
     } else {
-      diagnostic(stage, exceptionCategory(error), { responseStatus: 502 });
+      log(stage, exceptionCategory(error), { responseStatus: 502 });
     }
-    return json({ error: 'Submission could not be confirmed. Please email craig@neraium.com.' }, 502);
+    return respond({ error: 'Submission could not be confirmed. Please email craig@neraium.com.' }, 502);
   }
 }

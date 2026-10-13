@@ -14,13 +14,13 @@ export async function securityCodeFingerprint() {
 }
 
 function extractSecurityControls(source) {
-  const constants = source.match(/const EMAIL = [\s\S]*?(?=const json = )/);
+  const constants = source.match(/const EMAIL = [\s\S]*?const fields = \{[^\n]*\}/);
   const configured = source.match(/export function configured\(env\) \{[\s\S]*?\n\}/);
   const payload = source.match(/function validPayload\(data\) \{[\s\S]*?(?=\nasync function boundedBody\()/);
   const body = source.match(/async function boundedBody\(request\) \{[\s\S]*?(?=\nexport async function handleContact\()/);
-  const origin = source.match(/if \(!allowed\.includes\(url\.hostname\)[^\n]+/);
-  const mediaType = source.match(/if \(request\.headers\.get\('content-type'\)[^\n]+/);
-  const contentLength = source.match(/if \(Number\(request\.headers\.get\('content-length'\)\)[^\n]+/);
+  const origin = source.match(/if \(!allowed\.includes\(url\.hostname\) \|\| request\.headers\.get\('origin'\) !== url\.origin\)/);
+  const mediaType = source.match(/if \([^\n]*content-type[^\n]*application\/json'\)/);
+  const contentLength = source.match(/if \(Number\(request\.headers\.get\('content-length'\)\) > 8192\)/);
   const rateKey = source.match(/const digest = await crypto\.subtle\.digest\('SHA-256',[^\n]+/);
   const limiter = source.match(/const limit = await env\.CONTACT_RATE_LIMITER\.limit\([^\n]+/);
   const limitCheck = source.match(/limit\?\.success !== true/);

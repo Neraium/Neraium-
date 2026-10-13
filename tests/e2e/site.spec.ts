@@ -309,7 +309,9 @@ test('online intake diagnoses malformed response handling without losing inquiry
   await expect(page.locator('#form-feedback')).toContainText('delivery response could not be read');
   await expect(page.locator('#name')).toHaveValue('Alex Morgan');
   await expect(page.locator('#contact-form button[type="submit"]')).toHaveText('Prepare email draft');
-  expect(diagnostics).toContainEqual({ event: 'contact_frontend_diagnostic', stage: 'response_decode', category: 'invalid_json', responseStatus: 200 });
+  expect(diagnostics).toHaveLength(1);
+  expect(diagnostics[0]).toMatchObject({ event: 'contact_frontend_diagnostic', stage: 'response_decode', category: 'invalid_json', responseStatus: 200 });
+  expect(diagnostics[0].diagnosticId).toMatch(/^[0-9a-f-]{36}$/);
 });
 for (const [status, json, message] of [
   [200, { accepted: 'true' }, 'could not be confirmed'],

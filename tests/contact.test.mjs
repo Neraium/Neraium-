@@ -35,6 +35,7 @@ test('success follows provider acceptance and keeps destination server-owned', a
   const { env, sent, verify } = fixture();
   const response = await handleContact(request(), env, verify);
   assert.equal(response.status, 200); assert.equal((await response.json()).accepted, true);
+  assert.match(response.headers.get('X-Contact-Diagnostic-Id'), /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
   assert.equal(sent.length, 1); assert.equal(sent[0].to, env.CONTACT_TO); assert.equal(sent[0].replyTo, valid.email);
   assert.match(sent[0].text, /Treatment plant/); assert.equal(response.headers.get('cache-control'), 'no-store');
 });
@@ -93,9 +94,25 @@ test('stage diagnostics distinguish limiter, Turnstile and Zoho failures without
     ['turnstile_server_verification', 'network_error'],
     ['zoho_oauth_refresh', 'http_rejected'],
   ]);
+  assert.equal(new Set(events.map(event => event.diagnosticId)).size, 3);
+  assert.ok(events.every(event => /^[0-9a-f-]{36}$/.test(event.diagnosticId)));
   const serialized = JSON.stringify(events);
   assert.doesNotMatch(serialized, /Alex Morgan|alex@example\.com|192\.0\.2\.1|private inquiry|provider details|test-secret|test-refresh/);
   assert.equal(events[2].httpStatus, 403);
+});
+test('caller diagnostic IDs correlate only strict UUID values and are echoed on failures', async () => {
+  const { env, verify } = fixture();
+  const id = '550e8400-e29b-41d4-a716-446655440000';
+  const original = console.info; let event;
+  console.info = line => { event = JSON.parse(line); };
+  try {
+    const response = await handleContact(request('{', { 'X-Contact-Diagnostic-Id': id }), env, verify);
+    assert.equal(response.status, 400);
+    assert.equal(response.headers.get('X-Contact-Diagnostic-Id'), id);
+  } finally { console.info = original; }
+  assert.equal(event.diagnosticId, id);
+  assert.equal(event.stage, 'payload_validation');
+  assert.equal(event.responseStatus, 400);
 });
 test('failed, mismatched, expired or unavailable challenges never send', async () => {
   const { env, sent } = fixture();

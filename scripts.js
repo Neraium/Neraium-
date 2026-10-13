@@ -164,40 +164,41 @@
     form.setAttribute('aria-busy', 'true');
     button.disabled = true;
     button.textContent = 'Sending request…';
+    const diagnosticId = crypto.randomUUID();
     let transportDiagnosticReported = false;
     try {
       let response;
       try {
         response = await fetch('/api/contact', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Contact-Diagnostic-Id': diagnosticId },
           body: JSON.stringify({ ...data, website: '', token }), signal: AbortSignal.timeout(25000),
         });
       } catch (error) {
-        console.warn(JSON.stringify({ event: 'contact_frontend_diagnostic', stage: 'request_transport', category: error?.name === 'TimeoutError' || error?.name === 'AbortError' ? 'timeout' : 'network_error' }));
+        console.warn(JSON.stringify({ event: 'contact_frontend_diagnostic', diagnosticId, stage: 'request_transport', category: error?.name === 'TimeoutError' || error?.name === 'AbortError' ? 'timeout' : 'network_error' }));
         transportDiagnosticReported = true;
         throw error;
       }
       let result;
       try { result = await response.json(); }
       catch {
-        console.warn(JSON.stringify({ event: 'contact_frontend_diagnostic', stage: 'response_decode', category: 'invalid_json', responseStatus: response.status }));
+        console.warn(JSON.stringify({ event: 'contact_frontend_diagnostic', diagnosticId: response.headers.get('X-Contact-Diagnostic-Id') || diagnosticId, stage: 'response_decode', category: 'invalid_json', responseStatus: response.status }));
         const error = new Error('The delivery response could not be read. Please check with Neraium before retrying.');
         error.publicMessage = true;
         throw error;
       }
       if (!response.ok || result.accepted !== true) {
-        console.warn(JSON.stringify({ event: 'contact_frontend_diagnostic', stage: response.ok ? 'acceptance_contract' : 'server_response', category: response.ok ? 'acceptance_not_confirmed' : 'http_error', responseStatus: response.status }));
+        console.warn(JSON.stringify({ event: 'contact_frontend_diagnostic', diagnosticId: response.headers.get('X-Contact-Diagnostic-Id') || diagnosticId, stage: response.ok ? 'acceptance_contract' : 'server_response', category: response.ok ? 'acceptance_not_confirmed' : 'http_error', responseStatus: response.status }));
         const messages = { 400: 'Please check the fields and complete a new security verification.', 429: 'Too many requests. Please wait a minute before trying again.', 503: 'Online submission is unavailable. Please email craig@neraium.com.' };
         const error = new Error(messages[response.status] || 'Submission could not be confirmed. Please email craig@neraium.com.');
         error.publicMessage = true;
         throw error;
       }
-      console.info(JSON.stringify({ event: 'contact_frontend_diagnostic', stage: 'acceptance_contract', category: 'accepted_for_delivery', responseStatus: response.status }));
+      console.info(JSON.stringify({ event: 'contact_frontend_diagnostic', diagnosticId: response.headers.get('X-Contact-Diagnostic-Id') || diagnosticId, stage: 'acceptance_contract', category: 'accepted_for_delivery', responseStatus: response.status }));
       showStatus('success', 'Your request has been accepted for email delivery. This does not confirm inbox receipt.');
       form.reset();
     } catch (error) {
       if (!error.publicMessage && !transportDiagnosticReported) {
-        console.warn(JSON.stringify({ event: 'contact_frontend_diagnostic', stage: 'request_transport', category: error.name === 'TimeoutError' || error.name === 'AbortError' ? 'timeout' : 'network_error' }));
+        console.warn(JSON.stringify({ event: 'contact_frontend_diagnostic', diagnosticId, stage: 'request_transport', category: error.name === 'TimeoutError' || error.name === 'AbortError' ? 'timeout' : 'network_error' }));
       }
       const message = error.name === 'TimeoutError' || error.name === 'AbortError' ? 'Delivery could not be confirmed. Please email craig@neraium.com before retrying.' : 'Submission could not be confirmed. Please retry or email craig@neraium.com.';
       // Only display a known server response; never interpolate arbitrary HTML.
