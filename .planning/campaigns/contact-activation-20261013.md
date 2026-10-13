@@ -1,15 +1,15 @@
 # Contact activation from PPCLV
-Status: active
-Direction: Complete Neraium contact using PPCLV delivery reference; actual inbox receipt and explicit retention approval required before public activation; commit reviewed work.
+Status: complete
+Direction: Neraium contact form activated in production after the approved delivery, security, and retention gates passed. The optional copy inventory remains unknown and was explicitly waived by the owner as an internal release requirement; this is documented truthfully and in the public privacy notice.
 
 ## Phase End Conditions
 | Phase | State | Conditions | validator_retries_remaining |
 | --- | --- | --- | --- |
 | 1 research | complete | file_exists CONTACT_DELIVERY.md; reference and live settings inspected | 3 |
 | 2 implementation | complete | command_passes npm run check; npm run test:server; browser regressions | 3 |
-| 3 controlled delivery/security | pending | command_passes controlled validation harness; manual actual inquiry receipt and sender authorization | 3 |
-| 4 retention/activation | pending | file_exists approved policy record; manual explicit retention approval; command_passes production verification | 3 |
-| 5 commit/handoff | pending | command_passes git diff --check and regression suites; commit reviewed local preparation | 3 |
+| 3 controlled delivery/security | complete | command_passes controlled validation harness; manual actual inquiry receipt and sender authorization | 3 |
+| 4 retention/activation | complete | file_exists approved policy record; manual explicit retention approval; command_passes production verification | 3 |
+| 5 commit/handoff | complete | command_passes git diff --check and regression suites; commit reviewed local preparation | 3 |
 
 ## Exit Evidence
 | Subject | Required | Status | Evidence |
@@ -20,9 +20,9 @@ Direction: Complete Neraium contact using PPCLV delivery reference; actual inbox
 | phase:2 browser | yes | passed | 702 checks across nine viewport sizes; 49 static tests; desktop/mobile screenshots inspected |
 | phase:3 sender authorization | yes | passed | Fresh send-grant refresh reports exact CREATE scope; separate live account-read verifies confirmed sender/outgoing allowed; live-zoho-verification.json |
 | phase:3 actual receipt | yes | passed | Owner visually verified matching sender/recipient/subject/timestamp in Zoho Mail Inbox; owner-confirmations.json |
-| phase:3 real Turnstile/rate limit | yes | blocked | Live invalid-token/validation400 and rate429 observed; genuine challenge/replay/expiry/recovery remain unverified; probe fully removed; live-security.json |
+| phase:3 real Turnstile/rate limit | yes | passed | Six owner-reported scenarios validated from the verbatim sanitized panel export; prior live HTTP 429 evidence retained; probe removed after test; human-security.json and live-security.json |
 | phase:4 retention approval | yes | passed | Owner explicitly approved 90-day noncustomer policy including Sent/Trash; customer records separately governed; owner-confirmations.json |
-| phase:4 activation | yes | blocked | both flags false; strict deployment safeguard retained |
+| phase:4 activation | yes | passed | Guarded production deployment 20605c1a-6aa8-45e2-8f86-54a08d90b139/version fe081a7f-5543-4f7e-b1cc-4c09373f604a; strict pre/post config checks and public runtime checks passed |
 
 ## Decisions
 Sole writing agent is root. PPCLV reference delegated read-only. Existing untracked state and nested repository preserved. No stash, reset, secret retrieval, PPCLV production mutation, DNS or billing changes. Keep old provider as default; explicit Zoho selection requires independently authorized Neraium credentials. No automatic send retries. Prepare draft after failures.
@@ -108,3 +108,12 @@ Current identity: `/home/ubuntu/Neraium-`, branch `codex/neraium-phase-2`, HEAD 
 Review of the activation validator showed that the prior owner-reported synthetic failure HTTP 502 lacks the required challenge-checked and challenge-valid evidence. The deployed private panel now requires a fresh, challenge-validated synthetic failure in this session before recovery, followed by a different fresh token. This adapter cannot send email. Six human submissions remain: success, exact replay, synthetic failure, fresh-token recovery, unused-token expiry, and validation.
 
 The corrected panel is deployed to production Worker version 94aad278-c5f0-4673-a748-848e65dfb5b4 (deployment 46959738-1759-4402-9400-5d624287e6f2). Live authenticated panel check passed with the recovery-order prompt and seven controls; the current 30-minute one-time link remains unconsumed. Public contact and retention flags remain false.
+
+
+## Final activation and handoff — 2026-10-13
+
+All required production gates passed. The owner authorized activation without completing the optional Zoho copy inventory. Five surfaces remain `unknown`; neither the inventory nor owner attestation marks them empty or inspected. The privacy notice limits the approved 90-day deletion commitment to Craig's Received/Sent/Trash copies in the Neraium Zoho mailbox and discloses possible additional copies with separately configured or provider-managed retention.
+
+The temporary verification secret, local one-time link credential, route, Worker module, Durable Object binding/class, and dedicated private-link/live-probe scripts were removed through the guarded retirement workflow. Final retirement deployment: 150f5dc2-e7b4-41cc-b4a4-70c7167de4a1/version 99e2be22-8d1f-450b-a70a-aad8aa9c7598. Guarded activation deployment: 20605c1a-6aa8-45e2-8f86-54a08d90b139/version fe081a7f-5543-4f7e-b1cc-4c09373f604a. Both flags are true; Zoho US selected. Runtime config, form, privacy page, matching Turnstile site key, and 404 retired route were verified read-only. No repeat OAuth, human challenge, browser regression, or email-delivery test was run.
+
+Final checks: production build passed; 51 Node service/config/activation/probe tests passed; 32 Python static tests passed; syntax/config checks and `git diff --check` passed. Commit contains only task-scoped implementation, cleanup, verification, and campaign records. Citadel memory sync completed without force.

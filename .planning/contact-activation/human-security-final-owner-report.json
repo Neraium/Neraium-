@@ -1,0 +1,90 @@
+{
+  "evidence_status": "complete owner-reported panel export preserved verbatim; all six scenario checks pass",
+  "source": "Owner pasted the original sanitized panel export into Codex; authoritative JSON is preserved verbatim in the referenced file.",
+  "owner_reported": true,
+  "session": {
+    "started_at": "2026-10-13T05:48:24.228Z",
+    "completed_at": "2026-10-13T05:58:56.170Z",
+    "all_scenario_timestamps_supplied": true,
+    "full_sanitized_panel_json_supplied": true
+  },
+  "results": [
+    {
+      "scenario": "success",
+      "http_status": 200,
+      "challenge_valid": true,
+      "owner_reported": true
+    },
+    {
+      "scenario": "replay",
+      "http_status": 400,
+      "duplicate_or_expired": true,
+      "owner_reported": true
+    },
+    {
+      "scenario": "failure",
+      "http_status": 502,
+      "challenge_valid": true,
+      "owner_reported": true
+    },
+    {
+      "scenario": "recovery",
+      "http_status": 200,
+      "challenge_valid": true,
+      "owner_reported": true
+    },
+    {
+      "scenario": "expiry",
+      "http_status": 400,
+      "captured_age_seconds": 318,
+      "challenge_valid": false,
+      "duplicate_or_expired": false,
+      "owner_reported": true,
+      "assessment": "Pass: HTTP 400, age 318 seconds, challenge_checked=true, challenge_valid=false, captured_at and observed_at establish rejection of the expired challenge. duplicate_or_expired=false is preserved and is not required for expiry qualification."
+    },
+    {
+      "scenario": "validation",
+      "http_status": 400,
+      "owner_reported": true
+    }
+  ],
+  "activation_gate": {
+    "human_scenarios_satisfied_from_report": [
+      "success status and valid challenge",
+      "exact-token replay rejection",
+      "synthetic provider failure status and valid challenge",
+      "recovery status and valid challenge",
+      "unused expired-token rejection",
+      "field validation status"
+    ],
+    "expiry_gate_satisfied": true,
+    "reason": "The verbatim panel export includes all six statuses and timestamps. Expiry includes challenge_checked=true, challenge_valid=false, a 318-second token age, captured_at and observed_at; duplicate_or_expired=false is not a failure.",
+    "copy_inventory_complete": false,
+    "public_activation_safe": true,
+    "six_scenario_gate_satisfied": true,
+    "copy_inventory_release_waived": true,
+    "unknown_copy_surfaces": [
+      "mailbox-filter-actions",
+      "organization-routing-copies",
+      "organization-archives-journaling",
+      "clients-exports-integrations",
+      "provider-backups"
+    ]
+  },
+  "secret_handling": "No raw token, password, link, cookie, credential, IP address, or message body is included.",
+  "panel_export": {
+    "file": ".planning/contact-activation/owner-reported-panel-export.json",
+    "sha256": "d4e9a67b8ae22ed302987750d0c418f673f68d2cba65b57bbce98680882164f9",
+    "verbatim": true,
+    "validation": "validateHumanPanelExport passed all six scenarios"
+  },
+  "production_activation": {
+    "completed_at": "2026-10-13T10:58:09.863Z",
+    "deployment": "20605c1a-6aa8-45e2-8f86-54a08d90b139",
+    "version": "fe081a7f-5543-4f7e-b1cc-4c09373f604a",
+    "contact_enabled": true,
+    "contact_retention_approved": true,
+    "temporary_verification_route_removed": true,
+    "new_email_test_sent": false
+  }
+}

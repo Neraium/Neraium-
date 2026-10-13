@@ -1,0 +1,68 @@
+{
+  "human_operated": true,
+  "hostname": "neraium.com",
+  "started_at": "2026-10-13T05:48:24.228Z",
+  "completed_at": "2026-10-13T05:58:56.170Z",
+  "results": [
+    {
+      "scenario": "success",
+      "http_status": 200,
+      "observed_at": "2026-10-13T05:48:32.948Z",
+      "challenge_checked": true,
+      "challenge_valid": true,
+      "duplicate_or_expired": false,
+      "captured_age_seconds": null,
+      "captured_at": null
+    },
+    {
+      "scenario": "replay",
+      "http_status": 400,
+      "observed_at": "2026-10-13T05:48:36.723Z",
+      "challenge_checked": true,
+      "challenge_valid": false,
+      "duplicate_or_expired": true,
+      "captured_age_seconds": null,
+      "captured_at": null
+    },
+    {
+      "scenario": "failure",
+      "http_status": 502,
+      "observed_at": "2026-10-13T05:48:50.642Z",
+      "challenge_checked": true,
+      "challenge_valid": true,
+      "duplicate_or_expired": false,
+      "captured_age_seconds": null,
+      "captured_at": null
+    },
+    {
+      "scenario": "recovery",
+      "http_status": 200,
+      "observed_at": "2026-10-13T05:49:04.270Z",
+      "challenge_checked": true,
+      "challenge_valid": true,
+      "duplicate_or_expired": false,
+      "captured_age_seconds": null,
+      "captured_at": null
+    },
+    {
+      "scenario": "expiry",
+      "http_status": 400,
+      "observed_at": "2026-10-13T05:58:31.753Z",
+      "challenge_checked": true,
+      "challenge_valid": false,
+      "duplicate_or_expired": false,
+      "captured_age_seconds": 318,
+      "captured_at": "2026-10-13T05:53:13.282Z"
+    },
+    {
+      "scenario": "validation",
+      "http_status": 400,
+      "observed_at": "2026-10-13T05:58:56.125Z",
+      "challenge_checked": false,
+      "challenge_valid": false,
+      "duplicate_or_expired": false,
+      "captured_age_seconds": null,
+      "captured_at": null
+    }
+  ]
+}

@@ -24,7 +24,21 @@
     "mailbox_deletion_owner": "Craig",
     "forwarding_and_additional_copies_inventory_complete": false,
     "public_activation_authorized_after_all_required_checks": true,
-    "public_privacy_sha256": "2a6e65a8c7fd5ad005d39e91a259663224cb38f3d813f8b36e16fb169d0bf757",
-    "public_privacy_wording_basis": "Implements the existing owner-approved policy; disclosure of providers and policy scope; no assertion that unknown additional copies are absent."
+    "public_privacy_sha256": "97bab9f9ab36da71e428197f2d27d73718398a42f0bfed8168049a0be0b92851",
+    "public_privacy_wording_basis": "Implements the existing owner-approved policy; disclosure of providers and policy scope; no assertion that unknown additional copies are absent.",
+    "copy_inventory_waiver": {
+      "authorized": true,
+      "source": "Explicit owner authorization in Codex on 2026-10-13",
+      "authorized_at": "2026-10-13",
+      "unknown_surfaces_acknowledged": true,
+      "surfaces": [
+        "mailbox-filter-actions",
+        "organization-routing-copies",
+        "organization-archives-journaling",
+        "clients-exports-integrations",
+        "provider-backups"
+      ],
+      "scope": "Waives the internal inventory release gate only. Unknown surfaces remain unknown. The 90-day owner-managed deletion policy remains limited to noncustomer inquiries in Received, Sent and Trash in the Neraium Zoho mailbox."
+    }
   }
 }

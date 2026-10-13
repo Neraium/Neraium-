@@ -1,0 +1,61 @@
+{
+  "recorded_at": "2026-10-13T10:58:09.863Z",
+  "campaign": "contact-activation-20261013",
+  "phase": "production-activated-and-live-verified-local-commit-pending",
+  "worktree": "/home/ubuntu/Neraium-",
+  "head": "18f5e6eecd91f2a116336abd73ba2fd41ed81466",
+  "branch": "codex/neraium-phase-2",
+  "production_deployment": "20605c1a-6aa8-45e2-8f86-54a08d90b139",
+  "production_version": "fe081a7f-5543-4f7e-b1cc-4c09373f604a",
+  "verified": {
+    "owner_reported_human_session": "2026-10-13T05:48:24.228Z to 2026-10-13T05:58:56.170Z",
+    "human_results_recorded": true,
+    "zoho_account_readonly_inventory_refreshed": true,
+    "focused_tests": "11/11 activation-gate and private-panel tests passed",
+    "cloudflare_contact_flags": "false/false",
+    "secrets_exposed": false
+  },
+  "blockers": [],
+  "next_action": "No activation work remains. Preserve unrelated pre-existing untracked files and nested repository state.",
+  "public_contact_enabled": true,
+  "contact_retention_approved_flag": true,
+  "activation_performed": true,
+  "unrelated_repositories_or_infrastructure_changed": false,
+  "read_only_live_check": {
+    "checked_at": "2026-10-13T09:46:49.759Z",
+    "public_contact_enabled": false,
+    "contact_retention_approved": false,
+    "temporary_verification_secret_present": true,
+    "deployment": "46959738-1759-4402-9400-5d624287e6f2",
+    "version": "94aad278-c5f0-4673-a748-848e65dfb5b4"
+  },
+  "flags": {
+    "CONTACT_ENABLED": true,
+    "CONTACT_RETENTION_APPROVED": true
+  },
+  "temporary_verification_endpoint_removed": true,
+  "temporary_verification_secret_removed": true,
+  "local_one_time_credential_removed": true,
+  "copy_inventory_complete": false,
+  "copy_inventory_release_waived": true,
+  "unknown_copy_surfaces": [
+    "mailbox-filter-actions",
+    "organization-routing-copies",
+    "organization-archives-journaling",
+    "clients-exports-integrations",
+    "provider-backups"
+  ],
+  "owner_reported_human_results_preserved": true,
+  "mail_delivery_test_repeated": false,
+  "live_read_only_checks": {
+    "contact_config_http": 200,
+    "enabled": true,
+    "site_key_matches_config": true,
+    "contact_page_http": 200,
+    "evaluation_form_present": true,
+    "evaluation_cta_present": true,
+    "privacy_page_http": 200,
+    "privacy_scope_disclosed": true,
+    "verification_route_http": 404
+  }
+}

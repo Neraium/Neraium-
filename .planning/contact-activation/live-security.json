@@ -39,5 +39,21 @@
     "public_post_status": 503,
     "temporary_secret_removed": true,
     "temporary_local_key_deleted": true
+  },
+  "current_cleanup_verification": {
+    "verified_at": "2026-10-13T10:55:21.118Z",
+    "source": "Guarded probe-retirement deployment configuration check and post-deployment read-only HTTP checks.",
+    "deployment": "150f5dc2-e7b4-41cc-b4a4-70c7167de4a1",
+    "version": "99e2be22-8d1f-450b-a70a-aad8aa9c7598",
+    "endpoint_status": 404,
+    "contact_config_http_status": 200,
+    "public_contact_enabled": false,
+    "contact_flags_false": true,
+    "temporary_secret_removed": true,
+    "temporary_local_key_deleted": true,
+    "temporary_storage_removed": true,
+    "configuration_fingerprint": "56a132c048499d476d1fe6e59e8c85829e434cd762e509fcfce8f1758cce9e7e",
+    "code_fingerprint": "8f08b9a9ec79f508d62047b1851acefd947c70b2b2aa5a83a0cf0d6f2852706c",
+    "rate_limit_source": "Existing live-security.json observation; HTTP 429 was observed in the completed limiter check and was not repeated."
   }
 }

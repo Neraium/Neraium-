@@ -1,5 +1,5 @@
 {
-  "inspected_at": "2026-10-13T05:33:45.458Z",
+  "inspected_at": "2026-10-13T06:02:36.156Z",
   "source": "Zoho GET specific account, accounts.READ",
   "mailbox": "craig@neraium.com",
   "setting_fields_present": [
@@ -20,10 +20,19 @@
   "account_forwarding": {
     "list_explicitly_returned": false,
     "destinations": null,
-    "delete_zoho_copy": "unknown"
+    "delete_zoho_copy": "unknown",
+    "owner_reported": {
+      "mailbox_list_empty": true,
+      "administrator_list_empty": true,
+      "destinations": [],
+      "original_copy_preference": "retain in Zoho",
+      "reported_at": "2026-10-13T09:57:47Z"
+    }
   },
   "forwarding_inventory_complete": false,
   "additional_copy_inventory_complete": false,
+  "owner_attested": false,
+  "confirmed_by": null,
   "deletion_owners": [
     {
       "location": "Zoho mailbox received, Sent and Trash",
@@ -32,12 +41,14 @@
     }
   ],
   "unknown_surfaces": [
-    "Mail filtering/automatic forward actions",
-    "Organization routing, copy/archive/journaling rules",
-    "Client downloads, exports, integrations and backups"
+    "mailbox-filter-actions",
+    "organization-routing-copies",
+    "organization-archives-journaling",
+    "clients-exports-integrations",
+    "provider-backups"
   ],
   "programmatic_review": {
-    "checked_at": "2026-10-13T05:33:45.458Z",
+    "checked_at": "2026-10-13T06:02:36.156Z",
     "account_read_scope": "Existing read-only account inspection; did not broaden the send-only production grant.",
     "confirmed_findings": [
       "Zoho account API returned POP, IMAP and ActiveSync controls; POP/IMAP/ActiveSync are disabled.",
@@ -53,7 +64,40 @@
       "Provider backup deletion timeline and named oversight owner"
     ],
     "api_reference": "https://www.zoho.com/mail/help/api/account-api.html",
-    "api_scope_note": "Zoho documents mailbox forwarding configuration through account APIs; this investigation did not request wider OAuth scopes or make account changes."
+    "api_scope_note": "Zoho documents mailbox forwarding configuration through account APIs; this investigation did not request wider OAuth scopes or make account changes.",
+    "latest_refresh": "Read-only GET account and GET accounts listing rerun on 2026-10-13; setting fields unchanged and no explicit mailForward list was returned. No broader OAuth scope requested; no account settings changed.",
+    "capability_review": {
+      "reviewed_at": "2026-10-13",
+      "read_grant_already_used": "ZohoMail.accounts.READ",
+      "readable_and_already_inspected": [
+        "GET /api/accounts",
+        "GET /api/accounts/{accountId}"
+      ],
+      "read_result": "The existing single-account and account-list responses did not explicitly return a mailForward list. That does not establish forwarding absence.",
+      "forwarding_controls": "The Zoho API index documents forwarding and delete-Zoho-copy controls as account update (PUT) operations. No write operation was used to inventory them.",
+      "filter_rules": "The API index does not list an endpoint for enumerating mailbox filters. Zoho documents incoming/outgoing filters with automatic CC/BCC actions; console inspection is required.",
+      "organization_controls": "Organization account/policy and archive settings are separate administrative surfaces. No wider OAuth grant or setting change was made.",
+      "application_level": "worker/zoho-mail.mjs sends to the fixed Craig recipient without CC/BCC; the application has no inquiry database. These source-level facts do not establish mailbox or organization copy rules.",
+      "provider_policy": "Zoho publishes Trash recovery and organization eDiscovery/backup behavior; account-level API results do not reveal this organization’s configured retention or named oversight owner.",
+      "references": [
+        "https://www.zoho.com/mail/help/api/",
+        "https://www.zoho.com/mail/help/filters.html",
+        "https://www.zoho.com/mail/help/data-deletion-policy.html",
+        "https://www.zoho.com/mail/help/adminconsole/backup-and-recovery.html"
+      ],
+      "secrets_or_tokens_recorded": false,
+      "mailbox_forwarding_update_scope_documented": "Zoho documents PUT forwarding and Zoho-copy deletion controls under ZohoMail.accounts.UPDATE or ZohoMail.organization.accounts.UPDATE; neither scope is the existing read-only accounts grant, and no write call was made.",
+      "organization_forward_policy_read_scope_documented": "Zoho documents GET /api/organization/{zoid}/policy/mailForwardPolicy with ZohoMail.organization.policy.READ. No such organization-level grant was requested or verified for this inspection.",
+      "api_references": {
+        "accounts": "https://www.zoho.com/mail/help/api/",
+        "forward_restrictions": "https://www.zoho.com/mail/help/api/get-forward-restrictions.html",
+        "forwarding_update": "https://www.zoho.com/mail/help/api/put-add-email-forwarding.html",
+        "forwarded_copy_update": "https://www.zoho.com/mail/help/api/put-delete-zoho-mail-copy-in-email-forwarding.html",
+        "filters": "https://www.zoho.com/mail/help/filters.html",
+        "backup": "https://www.zoho.com/mail/help/adminconsole/backup-and-recovery.html",
+        "deletion": "https://www.zoho.com/mail/help/data-deletion-policy.html"
+      }
+    }
   },
   "application_delivery": {
     "recipient": "craig@neraium.com",
@@ -67,6 +111,112 @@
     "organization_archive_configuration": "unknown",
     "oversight_owner": "unassigned",
     "immediate_provider_backup_deletion_promised": false,
-    "terms_reference": "https://www.zoho.com/mail/help/data-deletion-policy.html"
-  }
+    "terms_reference": "https://www.zoho.com/mail/help/data-deletion-policy.html",
+    "published_behavior": {
+      "trash_after_manual_deletion": {
+        "trash_retention_days": "5-180 days depending on received date and organization Junk Cleanup Interval",
+        "recovery_after_trash_removal_days": 30,
+        "configuration_for_this_organization": "unknown",
+        "source": "https://www.zoho.com/mail/help/data-deletion-policy.html"
+      },
+      "organization_email_backup": {
+        "enabled_for_neraium": "unknown",
+        "documented_default_retention_days": 365,
+        "administrator_may_set_custom_duration_or_retain_forever": true,
+        "users_or_mailboxes_included": "unknown",
+        "oversight_owner": "unassigned",
+        "source": "https://www.zoho.com/mail/help/adminconsole/backup-and-recovery.html"
+      },
+      "configured_ediscovery_archive": "unknown",
+      "immediate_provider_backup_deletion_promised": false
+    },
+    "owner_admin_confirmations_required": [
+      {
+        "surface": "mailbox-forwarding",
+        "status": "owner-reported inspected-none",
+        "confirm": "Inspect active destinations, who configured each, whether Zoho retains a local copy, and recipient deletion owner/policy coverage.",
+        "confirmed_at": "2026-10-13T09:57:47Z",
+        "finding": "Both mailbox and administrator forwarding lists empty; retain originals in Zoho; owner owns applicable Received/Sent/Trash deletion under approved 90-day policy."
+      },
+      {
+        "surface": "mailbox-filter-actions",
+        "status": "unknown",
+        "confirm": "Inspect incoming and outgoing filters, including auto-forward, Auto-CC and Auto-BCC actions; identify each copy destination and deletion owner."
+      },
+      {
+        "surface": "organization-routing-copies",
+        "status": "unknown",
+        "confirm": "Inspect organization routing, transport, group/catch-all and copy rules affecting craig@neraium.com; identify resulting copies and deletion owners."
+      },
+      {
+        "surface": "organization-archives-journaling",
+        "status": "unknown",
+        "confirm": "Inspect archive, journaling, eDiscovery and retention policies affecting this mailbox; record destinations, duration and oversight/deletion owner."
+      },
+      {
+        "surface": "clients-exports-integrations",
+        "status": "unknown",
+        "confirm": "Inspect configured devices and clients, downloaded/exported message stores, integrations, and local backups; report only inspected outcomes and assign each retained copy a deletion owner."
+      },
+      {
+        "surface": "provider-backups",
+        "status": "unknown",
+        "confirm": "Confirm whether organization backup/eDiscovery applies to this mailbox, its configured retention and recoverability, included copies, applicable terms, and named oversight owner."
+      }
+    ],
+    "policy_coverage_owner_confirmation": "For any identified copy, confirm how the owner-approved 90-day noncustomer Received/Sent/Trash rule applies. Zoho Trash recovery and organization backup/archive windows can extend recoverability; the approved policy does not establish those settings or an immediate provider purge.",
+    "inventory_owner_attestation": {
+      "owner_attested": false,
+      "confirmed_by": null,
+      "confirmed_at": null
+    }
+  },
+  "owner_checklist": ".planning/contact-activation/owner-copy-checklist.md",
+  "copy_inventory_complete": false,
+  "activation_release_waiver": {
+    "authorized": true,
+    "source": "Explicit owner authorization in Codex on 2026-10-13",
+    "scope": "Internal release checklist only; this is not an inspection, completion attestation, or change to the approved 90-day policy.",
+    "unknown_surfaces_preserved": [
+      "mailbox-filter-actions",
+      "organization-routing-copies",
+      "organization-archives-journaling",
+      "clients-exports-integrations",
+      "provider-backups"
+    ]
+  },
+  "surface_reports": [
+    {
+      "id": "mailbox-forwarding",
+      "status": "inspected-none",
+      "source": "Owner-reported in Codex; no independent admin access used.",
+      "reported_at": "2026-10-13T09:57:47Z",
+      "inspected_by": "Owner (reported)",
+      "inspection_time": "not supplied; reported_at is the confirmation record time, not asserted as inspection time",
+      "method": "Owner reports checking both Zoho Mail Settings > Mail Accounts > craig@neraium.com > Forwards and Zoho Mail Admin Console > Users > craig@neraium.com > Mailbox Settings > Email Forwarding.",
+      "destinations": [],
+      "original_copy_preference": "Retain original emails in Zoho.",
+      "delete_original_copy_toggle": "Not applicable with no forwarding destinations; a distinct toggle state was not reported.",
+      "deletion_owner": "Owner responsible for noncustomer inquiries, including applicable Received, Sent, and Trash copies.",
+      "approved_policy_days": 90,
+      "evidence": "Owner states both mailbox and administrator forwarding lists are empty; no forwarding destinations are configured."
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "mailbox-forwarding",
+      "inspected_by": "Owner (reported)",
+      "inspected_at": null,
+      "confirmed_at": "2026-10-13T09:57:47Z",
+      "method": "Owner reports checking both mailbox and administrator forwarding lists.",
+      "status": "inspected-none",
+      "copies": [],
+      "finding": "No destinations configured; original emails are to be retained in Zoho. The separate delete-original-copy toggle was not reported. Owner covers applicable noncustomer Received, Sent, and Trash deletion under the approved 90-day policy."
+    },
+    { "id": "mailbox-filter-actions", "status": "unknown" },
+    { "id": "organization-routing-copies", "status": "unknown" },
+    { "id": "organization-archives-journaling", "status": "unknown" },
+    { "id": "clients-exports-integrations", "status": "unknown" },
+    { "id": "provider-backups", "status": "unknown" }
+  ]
 }

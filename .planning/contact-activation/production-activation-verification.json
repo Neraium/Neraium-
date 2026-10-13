@@ -1,0 +1,79 @@
+{
+  "verified_at": "2026-10-13T10:58:09.863Z",
+  "environment": "production",
+  "hostname": "neraium.com",
+  "deployment": "20605c1a-6aa8-45e2-8f86-54a08d90b139",
+  "version": "fe081a7f-5543-4f7e-b1cc-4c09373f604a",
+  "flags": {
+    "CONTACT_ENABLED": true,
+    "CONTACT_RETENTION_APPROVED": true
+  },
+  "delivery": {
+    "provider": "zoho",
+    "region": "us",
+    "permanent_secret_names_present": [
+      "ZOHO_CLIENT_ID",
+      "ZOHO_CLIENT_SECRET",
+      "ZOHO_REFRESH_TOKEN",
+      "ZOHO_ACCOUNT_ID",
+      "TURNSTILE_SECRET_KEY"
+    ],
+    "values_read_or_recorded": false,
+    "prior_sender_authorization_and_Inbox_receipt": "owner-confirmations.json and live-zoho-verification.json"
+  },
+  "turnstile": {
+    "runtime_enabled": true,
+    "configured_site_key_matches_live": true,
+    "owner_panel_export_sha256": "d4e9a67b8ae22ed302987750d0c418f673f68d2cba65b57bbce98680882164f9",
+    "human_scenarios": 6,
+    "completed_at": "2026-10-13T05:58:56.170Z"
+  },
+  "rate_limit": {
+    "configured": {
+      "limit": 5,
+      "period": 60
+    },
+    "previous_live_http_429_observed": true,
+    "source": "Existing live-security.json result; not repeated during final activation."
+  },
+  "temporary_verification": {
+    "retirement_deployment": "150f5dc2-e7b4-41cc-b4a4-70c7167de4a1",
+    "retirement_version": "99e2be22-8d1f-450b-a70a-aad8aa9c7598",
+    "secret_removed": true,
+    "local_one_time_credential_removed": true,
+    "temporary_storage_removed": true,
+    "route_http_status": 404
+  },
+  "read_only_live_checks": {
+    "contact_config_http": 200,
+    "enabled": true,
+    "site_key_matches_config": true,
+    "contact_page_http": 200,
+    "evaluation_form_present": true,
+    "evaluation_cta_present": true,
+    "privacy_page_http": 200,
+    "privacy_scope_disclosed": true,
+    "verification_route_http": 404
+  },
+  "retention": {
+    "owner_approved_days": 90,
+    "mailbox_folders": [
+      "Received",
+      "Sent",
+      "Trash"
+    ],
+    "deletion_responsible": "Craig",
+    "copy_inventory_complete": false,
+    "unknown_surfaces": [
+      "mailbox-filter-actions",
+      "organization-routing-copies",
+      "organization-archives-journaling",
+      "clients-exports-integrations",
+      "provider-backups"
+    ],
+    "internal_release_waiver_authorized": true,
+    "public_notice_sha256": "97bab9f9ab36da71e428197f2d27d73718398a42f0bfed8168049a0be0b92851"
+  },
+  "mail_submission_during_final_activation": false,
+  "email_delivery_evidence": "Previously completed controlled Zoho delivery and owner-confirmed Inbox receipt; not repeated as instructed."
+}

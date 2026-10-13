@@ -1,0 +1,12 @@
+{
+  "source": "Owner-pasted verbatim sanitized human-operated panel export; companion metadata only.",
+  "confirmed_by_user": true,
+  "operator": "Owner (human-operated; owner-reported)",
+  "configuration_fingerprint": "56a132c048499d476d1fe6e59e8c85829e434cd762e509fcfce8f1758cce9e7e",
+  "code_fingerprint": "8f08b9a9ec79f508d62047b1851acefd947c70b2b2aa5a83a0cf0d6f2852706c",
+  "probe_removed": true,
+  "temporary_secret_removed": true,
+  "cleanup_verified_at": "2026-10-13T10:55:21.118Z",
+  "panel_export_sha256": "d4e9a67b8ae22ed302987750d0c418f673f68d2cba65b57bbce98680882164f9",
+  "panel_export_completed_at": "2026-10-13T05:58:56.170Z"
+}

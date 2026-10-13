@@ -4,6 +4,8 @@ import { readFile } from 'node:fs/promises';
 import { compareBindings } from '../scripts/check-cloudflare-config.mjs';
 const config = JSON.parse(await readFile(new URL('../wrangler.jsonc', import.meta.url)));
 // These configuration-preservation tests exercise the permanent baseline.
+config.vars.CONTACT_ENABLED='false';
+config.vars.CONTACT_RETENTION_APPROVED='false';
 delete config.durable_objects;
 const bindings = [
   { name: 'ASSETS', type: 'assets' },

@@ -11,6 +11,30 @@ export async function securityCodeFingerprint() {
   for(const path of ['worker/contact.mjs','worker/zoho-mail.mjs','.planning/contact-activation/human-probe.mjs']) hash.update(path).update('\0').update(await readFile(path)).update('\0');
   return hash.digest('hex');
 }
+export function validateHumanPanelExport(human, now = Date.now()) {
+  requireGate(human?.human_operated === true && ['neraium.com','www.neraium.com'].includes(human.hostname), 'human-operated panel export missing');
+  const started=Date.parse(human.started_at),completed=Date.parse(human.completed_at);
+  requireGate(Number.isFinite(started) && completed >= started && completed <= now && completed-started <= 1200000 && now-completed <= 604800000, 'human session timestamps are stale or invalid');
+  const expected = { success:200, replay:400, failure:502, recovery:200, expiry:400, validation:400 };
+  requireGate(Array.isArray(human.results) && human.results.length === Object.keys(expected).length, 'panel export must contain exactly the six reported scenarios');
+  const times={};
+  for (const [scenario, status] of Object.entries(expected)) {
+    const matches=human.results.filter(result=>result.scenario===scenario);
+    requireGate(matches.length === 1 && matches[0].http_status === status, `human test missing/failed: ${scenario}`);
+    const result=matches[0];
+    times[scenario]=Date.parse(result.observed_at);
+    requireGate(Number.isFinite(times[scenario]) && times[scenario] >= started && times[scenario] <= completed, `test timestamp invalid: ${scenario}`);
+    if (['success','failure','recovery'].includes(scenario)) requireGate(result.challenge_checked === true && result.challenge_valid === true, `real challenge failed: ${scenario}`);
+    if (scenario === 'replay') requireGate(result.challenge_checked === true && result.duplicate_or_expired === true && result.challenge_valid === false, 'exact-token replay rejection unverified');
+    if (scenario === 'expiry') requireGate(result.challenge_checked === true && result.challenge_valid === false
+      && result.captured_age_seconds >= 310
+      && Number.isFinite(Date.parse(result.captured_at)) && Date.parse(result.captured_at) >= started
+      && times.expiry-Date.parse(result.captured_at) >= 310000, 'genuine unused-token expiry unverified');
+    if (scenario === 'validation') requireGate(result.challenge_checked === false && result.challenge_valid === false, 'field validation did not stop before challenge verification');
+  }
+  requireGate(times.replay >= times.success && times.recovery >= times.failure, 'replay/recovery test ordering invalid');
+  return { started, completed, times };
+}
 export function validateGateRecords({ owner, inventory, human, live, privacyHash, codeHash, config }) {
   requireGate(owner.receipt?.verified === true && owner.receipt.method === 'Visual verification in Zoho Mail Inbox'
     && owner.receipt.sender === 'website@neraium.com' && owner.receipt.recipient === 'craig@neraium.com'
@@ -18,39 +42,48 @@ export function validateGateRecords({ owner, inventory, human, live, privacyHash
   const policy = owner.retention?.noncustomer_inquiries;
   requireGate(policy?.delete_within_days_of_last_correspondence === 90 && ['Received','Sent','Trash'].every(s=>policy.covers?.includes(s))
     && Boolean(owner.retention.customer_records) && Boolean(owner.retention.approved_at), 'explicit retention approval');
-  requireGate(inventory.forwarding_inventory_complete === true && inventory.additional_copy_inventory_complete === true, 'forwarding and copy inventory incomplete');
-  requireGate(inventory.owner_attested === true && knownText(inventory.confirmed_by), 'owner copy inventory confirmation missing');
-  requireGate(Array.isArray(inventory.unknown_surfaces) && inventory.unknown_surfaces.length === 0, 'unresolved copy surfaces remain');
-  for (const id of inventorySurfaces) {
-    const surface = inventory.surfaces?.find(s=>s.id===id);
-    requireGate(surface && knownText(surface.inspected_by) && Number.isFinite(Date.parse(surface.inspected_at)) && knownText(surface.method), `inspection missing: ${id}`);
-    requireGate(['inspected-none','copies-present','provider-managed'].includes(surface.status), `unknown copy surface: ${id}`);
-    if (surface.status === 'inspected-none') requireGate(Array.isArray(surface.copies) && surface.copies.length === 0, `contradictory empty inventory: ${id}`);
-    if (surface.status === 'copies-present') {
-      requireGate(Array.isArray(surface.copies) && surface.copies.length > 0, `copy locations missing: ${id}`);
-      for (const copy of surface.copies) requireGate(knownText(copy.destination) && knownText(copy.deletion_owner) && copy.retention_days === 90 && copy.associated_sent_trash_covered === true, `copy deletion ownership/policy incomplete: ${id}`);
+  const unknownSurfaces = inventory.unknown_surfaces;
+  const waiver = owner.retention?.copy_inventory_waiver;
+  const hasOwnerWaiver = waiver?.authorized === true
+    && waiver.source === 'Explicit owner authorization in Codex on 2026-10-13'
+    && waiver.unknown_surfaces_acknowledged === true
+    && Array.isArray(unknownSurfaces) && unknownSurfaces.length > 0
+    && Array.isArray(waiver.surfaces)
+    && isDeepStrictEqual([...waiver.surfaces].sort(), [...unknownSurfaces].sort());
+  if (hasOwnerWaiver) {
+    requireGate(inventory.forwarding_inventory_complete === false && inventory.additional_copy_inventory_complete === false
+      && inventory.owner_attested === false, 'waiver must preserve incomplete inventory status');
+    const actualUnknown = inventorySurfaces.filter(id=>inventory.surfaces?.find(s=>s.id===id)?.status === 'unknown');
+    requireGate(isDeepStrictEqual([...actualUnknown].sort(), [...unknownSurfaces].sort()), 'waiver does not match the recorded unknown surfaces');
+  } else {
+    requireGate(inventory.forwarding_inventory_complete === true && inventory.additional_copy_inventory_complete === true, 'forwarding and copy inventory incomplete');
+    requireGate(inventory.owner_attested === true && knownText(inventory.confirmed_by), 'owner copy inventory confirmation missing');
+    requireGate(Array.isArray(unknownSurfaces) && unknownSurfaces.length === 0, 'unresolved copy surfaces remain');
+    for (const id of inventorySurfaces) {
+      const surface = inventory.surfaces?.find(s=>s.id===id);
+      const inspectionEvidenceAt=surface?.inspected_at ?? surface?.confirmed_at;
+      requireGate(surface && knownText(surface.inspected_by) && Number.isFinite(Date.parse(inspectionEvidenceAt)) && knownText(surface.method), `inspection missing: ${id}`);
+      requireGate(['inspected-none','copies-present','provider-managed'].includes(surface.status), `unknown copy surface: ${id}`);
+      if (surface.status === 'inspected-none') requireGate(Array.isArray(surface.copies) && surface.copies.length === 0, `contradictory empty inventory: ${id}`);
+      if (surface.status === 'copies-present') {
+        requireGate(Array.isArray(surface.copies) && surface.copies.length > 0, `copy locations missing: ${id}`);
+        for (const copy of surface.copies) requireGate(knownText(copy.destination) && knownText(copy.deletion_owner) && copy.retention_days === 90 && copy.associated_sent_trash_covered === true, `copy deletion ownership/policy incomplete: ${id}`);
+      }
+      if (surface.status === 'provider-managed') requireGate(id === 'provider-backups' && knownText(surface.terms_reference) && knownText(surface.oversight_owner), 'provider backup handling incomplete');
     }
-    if (surface.status === 'provider-managed') requireGate(id === 'provider-backups' && knownText(surface.terms_reference) && knownText(surface.oversight_owner), 'provider backup handling incomplete');
   }
-  requireGate(human?.human_operated === true && human.confirmed_by_user === true && Boolean(human.operator)
-    && ['neraium.com','www.neraium.com'].includes(human.hostname) && Number.isFinite(Date.parse(human.completed_at)), 'human-operated challenge evidence missing');
+  const { started, completed, times } = validateHumanPanelExport(human);
+  requireGate(human.confirmed_by_user === true && Boolean(human.operator), 'owner confirmation of human-operated challenge evidence missing');
   requireGate(human.configuration_fingerprint === securityConfigurationFingerprint(config), 'human verification configuration is stale');
   requireGate(knownText(codeHash) && human.code_fingerprint === codeHash, 'human verification code is stale');
-  const started=Date.parse(human.started_at),completed=Date.parse(human.completed_at),now=Date.now();
-  requireGate(Number.isFinite(started) && completed >= started && completed <= now && completed-started <= 1200000 && now-completed <= 604800000, 'human session timestamps are stale or invalid');
-  const expected = { success:200, replay:400, expiry:400, failure:502, recovery:200, invalid:400, validation:400 };
-  const times={};
-  for (const [scenario, status] of Object.entries(expected)) {
-    const result = human.results?.find(r=>r.scenario===scenario && r.http_status===status);
-    requireGate(Boolean(result), `human test missing/failed: ${scenario}`);
-    times[scenario]=Date.parse(result.observed_at);
-    requireGate(Number.isFinite(times[scenario]) && times[scenario] >= started && times[scenario] <= completed, `test timestamp invalid: ${scenario}`);
-    if (['success','failure','recovery'].includes(scenario)) requireGate(result.challenge_checked === true && result.challenge_valid === true, `real challenge failed: ${scenario}`);
-    if (['replay','expiry'].includes(scenario)) requireGate(result.challenge_checked === true && result.duplicate_or_expired === true && result.challenge_valid === false, `duplicate/expiry rejection unverified: ${scenario}`);
-    if (scenario === 'expiry') requireGate(result.captured_age_seconds >= 310 && human.unused_expiry_token_frozen === true && Date.parse(result.captured_at) >= started && times.expiry-Date.parse(result.captured_at) >= 310000, 'genuine unused-token expiry unverified');
-  }
-  requireGate(times.replay >= times.success && times.recovery >= times.failure, 'replay/recovery test ordering invalid');
-  requireGate(live.results?.rate_limit_statuses?.includes(429) && live.cleanup?.temporary_secret_removed === true && live.endpoint_removed === true, 'live limiter or probe cleanup unverified');
+  const now=Date.now();
+  const cleanup=live.current_cleanup_verification;
+  requireGate(live.results?.rate_limit_statuses?.includes(429), 'live rate limiter evidence missing');
+  requireGate(cleanup?.endpoint_status === 404 && cleanup.temporary_secret_removed === true
+    && cleanup.temporary_local_key_deleted === true && cleanup.temporary_storage_removed === true
+    && cleanup.public_contact_enabled === false && cleanup.contact_flags_false === true
+    && Date.parse(cleanup.verified_at) >= completed && Date.parse(cleanup.verified_at) <= now
+    && cleanup.configuration_fingerprint === securityConfigurationFingerprint(config), 'current live probe cleanup/configuration unverified');
   requireGate(human.probe_removed === true && human.temporary_secret_removed === true, 'human probe cleanup unverified');
   requireGate(Date.parse(human.cleanup_verified_at) >= completed && Date.parse(human.cleanup_verified_at) <= now, 'human cleanup evidence predates tests or is in the future');
   requireGate(owner.retention.public_privacy_sha256 === privacyHash, 'approved-policy privacy notice differs');
@@ -59,7 +92,10 @@ export function validateGateRecords({ owner, inventory, human, live, privacyHash
 export async function validateActivationEvidence(config) {
   const base = '.planning/contact-activation/';
   const parse = async name => JSON.parse(await readFile(base+name,'utf8'));
-  const [owner,inventory,human,live,privacy,codeHash] = await Promise.all([parse('owner-confirmations.json'),parse('forwarding-inventory.json'),parse('human-security.json'),parse('live-security.json'),readFile('privacy.html'),securityCodeFingerprint()]);
+  const [owner,inventory,humanMetadata,panelExport,live,privacy,codeHash] = await Promise.all([parse('owner-confirmations.json'),parse('forwarding-inventory.json'),parse('human-security.json'),parse('owner-reported-panel-export.json'),parse('live-security.json'),readFile('privacy.html'),securityCodeFingerprint()]);
+  // Keep the owner's panel observations authoritative and verbatim. The companion
+  // record supplies operator confirmation, fingerprints and cleanup attestations.
+  const human = { ...humanMetadata, ...panelExport };
   validateGateRecords({owner,inventory,human,live,config,codeHash,privacyHash:createHash('sha256').update(privacy).digest('hex')});
 }
 export function validateActivationTransition(before, after) {

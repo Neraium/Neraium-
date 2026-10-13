@@ -23,12 +23,14 @@
     }
   ],
   "vars": {
-    "CONTACT_ENABLED": "false",
-    "CONTACT_RETENTION_APPROVED": "false",
+    "CONTACT_ENABLED": "true",
+    "CONTACT_RETENTION_APPROVED": "true",
     "CONTACT_FROM": "website@neraium.com",
     "CONTACT_TO": "craig@neraium.com",
     "CONTACT_HOSTNAMES": "neraium.com,www.neraium.com",
-    "TURNSTILE_SITE_KEY": "0x4AAAAAAFU0ZCXIu-qT_E9P"
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFU0ZCXIu-qT_E9P",
+    "CONTACT_DELIVERY": "zoho",
+    "ZOHO_DATA_CENTER": "us"
   },
   "routes": [
     {
@@ -63,18 +65,16 @@
       "ZOHO_ACCOUNT_ID"
     ]
   },
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "CONTACT_VERIFICATION_SESSIONS",
-        "class_name": "ContactVerificationSession"
-      }
-    ]
-  },
   "migrations": [
     {
       "tag": "contact-verification-session-v1",
       "new_sqlite_classes": [
+        "ContactVerificationSession"
+      ]
+    },
+    {
+      "tag": "contact-verification-session-v2",
+      "deleted_classes": [
         "ContactVerificationSession"
       ]
     }
