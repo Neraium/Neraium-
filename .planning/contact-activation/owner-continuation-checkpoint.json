@@ -1,19 +1,19 @@
 {
-  "recorded_at": "2026-10-13T05:39:32.732Z",
+  "recorded_at": "2026-10-13T05:41:01.000Z",
   "campaign": "contact-activation-20261013",
-  "phase": "corrected-panel-deployed-and-automated-auth-qualified; awaiting-final-owner-human-turnstile-and-copy-inventory",
+  "phase": "final-human-turnstile-and-copy-inventory-pending",
   "worktree": "/home/ubuntu/Neraium-",
-  "head": "70294e28871f42784fcc0a840782a06f42c0fa06",
+  "head": "f9e200c957826f48e87d290c5c460c1c7c99c553",
   "branch": "codex/neraium-phase-2",
   "dirty_tree_digest": "fe7a0c40722afb489e168892271417546cb2f1e48bbe5a78e9a00ce9901df9af",
-  "production_deployment": "dadee20f-ee83-4fc2-8a6c-e066e5d9f3ea",
-  "production_version": "20601fa6-ae7a-4543-bd05-da4d0355c9e1",
+  "production_deployment": "46959738-1759-4402-9400-5d624287e6f2",
+  "production_version": "94aad278-c5f0-4673-a748-848e65dfb5b4",
   "blockers": [
-    "Human Turnstile test evidence incomplete: correlated success/replay, fresh-token recovery, unused-token expiry, field validation after cooldown. Prior provider-failure and invalid-token results are preserved.",
-    "Mailbox forwarding/filter, organization-copy/archive, endpoint/client copies and deletion owners are not fully inventoried.",
-    "CONTACT_ENABLED and CONTACT_RETENTION_APPROVED remain false; activation and verifier cleanup are held."
+    "Owner completes six human submissions documented in iphone-testing.md, including synthetic failure metadata and recovery with a separate fresh challenge.",
+    "Owner/admin inventory and deletion ownership for mailbox forwarding/filtering, organization copies/archive, client/local copies and provider backup oversight.",
+    "Both production flags stay false until all evidence passes; guarded verifier retirement and final activation remain pending."
   ],
-  "next_action": "Owner retrieves the current private one-time link in Termius; completes the five human test submissions in iphone-testing.md; and supplies the bundled six-surface copy inventory. Then retire temporary verification through the guard, verify evidence, activate, live-smoke, commit final changes, and sync Citadel memory.",
+  "next_action": "Use the exact Termius link retrieval command; complete success/replay/failure/recovery, then capture unused token and wait 310 seconds before expiry and validation. Supply one report for all copy surfaces. Afterward clean up, activate through guarded workflow, live verify, final commit, and Citadel memory sync.",
   "recovery": "No stash, reset, commit, or unrelated repository changes. Existing dirty tree preserved; current HEAD/branch/worktree identity rechecked.",
   "tracked_diff_sha256": "f9a06e54b5fc559599a342b5ba441b3459a5d4250ae92ae6149fe62babac1ae8",
   "task_source_sha256": {

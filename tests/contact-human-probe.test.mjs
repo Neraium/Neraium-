@@ -106,6 +106,9 @@ test('human test panel freezes the exact replay token and requires distinct fres
   await button('failure').onclick();
   assert.equal(sent.length,2,'failure must require a reset after success/replay');
   assert.match(status.textContent,/Reset and complete a fresh challenge/);
+  reset.onclick();callback('fixture-premature-recovery-token');await button('recovery').onclick();
+  assert.equal(sent.length,2,'recovery must require a synthetic failure in this session');
+  assert.match(status.textContent,/Run the synthetic failure/);
   reset.onclick();callback('fixture-failure-token');await button('failure').onclick();
   assert.equal(sent[2].token,'fixture-failure-token');
   await button('recovery').onclick();

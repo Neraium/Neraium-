@@ -1,6 +1,6 @@
 # Human contact verification and guarded activation
 
-State: private verification route deployed; reviewed human results are partial because replay correlation, recovery freshness, expiry and validation remain incomplete. Public contact remains disabled. The owner already confirmed the original Inbox receipt and approved the 90-day noncustomer inquiry policy; do not repeat OAuth setup or the controlled email.
+State: private verification route deployed; reviewed human results are partial because replay correlation, challenge-validated synthetic failure/recovery, expiry and validation remain incomplete. The earlier HTTP 502 failure result is preserved but lacks challenge-valid metadata required by the activation gate, so the synthetic failure must be repeated once (the test adapter cannot send mail). Public contact remains disabled. The owner already confirmed the original Inbox receipt and approved the 90-day noncustomer inquiry policy; do not repeat OAuth setup or the controlled email.
 
 ## iPhone authentication rejection and fix
 
@@ -34,7 +34,7 @@ python3 scripts/contact-human-session.py --link
 
 It prints only the live HTTPS link to an interactive terminal after ownership, permissions and expiry checks. Copy it directly from Termius to Safari. The link is valid at most 30 minutes, and the authenticated test session at most 40 minutes. When rotating, the previous session secret is replaced before deployment, immediately invalidating the old link and session. Its token is a URL fragment, is not sent in the HTTP request, is removed from Safari's address before submission, and is consumed atomically once by Durable Object storage. The same-origin bounded POST is rate limited; a successful redemption returns a clean 303 and an HttpOnly, Secure, SameSite=Strict scoped cookie. No authentication exception, dummy Turnstile key or production security change is introduced.
 
-Follow the minimal remaining sequence in `iphone-testing.md`; preserve the owner-reported partial outcomes in `human-security-partial.json` and merge actual sanitized new results before preparing final activation evidence. The probe calls the real `handleContact` logic against synthetic non-delivery adapters; it has no email binding or Zoho credential access. It uses the real site key, action `evaluation`, challenge endpoint, host validation and existing rate limiter. Never export a raw challenge token, link, cookie, IP, or request details. Store only sanitized actual results and user confirmation.
+Follow the six-submission sequence in `iphone-testing.md`; preserve the owner-reported partial outcomes in `human-security-partial.json` and merge actual sanitized new results before preparing final activation evidence. The panel blocks recovery until a valid synthetic failure has occurred in the same session and a distinct fresh challenge is solved. The probe calls the real `handleContact` logic against synthetic non-delivery adapters; it has no email binding or Zoho credential access. It uses the real site key, action `evaluation`, challenge endpoint, host validation and existing rate limiter. Never export a raw challenge token, link, cookie, IP, or request details. Store only sanitized actual results and user confirmation.
 
 ## Required cleanup, even on failure
 

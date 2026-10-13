@@ -101,3 +101,10 @@ Focused verification passed: 17/17 panel/config/activation-gate tests, 29/29 con
 Hold production activation and cleanup: public flags remain false until owner supplies the complete human Turnstile sequence and answers the bundled six-surface copy inventory. Then perform guarded verifier retirement, complete the evidence validator, activate, verify live operation, commit only task-owned completed files, and sync Citadel memory.
 
 Current identity: `/home/ubuntu/Neraium-`, branch `codex/neraium-phase-2`, HEAD `1fd117be949ccea2a9cbbb78296f2bb8cce9fa2e`.
+
+
+## Corrected recovery-evidence gate — 2026-10-13T05:40:00Z
+
+Review of the activation validator showed that the prior owner-reported synthetic failure HTTP 502 lacks the required challenge-checked and challenge-valid evidence. The deployed private panel now requires a fresh, challenge-validated synthetic failure in this session before recovery, followed by a different fresh token. This adapter cannot send email. Six human submissions remain: success, exact replay, synthetic failure, fresh-token recovery, unused-token expiry, and validation.
+
+The corrected panel is deployed to production Worker version 94aad278-c5f0-4673-a748-848e65dfb5b4 (deployment 46959738-1759-4402-9400-5d624287e6f2). Live authenticated panel check passed with the recovery-order prompt and seven controls; the current 30-minute one-time link remains unconsumed. Public contact and retention flags remain false.

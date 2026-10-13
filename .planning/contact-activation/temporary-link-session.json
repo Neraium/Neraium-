@@ -11,9 +11,9 @@
     "private_file_permissions": "0600",
     "session_metadata_consistent": true,
     "secret_binding_name_verified": true,
-    "worker_deployment_id": "dadee20f-ee83-4fc2-8a6c-e066e5d9f3ea",
-    "worker_version_id": "20601fa6-ae7a-4543-bd05-da4d0355c9e1",
-    "authenticated_panel_live_check": "passed using private session-scoped cookie; link remains unconsumed",
+    "worker_deployment_id": "46959738-1759-4402-9400-5d624287e6f2",
+    "worker_version_id": "94aad278-c5f0-4673-a748-848e65dfb5b4",
+    "authenticated_panel_live_check": "passed; current session cookie loads corrected failure-before-recovery panel; one-time link remains unused",
     "public_contact_enabled": false,
     "retention_approved_flag": false,
     "human_turnstile_tests": "pending"

@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-13T05:41:01.000Z",
+  "deployment_id": "46959738-1759-4402-9400-5d624287e6f2",
+  "worker_version": "94aad278-c5f0-4673-a748-848e65dfb5b4",
+  "authenticated_live_panel_status": 200,
+  "synthetic_failure_required_before_recovery": true,
+  "seven_scenario_controls": true,
+  "final_link_is_stored_privately": true,
+  "link_material_recorded": false,
+  "link_expires_at": "2026-10-13T06:07:35.943Z",
+  "public_contact_enabled": false,
+  "retention_approved_flag": false,
+  "no_email_sent": true
+}
