@@ -161,14 +161,13 @@
       return;
     }
     if (online && !token) { showStatus('error', 'Please complete the security verification before sending.'); return; }
-    const idleLabel = 'Send evaluation request';
     form.setAttribute('aria-busy', 'true');
     button.disabled = true;
     button.textContent = 'Sending request…';
     try {
       const response = await fetch('/api/contact', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, website: '', token }), signal: AbortSignal.timeout(15000),
+        body: JSON.stringify({ ...data, website: '', token }), signal: AbortSignal.timeout(25000),
       });
       const result = await response.json();
       if (!response.ok || result.accepted !== true) {
@@ -182,12 +181,13 @@
     } catch (error) {
       const message = error.name === 'TimeoutError' || error.name === 'AbortError' ? 'Delivery could not be confirmed. Please email craig@neraium.com before retrying.' : 'Submission could not be confirmed. Please retry or email craig@neraium.com.';
       // Only display a known server response; never interpolate arbitrary HTML.
-      showStatus('error', error.publicMessage ? error.message : message);
+      useEmailDraft();
+      showStatus('error', `${error.publicMessage ? error.message : message} Your details are preserved. You can prepare an email draft. If delivery is uncertain, check with Neraium before sending again.`);
     } finally {
       token = '';
       form.removeAttribute('aria-busy');
       button.disabled = false;
-      button.textContent = idleLabel;
+      button.textContent = online ? 'Send evaluation request' : 'Prepare email draft';
       if (online && window.turnstile && widget !== undefined) {
         try { window.turnstile.reset(widget); } catch {
           useEmailDraft();

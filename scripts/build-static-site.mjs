@@ -130,7 +130,7 @@ async function packageFiles(directory) {
   return files;
 }
 const releaseHash = createHash('sha256');
-for (const file of [...await packageFiles(outputDir), 'worker/index.mjs', 'worker/contact.mjs', 'wrangler.jsonc'].sort()) {
+for (const file of [...await packageFiles(outputDir), 'worker/index.mjs', 'worker/contact.mjs', 'worker/zoho-mail.mjs', 'wrangler.jsonc'].sort()) {
   releaseHash.update(file).update('\0').update(await readFile(file)).update('\0');
 }
 const version = `neraium-${releaseHash.digest('hex').slice(0, 16)}`;

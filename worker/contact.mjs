@@ -1,11 +1,18 @@
+import { zohoConfigured, sendZoho } from './zoho-mail.mjs';
+
 const EMAIL = /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 // Cloudflare's documented dummy keys must never activate public intake.
 const TEST_TURNSTILE_KEY = /^[123]x0{20,}(?:AA|AB|BB|FF)$/;
 const realChallengeKey = value => typeof value === 'string' && Boolean(value.trim()) && value === value.trim() && !TEST_TURNSTILE_KEY.test(value);
 const fields = { name: [100, true], email: [254, true], organization: [160, true], facility: [160, true], 'review-question': [600, false], role: [120, false], 'preferred-contact': [30, false] };
 const json = (body, status = 200, extra = {}) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', ...extra } });
+function deliveryConfigured(env) {
+  const provider = env.CONTACT_DELIVERY ?? 'cloudflare';
+  if (provider === 'zoho') return zohoConfigured(env);
+  return provider === 'cloudflare' && typeof env.EMAIL?.send === 'function';
+}
 export function configured(env) {
-  return env.CONTACT_ENABLED === 'true' && env.CONTACT_RETENTION_APPROVED === 'true' && typeof env.EMAIL?.send === 'function' && typeof env.CONTACT_RATE_LIMITER?.limit === 'function' && realChallengeKey(env.TURNSTILE_SITE_KEY) && realChallengeKey(env.TURNSTILE_SECRET_KEY) && EMAIL.test(env.CONTACT_FROM || '') && EMAIL.test(env.CONTACT_TO || '') && typeof env.CONTACT_HOSTNAMES === 'string' && env.CONTACT_HOSTNAMES.split(',').some(host => host.trim());
+  return env.CONTACT_ENABLED === 'true' && env.CONTACT_RETENTION_APPROVED === 'true' && deliveryConfigured(env) && typeof env.CONTACT_RATE_LIMITER?.limit === 'function' && realChallengeKey(env.TURNSTILE_SITE_KEY) && realChallengeKey(env.TURNSTILE_SECRET_KEY) && EMAIL.test(env.CONTACT_FROM || '') && EMAIL.test(env.CONTACT_TO || '') && typeof env.CONTACT_HOSTNAMES === 'string' && env.CONTACT_HOSTNAMES.split(',').some(host => host.trim());
 }
 function validPayload(data) {
   if (!data || typeof data !== 'object' || Array.isArray(data)) return null;
@@ -36,7 +43,7 @@ async function boundedBody(request) {
   for (const chunk of chunks) { body.set(chunk, offset); offset += chunk.byteLength; }
   return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(body));
 }
-export async function handleContact(request, env, verifyFetch = fetch) {
+export async function handleContact(request, env, verifyFetch = fetch, deliveryFetch = fetch) {
   const url = new URL(request.url);
   if (url.pathname === '/api/contact-config' && request.method === 'GET') {
     const enabled = configured(env);
@@ -69,8 +76,12 @@ export async function handleContact(request, env, verifyFetch = fetch) {
     const result = await verification.json();
     if (result?.success !== true || result.hostname !== url.hostname || result.action !== 'evaluation') return json({ error: 'Security verification expired or failed. Please try again.' }, 400);
     const text = Object.entries(values).filter(([,value]) => value).map(([label,value]) => `${label}: ${value}`).join('\n\n');
-    const receipt = await env.EMAIL.send({ from: env.CONTACT_FROM, to: env.CONTACT_TO, replyTo: values.email, subject: 'Neraium evaluation inquiry', text });
-    if (typeof receipt?.messageId !== 'string' || !receipt.messageId.trim()) return json({ error: 'Submission could not be confirmed. Please email craig@neraium.com.' }, 502);
+    if (env.CONTACT_DELIVERY === 'zoho') {
+      await sendZoho(env, `Visitor email (reply to this address): ${values.email}\n\n${text}`, deliveryFetch);
+    } else {
+      const receipt = await env.EMAIL.send({ from: env.CONTACT_FROM, to: env.CONTACT_TO, replyTo: values.email, subject: 'Neraium evaluation inquiry', text });
+      if (typeof receipt?.messageId !== 'string' || !receipt.messageId.trim()) return json({ error: 'Submission could not be confirmed. Please email craig@neraium.com.' }, 502);
+    }
     return json({ accepted: true, message: 'Your request has been accepted for email delivery. This does not confirm inbox receipt.' });
   } catch {
     // Never log submitted fields, IP addresses, provider errors, or secrets.

@@ -276,14 +276,21 @@ test('online intake requires a challenge and reports accepted email delivery onl
   expect(posts).toBe(1); await expect(page.locator('#name')).toHaveValue('');
 });
 test('online intake preserves entered details and never shows success after provider failure', async ({ page }) => {
-  await page.route('**/api/contact', route => route.fulfill({ status: 502, json: { error: 'Delivery unavailable' } }));
+  let posts = 0;
+  await page.route('**/api/contact', route => { posts++; return route.fulfill({ status: 502, json: { error: 'Delivery unavailable' } }); });
   await mockOnlineIntake(page); await fillInquiry(page);
   await page.evaluate(() => (window as any).testChallenge.callback('test-token'));
   await page.locator('#contact-form button[type="submit"]').click();
   await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'error');
   await expect(page.locator('#form-feedback')).toContainText('could not be confirmed');
   await expect(page.locator('#name')).toHaveValue('Alex Morgan');
-  await expect(page.locator('#contact-form button[type="submit"]')).toBeEnabled();
+  const button = page.locator('#contact-form button[type="submit"]');
+  await expect(button).toHaveText('Prepare email draft');
+  await button.click();
+  await expect(page.locator('#form-feedback')).toHaveAttribute('data-state', 'ready');
+  const draft = page.getByRole('link', { name: 'Open email draft' });
+  expect(new URL((await draft.getAttribute('href'))!).searchParams.get('body')).toContain('Work email: alex@example.com');
+  expect(posts).toBe(1);
 });
 for (const [status, json, message] of [
   [200, { accepted: 'true' }, 'could not be confirmed'],

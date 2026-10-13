@@ -95,3 +95,88 @@ test('method and unknown API route have explicit responses', async () => {
   const response = await handleContact(request(undefined, {}, 'GET'), env, verify); assert.equal(response.status, 405); assert.equal(response.headers.get('allow'), 'POST');
   assert.equal((await handleContact(new Request('https://www.neraium.com/api/unknown'), env, verify)).status, 404);
 });
+
+function zohoFixture() {
+  const result = fixture();
+  Object.assign(result.env, { CONTACT_DELIVERY: 'zoho', CONTACT_FROM: 'website@neraium.com', ZOHO_CLIENT_ID: 'test-client', ZOHO_CLIENT_SECRET: 'test-secret', ZOHO_REFRESH_TOKEN: 'test-refresh', ZOHO_ACCOUNT_ID: '123456', ZOHO_DATA_CENTER: 'us' });
+  delete result.env.EMAIL;
+  return result;
+}
+test('Zoho sends only after validation, Turnstile and rate limiting, using fixed Neraium addresses', async () => {
+  const { env, verify } = zohoFixture(); const calls = [];
+  const deliver = async (url, options) => {
+    calls.push({ url, options });
+    return Response.json(calls.length === 1 ? { access_token: 'test-access', expires_in: 3600 } : { status: { code: 200 } });
+  };
+  assert.equal((await handleContact(request(), env, verify, deliver)).status, 200);
+  assert.equal(calls.length, 2);
+  assert.equal(calls[0].url, 'https://accounts.zoho.com/oauth/v2/token');
+  assert.equal(calls[0].options.body.get('grant_type'), 'refresh_token');
+  assert.equal(calls[1].url, 'https://mail.zoho.com/api/accounts/123456/messages');
+  const body = JSON.parse(calls[1].options.body);
+  assert.equal(body.fromAddress, 'website@neraium.com'); assert.equal(body.toAddress, 'craig@neraium.com');
+  assert.equal(body.mailFormat, 'plaintext'); assert.match(body.content, /Visitor email \(reply to this address\): alex@example.com/);
+  assert.equal(Object.hasOwn(body, 'replyTo'), false);
+  for (const call of calls) { assert.equal(call.options.redirect, 'error'); assert.ok(call.options.signal instanceof AbortSignal); }
+});
+test('Zoho fails closed for missing credentials, invalid region, account path injection and foreign sender', async () => {
+  for (const key of ['ZOHO_CLIENT_ID', 'ZOHO_CLIENT_SECRET', 'ZOHO_REFRESH_TOKEN', 'ZOHO_ACCOUNT_ID']) {
+    const { env } = zohoFixture(); delete env[key]; assert.equal(configured(env), false);
+  }
+  for (const [key, value] of [['ZOHO_DATA_CENTER', 'toString'], ['ZOHO_DATA_CENTER', 'https://attacker.example'], ['ZOHO_ACCOUNT_ID', '../messages'], ['CONTACT_FROM', 'sender@professionalpoolcare.com'], ['CONTACT_TO', 'other@example.com'], ['CONTACT_DELIVERY', 'unknown']]) {
+    const { env } = zohoFixture(); env[key] = value; assert.equal(configured(env), false);
+  }
+});
+test('Zoho provider failures are generic, have no retries, and cannot claim acceptance', async () => {
+  const failures = [
+    new Response('', { status: 401 }), Response.json({ error: 'sensitive authorization error' }),
+    Response.json({ access_token: '', expires_in: 3600 }), Response.json({ access_token: 'a', expires_in: 10 }),
+    new Response('malformed'),
+  ];
+  for (const tokenResponse of failures) {
+    const { env, verify } = zohoFixture(); let calls = 0;
+    const response = await handleContact(request(), env, verify, async () => { calls++; return tokenResponse; });
+    assert.equal(response.status, 502); assert.equal(calls, 1); assert.doesNotMatch(await response.text(), /accepted|sensitive|test-secret/);
+  }
+  for (const sendResponse of [new Response('', { status: 403 }), Response.json({ status: { code: 400 } }), Response.json({ status: { code: '200' } }), Response.json({}), new Response('malformed'), null]) {
+    const { env, verify } = zohoFixture(); let calls = 0;
+    const response = await handleContact(request(), env, verify, async () => {
+      calls++; if (calls === 1) return Response.json({ access_token: 'a', expires_in: 3600 });
+      if (!sendResponse) throw new DOMException('sensitive detail', 'TimeoutError'); return sendResponse;
+    });
+    assert.equal(response.status, 502); assert.equal(calls, 2); assert.doesNotMatch(await response.text(), /accepted|sensitive/);
+  }
+});
+test('Zoho OAuth is never called when retention, validation, Turnstile or limiter rejects', async () => {
+  for (const scenario of ['retention', 'disabled', 'validation', 'challenge', 'limit']) {
+    const { env, verify } = zohoFixture(); let data = valid; let challenge = verify;
+    if (scenario === 'retention') env.CONTACT_RETENTION_APPROVED = 'false';
+    if (scenario === 'disabled') env.CONTACT_ENABLED = 'false';
+    if (scenario === 'validation') data = { ...valid, email: 'invalid' };
+    if (scenario === 'challenge') challenge = async () => Response.json({ success: false });
+    if (scenario === 'limit') env.CONTACT_RATE_LIMITER.limit = async () => ({ success: false });
+    const response = await handleContact(request(data), env, challenge, async () => assert.fail('No provider request allowed'));
+    assert.ok(response.status >= 400);
+  }
+});
+
+test('Zoho caches per environment and refreshes after auth rejection without retrying mail', async () => {
+  const { sendZoho } = await import('../worker/zoho-mail.mjs');
+  const originalFetch = globalThis.fetch;
+  try {
+    for (const failure of [() => new Response('', { status: 401 }), () => Response.json({ status: { code: 401 } })]) {
+      const { env } = zohoFixture(); let tokens = 0; let sends = 0;
+      globalThis.fetch = async url => {
+        if (url.includes('/oauth/')) { tokens++; return Response.json({ access_token: `token-${tokens}`, expires_in: 3600 }); }
+        sends++; return sends === 2 ? failure() : Response.json({ status: { code: 200 } });
+      };
+      await sendZoho(env, 'test inquiry');
+      await assert.rejects(sendZoho(env, 'test inquiry'));
+      assert.equal(tokens, 1); assert.equal(sends, 2);
+      await sendZoho(env, 'test inquiry');
+      assert.equal(tokens, 2); assert.equal(sends, 3);
+      await sendZoho({ ...env }, 'distinct environment');
+      assert.equal(tokens, 3);
+    }
+  } finally { globalThis.fetch = originalFetch; }
+});
