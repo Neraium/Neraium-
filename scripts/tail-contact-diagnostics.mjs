@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { appendFileSync, mkdirSync } from 'node:fs';
 
 const allowedEvents = new Set(['contact_diagnostic', 'contact_frontend_diagnostic']);
 const numericFields = ['httpStatus', 'providerCode', 'responseStatus'];
@@ -36,7 +37,17 @@ export function sanitizedContactDiagnostics(line, receivedAt = new Date().toISOS
   });
 }
 
+export function recordContactDiagnostics(line, outputPath, receivedAt) {
+  const events = sanitizedContactDiagnostics(line, receivedAt);
+  if (events.length) appendFileSync(outputPath, events.map(event => JSON.stringify(event)).join('\n') + '\n', { mode: 0o600 });
+  return events;
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  // Retain only the sanitized schema, including every later event. Raw Wrangler
+  // output, inquiry content, headers and credentials never enter this file.
+  mkdirSync('artifacts/contact-diagnostics', { recursive: true, mode: 0o700 });
+  const outputPath = 'artifacts/contact-diagnostics/production.jsonl';
   const child = spawn('./node_modules/.bin/wrangler', ['tail', 'website', '--format', 'json'], { stdio: ['ignore', 'pipe', 'ignore'] });
   let buffer = '';
   const heartbeat = setInterval(() => process.stdout.write(`${JSON.stringify({ tail: 'connected-or-waiting' })}\n`), 30000);
@@ -46,7 +57,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       const end = buffer.indexOf('\n');
       if (end < 0) break;
       const line = buffer.slice(0, end); buffer = buffer.slice(end + 1);
-      for (const event of sanitizedContactDiagnostics(line)) process.stdout.write(`${JSON.stringify(event)}\n`);
+      for (const event of recordContactDiagnostics(line, outputPath)) process.stdout.write(`${JSON.stringify(event)}\n`);
     }
   });
   child.on('close', code => { clearInterval(heartbeat); process.stdout.write(`${JSON.stringify({ tail: 'closed', exit: code })}\n`); process.exitCode = code ?? 1; });

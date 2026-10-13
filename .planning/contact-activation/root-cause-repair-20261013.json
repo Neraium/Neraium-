@@ -1,0 +1,115 @@
+{
+  "test_identifier": "NERAIUM-REPAIR-E164BAEC",
+  "started_at": "2026-10-13T13:36:07.983Z",
+  "public_intake_enabled": false,
+  "attempted": true,
+  "provider_accepted": true,
+  "inbox_receipt_verified": true,
+  "automatic_mail_retry": false,
+  "runtime": "Cloudflare workerd via local Miniflare; real Zoho API",
+  "completed_at": "2026-10-13T13:36:09.198Z",
+  "outcome": {
+    "accepted": true,
+    "httpStatus": 200,
+    "providerCode": 200,
+    "authRetry": false,
+    "oauthRetryAttempted": false
+  },
+  "owner_receipt": {
+    "source": "Owner report in Codex",
+    "reported_at": "2026-10-13T13:39:42.610Z",
+    "folder": "Zoho Inbox",
+    "reported_local_time": "2026-10-13 6:36 AM Las Vegas",
+    "test_identifier": "NERAIUM-REPAIR-E164BAEC"
+  },
+  "website_path_verification": {
+    "verified_at": "2026-10-13T13:40:31.519Z",
+    "frontend": "Live production contact page and scripts",
+    "worker": "Actual production index/contact/Zoho modules in workerd",
+    "upstreams": "Simulated rate limiter, Turnstile and Zoho responses; no additional email",
+    "http_status": 200,
+    "request_id": "bc4521d2-d56f-4631-8608-9109f7538625",
+    "response_id": "bc4521d2-d56f-4631-8608-9109f7538625",
+    "accepted": true,
+    "browser_success_message": "Your request has been accepted for email delivery. This does not confirm inbox receipt.",
+    "upstream_calls": [
+      "turnstile",
+      "oauth",
+      "mail"
+    ],
+    "real_email_sent": false
+  },
+  "production_disabled_probe": {
+    "probe": "disabled intake; no inquiry or delivery",
+    "at": "2026-10-13T13:40:48.494Z",
+    "request_id": "ade129d9-2093-4cf9-802d-b640ca4a319b",
+    "response_id": "ade129d9-2093-4cf9-802d-b640ca4a319b",
+    "http_status": 503,
+    "persisted_diagnostic": {
+      "receivedAt": "2026-10-13T13:40:48.570Z",
+      "event": "contact_diagnostic",
+      "diagnosticId": "ade129d9-2093-4cf9-802d-b640ca4a319b",
+      "stage": "contact_configuration",
+      "category": "disabled",
+      "responseStatus": 503
+    }
+  },
+  "production_activation": {
+    "verified_at": "2026-10-13T13:42:43.559Z",
+    "worker_version": "88c1ceac-4a83-4f97-8ef6-50de4a4a96a1",
+    "deployment": "4703a113-c11f-40eb-95e5-b8e2430c4cbf",
+    "guarded_configuration_comparison": "passed before and after upload",
+    "contact_enabled": true,
+    "retention_approved": true,
+    "resources_and_credentials_preserved": true,
+    "page_http_status": 200,
+    "button": "Send evaluation request",
+    "challenge_container_visible": true,
+    "email_draft_fallback_present": true,
+    "probe": {
+      "purpose": "empty-body field validation only; no Turnstile or Zoho request",
+      "request_id": "b830d3ef-7e4e-4203-8f1a-ac2b3fb13bfa",
+      "http_status": 400,
+      "persisted_diagnostic": {
+        "receivedAt": "2026-10-13T13:42:43.585Z",
+        "event": "contact_diagnostic",
+        "diagnosticId": "b830d3ef-7e4e-4203-8f1a-ac2b3fb13bfa",
+        "stage": "payload_validation",
+        "category": "field_rejected",
+        "responseStatus": 400
+      }
+    },
+    "initial_challenge_container_visible": false,
+    "turnstile_script_loaded": true,
+    "intake_description": "Send a business inquiry directly to Neraium."
+  },
+  "root_cause": {
+    "stage": "zoho_oauth_refresh",
+    "cause": "workerd rejects redirect:error before issuing an outbound request",
+    "runtime_exception": "TypeError: Invalid redirect value; only follow or manual supported",
+    "previous_retry_effect": "Retries the same rejected request options; cannot resolve it",
+    "mail_send_affected_too": true,
+    "original_fourth_event_still_unrecoverable": true
+  },
+  "fix": {
+    "redirect_mode": "manual for OAuth refresh and Zoho Mail send",
+    "redirects_rejected_by_existing_non_2xx_check": true,
+    "credentials_and_security_protections_preserved": true
+  },
+  "focused_verification": {
+    "workerd_runtime_tests": "3 passed; previously 3 failed before the fix",
+    "selected_contact_tests": "11 passed",
+    "sanitized_collector_tests": "3 passed",
+    "syntax_and_diff_checks": "passed",
+    "production_build_repeated": false,
+    "real_email_count": 1,
+    "owner_receipt_confirmed": true
+  },
+  "diagnostics": {
+    "schema": "timestamp, request UUID, fixed stage/category, numeric statuses only",
+    "retained_file": "artifacts/contact-diagnostics/production.jsonl",
+    "live_tail_session": 87080,
+    "live_capture_verified_at": "2026-10-13T13:42:43.585Z",
+    "collector_running_at_verification": true
+  }
+}

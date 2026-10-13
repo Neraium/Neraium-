@@ -70,7 +70,10 @@ export async function handleContact(request, env, verifyFetch = fetch, deliveryF
     ? suppliedId.toLowerCase() : crypto.randomUUID();
   const respond = (body, status = 200, extra = {}) => json(body, status, { ...extra, 'X-Contact-Diagnostic-Id': diagnosticId });
   const log = (stage, category, details = {}) => diagnostic(stage, category, details, diagnosticId);
-  if (!configured(env)) return respond({ error: 'Online submission is unavailable. Please email craig@neraium.com.' }, 503);
+  if (!configured(env)) {
+    log('contact_configuration', 'disabled', { responseStatus: 503 });
+    return respond({ error: 'Online submission is unavailable. Please email craig@neraium.com.' }, 503);
+  }
   const allowed = env.CONTACT_HOSTNAMES.split(',').map(host => host.trim());
   if (!allowed.includes(url.hostname) || request.headers.get('origin') !== url.origin) return respond({ error: 'Request origin rejected.' }, 403);
   if (request.headers.get('content-type')?.split(';')[0].trim() !== 'application/json') return respond({ error: 'Use JSON.' }, 415);

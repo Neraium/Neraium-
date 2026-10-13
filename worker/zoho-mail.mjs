@@ -50,7 +50,9 @@ async function accessToken(env, fetchImpl, accountsOrigin) {
     let response;
     let retryAttempted = false;
     const refresh = () => fetchImpl(`${accountsOrigin}/oauth/v2/token`, {
-      method: 'POST', redirect: 'error', signal: AbortSignal.timeout(10000),
+      // workerd supports manual redirects, not "error". Reject non-2xx below;
+      // never follow redirects carrying OAuth credentials.
+      method: 'POST', redirect: 'manual', signal: AbortSignal.timeout(10000),
       headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
       body: new URLSearchParams({ grant_type: 'refresh_token', client_id: env.ZOHO_CLIENT_ID,
         client_secret: env.ZOHO_CLIENT_SECRET, refresh_token: env.ZOHO_REFRESH_TOKEN }),
@@ -89,7 +91,7 @@ export async function sendZoho(env, text, fetchImpl = fetch) {
     let response;
     try {
       response = await fetchImpl(`${mailOrigin}/api/accounts/${env.ZOHO_ACCOUNT_ID}/messages`, {
-        method: 'POST', redirect: 'error', signal: AbortSignal.timeout(10000),
+        method: 'POST', redirect: 'manual', signal: AbortSignal.timeout(10000),
         headers: { Authorization: `Zoho-oauthtoken ${token}`, 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ fromAddress: env.CONTACT_FROM, toAddress: env.CONTACT_TO,
           subject: 'Neraium evaluation inquiry', content: text, mailFormat: 'plaintext', encoding: 'UTF-8' }),

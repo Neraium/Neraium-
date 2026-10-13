@@ -9,6 +9,20 @@ function fixture() {
   return { env, sent, verify };
 }
 const request = (data = valid, headers = {}, method = 'POST') => new Request('https://www.neraium.com/api/contact', { method, headers: { Origin: 'https://www.neraium.com', 'Content-Type': 'application/json', 'CF-Connecting-IP': '192.0.2.1', ...headers }, ...(method === 'POST' ? { body: typeof data === 'string' ? data : JSON.stringify(data) } : {}) });
+test('disabled contact diagnostic correlates the 503 without processing an inquiry', async () => {
+  const { env, sent } = fixture();
+  env.CONTACT_ENABLED = 'false';
+  const id = '550e8400-e29b-41d4-a716-446655440000';
+  const events = []; const original = console.info;
+  console.info = line => events.push(JSON.parse(line));
+  try {
+    const response = await handleContact(request(valid, { 'X-Contact-Diagnostic-Id': id }), env, () => { throw Error('Must not verify'); });
+    assert.equal(response.status, 503);
+    assert.equal(response.headers.get('X-Contact-Diagnostic-Id'), id);
+    assert.deepEqual(events, [{ event: 'contact_diagnostic', stage: 'contact_configuration', category: 'disabled', diagnosticId: id, responseStatus: 503 }]);
+    assert.equal(sent.length, 0);
+  } finally { console.info = original; }
+});
 test('configuration fails closed for each missing dependency and discloses no secrets', async () => {
   for (const key of ['CONTACT_ENABLED','CONTACT_RETENTION_APPROVED','CONTACT_FROM','CONTACT_TO','CONTACT_HOSTNAMES','EMAIL','CONTACT_RATE_LIMITER','TURNSTILE_SITE_KEY','TURNSTILE_SECRET_KEY']) {
     const { env, sent, verify } = fixture(); delete env[key];
@@ -171,7 +185,7 @@ test('Zoho sends only after validation, Turnstile and rate limiting, using fixed
   assert.equal(body.fromAddress, 'website@neraium.com'); assert.equal(body.toAddress, 'craig@neraium.com');
   assert.equal(body.mailFormat, 'plaintext'); assert.match(body.content, /Visitor email \(reply to this address\): alex@example.com/);
   assert.equal(Object.hasOwn(body, 'replyTo'), false);
-  for (const call of calls) { assert.equal(call.options.redirect, 'error'); assert.ok(call.options.signal instanceof AbortSignal); }
+  for (const call of calls) { assert.equal(call.options.redirect, 'manual'); assert.ok(call.options.signal instanceof AbortSignal); }
 });
 test('Zoho fails closed for missing credentials, invalid region, account path injection and foreign sender', async () => {
   for (const key of ['ZOHO_CLIENT_ID', 'ZOHO_CLIENT_SECRET', 'ZOHO_REFRESH_TOKEN', 'ZOHO_ACCOUNT_ID']) {
