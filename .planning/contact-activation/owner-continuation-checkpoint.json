@@ -1,0 +1,42 @@
+{
+  "recorded_at": "2026-10-13T05:38:24.578Z",
+  "campaign": "contact-activation-20261013",
+  "phase": "corrected-panel-deployed-and-automated-auth-qualified; awaiting-final-owner-human-turnstile-and-copy-inventory",
+  "worktree": "/home/ubuntu/Neraium-",
+  "head": "1fd117be949ccea2a9cbbb78296f2bb8cce9fa2e",
+  "branch": "codex/neraium-phase-2",
+  "dirty_tree_digest": "fe7a0c40722afb489e168892271417546cb2f1e48bbe5a78e9a00ce9901df9af",
+  "production_deployment": "dadee20f-ee83-4fc2-8a6c-e066e5d9f3ea",
+  "production_version": "20601fa6-ae7a-4543-bd05-da4d0355c9e1",
+  "blockers": [
+    "Owner completes remaining human Turnstile sequence using final private one-time link",
+    "Owner/admin reports all six forwarding/copy/retention surfaces and named deletion ownership",
+    "After qualification, retire temporary route/secret/Durable Object; validate evidence; activate only through guarded workflow; live smoke; commit and memory sync"
+  ],
+  "next_action": "Owner retrieves final link privately in Termius, completes the five request sequence, and answers bundled copy inventory questions. Do not activate or remove temporary verifier before qualification.",
+  "recovery": "No stash, reset, commit, or unrelated repository changes. Existing dirty tree preserved; current HEAD/branch/worktree identity rechecked.",
+  "tracked_diff_sha256": "f9a06e54b5fc559599a342b5ba441b3459a5d4250ae92ae6149fe62babac1ae8",
+  "task_source_sha256": {
+    "scripts/contact-activation.mjs": "cfa01048cdd62db69ba30ff3558ca339aa5a5e8f6288e46acad24cc8a791a944",
+    "scripts/contact-activation-gates.mjs": "12dd1dae4f0c5e711bc532567229c669bd441734ef1274baf527b9d00d61ce51",
+    "scripts/check-cloudflare-config.mjs": "4ca40e49f07a25cad8b4c08b1a7a4b5af9bd48f5b2790e85af465803f242bc1d",
+    "scripts/deploy-production.mjs": "451736657a754bddfbd5f2feed753cc5433a2b4a58971450aade66c4c0c9c82e",
+    "scripts/contact-human-session.py": "bbb790c83bad1a75f7781b16c0e4b7c9a4b9851d4adcf10d3fdcc062a0a60449",
+    ".planning/contact-activation/human-probe.mjs": "1597a4ac933fa4d0b176432c25af18eb4c93b95c0d26933d2374d58180f31672",
+    "privacy.html": "2a6e65a8c7fd5ad005d39e91a259663224cb38f3d813f8b36e16fb169d0bf757",
+    "CONTACT_DELIVERY.md": "9c46e5900802e5fda1fe7f6bbae480f0f74b7af21145f7906146bf2ec7d5bb3c",
+    "scripts/reuse-built-assets.mjs": "4118706c13c6bb081c1789274e0c6418074c43b5b27a47947be4d057b4fa0603",
+    "tests/reuse-built-assets.test.mjs": "da6353776d910697df953f86f927ba366544acb03dadb43072858724c34cb051",
+    ".planning/contact-activation/iphone-testing.md": "1f64a4a8ac64af04d2361da19049bd4a0420b696c1ed6d404394b406fdc4d89a"
+  },
+  "verified_automated": {
+    "panel_deployed": true,
+    "one_time_handoff_authenticated": true,
+    "clean_redirect": true,
+    "replay_rejected_404": true,
+    "turnstile_solved": false,
+    "public_contact_enabled": false,
+    "retention_flag": false,
+    "focused_tests": "17/17 activation, config, and private panel tests; 29/29 contact service tests; npm run check; git diff --check"
+  }
+}

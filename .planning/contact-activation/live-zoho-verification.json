@@ -1,0 +1,9 @@
+{
+  "verified_at": "2026-10-13T01:04:05.551Z",
+  "sender_authorized": true,
+  "refresh_grant_valid": true,
+  "scope_reported_by_refresh": true,
+  "expected_scope": "ZohoMail.messages.CREATE",
+  "data_center": "us",
+  "credentials_secure": true
+}

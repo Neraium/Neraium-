@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-10-13T01:05:12.798Z",
+  "sender": "website@neraium.com",
+  "recipient": "craig@neraium.com",
+  "attempted": true,
+  "provider_accepted": true,
+  "inbox_receipt_verified": true,
+  "automatic_retry": false,
+  "receipt_confirmation": {
+    "confirmed_at": "2026-10-13T01:19:58.964902+00:00",
+    "source": "Owner confirmation in current user instruction",
+    "method": "Visual verification in Zoho Mail Inbox",
+    "sender": "website@neraium.com",
+    "recipient": "craig@neraium.com",
+    "subject": "Neraium evaluation inquiry",
+    "message_timestamp": "2026-10-13T01:05:12.798Z",
+    "verified": true
+  }
+}

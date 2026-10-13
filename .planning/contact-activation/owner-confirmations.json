@@ -1,0 +1,30 @@
+{
+  "receipt": {
+    "confirmed_at": "2026-10-13T01:19:58.964902+00:00",
+    "source": "Owner confirmation in current user instruction",
+    "method": "Visual verification in Zoho Mail Inbox",
+    "sender": "website@neraium.com",
+    "recipient": "craig@neraium.com",
+    "subject": "Neraium evaluation inquiry",
+    "message_timestamp": "2026-10-13T01:05:12.798Z",
+    "verified": true
+  },
+  "retention": {
+    "approved_at": "2026-10-13T01:19:58.964902+00:00",
+    "source": "Explicit owner approval in current user instruction",
+    "noncustomer_inquiries": {
+      "delete_within_days_of_last_correspondence": 90,
+      "covers": [
+        "Received",
+        "Sent",
+        "Trash"
+      ]
+    },
+    "customer_records": "Separately agreed policy",
+    "mailbox_deletion_owner": "Craig",
+    "forwarding_and_additional_copies_inventory_complete": false,
+    "public_activation_authorized_after_all_required_checks": true,
+    "public_privacy_sha256": "2a6e65a8c7fd5ad005d39e91a259663224cb38f3d813f8b36e16fb169d0bf757",
+    "public_privacy_wording_basis": "Implements the existing owner-approved policy; disclosure of providers and policy scope; no assertion that unknown additional copies are absent."
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "inspected_at": "2026-10-13T05:33:45.458Z",
+  "source": "Zoho GET specific account, accounts.READ",
+  "mailbox": "craig@neraium.com",
+  "setting_fields_present": [
+    "activeSyncEnabled",
+    "popBlocked",
+    "imapAccessEnabled",
+    "popFetchTime",
+    "popAccessEnabled",
+    "imapBlocked"
+  ],
+  "protocol_access": {
+    "popAccessEnabled": false,
+    "popBlocked": false,
+    "imapAccessEnabled": false,
+    "imapBlocked": false,
+    "activeSyncEnabled": false
+  },
+  "account_forwarding": {
+    "list_explicitly_returned": false,
+    "destinations": null,
+    "delete_zoho_copy": "unknown"
+  },
+  "forwarding_inventory_complete": false,
+  "additional_copy_inventory_complete": false,
+  "deletion_owners": [
+    {
+      "location": "Zoho mailbox received, Sent and Trash",
+      "owner": "Craig",
+      "basis": "Owner-approved retention policy"
+    }
+  ],
+  "unknown_surfaces": [
+    "Mail filtering/automatic forward actions",
+    "Organization routing, copy/archive/journaling rules",
+    "Client downloads, exports, integrations and backups"
+  ],
+  "programmatic_review": {
+    "checked_at": "2026-10-13T05:33:45.458Z",
+    "account_read_scope": "Existing read-only account inspection; did not broaden the send-only production grant.",
+    "confirmed_findings": [
+      "Zoho account API returned POP, IMAP and ActiveSync controls; POP/IMAP/ActiveSync are disabled.",
+      "The inspected account response did not return an explicit mailForward list. Absence is not established.",
+      "Application delivery targets Craig only, adds no CC/BCC and stores no inquiry database, based on worker source.",
+      "Zoho Mail supports mailbox forwarding and copy-retention controls; account settings alone do not establish mailbox filter rules or organization archives."
+    ],
+    "not_programmatically_verified": [
+      "Mailbox forwarding destinations and delete-Zoho-copy setting",
+      "Incoming/outgoing filter rules including Auto-Bcc and filter-based forwarding",
+      "Organization routing/copy rules and archive/journaling/eDiscovery configuration",
+      "Client downloads, exports, integrations and local backups",
+      "Provider backup deletion timeline and named oversight owner"
+    ],
+    "api_reference": "https://www.zoho.com/mail/help/api/account-api.html",
+    "api_scope_note": "Zoho documents mailbox forwarding configuration through account APIs; this investigation did not request wider OAuth scopes or make account changes."
+  },
+  "application_delivery": {
+    "recipient": "craig@neraium.com",
+    "additional_cc_bcc_requested": false,
+    "inquiry_database": false,
+    "source": "Inspected worker/zoho-mail.mjs request payload and worker/contact.mjs; provider/mailbox rules remain separate unknowns."
+  },
+  "provider_policy": {
+    "recovery_after_trash_removal_days": 30,
+    "configured_ediscovery_retention_possible": true,
+    "organization_archive_configuration": "unknown",
+    "oversight_owner": "unassigned",
+    "immediate_provider_backup_deletion_promised": false,
+    "terms_reference": "https://www.zoho.com/mail/help/data-deletion-policy.html"
+  }
+}

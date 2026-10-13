@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-10-13T03:51:42.124Z",
+  "prior_attempt": "The link fragment was processed and a POST reached /redeem. Automated browser diagnostics showed method POST from a top-level HTTPS document, but native form navigation sent an opaque null Origin. The exact-Origin guard correctly returned 403 before rate limiting or Durable Object access. The same response was reproduced against the deployed Worker without retaining request values, cookies, link material or IP.",
+  "diagnosis": "Safari received Rejected because the native form handoff produced Origin: null, which did not equal the request URL origin. The fragment regex and token/session pairing were valid; the Worker was reached. The strict guard was correct to reject an opaque origin.",
+  "fix": "The handoff now removes the fragment, then uses credentialed same-origin Fetch API POST. HTTPS, host, exact Origin, POST, content type, bounded body, rate limit, session/token hash, expiry and atomic Durable Object consumption are unchanged.",
+  "verification": "Automated browser test against deployed version 70ead5f1-ba82-4205-9084-6652d99c4a86 passed: one-use handoff POST returned 303, clean URL and secure HttpOnly SameSite=Strict cookie appeared, and replay returned 404. Public contact remains disabled.",
+  "secret_handling": "Link URL stays only in the owner's mode-0600 file and interactive Termius output. Fragment is not included in HTTP requests. The Worker secret stores only a hash and session/expiry metadata. No auth material is written to logs, Git, or analytics.",
+  "next": "A final 30-minute link has been prepared only after the deployed end-to-end proof; owner may now continue the human Turnstile scenarios. No prior human tests were repeated."
+}

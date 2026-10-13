@@ -1,0 +1,63 @@
+{
+  "checked_at": "2026-10-13T03:51:42.124Z",
+  "worker_version": "70ead5f1-ba82-4205-9084-6652d99c4a86",
+  "integrity": {
+    "private_permissions": true,
+    "session_id_matches": true,
+    "token_hash_matches": true,
+    "expiry_metadata_matches": true,
+    "unexpired": true
+  },
+  "fragment_request_reached_worker": true,
+  "first_redeem_status": 303,
+  "authenticated_page": true,
+  "clean_address_after_handoff": true,
+  "cookie_secure": true,
+  "cookie_http_only": true,
+  "cookie_same_site_strict": true,
+  "replay_status": 404,
+  "events": [
+    {
+      "kind": "request",
+      "path": "/api/contact-verification",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "kind": "request",
+      "path": "/api/contact-verification/redeem",
+      "method": "POST",
+      "status": 303
+    },
+    {
+      "kind": "request",
+      "path": "/api/contact-verification",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "kind": "replay",
+      "path": "/api/contact-verification/redeem",
+      "method": "POST",
+      "status": 404
+    }
+  ],
+  "stage": "passed",
+  "passed": true,
+  "cause": "Native form navigation emitted an opaque null Origin even though the document was top-level HTTPS at the expected host. The strict method/Origin guard returned 403 before the rate limiter or Durable Object.",
+  "fix": "Replaced native form navigation with credentialed same-origin Fetch API POST after synchronously removing the URL fragment. Exact Origin enforcement remains unchanged.",
+  "post_origin_guard": "passed (Worker returned 303)",
+  "atomic_first_use_consumed": true,
+  "replay_rejected_as_used": true,
+  "origin_guard_diagnostic": {
+    "native_form_request_origin": "opaque-null",
+    "document_origin": "expected-https-origin",
+    "method": "POST",
+    "worker_status": 403
+  },
+  "fragment_diagnostic": {
+    "browser_read_fragment": true,
+    "worker_received_post_without_fragment": true,
+    "location_clean_after_fetch_redirect": true
+  }
+}

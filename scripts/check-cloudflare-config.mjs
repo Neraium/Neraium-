@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { isDeepStrictEqual } from 'node:util';
 import { pathToFileURL } from 'node:url';
+import { validateActivationEvidence, validateActivationTransition } from './contact-activation-gates.mjs';
 
 export async function cloudflare(path, options = {}) {
   if (!process.env.CLOUDFLARE_API_TOKEN) throw new Error('Load the existing Cloudflare API token into the environment before comparing or deploying.');
@@ -20,6 +21,7 @@ export function compareBindings(config, bindings) {
     ...Object.entries(config.vars).map(([name, text]) => ({ name, type: 'plain_text', text })),
     ...config.send_email.map(binding => ({ ...binding, type: 'send_email' })),
     ...config.ratelimits.map(binding => ({ ...binding, type: 'ratelimit' })),
+    ...(config.durable_objects?.bindings ?? []).map(binding => ({ name:binding.name, type:'durable_object_namespace', class_name:binding.class_name, ...(binding.script_name ? {script_name:binding.script_name} : {}) })),
   ];
   const differences = [];
   const secrets = bindings.filter(binding => ['secret_text', 'secret_key'].includes(binding.type)).map(binding => binding.name).sort();
@@ -29,7 +31,10 @@ export function compareBindings(config, bindings) {
   }
   for (const binding of expected) {
     const actual = bindings.find(candidate => candidate.name === binding.name);
-    if (!isDeepStrictEqual(binding, actual)) differences.push(`Binding differs: ${binding.name}`);
+    if (binding.type === 'durable_object_namespace') {
+      const normalized = actual && Object.fromEntries(Object.entries(actual).filter(([key]) => key !== 'namespace_id'));
+      if (!/^[a-f0-9-]{16,64}$/i.test(actual?.namespace_id ?? '') || !isDeepStrictEqual(binding, normalized)) differences.push(`Binding differs: ${binding.name}`);
+    } else if (!isDeepStrictEqual(binding, actual)) differences.push(`Binding differs: ${binding.name}`);
   }
   for (const binding of bindings) {
     if (!secrets.includes(binding.name) && !expected.some(candidate => candidate.name === binding.name)) differences.push(`Unmanaged remote binding: ${binding.name}`);
@@ -37,12 +42,18 @@ export function compareBindings(config, bindings) {
   return { differences, secrets };
 }
 
-export async function checkConfiguration() {
+export async function checkConfiguration({ expectedConfig, validateTransition = true } = {}) {
   // wrangler.jsonc deliberately uses JSON syntax so this check needs no second parser.
-  const config = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
+  const current = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
+  const disabled = current.vars.CONTACT_ENABLED === 'false' && current.vars.CONTACT_RETENTION_APPROVED === 'false';
+  if (!disabled) {
+    if (current.vars.CONTACT_ENABLED !== 'true' || current.vars.CONTACT_RETENTION_APPROVED !== 'true') throw Error('Both contact flags must have the same approved state.');
+    await validateActivationEvidence(current);
+  }
+  if (expectedConfig && validateTransition) validateActivationTransition(expectedConfig, current);
+  const config = expectedConfig ?? current;
   if (config.name !== 'website' || config.account_id !== '9820361c238dcdeef0b72b24ec3734db') throw new Error('Unexpected production Worker or account.');
   if (process.env.CLOUDFLARE_ACCOUNT_ID && process.env.CLOUDFLARE_ACCOUNT_ID !== config.account_id) throw new Error('Environment account differs from production configuration.');
-  if (config.vars.CONTACT_ENABLED !== 'false' || config.vars.CONTACT_RETENTION_APPROVED !== 'false') throw new Error('Production contact and retention flags must remain false.');
   if (config.keep_vars) throw new Error('Production public variables must be fully represented in wrangler.jsonc.');
   const root = `accounts/${config.account_id}/workers`;
   const script = `${root}/scripts/${config.name}`;
@@ -55,6 +66,8 @@ export async function checkConfiguration() {
     cloudflare(`${script}/deployments`),
   ]);
   const { differences, secrets } = compareBindings(config, settings.bindings);
+  if (!disabled && secrets.includes('CONTACT_VERIFICATION_KEY')) differences.push('Temporary verification secret must be removed before activation.');
+  if (!disabled && (config.durable_objects?.bindings ?? []).some(binding => binding.name === 'CONTACT_VERIFICATION_SESSIONS')) differences.push('Temporary verification storage binding must be removed before activation.');
   const actualRoutes = [
     ...routes.map(route => ({ pattern: route.pattern, zone_name: route.zone_name })),
     ...domains.filter(domain => domain.service === config.name && domain.environment === 'production').map(domain => ({
@@ -69,7 +82,7 @@ export async function checkConfiguration() {
   if (schedules.schedules.length) differences.push('Unmanaged production cron schedules.');
   if (settings.tail_consumers?.length || settings.logpush || settings.placement?.mode || settings.limits || settings.observability?.enabled || settings.tags?.length) differences.push('Additional production settings require explicit reconciliation.');
   if (differences.length) throw new Error(`Deployment blocked:\n${differences.join('\n')}`);
-  console.log('Remote configuration matches: public variables, all resource bindings, both production domains, and disabled contact.');
+  console.log(`Remote configuration matches: public variables, all resource bindings, both production domains, and ${config.vars.CONTACT_ENABLED === 'false' ? 'disabled' : 'verified approved'} contact.`);
   console.log(`Existing secret names verified (values never retrieved): ${secrets.join(', ')}`);
   console.log(`Current deployment: ${deployments.deployments[0]?.id}; version: ${deployments.deployments[0]?.versions.map(version => version.version_id).join(', ')}`);
   return { secrets, deployments };

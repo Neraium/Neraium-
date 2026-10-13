@@ -1,0 +1,43 @@
+{
+  "started_at": "2026-10-13T01:12:52.085Z",
+  "public_flags_false": true,
+  "endpoint_removed": true,
+  "actual_email_sent_by_probe": false,
+  "results": {
+    "unauthenticated": 404,
+    "validation": 400,
+    "invalid_token": 400,
+    "rate_limit_statuses": [
+      400,
+      400,
+      400,
+      400,
+      400,
+      400,
+      400,
+      400,
+      400,
+      400,
+      429
+    ]
+  },
+  "complete": false,
+  "inconclusive": true,
+  "stopped_at_stage": "challenge-completion",
+  "failure_category": "timeout",
+  "widget_state": {
+    "exists": true,
+    "token_present": false,
+    "error_code": null
+  },
+  "finished_at": "2026-10-13T01:13:39.041Z",
+  "required_followup": "Human-operated real widget with action evaluation: successful challenge, replay, actual expiry, synthetic provider failure and recovery. Automated browsers are unsupported for production challenge solving. Keep flags false.",
+  "cleanup_verified_at": "2026-10-13T01:14:42.205Z",
+  "cleanup": {
+    "removed_endpoint_status": 404,
+    "public_enabled": false,
+    "public_post_status": 503,
+    "temporary_secret_removed": true,
+    "temporary_local_key_deleted": true
+  }
+}

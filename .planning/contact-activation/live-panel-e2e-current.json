@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-10-13T05:37:17.486Z",
+  "worker_deployment_id": "8b06689a-ca87-49f8-bc81-27313e66836e",
+  "worker_version": "6fa3eeee-a257-4dc5-8815-5141bb01bdec",
+  "stage": "deployed private-panel authentication qualification",
+  "human_link_material_recorded": false,
+  "results": {
+    "one_time_handoff": "passed; the link reached the authenticated panel and the address was clean",
+    "authenticated_page_http_status": 200,
+    "panel_has_frozen_success_token_replay": true,
+    "scenario_controls_present": 7,
+    "same_link_replay_http_status": 404,
+    "public_contact_config_enabled": false
+  },
+  "test_email_sent": false,
+  "challenge_solved": false,
+  "credentials_or_bearer_material_logged": false
+}

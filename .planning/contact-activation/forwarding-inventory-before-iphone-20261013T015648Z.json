@@ -1,0 +1,39 @@
+{
+  "inspected_at": "2026-10-13T01:20:57.145Z",
+  "source": "Zoho GET specific account, accounts.READ",
+  "mailbox": "craig@neraium.com",
+  "setting_fields_present": [
+    "activeSyncEnabled",
+    "popBlocked",
+    "imapAccessEnabled",
+    "popFetchTime",
+    "popAccessEnabled",
+    "imapBlocked"
+  ],
+  "protocol_access": {
+    "popAccessEnabled": false,
+    "popBlocked": false,
+    "imapAccessEnabled": false,
+    "imapBlocked": false,
+    "activeSyncEnabled": false
+  },
+  "account_forwarding": {
+    "list_explicitly_returned": false,
+    "destinations": null,
+    "delete_zoho_copy": "unknown"
+  },
+  "forwarding_inventory_complete": false,
+  "additional_copy_inventory_complete": false,
+  "deletion_owners": [
+    {
+      "location": "Zoho mailbox received, Sent and Trash",
+      "owner": "Craig",
+      "basis": "Owner-approved retention policy"
+    }
+  ],
+  "unknown_surfaces": [
+    "Mail filtering/automatic forward actions",
+    "Organization routing, copy/archive/journaling rules",
+    "Client downloads, exports, integrations and backups"
+  ]
+}

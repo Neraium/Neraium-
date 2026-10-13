@@ -56,7 +56,27 @@
   "account_id": "9820361c238dcdeef0b72b24ec3734db",
   "secrets": {
     "required": [
-      "TURNSTILE_SECRET_KEY"
+      "TURNSTILE_SECRET_KEY",
+      "ZOHO_CLIENT_ID",
+      "ZOHO_CLIENT_SECRET",
+      "ZOHO_REFRESH_TOKEN",
+      "ZOHO_ACCOUNT_ID"
     ]
-  }
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "CONTACT_VERIFICATION_SESSIONS",
+        "class_name": "ContactVerificationSession"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "contact-verification-session-v1",
+      "new_sqlite_classes": [
+        "ContactVerificationSession"
+      ]
+    }
+  ]
 }

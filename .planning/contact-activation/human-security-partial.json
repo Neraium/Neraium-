@@ -1,0 +1,78 @@
+{
+  "evidence_status": "partial-human-results; activation gate remains closed",
+  "report_received_at": "2026-10-13T04:23:35Z",
+  "source": "Owner-reported summary in Codex; no raw tokens, cookies, link, headers, IPs or message content provided or retained.",
+  "human_operated_reported": true,
+  "actual_test_timestamps_supplied": false,
+  "results": [
+    {
+      "scenario": "success",
+      "http_status": 200,
+      "owner_reported": true,
+      "assessment": "preserved as valid challenge accepted"
+    },
+    {
+      "scenario": "replay",
+      "attempt": 1,
+      "http_status": 200,
+      "owner_reported": true,
+      "assessment": "not a replay pass; likely a refreshed/unconsumed token was submitted"
+    },
+    {
+      "scenario": "replay",
+      "attempt": 2,
+      "http_status": 400,
+      "duplicate_or_expired": true,
+      "owner_reported": true,
+      "assessment": "duplicate/expiry rejection observed, but token is not correlated with success token"
+    },
+    {
+      "scenario": "failure",
+      "http_status": 502,
+      "owner_reported": true,
+      "assessment": "expected synthetic provider-failure status observed; detailed challenge metadata not supplied"
+    },
+    {
+      "scenario": "recovery",
+      "http_status": 400,
+      "duplicate_or_expired": true,
+      "owner_reported": true,
+      "assessment": "no recovery pass; duplicate/expired token indicates stale/reused challenge or sequencing issue"
+    },
+    {
+      "scenario": "invalid",
+      "http_status": 400,
+      "owner_reported": true,
+      "assessment": "preserved as passed invalid-token response"
+    },
+    {
+      "scenario": "validation",
+      "http_status": 429,
+      "owner_reported": true,
+      "assessment": "validation not exercised; limiter rejected before payload validation"
+    },
+    {
+      "scenario": "expiry",
+      "completed": false,
+      "owner_reported": true,
+      "assessment": "not tested"
+    }
+  ],
+  "diagnosis": {
+    "replay": "No contact-delivery security defect indicated. A real replay of the successful Turnstile token should return duplicate/expired. The panel previously selected mutable state.token, so a refreshed challenge token could explain the initial HTTP 200. The later duplicate/expired response alone cannot prove it reused the success token.",
+    "recovery": "The contact handler correctly rejects duplicate/expired Turnstile tokens with HTTP 400. The recovery request did not present a fresh usable token. Current evidence points to token reuse/expiry or test sequencing, not a delivery recovery implementation defect.",
+    "validation": "HTTP 429 is expected from the configured 5-per-60-second limiter when too many scenarios run together; validation is performed only after the limiter passes."
+  },
+  "public_flags": {
+    "CONTACT_ENABLED": false,
+    "CONTACT_RETENTION_APPROVED": false
+  },
+  "remaining_checks": [
+    "correlated success->replay using frozen token",
+    "recovery with fresh challenge after reset",
+    "unused challenge expiry after 310 seconds",
+    "field validation HTTP 400 after limiter window clears",
+    "owner copy/forwarding and deletion-ownership inventory"
+  ],
+  "activation_safe": false
+}

@@ -1,0 +1,44 @@
+{
+  "current_session": {
+    "prepared_at": "2026-10-13T05:37:52.083Z",
+    "link_expires_at": "2026-10-13T06:07:35.943Z",
+    "session_expires_at": "2026-10-13T06:17:35.943Z",
+    "route": "https://neraium.com/api/contact-verification",
+    "private_retrieval_command": "cd /home/ubuntu/Neraium- && python3 scripts/contact-human-session.py --link",
+    "link_material_recorded": false,
+    "link_lifetime_seconds": 1800,
+    "session_lifetime_seconds": 2400,
+    "private_file_permissions": "0600",
+    "session_metadata_consistent": true,
+    "secret_binding_name_verified": true,
+    "worker_deployment_id": "dadee20f-ee83-4fc2-8a6c-e066e5d9f3ea",
+    "worker_version_id": "20601fa6-ae7a-4543-bd05-da4d0355c9e1",
+    "authenticated_panel_live_check": "passed using private session-scoped cookie; link remains unconsumed",
+    "public_contact_enabled": false,
+    "retention_approved_flag": false,
+    "human_turnstile_tests": "pending"
+  },
+  "prior_sessions": [
+    {
+      "link_expires_at": "2026-10-13T03:37:21Z",
+      "session_expires_at": "2026-10-13T03:47:21Z",
+      "invalidated_by_secret_replacement": true,
+      "link_material_recorded": false
+    },
+    {
+      "link_expires_at": "2026-10-13T04:11:12Z",
+      "session_expires_at": "2026-10-13T04:21:12Z",
+      "automated_e2e_first_use_succeeded": true,
+      "durable_object_replay_rejected": true,
+      "invalidated_by_final_secret_replacement": true,
+      "link_material_recorded": false
+    }
+  ],
+  "authentication_e2e": {
+    "result_file": "live-auth-e2e.json",
+    "fixed_worker_version_tested": "70ead5f1-ba82-4205-9084-6652d99c4a86",
+    "final_secret_deployment_version": "7be2b199-ed58-45c1-9fcb-26370055a76b",
+    "fixed_worker_source_unchanged_after_e2e": true,
+    "success_redirect_cookie_clean_url_and_replay_rejection": "passed"
+  }
+}

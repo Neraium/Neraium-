@@ -1,0 +1,14 @@
+{
+  "ZOHO_DATA_CENTER": "us",
+  "mailbox": "craig@neraium.com",
+  "sender": "website@neraium.com",
+  "is_alias": true,
+  "outgoing_allowed": true,
+  "verified_at": "2026-10-13T00:54:48.905945+00:00",
+  "production_send_grant_saved": true,
+  "contact_enabled": false,
+  "retention_approved": false,
+  "cloudflare_changed": false,
+  "mail_sent": false,
+  "account_identifier_retained": false
+}
