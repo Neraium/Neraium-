@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SITE_ORIGIN = "https://www.neraium.com"
+SITE_ORIGIN = "https://neraium.com"
 HOMEPAGE_MAX_WORD_COUNT = 540
 PAGE_MAX_WORD_COUNTS = {
     "platform.html": 400,
@@ -372,7 +372,7 @@ class TestStaticSite(unittest.TestCase):
         for html_file in site_html_files():
             html = html_file.read_text(encoding='utf-8')
             self.assertNotIn('name="ga4-measurement-id"', html)
-            for match in re.findall(r'<meta property="og:image" content="https://www\.neraium\.com/([^"]+)">', html):
+            for match in re.findall(r'<meta property="og:image" content="https://neraium\.com/([^"]+)">', html):
                 self.assertTrue((ROOT / match).exists(), f"{html_file.name}: missing social image {match}")
 
 
@@ -719,13 +719,19 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         security_txt = (ROOT / ".well-known" / "security.txt").read_text(encoding="utf-8")
         self.assertIn("Contact: mailto:craig@neraium.com", security_txt)
         self.assertRegex(security_txt, r"(?m)^Expires: 20\d{2}-\d{2}-\d{2}T")
-        self.assertIn("Canonical: https://www.neraium.com/.well-known/security.txt", security_txt)
+        self.assertIn("Canonical: https://neraium.com/.well-known/security.txt", security_txt)
+
+    def test_public_metadata_uses_the_production_origin(self):
+        files = [*site_html_files(), ROOT / "robots.txt", ROOT / "sitemap.xml", ROOT / ".well-known/security.txt"]
+        for source in files:
+            with self.subTest(file=source.name):
+                self.assertNotIn("https://www.neraium.com", source.read_text(encoding="utf-8"))
 
     def test_custom_404_uses_root_assets_without_a_false_canonical(self):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20260918d', '/scripts.js?v=20260819a', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261102a', '/scripts.js?v=20261102a', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
@@ -772,8 +778,8 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20260918d">')
-            self.assertRegex(html, r'<script src="/scripts\.js\?v=202608(?:11|19)a" defer></script>')
+            self.assertRegex(html, r'<link rel="stylesheet" href="/styles\.css\?v=20261102a">')
+            self.assertRegex(html, r'<script src="/scripts\.js\?v=20261102a" defer></script>')
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
             self.assertNotIn("onload=", html)
     def test_above_fold_media_is_not_deferred(self):

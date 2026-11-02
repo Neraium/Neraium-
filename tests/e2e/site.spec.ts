@@ -2,17 +2,17 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /Know when the system/i, canonical: 'https://www.neraium.com/' },
-  { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://www.neraium.com/platform' },
-  { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://www.neraium.com/evidence' },
-  { path: '/applications', purpose: /Practical questions for interconnected facility systems/i, canonical: 'https://www.neraium.com/applications' },
-  { path: '/pilot', purpose: /Start with history/i, canonical: 'https://www.neraium.com/pilot' },
-  { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://www.neraium.com/methodology' },
-  { path: '/security', purpose: /Read-only by design/i, canonical: 'https://www.neraium.com/security' },
-  { path: '/company', purpose: /Built from the gap between what the dashboard/i, canonical: 'https://www.neraium.com/company' },
-  { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://www.neraium.com/operator-brief' },
-  { path: '/contact', purpose: /one system and one review question/i, canonical: 'https://www.neraium.com/contact' },
-  { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://www.neraium.com/privacy' },
+  { path: '/', purpose: /Know when the system/i, canonical: 'https://neraium.com/' },
+  { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://neraium.com/platform' },
+  { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
+  { path: '/applications', purpose: /Practical questions for interconnected facility systems/i, canonical: 'https://neraium.com/applications' },
+  { path: '/pilot', purpose: /Start with history/i, canonical: 'https://neraium.com/pilot' },
+  { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://neraium.com/methodology' },
+  { path: '/security', purpose: /Read-only by design/i, canonical: 'https://neraium.com/security' },
+  { path: '/company', purpose: /Built from the gap between what the dashboard/i, canonical: 'https://neraium.com/company' },
+  { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://neraium.com/operator-brief' },
+  { path: '/contact', purpose: /one system and one review question/i, canonical: 'https://neraium.com/contact' },
+  { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://neraium.com/privacy' },
 ] as const;
 
 const navLinks = ['Platform','How It Works','Applications','Evaluation','Company'] as const;
@@ -103,6 +103,44 @@ test('contact form validates practical fields and prepares an email without fake
   await expect(page.locator('#form-feedback')).toContainText(/email draft is ready/i);
   await expect(page.locator('#form-feedback a')).toHaveAttribute('href', /^mailto:craig@neraium[.]com[?]/);
   expect(posts).toEqual([]);
+});
+
+test('contact draft is cleared after edits, selection changes, and form reset', async ({ page }) => {
+  await page.goto('/contact');
+  await page.locator('#name').fill('Original name');
+  await page.locator('#email').fill('audit@example.com');
+  await page.locator('#organization').fill('Example');
+  await page.locator('#facility').fill('Pumping plant');
+  await page.locator('#review-question').fill('Has power changed at comparable flow?');
+  const prepare = page.locator('#contact-form button[type="submit"]');
+  const draft = page.locator('#form-feedback a');
+  await prepare.click();
+  await expect(draft).toHaveAttribute('href', /Original%20name/);
+  await page.locator('#name').fill('Revised name');
+  await expect(page.locator('#form-feedback')).toBeEmpty();
+  await expect(page.locator('#form-feedback')).not.toHaveAttribute('data-state');
+  await prepare.click();
+  await expect(draft).toHaveAttribute('href', /Revised%20name/);
+  await expect(draft).not.toHaveAttribute('href', /Original%20name/);
+  await page.locator('#preferred-contact').selectOption('Email');
+  await expect(page.locator('#form-feedback')).toBeEmpty();
+  await prepare.click();
+  await expect(draft).toBeVisible();
+  await page.locator('#contact-form').evaluate((form: HTMLFormElement) => form.reset());
+  await expect(page.locator('#form-feedback')).toBeEmpty();
+});
+
+test('homepage stays compact on phones with readable chart labels', async ({ page }) => {
+  await page.goto('/');
+  const axes = page.locator('.chart-axis');
+  await expect(axes).toHaveCount(2);
+  for (const axis of await axes.all()) {
+    await expect(axis).toBeVisible();
+    expect(await axis.evaluate(element => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(13);
+  }
+  if ((page.viewportSize()?.width ?? 0) <= 430) {
+    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThan(6200);
+  }
 });
 
 test('respects reduced motion preference', async ({ page }) => {
