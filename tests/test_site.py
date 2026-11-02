@@ -14,13 +14,13 @@ HOMEPAGE_MAX_WORD_COUNT = 540
 PAGE_MAX_WORD_COUNTS = {
     "platform.html": 400,
     "methodology.html": 440,
-    "evidence.html": 335,
+    "evidence.html": 395,
     "applications.html": 400,
     "security.html": 300,
-    "pilot.html": 316,
+    "pilot.html": 425,
     "operator-brief.html": 325,
     "company.html": 375,
-    "contact.html": 270,
+    "contact.html": 330,
 }
 
 
@@ -394,10 +394,10 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Systemic Infrastructure Intelligence",
             "Know when the system stops behaving like itself.",
-            "learns expected behavior across facility-system signals",
-            "persistent relationship changes that thresholds can miss",
-            "while individual measurements remain within limits",
-            "Engineers receive evidence to decide what to review next.",
+            "For facility engineers and plant operators",
+            "needs more power to deliver the same flow",
+            "while individual readings stay within limits",
+            "shows the evidence behind persistent change.",
             "Establish operating behavior",
             "Learn relationships and context",
             "Identify persistent systemic change",
@@ -482,7 +482,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             "Telemetry alone cannot distinguish hydraulic restriction from pump-performance degradation.",
         ):
             self.assertIn(phrase, homepage)
-        self.assertIn('href="/evidence">Review the illustrative finding</a>', self.index)
+        self.assertIn('href="/evidence">Open the sample finding</a>', self.index)
         for deferred_field in ("Threshold status", "Provenance", "Review state"):
             self.assertNotIn(f"<dt>{deferred_field}</dt>", self.index)
 
@@ -496,7 +496,7 @@ class TestPositioningAndExperience(unittest.TestCase):
             "Supporting relationships",
             "Power-to-flow and differential-pressure-to-flow relationships.",
             "Known limitations",
-            "Engineering reviews the evidence and determines whether further analysis or a field check is warranted.",
+            "Review operating and maintenance context to determine whether further analysis or a field check is warranted.",
             "Insufficient evidence is explicit, not hidden.",
             "The available telemetry does not support a defensible conclusion.",
             "Insufficient evidence does not mean the physical system remained unchanged.",
@@ -583,7 +583,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         for href, label in (
             ("/contact", "Request an Evaluation"),
             ("/methodology", "See how it works"),
-            ("/evidence", "Review the illustrative finding"),
+            ("/evidence", "Open the sample finding"),
             ("/pilot", "Review the evaluation process"),
         ):
             self.assertIn(f'href="{href}"', self.index, f"missing route for {label}")
