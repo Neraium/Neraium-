@@ -686,11 +686,33 @@ p {
   stroke-width: 3;
 }
 
-.relationship-chart text {
-  fill: var(--muted-low);
+/* HTML axis labels keep their size when the SVG scales on small screens. */
+.chart-axis {
+  color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: .08em;
+  font-size: .8125rem;
+  line-height: 1.5;
+}
+
+.chart-axis-y {
+  margin-top: .8rem;
+}
+
+.chart-axis-x {
+  text-align: right;
+}
+
+.chart-legend {
+  font-size: .75rem;
+}
+
+.chart-heading {
+  flex-wrap: wrap;
+  font-size: .8125rem;
+}
+
+.home-consequences {
+  margin-top: 2rem;
 }
 
 .visual-finding {
@@ -3239,6 +3261,128 @@ p {
     transition-duration: .01ms !important;
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+/* Keep the homepage concise on phones without hiding its evidence or operating boundaries. */
+@media (max-width: 760px) {
+  .home-page .section {
+    padding-block: 2.5rem;
+  }
+
+  .home-page .home-hero {
+    padding-block: 2rem 2.5rem;
+  }
+
+  .home-page .hero-grid,
+  .home-page .problem-layout,
+  .home-page .evidence-summary-grid {
+    gap: 1.5rem;
+  }
+
+  .home-page .infrastructure-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 180px 130px;
+    gap: .6rem;
+  }
+
+  .home-page .infrastructure-photo:first-child {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .home-page .product-flow,
+  .home-page .consequence-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-page .consequence-grid > div {
+    min-height: 0;
+    padding: .85rem .65rem;
+  }
+
+  .home-page .consequence-grid > div:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .home-page .consequence-grid > div:nth-child(even) {
+    border-left: 1px solid var(--line-soft);
+  }
+
+  .home-page .product-flow li {
+    padding: .85rem .65rem;
+  }
+
+  .home-page .product-flow li::after {
+    display: none;
+  }
+
+  .home-page .product-flow h3 {
+    font-size: .95rem;
+  }
+
+  .home-page .lifecycle-grid {
+    gap: .75rem;
+  }
+
+  .home-page .lifecycle-grid > article {
+    padding: 1rem;
+  }
+
+  .home-page .lifecycle-grid ul {
+    margin-top: .65rem;
+    gap: .3rem;
+  }
+
+  .home-page .signal-status-row {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page .signal-status-row > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    padding: .45rem .9rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .home-page .signal-status-row > div:last-child {
+    border-bottom: 0;
+  }
+
+  .home-page .signal-status-row span,
+  .home-page .signal-status-row strong {
+    font-size: .75rem;
+  }
+
+  .home-page .signal-status-row strong {
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .home-page .behavior-visual > header {
+    gap: .5rem;
+    padding: .85rem .9rem;
+  }
+
+  .home-page .system-strip {
+    padding: .7rem .9rem;
+  }
+
+  .home-page .visual-finding {
+    gap: .35rem;
+    margin-block: .7rem .2rem;
+    padding: .65rem .75rem;
+  }
+
+  .home-page .relationship-chart {
+    padding-top: .7rem;
+  }
+
+  .home-page .mini-evidence dl > div {
+    padding-block: .65rem;
   }
 }
 

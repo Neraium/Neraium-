@@ -71,7 +71,7 @@ function collectReferencedImages(text) {
     for (const match of text.matchAll(pattern)) {
       for (const candidate of match[1].split(',')) {
         let value = candidate.trim().split(/\s+/, 1)[0];
-        if (value.startsWith('https://www.neraium.com/')) value = value.replace('https://www.neraium.com', '');
+        if (value.startsWith('https://neraium.com/')) value = value.replace('https://neraium.com', '');
         if (!value.startsWith('/assets/images/')) continue;
         refs.add(value.split(/[?#]/, 1)[0]);
       }

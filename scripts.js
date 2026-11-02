@@ -56,10 +56,16 @@
   const form = document.getElementById('contact-form');
   const feedback = document.getElementById('form-feedback');
   if (form && feedback) {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
+    const clearPreparedRequest = () => {
       feedback.replaceChildren();
       feedback.removeAttribute('data-state');
+    };
+    ['input', 'change', 'reset'].forEach((eventName) => {
+      form.addEventListener(eventName, clearPreparedRequest);
+    });
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      clearPreparedRequest();
       const requiredIds = ['name', 'email', 'organization', 'facility', 'review-question'];
       const missing = requiredIds.some((id) => !document.getElementById(id)?.value.trim());
       const email = document.getElementById('email')?.value.trim() || '';

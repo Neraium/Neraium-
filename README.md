@@ -43,7 +43,7 @@ Do not commit Turnstile secrets, provider credentials, destination tokens, or pr
 - `netlify.toml` publishes the built `dist/` directory if Netlify is used instead.
 - `robots.txt`, `sitemap.xml`, `site.webmanifest`, and `.well-known/security.txt` provide crawler and site metadata.
 
-The canonical origin is `https://www.neraium.com`. Apex, `www`, and HTTP consolidation must also be enforced at the DNS/CDN account level.
+The canonical origin is `https://neraium.com`. Apex, `www`, and HTTP consolidation must also be enforced at the DNS/CDN account level.
 
 ## Local development
 
