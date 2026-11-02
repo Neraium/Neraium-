@@ -64,6 +64,7 @@ for (const sitePage of publicPages) {
       const images = page.locator('img');
       for (let index = 0; index < await images.count(); index += 1) {
         const image = images.nth(index);
+        await image.scrollIntoViewIfNeeded();
         await expect(image).toHaveAttribute('alt', /\S/);
         await expect.poll(() => image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
       }
