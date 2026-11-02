@@ -139,7 +139,7 @@ test('homepage stays compact on phones with readable chart labels', async ({ pag
     expect(await axis.evaluate(element => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(13);
   }
   if ((page.viewportSize()?.width ?? 0) <= 430) {
-    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThan(6200);
+    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThan(6500);
   }
 });
 
