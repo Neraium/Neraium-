@@ -75,7 +75,11 @@ export function assertCandidate(previous, next, assets) {
   hold(Number.isInteger(previous.number) && next.number===previous.number+1, 'intervening version upload; binding inheritance cannot be trusted');
   hold(isDeepStrictEqual(controls(previous),controls(next)), 'candidate changes production code, bindings, secrets or runtime settings');
   const current=next.resources.script_runtime.assets;
-  hold(isDeepStrictEqual(assetRouting(previous.resources.script_runtime.assets),assetRouting(current)), 'candidate changes asset/API routing');
+  const routing = value => {
+    const {headers,redirects,raw_headers,raw_redirects,...unchanged}=value;
+    return unchanged;
+  };
+  hold(isDeepStrictEqual(routing(previous.resources.script_runtime.assets),routing(current)), 'candidate changes asset/API routing');
   hold(current.raw_headers===assets.bytes.get('_headers').toString() && current.raw_redirects===assets.bytes.get('_redirects').toString(), 'candidate headers/redirects do not match the approved assets');
 }
 

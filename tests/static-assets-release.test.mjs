@@ -30,6 +30,7 @@ test('asset scope rejects every contact code, routing, binding, secret or compat
     v=>v.resources.bindings.pop(),v=>v.resources.bindings.push({name:'EXTRA',type:'secret_text'}),
     v=>v.resources.bindings[1].text='false',v=>v.resources.bindings[3].name='OTHER_SECRET',v=>v.resources.bindings[4].simple.limit=50,
     v=>v.resources.script_runtime.assets.raw_run_worker_first=[],v=>v.resources.script_runtime.assets.base_path='/new',
+    v=>v.resources.script_runtime.assets.serve_directly=false,v=>v.resources.script_runtime.assets.static_routing={user_worker:[]},
     v=>v.resources.script_runtime.assets.raw_headers='unapproved',v=>v.resources.script_runtime.assets.raw_redirects='unapproved',
   ]) {const f=fixture();mutate(f.next);assert.throws(()=>assertCandidate(f.previous,f.next,f.assets),/Static release held/);}
 });
