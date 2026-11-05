@@ -43,7 +43,9 @@ export function compareBindings(config, bindings) {
   return { differences, secrets };
 }
 
-export async function checkConfiguration({ expectedConfig, validateTransition = true } = {}) {
+// Read-only structural comparison shared by runtime and exact-code asset releases.
+// This is not a release authorization; each caller must apply its own scope gate.
+export async function inspectProductionConfiguration({ expectedConfig, validateTransition = true } = {}) {
   // wrangler.jsonc deliberately uses JSON syntax so this check needs no second parser.
   const current = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
   const disabled = current.vars.CONTACT_ENABLED === 'false' && current.vars.CONTACT_RETENTION_APPROVED === 'false';
@@ -82,6 +84,13 @@ export async function checkConfiguration({ expectedConfig, validateTransition = 
   if (schedules.schedules.length) differences.push('Unmanaged production cron schedules.');
   if (settings.tail_consumers?.length || settings.logpush || settings.placement?.mode || settings.limits || settings.observability?.enabled || settings.tags?.length) differences.push('Additional production settings require explicit reconciliation.');
   if (differences.length) throw new Error(`Deployment blocked:\n${differences.join('\n')}`);
+  return { secrets, deployments, settings, current, config, disabled, infrastructure: { routes: sorted(actualRoutes), subdomain, schedules } };
+}
+
+export async function checkConfiguration(options = {}) {
+  const { expectedConfig } = options;
+  const inspected = await inspectProductionConfiguration(options);
+  const { secrets, deployments, settings, current, config, disabled } = inspected;
   if (!disabled) {
     const mode = contactVerificationMode(current, settings.bindings, { expectedConfig });
     if (mode === 'maintenance') await validateMaintenanceEvidence(current, settings, cloudflare);
