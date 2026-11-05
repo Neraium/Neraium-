@@ -1,0 +1,11 @@
+{
+  "verified_at": "2026-11-05T02:06:53.348653+00:00",
+  "approved_sha256": "ad2ca1b1d4073aca46e762637f52fe66885cf93521d5c5ce30ef57f3b66e9de0",
+  "source_build_commit_match": true,
+  "old_policy_receipt_and_waiver_preserved": true,
+  "only_owner_record_changes": [
+    "retention.public_privacy_sha256",
+    "retention.public_privacy_approval_record"
+  ],
+  "owner_record_sha256": "1e2a544448ed18eb841a4b9e5cf44ee02754007245ece1c4c8f53dc086a3717d"
+}

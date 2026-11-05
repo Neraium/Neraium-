@@ -23,4 +23,4 @@ After reviewing that file, the founder can say:
 4. Fresh human-operated contact security verification remains independently required. Existing success, replay, unused-token expiry, failure, recovery and validation observations must not be relabeled with new dates. Any temporary production verifier or email action needs separate explicit authorization.
 5. Re-run `npm run config:check`. It must actually pass, including all remote configuration comparisons, before claiming deployment readiness. Never skip the existing guard or change flags to avoid it.
 
-Status: verification complete; founder approval pending. No approval record has been changed.
+Status update: the founder explicitly approved this exact file/hash in the current 2026-11-05 conversation. The fingerprint is now recorded in the existing owner-confirmations.json; genuine approval provenance is preserved in .planning/contact-activation/privacy-approval-20261105.json. Historical receipt, retention-policy and copy-inventory approvals remain unchanged. Fresh human security verification and deployment authorization remain separate.

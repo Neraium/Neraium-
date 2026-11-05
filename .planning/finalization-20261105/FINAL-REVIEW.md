@@ -52,3 +52,7 @@ The live homepage and contact-config were read without sending an inquiry: HTTP 
 4. Separately authorize push/deployment when ready. The existing guarded npm run deploy remains the only documented release path; do not change flags, skip checks, or use an unguarded upload.
 
 Verdict: local website implementation verified; production deployment blocked by outstanding founder approval and fresh human contact-verification evidence. Nothing has been pushed or deployed.
+
+## Founder approval recorded — 2026-11-05
+
+The founder explicitly approved privacy.html SHA-256 ad2ca1b1d4073aca46e762637f52fe66885cf93521d5c5ce30ef57f3b66e9de0 and authorized its fingerprint record. Source/build/committed bytes still match. The existing owner record now carries that hash and links to the exact authorization evidence; the prior receipt/policy/waiver and historical verification observations are unchanged. The disclosure approval blocker is resolved. The actual guarded preflight still exits1 on expired human contact evidence. Current GET confirms the retired private verifier is404 and public intake is enabled. Completing the archived six-scenario human workflow requires separately authorized verifier deployment and manual browser participation; no deployment, push or email was performed. Current handoff: .planning/privacy-approval-20261105/HUMAN-VERIFICATION-HANDOFF.md.
