@@ -1,6 +1,6 @@
 # Proposal: isolated evidence recognition, without release authorization
 
-Status: independently testable review proposal. No production gate imports this module. No real human observations, attestations or cleanup results have been generated. Architecture approval in principle is not approval of this evidence policy or a deployment.
+Status: the recognizer remains isolated-only. The separately authorized [maintenance correction](MAINTENANCE.md) now uses it as ONE prerequisite alongside fresh production-host checks, historical activation approval and enabled-intake cleanup. Initial activation still cannot accept isolated evidence. No real human observations, attestations or cleanup results have been generated; no deployment is authorized. The original proposal below records why isolated evidence alone is insufficient; statements about the then-unchanged maintenance gate are superseded by MAINTENANCE.md.
 
 ## Narrow recognition boundary
 

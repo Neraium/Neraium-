@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { isDeepStrictEqual } from 'node:util';
 import { pathToFileURL } from 'node:url';
 import { validateActivationEvidence, validateActivationTransition } from './contact-activation-gates.mjs';
+import { contactVerificationMode, validateMaintenanceEvidence } from './contact-maintenance-gates.mjs';
 
 export async function cloudflare(path, options = {}) {
   if (!process.env.CLOUDFLARE_API_TOKEN) throw new Error('Load the existing Cloudflare API token into the environment before comparing or deploying.');
@@ -48,7 +49,6 @@ export async function checkConfiguration({ expectedConfig, validateTransition = 
   const disabled = current.vars.CONTACT_ENABLED === 'false' && current.vars.CONTACT_RETENTION_APPROVED === 'false';
   if (!disabled) {
     if (current.vars.CONTACT_ENABLED !== 'true' || current.vars.CONTACT_RETENTION_APPROVED !== 'true') throw Error('Both contact flags must have the same approved state.');
-    await validateActivationEvidence(current);
   }
   if (expectedConfig && validateTransition) validateActivationTransition(expectedConfig, current);
   const config = expectedConfig ?? current;
@@ -82,6 +82,12 @@ export async function checkConfiguration({ expectedConfig, validateTransition = 
   if (schedules.schedules.length) differences.push('Unmanaged production cron schedules.');
   if (settings.tail_consumers?.length || settings.logpush || settings.placement?.mode || settings.limits || settings.observability?.enabled || settings.tags?.length) differences.push('Additional production settings require explicit reconciliation.');
   if (differences.length) throw new Error(`Deployment blocked:\n${differences.join('\n')}`);
+  if (!disabled) {
+    const mode = contactVerificationMode(current, settings.bindings, { expectedConfig });
+    if (mode === 'maintenance') await validateMaintenanceEvidence(current, settings, cloudflare);
+    else await validateActivationEvidence(current);
+    console.log(`Contact evidence verified for ${mode}; intake state is unchanged.`);
+  }
   console.log(`Remote configuration matches: public variables, all resource bindings, both production domains, and ${config.vars.CONTACT_ENABLED === 'false' ? 'disabled' : 'verified approved'} contact.`);
   console.log(`Existing secret names verified (values never retrieved): ${secrets.join(', ')}`);
   console.log(`Current deployment: ${deployments.deployments[0]?.id}; version: ${deployments.deployments[0]?.versions.map(version => version.version_id).join(', ')}`);

@@ -1,6 +1,6 @@
 # Exact proposed verifier installation and retirement runbook
 
-**For approval only. Do not execute cloud actions until separately authorized. No steps below have been deployed.** Architecture approval in principle is not deployment authorization. Read EVIDENCE-POLICY.md first: this standalone session does not automatically clear the unchanged production release gate.
+**For approval only. Do not execute cloud actions until separately authorized. No steps below have been deployed.** Architecture approval in principle is not deployment authorization. Read EVIDENCE-POLICY.md and MAINTENANCE.md: this standalone session does not automatically clear the production release gate. The authorized maintenance correction requires fresh separate production checks and enabled-intake cleanup; first-activation rules stay intact.
 
 Scope: only Worker `neraium-contact-verifier` in account `9820361c238dcdeef0b72b24ec3734db`, its own new Turnstile widget, two private secrets, separate limiter and SQLite class. No production routes/custom domains/DNS changes, Worker `website` updates, intake pause, public asset upload, owner-record changes or AWS actions. No `--name`, `--env`, `--force`, `--keep-vars`, or route overrides are allowed. In particular, Wrangler deletion `--force` can break dependencies and must not be used.
 
@@ -18,7 +18,7 @@ node scripts/inspect-isolated-verifier-boundaries.mjs .planning/verifier-before.
 
 Use fresh output filenames on a rerun; snapshots never overwrite an existing artifact or baseline. The inspector makes only GETs and records hashes rather than DNS/binding values. Require production settings/routes/version/assets unchanged, contact intake enabled and matching bindings. It must report the new Worker absent. Recheck the account workers.dev subdomain, name availability, dedicated limiter namespace and lack of consumers of the new class. The current API token cannot read DNS records (HTTP403); obtain an independently authorized READ-only DNS inventory/attestation before calling that category verified. Do not change DNS or broaden permissions silently.
 
-Review EVIDENCE-POLICY.md and decide the treatment of isolated versus remaining production-host proof. Do not deploy merely to generate results with no approved acceptance plan.
+Review EVIDENCE-POLICY.md and follow the now-authorized local maintenance correction in MAINTENANCE.md, including separate production-host proof. Temporary deployment still needs its own authorization.
 
 ## B. Dedicated widget and public configuration inputs
 
@@ -86,7 +86,7 @@ Read back the new version, binding/secret NAMES, no extra routes/services/mail/a
 node scripts/inspect-isolated-verifier-boundaries.mjs .planning/verifier-after-install.json .planning/verifier-before.json
 ```
 
-Any production difference or unknown verification category holds the operation for review. The new verifier's existence alone is allowed; a production change is not. The inspector cannot waive release gates. Deliver the fragment link only through the agreed private channel; do not print it to tool output or commit it.
+Any production difference or unknown production verification category holds the operation for review. DNS-read403 is not a blocker for this route-free workers.dev operation and remains honestly unverified. The inspector's aggregate exit code may reflect only that DNS gap; inspect its individual categories without claiming full DNS invariance. The new verifier's existence alone is allowed; a production change is not. The inspector cannot waive release gates. Deliver the fragment link only through the agreed private channel; do not print it to tool output or commit it.
 
 ## E. Actual human sequence
 
@@ -122,4 +122,4 @@ node scripts/inspect-isolated-verifier-boundaries.mjs .planning/verifier-after-c
 npm run config:check
 ```
 
-The preflight may still fail because isolated-only evidence does not meet the unchanged production-host/disabled-intake schema. Stop there. Do not rename evidence, invent false intake state, reset timestamps, use skip flags or run a website deploy to bypass it. Apply only a separately reviewed evidence-policy decision. The redesigned public website still requires its own successful guarded preflight and separate release authorization.
+For already-active intake, assemble the separate genuine maintenance record in MAINTENANCE.md, including fresh actual production-host checks. Isolated-only evidence still cannot pass. First activation retains its production-host/disabled-intake schema. Do not rename evidence, invent false intake state, reset timestamps, use skip flags or run a website deploy to bypass a failure. The redesigned public website still requires its own successful guarded preflight and separate release authorization.

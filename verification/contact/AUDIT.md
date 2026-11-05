@@ -1,5 +1,7 @@
 # Final isolated verifier audit — 2026-11-05
 
+Historical audit of `80cfbb5`. The subsequently authorized release-only maintenance correction is documented in [MAINTENANCE.md](MAINTENANCE.md). It does not change this verifier's runtime or initial-activation safeguards. `review-manifest.json` records the current package; the original fingerprint below identifies this original audit only. Temporary deployment remains separately unauthorized.
+
 Checkout: /home/ubuntu/Neraium-; branch codex/neraium-phase-2; reviewed base 3598844755e20b5480887a76b0d80f7cc6bb6def. Architecture approved in principle, subject to security requirements. No temporary/public deployment or push authorized or performed. This fresh review re-read the implementation and tested prior claims rather than relying only on the previous passing report.
 
 ## Outcome

@@ -36,3 +36,6 @@ test-results/
 dist/
 
 dist-staging/
+
+# Operator observations are collected locally, never staged with source fixes.
+.planning/contact-maintenance/

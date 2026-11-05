@@ -1,15 +1,17 @@
 {
-  "reviewed_at": "2026-11-05T03:07:09.569Z",
+  "reviewed_at": "2026-11-05T06:47:03.893Z",
   "isolated": true,
   "mail_bindings": false,
   "production_routes": false,
   "production_migration_history_reused": false,
   "deployment_authorized": false,
-  "package_sha256": "50399b7fbac3e94ee455e5e496a3797fa2d5ba0a5059db8ad014218a703d42ae",
+  "package_sha256": "15f0bc10ca21acc09004029e83e41738411537c0bc1292c5ac1f15bf77b9948a",
   "files": {
+    "scripts/contact-maintenance-gates.mjs": "60873daf016f1d0da9eaa83b795577ded63cbdeae17ef58a58bd632c13492b0e",
     "scripts/create-isolated-verifier-session.mjs": "176900999208d3c23571fb303e62864ce6004581a007b9775c343b8fbf093e49",
     "scripts/inspect-isolated-verifier-boundaries.mjs": "499b1bec388bc75d00f9c466963ec6337179b23ba2292d7ab0e591e270fafcdf",
-    "scripts/review-isolated-verifier.mjs": "96a69cc2574e45dadb529b09aa2fedabb2a299b7321fd950a648c499bbad6939",
+    "scripts/review-isolated-verifier.mjs": "7b15d835ff665ccd706e62238f874febeba2551581683ac9ed9d8b992a128238",
+    "tests/contact-maintenance-gates.test.mjs": "a5fd273c373a93cb216c3180ea8112027c0befe680be944e64886a9833153661",
     "tests/isolated-boundaries.test.mjs": "1a486ab37ea3151aaf0a4ad499ae5c4068e09c9d8f61ccc13591bf740db7a4a4",
     "tests/isolated-evidence-review.test.mjs": "d6a3a667e1d875555f815e1d7d3196ae3fc04f689310cd421afab4249f663006",
     "tests/isolated-verifier-browser.test.mjs": "bbb86dde7cb879493051e9576bc5253ccf63034229f16bb19ae89261b1fad4c2",
@@ -17,9 +19,10 @@
     "tests/isolated-verifier-workerd.test.mjs": "9e3c31d6f20bb0dba122b0e0133e95eee204eab7e56b2bc5dd5d9f1c99c01585",
     "tests/isolated-verifier.test.mjs": "2eec45d79f5dcb4318b690c92f577e13ae73a4b78d08f425253f160661126b22",
     "verification/contact/.gitignore": "1576d0a1994a5e5bd313c72919dd3d0ecf0cc2def94e7de04901414661b75f78",
-    "verification/contact/EVIDENCE-POLICY.md": "0f3445ffd5d72c04a1caf471679e0c06e49d4329c117e5d2dc813148e12236e4",
-    "verification/contact/OPERATIONS.md": "722aa4107b789deab6be4924d15b792a026caa1be799b5a4bd15535636320152",
-    "verification/contact/README.md": "dd11a5b8c38e68e96b01291449da5e4bb050b787b4745a65260953dc3788375c",
+    "verification/contact/EVIDENCE-POLICY.md": "86813c3908a1a4ff45f0d8304a8b39f79b1ad3d6a3b83b9cb2fbcf0b60436e3e",
+    "verification/contact/MAINTENANCE.md": "e9a21f84502689803fdda0923c750829382f6319961258bed1470ae65571d640",
+    "verification/contact/OPERATIONS.md": "2b912ccee701afe586db1b5dbddcb23cb6468021244996f50204f3c4988cf05f",
+    "verification/contact/README.md": "d346a4928fe67f2d03b8ab1673025baddef6f0c9615cd90c3d7f24723ce61b35",
     "verification/contact/evidence-review.mjs": "b0e37f4d3a870ed4eb60fd4a927d706d33d389e9667fb6741c45ec9a50ec1ed3",
     "verification/contact/index.mjs": "98303e64a70ac0d097b9c567ac8463a477a82e53dc48838597698ce611d2d1ab",
     "verification/contact/panel.mjs": "37f6915d69b6f80aca50a94277cc112f994badd2405f6a0b3588c7a2691b5868",
@@ -46,7 +49,7 @@
     "Explicit separate deployment authorization after review.",
     "Dedicated workers.dev hostname and separate real Turnstile widget/secrets; production widget must remain untouched.",
     "Out-of-band one-use access secret with <=20-minute session and <=10-minute redemption window.",
-    "Review treatment of isolated-origin evidence; existing activation guard is intentionally unchanged and will not accept this alternate provenance.",
+    "Fresh isolated and separate production human evidence plus enabled-intake cleanup required for maintenance; initial activation cannot accept isolated provenance.",
     "Manual human session, actual sanitized evidence, separately confirmed participation, then authenticated revocation/resource cleanup."
   ]
 }

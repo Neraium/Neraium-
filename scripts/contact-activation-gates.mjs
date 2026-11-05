@@ -98,7 +98,7 @@ export function validateHumanPanelExport(human, now = Date.now()) {
   requireGate(times.replay >= times.success && times.recovery >= times.failure, 'replay/recovery test ordering invalid');
   return { started, completed, times };
 }
-export function validateGateRecords({ owner, inventory, human, live, privacyHash, codeHash, config }) {
+export function validateGateRecords({ owner, inventory, human, live, privacyHash, codeHash, config }, now = Date.now()) {
   requireGate(owner.receipt?.verified === true && owner.receipt.method === 'Visual verification in Zoho Mail Inbox'
     && owner.receipt.sender === 'website@neraium.com' && owner.receipt.recipient === 'craig@neraium.com'
     && owner.receipt.subject === 'Neraium evaluation inquiry' && owner.receipt.message_timestamp === '2026-10-13T01:05:12.798Z', 'actual Inbox receipt');
@@ -135,11 +135,10 @@ export function validateGateRecords({ owner, inventory, human, live, privacyHash
       if (surface.status === 'provider-managed') requireGate(id === 'provider-backups' && knownText(surface.terms_reference) && knownText(surface.oversight_owner), 'provider backup handling incomplete');
     }
   }
-  const { started, completed, times } = validateHumanPanelExport(human);
+  const { started, completed, times } = validateHumanPanelExport(human, now);
   requireGate(human.confirmed_by_user === true && Boolean(human.operator), 'owner confirmation of human-operated challenge evidence missing');
   requireGate(human.configuration_fingerprint === securityConfigurationFingerprint(config), 'human verification configuration is stale');
   requireGate(knownText(codeHash) && human.code_fingerprint === codeHash, 'human verification code is stale');
-  const now=Date.now();
   const cleanup=live.current_cleanup_verification;
   requireGate(live.results?.rate_limit_statuses?.includes(429), 'live rate limiter evidence missing');
   requireGate(cleanup?.endpoint_status === 404 && cleanup.temporary_secret_removed === true

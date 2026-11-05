@@ -43,6 +43,8 @@ The server enforces order, exact replay identity, fresh tokens, unused-token cap
 
 ## Important production-gate compatibility limit
 
+The authorized [maintenance policy](MAINTENANCE.md) now distinguishes already-active intake from first activation. It requires these isolated observations PLUS fresh actual production-host checks and actual cleanup with intake enabled. It does not relabel isolated results or relax the initial-activation path. The original compatibility discussion below applies to initial activation; the maintenance correction supersedes its description of maintenance as not yet implemented. Temporary installation remains separately unauthorized.
+
 The export schema is `neraium.isolated-contact-verifier.v1`, always `candidate_only: true`. It contains neither a `human_operated: true` claim nor a production approval. Server scenario completion does not mean founder participation or deployment readiness.
 
 The **unchanged** production activation guard currently requires `neraium.com`/`www.neraium.com` human evidence, original code/config identities, and cleanup observations with intake disabled. This proposal uses a different origin/widget/limiter/namespace while production intake remains enabled. It exercises the same source handler and required scenario types, but does not prove the live production widget, limiter instance, mail delivery or deployed environment. The current guard will not accept these alternate observations automatically.
