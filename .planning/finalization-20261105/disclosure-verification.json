@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "baseline_commit": "6e874c5f0a378e916ea76050f54123f9b9e68d74",
+  "verified_at": "2026-11-05T01:58:28.472Z",
+  "file": "privacy.html",
+  "sha256": "ad2ca1b1d4073aca46e762637f52fe66885cf93521d5c5ce30ef57f3b66e9de0",
+  "bytes": 7710,
+  "baseline_sha256": "97bab9f9ab36da71e428197f2d27d73718398a42f0bfed8168049a0be0b92851",
+  "existing_approved_sha256": "97bab9f9ab36da71e428197f2d27d73718398a42f0bfed8168049a0be0b92851",
+  "disclosure_main_sha256": "46ac5ecfb46bae3df14c5d4307b2251b15c247f52e26b9eb25393d2d70357772",
+  "disclosure_main_matches_baseline": true,
+  "build_copy_matches_source": true,
+  "approved_fingerprint_matches_source": false,
+  "founder_approval": "pending; no approval inferred from verification request",
+  "approval_record_modified": false
+}

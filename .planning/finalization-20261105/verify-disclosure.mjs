@@ -1,0 +1,16 @@
+import fs from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+const hash=b=>createHash('sha256').update(b).digest('hex');
+const file='privacy.html';
+const source=await fs.readFile(file);
+const baseline=execFileSync('git',['show','6e874c5f0a378e916ea76050f54123f9b9e68d74:privacy.html']);
+const main=b=>b.toString().match(/<main[^>]*>[\s\S]*?<\/main>/)?.[0];
+if(!main(source)||!main(baseline))throw Error('Disclosure section missing.');
+const owner=JSON.parse(await fs.readFile('.planning/contact-activation/owner-confirmations.json','utf8'));
+const built=await fs.readFile('dist/privacy.html');
+const record={schema:1,baseline_commit:'6e874c5f0a378e916ea76050f54123f9b9e68d74',verified_at:new Date().toISOString(),file,sha256:hash(source),bytes:source.length,baseline_sha256:hash(baseline),existing_approved_sha256:owner.retention.public_privacy_sha256,disclosure_main_sha256:hash(main(source)),disclosure_main_matches_baseline:main(source)===main(baseline),build_copy_matches_source:source.equals(built),approved_fingerprint_matches_source:owner.retention.public_privacy_sha256===hash(source),founder_approval:'pending; no approval inferred from verification request',approval_record_modified:false};
+if(!record.disclosure_main_matches_baseline||!record.build_copy_matches_source)throw Error('Disclosure verification failed.');
+await fs.writeFile('.planning/finalization-20261105/disclosure-verification.json',JSON.stringify(record,null,2)+'\n');
+await fs.writeFile('.planning/finalization-20261105/privacy-main-reviewed.html',main(source)+'\n');
+console.log(JSON.stringify(record,null,2));

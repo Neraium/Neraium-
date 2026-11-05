@@ -11,7 +11,7 @@ async function safePath(path) {
 async function files(path, omitPreview = false, directories = []) {
   await safePath(path);
   const stat = await lstat(path);
-  if (stat.isFile()) return omitPreview && path.split('/').at(-1)==='neraium-brand-preview.png' ? [] : [path];
+  if (stat.isFile()) return omitPreview && ['neraium-brand-preview.png','neraium-social.jpg','neraium-social-horizontal.png'].includes(path.split('/').at(-1)) ? [] : [path];
   assert(stat.isDirectory(), 'Unexpected asset type.');
   directories.push(path);
   const result=[];

@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-11-05T01:57:28.222Z",
+  "mode": "independent read-only prerequisites; deployment gate remains mandatory",
+  "routes_match": true,
+  "compatibility_matches": true,
+  "workers_dev_and_preview_match": true,
+  "no_unmanaged_schedules": true,
+  "no_additional_remote_settings": true
+}

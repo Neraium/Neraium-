@@ -93,8 +93,8 @@ for (const asset of publicAssets) {
   await assertNoSymlinks(asset);
   await cp(asset, path.join(outputDir, asset), {
     recursive: true,
-    // Retain the prior simulated social graphic in source for rollback only.
-    filter: (source) => path.basename(source) !== 'neraium-brand-preview.png',
+    // Retain obsolete social graphics in source history, outside the public package.
+    filter: (source) => !['neraium-brand-preview.png', 'neraium-social.jpg', 'neraium-social-horizontal.png'].includes(path.basename(source)),
   });
 }
 

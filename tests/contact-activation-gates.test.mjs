@@ -38,9 +38,12 @@ test('contact disable transition allows only both contact flags to be turned off
 test('complete synthetic fixture passes without authorizing real activation',()=>assert.doesNotThrow(()=>validateGateRecords(records())));
 test('owner panel export validates all six original scenarios verbatim',async()=>{
   const panel=JSON.parse(await readFile(new URL('../.planning/contact-activation/owner-reported-panel-export.json',import.meta.url),'utf8'));
-  assert.equal(validateHumanPanelExport(panel).times.expiry,Date.parse('2026-10-13T05:58:31.753Z'));
+  // This archived panel tests parsing at its recorded time, not present-day activation.
+  const panelReviewTime = Date.parse(panel.completed_at) + 1000;
+  assert.equal(validateHumanPanelExport(panel, panelReviewTime).times.expiry,Date.parse('2026-10-13T05:58:31.753Z'));
+  assert.throws(()=>validateHumanPanelExport(panel, panelReviewTime + 604800000),/stale or invalid/);
   assert.equal(panel.results.find(x=>x.scenario==='expiry').duplicate_or_expired,false);
-  assert.throws(()=>validateHumanPanelExport({...panel,results:panel.results.filter(x=>x.scenario!=='recovery')}),/exactly the six/);
+  assert.throws(()=>validateHumanPanelExport({...panel,results:panel.results.filter(x=>x.scenario!=='recovery')}, panelReviewTime),/exactly the six/);
 });
 test('delivery-only source changes retain human verification only when security controls match the tested revision',async()=>{
   const human=JSON.parse(await readFile(new URL('../.planning/contact-activation/human-security.json',import.meta.url),'utf8'));

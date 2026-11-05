@@ -2,23 +2,23 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /See degradation/i, canonical: 'https://neraium.com/' },
-  { path: '/platform', purpose: /Integrated infrastructure intelligence/i, canonical: 'https://neraium.com/platform' },
-  { path: '/evidence', purpose: /More effort for comparable flow/i, canonical: 'https://neraium.com/evidence' },
-  { path: '/applications', purpose: /Applications/i, canonical: 'https://neraium.com/applications' },
+  { path: '/', purpose: /Understand What Your Infrastructure Is Really Doing/i, canonical: 'https://neraium.com/' },
+  { path: '/platform', purpose: /Systemic Infrastructure Intelligence/i, canonical: 'https://neraium.com/platform' },
+  { path: '/evidence', purpose: /Evidence you can follow/i, canonical: 'https://neraium.com/evidence' },
+  { path: '/applications', purpose: /Infrastructure is connected/i, canonical: 'https://neraium.com/applications' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://neraium.com/pilot' },
-  { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://neraium.com/methodology' },
+  { path: '/methodology', purpose: /Learn relationships/i, canonical: 'https://neraium.com/methodology' },
   { path: '/security', purpose: /Read-only by design/i, canonical: 'https://neraium.com/security' },
-  { path: '/company', purpose: /Company/i, canonical: 'https://neraium.com/company' },
+  { path: '/company', purpose: /Built around an operational question/i, canonical: 'https://neraium.com/company' },
   { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://neraium.com/operator-brief' },
   { path: '/contact', purpose: /Request an evaluation/i, canonical: 'https://neraium.com/contact' },
   { path: '/privacy', purpose: /Privacy/i, canonical: 'https://neraium.com/privacy' },
   { path: '/water-wastewater', purpose: /Municipal water & wastewater/i, canonical: 'https://neraium.com/water-wastewater' },
-  { path: '/hospitality', purpose: /Hospitality, resorts & attractions/i, canonical: 'https://neraium.com/hospitality' },
+  { path: '/hospitality', purpose: /Hospitality, resorts & integrated operations/i, canonical: 'https://neraium.com/hospitality' },
   { path: '/infrastructure', purpose: /Broader infrastructure/i, canonical: 'https://neraium.com/infrastructure' },
 ] as const;
 
-const navLinks = ['Platform','How It Works','Applications','Company'] as const;
+const navLinks = ['Platform','How It Works','Industries','About'] as const;
 
 async function openPrimaryNavigation(page: Page) {
   const toggle = page.locator('.nav-toggle');
@@ -61,6 +61,7 @@ for (const sitePage of publicPages) {
 
     test('has no horizontal overflow and loads local images with alt text', async ({ page }) => {
       await page.goto(sitePage.path);
+      for (const image of await page.locator('img[loading="lazy"]').all()) await image.scrollIntoViewIfNeeded();
       await page.locator('footer').scrollIntoViewIfNeeded();
       const dimensions = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, document: document.documentElement.scrollWidth }));
       expect(dimensions.document).toBeLessThanOrEqual(dimensions.viewport);
@@ -75,6 +76,7 @@ for (const sitePage of publicPages) {
     test('captures visual review screenshots', async ({ page }, testInfo) => {
       await page.goto(sitePage.path, { waitUntil: 'networkidle' });
       const slug = sitePage.path.slice(1) || 'index';
+      for (const image of await page.locator('img[loading="lazy"]').all()) await image.scrollIntoViewIfNeeded();
       await page.locator('footer').scrollIntoViewIfNeeded();
       await page.waitForFunction(() => Array.from(document.images).every(img => img.complete && img.naturalWidth > 0));
       await page.evaluate(async () => {
@@ -190,17 +192,17 @@ test('header logo and controls stay proportionate and aligned across viewports',
 
   if ((viewport?.width ?? 0) <= 600) {
     expect(headerBox?.height).toBe(72);
-    expect(brandBox?.width).toBe(208);
+    expect(brandBox?.width).toBe(190);
   } else {
-    expect(headerBox?.height).toBe(92);
-    expect(brandBox?.width).toBe(240);
+    expect(headerBox?.height).toBe((viewport?.width ?? 0) <= 760 ? 72 : (viewport?.width ?? 0) <= 1120 ? 80 : 94);
+    expect(brandBox?.width).toBe((viewport?.width ?? 0) <= 760 ? 190 : (viewport?.width ?? 0) <= 1120 ? 208 : (viewport?.width ?? 0) <= 1200 ? 190 : 216);
   }
 
   if (await toggle.isVisible()) {
     const toggleBox = await toggle.boundingBox();
     expect(toggleBox?.width).toBeGreaterThanOrEqual(44);
     expect(toggleBox?.height).toBeGreaterThanOrEqual(44);
-    if ((viewport?.width ?? 0) >= 701) {
+    if ((viewport?.width ?? 0) >= 761) {
       const action = page.locator('.header-action');
       await expect(action).toBeVisible();
       const actionBox = await action.boundingBox();
@@ -238,7 +240,7 @@ test('Cloudflare preview enforces clean routes, redirects, security headers, and
 
   const response = await page.goto('/definitely-missing/nested/page', { waitUntil: 'networkidle' });
   expect(response?.status()).toBe(404);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/404 \/ Not found/i);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/This page could not be found/i);
   await expect(page.locator('link[rel="stylesheet"]')).toHaveAttribute('href', /^\/styles[.]css[?]/);
   await expect(page.locator('script[src]')).toHaveAttribute('src', /^\/scripts[.]js[?]/);
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
@@ -395,11 +397,11 @@ test('industry evaluation links prefill system context and optional review quest
 });
 
 test('retired claim artifacts are unavailable while the current social image remains accessible', async ({ request }) => {
-  for (const route of ['/sample-finding-pack.pdf', '/assets/images/neraium-brand-preview.png']) {
+  for (const route of ['/sample-finding-pack.pdf', '/assets/images/neraium-brand-preview.png', '/assets/images/neraium-social.jpg', '/assets/images/neraium-social-horizontal.png']) {
     const response = await request.get(route);
     expect(response.status()).toBe(404);
   }
-  const current = await request.get('/assets/images/neraium-social-horizontal.png');
+  const current = await request.get('/assets/images/neraium-sii-social.png');
   expect(current.status()).toBe(200);
   expect(current.headers()['content-type']).toContain('image/png');
 });
@@ -450,25 +452,30 @@ test('public package identity agrees with the served homepage', async ({ request
   expect(manifestResponse.headers()['cache-control']).toBe('no-store');
 });
 
-test('illustrative product explanation leads to traceable engineering review', async ({ page }) => {
-  await page.goto('/#operating-example');
-  const demo = page.locator('.product-demo');
-  await expect(demo).toContainText('Conceptual scenario.');
-  await expect(demo).toContainText('Not customer data');
-  await expect(demo).toContainText('not measured values');
-  await expect(demo.getByRole('img')).toHaveAccessibleName('More effort for comparable delivered flow');
-  const limitations = demo.locator('details').filter({ hasText: 'Known limitations' });
-  await limitations.locator('summary').focus();
+test('illustrative relationship comparison leads to evidence and keyboard-operable capability limits', async ({ page }) => {
+  await page.goto('/#difference');
+  const comparison = page.locator('#difference .relationship-chart');
+  await expect(comparison).toContainText('Not customer data');
+  await expect(comparison.getByRole('img')).toHaveAccessibleName(/Illustrative shift/);
+  await page.getByRole('link', { name: 'See an illustrative finding' }).click();
+  await expect(page).toHaveURL(/\/evidence$/);
+  await expect(page.locator('#evidence')).toContainText('immudb-backed tamper-evident integrity');
+  await expect(page.locator('#evidence')).toContainText('does not establish the correctness');
+  await page.goto('/platform#capability-status');
+  const disclosure = page.locator('details').filter({ hasText: 'Continuous Analytical Memory' });
+  await disclosure.locator('summary').focus();
   await page.keyboard.press('Enter');
-  await expect(limitations).toHaveAttribute('open', '');
-  await expect(limitations.locator('p')).toBeVisible();
-  await expect(limitations).toContainText('does not establish root cause or failure timing');
-  await demo.getByRole('link', { name: 'Follow the walkthrough' }).click();
-  await expect(page).toHaveURL(/\/evidence#walkthrough$/);
-  const review = page.locator('#walkthrough details').filter({ hasText: 'Operating-context considerations' });
-  await review.locator('summary').focus();
-  await page.keyboard.press('Enter');
-  await expect(review).toHaveAttribute('open', '');
-  await expect(review.getByText('Incomplete comparable history may instead yield insufficient evidence. Partial comparability must remain explicit.')).toBeVisible();
-  await expect(review).toContainText('insufficient evidence');
+  await expect(disclosure).toHaveAttribute('open', '');
+  await expect(disclosure).toContainText('not production-qualified');
+});
+
+test('contact fallback is readable without JavaScript and hidden with JavaScript enabled', async ({ page, browser }) => {
+  await page.goto('/contact');
+  await expect(page.locator('noscript')).toBeHidden();
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const fallback = await context.newPage();
+  await fallback.goto('http://127.0.0.1:4179/contact');
+  await expect(fallback.locator('noscript p')).toBeVisible();
+  await expect(fallback.locator('noscript a')).toHaveAttribute('href', 'mailto:craig@neraium.com');
+  await context.close();
 });
