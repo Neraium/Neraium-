@@ -1,0 +1,8 @@
+# Per-session effective inputs and credentials must never be committed.
+.dev.vars*
+.env*
+wrangler.session.jsonc
+wrangler.enabled.jsonc
+*session*.json
+*credential*
+*secret*

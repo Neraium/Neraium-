@@ -1,0 +1,49 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "neraium-contact-verifier",
+  "main": "index.mjs",
+  "compatibility_date": "2026-08-05",
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": {
+    "VERIFIER_ENABLED": "false",
+    "VERIFIER_HOSTNAME": "review-required.invalid",
+    "TURNSTILE_SITE_KEY": "review-required"
+  },
+  "ratelimits": [
+    {
+      "name": "VERIFIER_RATE_LIMITER",
+      "namespace_id": "20261105",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "VERIFIER_SESSIONS",
+        "class_name": "IsolatedVerificationSession"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "isolated-verifier-v1",
+      "new_sqlite_classes": [
+        "IsolatedVerificationSession"
+      ]
+    }
+  ],
+  "secrets": {
+    "required": [
+      "TURNSTILE_SECRET_KEY",
+      "VERIFIER_ACCESS"
+    ]
+  },
+  "observability": {
+    "enabled": false
+  },
+  "account_id": "9820361c238dcdeef0b72b24ec3734db"
+}

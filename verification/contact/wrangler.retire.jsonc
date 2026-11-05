@@ -1,0 +1,32 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "neraium-contact-verifier",
+  "main": "retire.mjs",
+  "compatibility_date": "2026-08-05",
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": {
+    "VERIFIER_ENABLED": "false"
+  },
+  "migrations": [
+    {
+      "tag": "isolated-verifier-v1",
+      "new_sqlite_classes": [
+        "IsolatedVerificationSession"
+      ]
+    },
+    {
+      "tag": "isolated-verifier-retire-v1",
+      "deleted_classes": [
+        "IsolatedVerificationSession"
+      ]
+    }
+  ],
+  "secrets": {
+    "required": []
+  },
+  "observability": {
+    "enabled": false
+  },
+  "account_id": "9820361c238dcdeef0b72b24ec3734db"
+}
