@@ -20,6 +20,7 @@ export function settingsFingerprint(settings) {
   return fingerprint(controls);
 }
 const git = (...args) => execFileSync('git',args,{encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim();
+export const approvedBytes = path => execFileSync('git',['show',`${approved}:${path}`],{maxBuffer:32*1024*1024,stdio:['ignore','pipe','ignore']});
 const mime = {'.html':'text/html','.css':'text/css','.js':'application/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.xml':'application/xml','.txt':'text/plain','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.ico':'image/x-icon','.woff':'font/woff','.woff2':'font/woff2','.ttf':'font/ttf','.otf':'font/otf'};
 
 export async function request(path, options = {}, bearer = process.env.CLOUDFLARE_API_TOKEN) {
@@ -35,7 +36,7 @@ async function packageAssets() {
   // The existing build verifier rejects symlinks, unknown files and source/output drift.
   await reuseBuiltAssets();
   for (const file of ['scripts/build-static-site.mjs','wrangler.jsonc','worker/index.mjs','worker/contact.mjs','worker/zoho-mail.mjs','.planning/contact-activation/owner-confirmations.json','.planning/contact-activation/privacy-approval-20261105.json']) {
-    hold(execFileSync('git',['show',`${approved}:${file}`]).equals(await readFile(file)), `approved configuration/handler/approval changed: ${file}`);
+    hold(approvedBytes(file).equals(await readFile(file)), `approved configuration/handler/approval changed: ${file}`);
   }
   const files={}, manifest={}, bytes=new Map();
   async function walk(directory) {
@@ -46,7 +47,7 @@ async function packageAssets() {
       hold(stat.isFile() && stat.size<=25*1024*1024, 'invalid asset file');
       const name=path.slice('dist/'.length), content=await readFile(path);
       if(name!=='release.json') {
-        const original=execFileSync('git',['show',`${approved}:${name}`]);
+        const original=approvedBytes(name);
         const actual=name==='_headers'?Buffer.from(content.toString().replace(/^  X-Neraium-Release: .*\n/m,'')):content;
         hold(original.equals(actual), `asset differs from approved redesign: ${name}`);
       }

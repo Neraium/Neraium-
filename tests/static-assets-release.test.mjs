@@ -1,6 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assertCandidate, assertUnchanged, controls, fingerprint, settingsFingerprint, versionForm, request } from '../scripts/deploy-static-assets.mjs';
+import { readFile } from 'node:fs/promises';
+import { assertCandidate, assertUnchanged, controls, fingerprint, settingsFingerprint, versionForm, request, approvedBytes } from '../scripts/deploy-static-assets.mjs';
+
+test('approved package comparison handles existing image assets larger than one MiB',async()=>{
+  const path='assets/images/diagram-threshold-vs-relationships.jpg';
+  const original=approvedBytes(path);
+  assert(original.length>1024*1024);
+  assert.deepEqual(original,await readFile(path));
+});
 
 function fixture() {
   const previous={number:42,resources:{script:{etag:'same-deployed-script-content',handlers:['fetch'],last_deployed_from:'wrangler'},script_runtime:{compatibility_date:'2026-08-05',migration_tag:'contact-verification-session-v2',usage_model:'standard',assets:{html_handling:'auto-trailing-slash',not_found_handling:'404-page',base_path:'/',raw_run_worker_first:['/api/*'],raw_headers:'old headers',raw_redirects:'old redirects'}},bindings:[{name:'ASSETS',type:'assets'},{name:'CONTACT_ENABLED',type:'plain_text',text:'true'},{name:'CONTACT_RETENTION_APPROVED',type:'plain_text',text:'true'},{name:'TURNSTILE_SECRET_KEY',type:'secret_text'},{name:'CONTACT_RATE_LIMITER',type:'ratelimit',namespace_id:'1001',simple:{limit:5,period:60}}]}};
