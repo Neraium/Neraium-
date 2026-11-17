@@ -2,16 +2,16 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /Know when the system/i, canonical: 'https://neraium.com/' },
+  { path: '/', purpose: /Know when your system starts behaving differently/i, canonical: 'https://neraium.com/' },
   { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
-  { path: '/applications', purpose: /Practical questions for interconnected facility systems/i, canonical: 'https://neraium.com/applications' },
-  { path: '/pilot', purpose: /Start with history/i, canonical: 'https://neraium.com/pilot' },
+  { path: '/applications', purpose: /Water systems and central plants/i, canonical: 'https://neraium.com/applications' },
+  { path: '/pilot', purpose: /Test Neraium against an event your team already knows/i, canonical: 'https://neraium.com/pilot' },
   { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://neraium.com/methodology' },
   { path: '/security', purpose: /Read-only by design/i, canonical: 'https://neraium.com/security' },
   { path: '/company', purpose: /Built from the gap between what the dashboard/i, canonical: 'https://neraium.com/company' },
   { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://neraium.com/operator-brief' },
-  { path: '/contact', purpose: /one system and one review question/i, canonical: 'https://neraium.com/contact' },
+  { path: '/contact', purpose: /Request a free historical evaluation/i, canonical: 'https://neraium.com/contact' },
   { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://neraium.com/privacy' },
 ] as const;
 
@@ -85,49 +85,109 @@ for (const sitePage of publicPages) {
   });
 }
 
-test('contact form validates practical fields and prepares an email without fake submission', async ({ page }) => {
+test('homepage routes buyers to the software, the examples, and the free evaluation', async ({ page, request }) => {
+  await page.goto('/');
+  const hero = page.locator('.home-hero');
+  const demo = hero.getByRole('link', { name: 'Run the interactive demo' });
+  const freeEvaluation = hero.getByRole('link', { name: 'Request a free historical evaluation' });
+  await expect(demo).toHaveAttribute('href', 'https://demo.neraium.com/');
+  await demo.focus();
+  await page.keyboard.press('Tab');
+  await expect(freeEvaluation).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL('/contact');
+
+  for (const route of ['/', '/applications']) {
+    await page.goto(route);
+    const applications = page.locator('#applications');
+    await expect(applications.getByRole('link', { name: /open the aeration replay/i }))
+      .toHaveAttribute('href', 'https://demo.neraium.com/replay?scenario=aeration');
+    await applications.getByRole('link', { name: /read the illustrative chilled-water finding/i }).click();
+    await expect(page).toHaveURL('/evidence#finding-title');
+    await expect(page.locator('#finding-title')).toBeVisible();
+  }
+
+  await page.goto('/');
+  await page.getByRole('link', { name: /review the evaluation process/i }).click();
+  await expect(page).toHaveURL('/pilot');
+  for (const option of ['Hosted', 'Portable']) {
+    await expect(page.getByRole('heading', { name: option, exact: true })).toBeVisible();
+  }
+  const printable = await request.get('/sample-finding-pack.pdf');
+  expect(printable.ok()).toBe(true);
+  expect(printable.headers()['content-type']).toContain('application/pdf');
+});
+
+test('contact requires only name and organization and prepares a local draft', async ({ page }) => {
   const posts: string[] = [];
   page.on('request', (request) => {
     if (request.method() === 'POST') posts.push(request.url());
   });
+
   await page.goto('/contact');
-  await page.locator('#contact-form button[type="submit"]').click();
-  await expect(page.locator('#name')).toBeFocused();
-  await page.locator('#name').fill('Alex Morgan');
-  await page.locator('#email').fill('alex@example.com');
-  await page.locator('#organization').fill('Example Facilities');
-  await page.locator('#facility').fill('Central plant');
-  await page.locator('#review-question').fill('Has pumping response changed across comparable periods?');
-  await page.locator('#contact-form button[type="submit"]').click();
-  await expect(page.locator('#form-feedback')).toBeFocused();
-  await expect(page.locator('#form-feedback')).toContainText(/email draft is ready/i);
-  await expect(page.locator('#form-feedback a')).toHaveAttribute('href', /^mailto:craig@neraium[.]com[?]/);
+  const form = page.locator('#contact-form');
+  const prepare = form.getByRole('button', { name: 'Open email draft' });
+  const name = form.getByLabel('Name', { exact: true });
+  const organization = form.getByLabel('Organization', { exact: true });
+
+  await expect(page.getByRole('link', { name: 'craig@neraium.com' }))
+    .toHaveAttribute('href', /^mailto:craig@neraium[.]com[?]/);
+  await expect(form).toContainText('Please keep event details, dates, and telemetry out of this first message.');
+  await prepare.click();
+  await expect(name).toBeFocused();
+  await name.fill('Alex Morgan');
+  await prepare.click();
+  await expect(organization).toBeFocused();
+  await organization.fill('Example Facilities');
+
+  await form.getByLabel('System type (optional)').focus();
+  await page.keyboard.press('Tab');
+  await expect(prepare).toBeFocused();
+  await page.keyboard.press('Enter');
+  const feedback = page.locator('#form-feedback');
+  await expect(feedback).toBeFocused();
+  await expect(feedback).toContainText(/email draft is ready/i);
+  await page.keyboard.press('Tab');
+  const emailLink = feedback.getByRole('link', { name: 'Continue to your email app' });
+  await expect(emailLink).toBeFocused();
+
+  const draft = new URL((await emailLink.getAttribute('href'))!);
+  expect(draft.protocol).toBe('mailto:');
+  expect(draft.pathname).toBe('craig@neraium.com');
+  expect(draft.searchParams.get('subject')).toBe('Neraium Historical Evaluation');
+  expect(draft.searchParams.get('body')?.split('\r\n\r\n')).toEqual([
+    'I would like to discuss a free historical evaluation.',
+    'Name: Alex Morgan',
+    'Organization: Example Facilities',
+  ]);
   expect(posts).toEqual([]);
 });
 
-test('contact draft is cleared after edits, selection changes, and form reset', async ({ page }) => {
+test('contact draft is cleared after edits and form reset', async ({ page }) => {
   await page.goto('/contact');
-  await page.locator('#name').fill('Original name');
-  await page.locator('#email').fill('audit@example.com');
-  await page.locator('#organization').fill('Example');
-  await page.locator('#facility').fill('Pumping plant');
-  await page.locator('#review-question').fill('Has power changed at comparable flow?');
-  const prepare = page.locator('#contact-form button[type="submit"]');
-  const draft = page.locator('#form-feedback a');
+  await page.getByLabel('Name', { exact: true }).fill('Original name');
+  await page.getByLabel('Organization', { exact: true }).fill('Example');
+  const systemType = page.getByLabel('System type (optional)');
+  await systemType.fill('Pumping plant');
+  const prepare = page.getByRole('button', { name: 'Open email draft' });
+  const feedback = page.locator('#form-feedback');
+  const draft = feedback.getByRole('link');
+
   await prepare.click();
   await expect(draft).toHaveAttribute('href', /Original%20name/);
-  await page.locator('#name').fill('Revised name');
-  await expect(page.locator('#form-feedback')).toBeEmpty();
-  await expect(page.locator('#form-feedback')).not.toHaveAttribute('data-state');
+  await expect(draft).toHaveAttribute('href', /System%20type%3A%20Pumping%20plant/);
+  await page.getByLabel('Name', { exact: true }).fill('Revised name');
+  await expect(feedback).toBeEmpty();
+  await expect(feedback).not.toHaveAttribute('data-state');
   await prepare.click();
   await expect(draft).toHaveAttribute('href', /Revised%20name/);
   await expect(draft).not.toHaveAttribute('href', /Original%20name/);
-  await page.locator('#preferred-contact').selectOption('Email');
-  await expect(page.locator('#form-feedback')).toBeEmpty();
+  await systemType.clear();
+  await expect(feedback).toBeEmpty();
   await prepare.click();
-  await expect(draft).toBeVisible();
+  await expect(draft).not.toHaveAttribute('href', /System%20type/);
   await page.locator('#contact-form').evaluate((form: HTMLFormElement) => form.reset());
-  await expect(page.locator('#form-feedback')).toBeEmpty();
+  await expect(feedback).toBeEmpty();
 });
 
 test('homepage stays compact on phones with readable chart labels', async ({ page }) => {
@@ -139,7 +199,7 @@ test('homepage stays compact on phones with readable chart labels', async ({ pag
     expect(await axis.evaluate(element => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(13);
   }
   if ((page.viewportSize()?.width ?? 0) <= 430) {
-    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThan(6500);
+    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThan(4400);
   }
 });
 

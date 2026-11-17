@@ -66,63 +66,36 @@
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       clearPreparedRequest();
-      const requiredIds = ['name', 'email', 'organization', 'facility', 'review-question'];
-      const missing = requiredIds.some((id) => !document.getElementById(id)?.value.trim());
-      const email = document.getElementById('email')?.value.trim() || '';
-      if (missing) {
+      const name = form.elements.namedItem('Name').value.trim();
+      const organization = form.elements.namedItem('Organization').value.trim();
+      const systemType = form.elements.namedItem('System type').value.trim();
+      if (!name || !organization) {
         feedback.dataset.state = 'error';
-        feedback.textContent = 'Please complete the required practical scoping fields.';
-        feedback.focus();
-        return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        feedback.dataset.state = 'error';
-        feedback.textContent = 'Please enter a valid work email address.';
+        feedback.textContent = 'Please enter your name and organization.';
         feedback.focus();
         return;
       }
 
-      const submitButton = form.querySelector('button[type="submit"]');
-      const idleLabel = submitButton?.dataset.idleLabel || submitButton?.textContent || 'Prepare Evaluation Request';
-      const loadingLabel = submitButton?.dataset.loadingLabel || 'Preparing request...';
-      form.setAttribute('aria-busy', 'true');
-      if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = loadingLabel;
-      }
+      const bodyLines = [
+        'I would like to discuss a free historical evaluation.',
+        `Name: ${name}`,
+        `Organization: ${organization}`,
+      ];
+      if (systemType) bodyLines.push(`System type: ${systemType}`);
 
-      window.requestAnimationFrame(() => {
-        try {
-          const value = (id) => document.getElementById(id)?.value.trim() || '';
-          const body = [
-            `Name: ${value('name')}`,
-            `Work email: ${email}`,
-            `Organization: ${value('organization')}`,
-            `System or facility type: ${value('facility')}`,
-            `Review question: ${value('review-question')}`,
-            value('role') ? `Role: ${value('role')}` : '',
-            value('preferred-contact') ? `Preferred contact method: ${value('preferred-contact')}` : '',
-          ].filter(Boolean).join('\n\n');
-          const emailLink = document.createElement('a');
-          emailLink.className = 'button secondary prepared-email-link';
-          emailLink.href = `mailto:craig@neraium.com?subject=${encodeURIComponent('Neraium Historical Evaluation')}&body=${encodeURIComponent(body)}`;
-          emailLink.textContent = 'Open the prepared email';
-          const status = document.createElement('span');
-          status.textContent = 'Your email draft is ready. Review it in your email application, then choose send.';
-          feedback.dataset.state = 'success';
-          feedback.append(status, emailLink);
-        } catch {
-          feedback.dataset.state = 'error';
-          feedback.textContent = 'The request could not be prepared. Please email craig@neraium.com directly.';
-        } finally {
-          form.removeAttribute('aria-busy');
-          if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.textContent = idleLabel;
-          }
-          feedback.focus();
-        }
-      });
+      const emailLink = document.createElement('a');
+      emailLink.className = 'button secondary prepared-email-link';
+      const recipient = form.getAttribute('action');
+      const subject = encodeURIComponent('Neraium Historical Evaluation');
+      const body = encodeURIComponent(bodyLines.join('\r\n\r\n'));
+      emailLink.href = `${recipient}?subject=${subject}&body=${body}`;
+      emailLink.textContent = 'Continue to your email app';
+
+      const status = document.createElement('span');
+      status.textContent = 'Your email draft is ready. Review it in your email app before sending.';
+      feedback.dataset.state = 'success';
+      feedback.append(status, emailLink);
+      feedback.focus();
     });
   }
 })();
