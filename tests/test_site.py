@@ -393,9 +393,8 @@ class TestPositioningAndExperience(unittest.TestCase):
         text = self.normalized(self.index)
         for phrase in (
             "See Beyond the Signals.",
-            "Know when your system starts behaving differently.",
+            "The readings look normal. The system is working harder.",
             "persistent changes in how operational signals relate",
-            "each reading stays within its normal range",
             "SII qualifies findings",
             "Your engineers decide what to investigate.",
             "Founder Craig Curtis’s experience with water and mechanical systems",
@@ -419,9 +418,8 @@ class TestPositioningAndExperience(unittest.TestCase):
             for phrase in (
                 "Municipal water and wastewater",
                 "The oxygen target stayed the same. Why did air delivery rise?",
-                "modeled wastewater telemetry",
-                "SII withheld qualification",
-                "Hospitality and central plants",
+                "modeled wastewater data",
+                "Resort facilities and central plants",
                 "The plant delivered comparable flow. Why did pumping power rise?",
                 "illustrative chilled-water finding",
             ):
@@ -518,6 +516,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         expected_order = [
             'id="platform"',
             'id="applications"',
+            'id="aeration"',
             'id="evidence"',
             'id="evaluation"',
         ]
@@ -545,7 +544,7 @@ class TestPositioningAndExperience(unittest.TestCase):
         self.assertEqual(
             re.findall(r'<a class="button ([^"]+)" href="([^"]+)">([^<]+)</a>', actions.group(1)),
             [
-                ("primary", "https://demo.neraium.com/", "Run the interactive demo"),
+                ("primary", "https://demo.neraium.com/", "Explore the demo"),
                 ("secondary", "/contact", "Request a free historical evaluation"),
             ],
         )
@@ -709,7 +708,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261118a', '/scripts.js?v=20261102a', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261118b', '/scripts.js?v=20261102a', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
@@ -729,7 +728,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
         cls.index = load_html(ROOT / "index.html")
         cls.index_html = (ROOT / "index.html").read_text(encoding="utf-8")
 
-    def test_home_hero_prioritizes_structured_proof_over_decorative_media(self):
+    def test_home_retains_structured_aeration_evidence(self):
         self.assertIn('class="behavior-visual"', self.index_html)
         self.assertIn('aria-labelledby="aeration-question"', self.index_html)
         self.assertEqual(3, self.index_html.count('class="pair-comparison"'))
@@ -755,7 +754,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            self.assertIn('<link rel="stylesheet" href="/styles.css?v=20261118a">', html)
+            self.assertIn('<link rel="stylesheet" href="/styles.css?v=20261118b">', html)
             script_version = "20261117a" if html_file.name == "contact.html" else "20261102a"
             self.assertIn(f'<script src="/scripts.js?v={script_version}" defer></script>', html)
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)

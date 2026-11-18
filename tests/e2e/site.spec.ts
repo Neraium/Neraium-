@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /Know when your system starts behaving differently/i, canonical: 'https://neraium.com/' },
+  { path: '/', purpose: /The readings look normal\. The system is working harder\./i, canonical: 'https://neraium.com/' },
   { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
   { path: '/applications', purpose: /Water systems and central plants/i, canonical: 'https://neraium.com/applications' },
@@ -88,9 +88,15 @@ for (const sitePage of publicPages) {
 test('homepage routes buyers to the software, the examples, and the free evaluation', async ({ page, request }) => {
   await page.goto('/');
   const hero = page.locator('.home-hero');
-  const demo = hero.getByRole('link', { name: 'Run the interactive demo' });
+  const demo = hero.getByRole('link', { name: 'Explore the demo' });
   const freeEvaluation = hero.getByRole('link', { name: 'Request a free historical evaluation' });
   await expect(demo).toHaveAttribute('href', 'https://demo.neraium.com/');
+  const viewport = page.viewportSize();
+  if (viewport && viewport.width <= 430) {
+    await expect(hero.getByRole('heading', { level: 1 })).toBeInViewport({ ratio: 1 });
+    await expect(demo).toBeInViewport({ ratio: 1 });
+    await expect(freeEvaluation).toBeInViewport({ ratio: 1 });
+  }
   await demo.focus();
   await page.keyboard.press('Tab');
   await expect(freeEvaluation).toBeFocused();
@@ -192,7 +198,7 @@ test('contact draft is cleared after edits and form reset', async ({ page }) => 
 
 test('homepage stays compact on phones with readable chart labels', async ({ page }) => {
   await page.goto('/');
-  const panel = page.getByRole('region', { name: /which signals moved together/i });
+  const panel = page.getByRole('region', { name: /which aeration signals moved together/i });
   await expect(panel.getByText('Pearson correlation (r)', { exact: false })).toBeVisible();
   await expect(panel.getByText('SII withheld qualification in all 10 windows.')).toBeVisible();
   await expect(panel.getByRole('heading', { level: 3 })).toHaveText([
@@ -200,7 +206,10 @@ test('homepage stays compact on phones with readable chart labels', async ({ pag
     'Dissolved oxygen & blower command',
     'Delivered air & blower command',
   ]);
-  await expect(panel.locator('dd')).toHaveText([
+  await expect(panel.locator('.pair-periods dd')).toHaveText([
+    'Aug 3–16, 2026', 'Aug 19, 2026 · 00:00–23:55 UTC',
+  ]);
+  await expect(panel.locator('.pair-values dd')).toHaveText([
     '-0.313741', '+0.057774', '-0.321915', '+0.049456', '+0.999921', '+0.999941',
   ]);
   await expect(panel.getByRole('link', { name: /six-signal investigation/i }))
@@ -217,7 +226,10 @@ test('homepage stays compact on phones with readable chart labels', async ({ pag
     expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThan(4400);
   }
   if (viewport?.width === 390 && viewport.height === 844) {
-    await expect(panel.getByRole('listitem').last()).toBeInViewport({ ratio: 1 });
+    await panel.locator('.pair-list').scrollIntoViewIfNeeded();
+    for (const comparison of await panel.getByRole('listitem').all()) {
+      await expect(comparison).toBeInViewport({ ratio: 1 });
+    }
   }
 });
 
@@ -270,12 +282,12 @@ test('header logo and controls stay proportionate and aligned across viewports',
   expect(logoBox?.height).toBe(brandBox?.height);
 
   if ((viewport?.width ?? 0) <= 560) {
-    expect(headerBox?.height).toBeLessThanOrEqual(126);
-    expect(brandBox?.width).toBe(160);
-    expect(brandBox?.height).toBeCloseTo(160 * 759 / 1034, 0);
+    expect(headerBox?.height).toBeLessThanOrEqual(90);
+    expect(brandBox?.width).toBe(100);
+    expect(brandBox?.height).toBeCloseTo(100 * 759 / 1034, 0);
     expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1034 / 759, 2);
   } else {
-    expect(brandBox?.width).toBe(128);
+    expect(brandBox?.width).toBe(112);
   }
 
   if (await toggle.isVisible()) {
