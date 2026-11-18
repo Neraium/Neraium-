@@ -1,0 +1,62 @@
+{
+  "verifiedAt": "2026-11-18T04:11:44.051Z",
+  "worker": "website",
+  "deployment": "9f3810a2-2996-40a6-9e98-e9bdaaae3b39",
+  "version": "c9085b01-535b-4f41-9b24-14ea9fe9c016",
+  "versionNumber": 73,
+  "percentage": 100,
+  "source": "84424a999b82a763c4159f33d061b31c2d46399e",
+  "rollbackVersion": "6ce7622c-cd56-4db4-958d-2289744de5ef",
+  "workerModulesVerified": [
+    {
+      "name": "_headers",
+      "type": "text/plain",
+      "sha256": "4b2748bf64173d3ea08a14575826074a8430a5054212fac0ee4b02aa68bdc12d"
+    },
+    {
+      "name": "_redirects",
+      "type": "text/plain",
+      "sha256": "afe4dfa0fb79073bdbe0288e66bd7e28f062b1ce93b232e7bbbcd13261581f23"
+    },
+    {
+      "name": "index.js",
+      "type": "application/javascript+module",
+      "sha256": "5130e3032ebca61422e0ca5d2594bc0cb7075c61196cbdf8f45b3ec96b0d05cd"
+    }
+  ],
+  "routingAndContactControlsMatchBaseline": true,
+  "routes": {
+    "/": 200,
+    "/applications": 200,
+    "/evidence": 200,
+    "/pilot": 200,
+    "/contact": 200,
+    "/platform": 200,
+    "/company": 200,
+    "/methodology": 200,
+    "/operator-brief": 200,
+    "/privacy": 200,
+    "/security": 200,
+    "/robots.txt": 200,
+    "/sitemap.xml": 200,
+    "/sample-finding-pack.pdf": 200,
+    "/api/contact-config": 200,
+    "https://neraium.com/technical": {
+      "status": 301,
+      "destination": "/applications"
+    },
+    "https://neraium.com/analysis": {
+      "status": 301,
+      "destination": "/platform"
+    },
+    "https://neraium.com/contact.html": {
+      "status": 301,
+      "destination": "/contact"
+    },
+    "https://www.neraium.com/": {
+      "status": 301,
+      "destination": "https://neraium.com/"
+    },
+    "nested custom 404": 404
+  }
+}

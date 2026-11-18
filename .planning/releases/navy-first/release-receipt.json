@@ -1,0 +1,31 @@
+{
+  "plan_sha256": "85282d905e1ef3eb45cdcd488fb22f4db13a36b2d81bb6306ec9b12e9c8083e1",
+  "rollback_version": "6ce7622c-cd56-4db4-958d-2289744de5ef",
+  "status": "verified",
+  "version_id": "c9085b01-535b-4f41-9b24-14ea9fe9c016",
+  "version_contents": {
+    "main_module": "index.js",
+    "migration_tag": "contact-verification-session-v2",
+    "modules": [
+      {
+        "name": "_headers",
+        "type": "text/plain",
+        "sha256": "4b2748bf64173d3ea08a14575826074a8430a5054212fac0ee4b02aa68bdc12d"
+      },
+      {
+        "name": "_redirects",
+        "type": "text/plain",
+        "sha256": "afe4dfa0fb79073bdbe0288e66bd7e28f062b1ce93b232e7bbbcd13261581f23"
+      },
+      {
+        "name": "index.js",
+        "type": "application/javascript+module",
+        "sha256": "5130e3032ebca61422e0ca5d2594bc0cb7075c61196cbdf8f45b3ec96b0d05cd"
+      }
+    ],
+    "baseline_etag": "e735302069db8d848905ade250fba3675382dd2af0eae21186d6a6292326002e",
+    "candidate_etag": "e735302069db8d848905ade250fba3675382dd2af0eae21186d6a6292326002e"
+  },
+  "deployment_id": "9f3810a2-2996-40a6-9e98-e9bdaaae3b39",
+  "verified_at": "2026-11-18T04:11:34.720Z"
+}
