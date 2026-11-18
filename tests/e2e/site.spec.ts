@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /The readings look normal\. The system is working harder\./i, canonical: 'https://neraium.com/' },
+  { path: '/', purpose: /See the shift while the readings still look normal\./i, canonical: 'https://neraium.com/' },
   { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
   { path: '/applications', purpose: /Water systems and central plants/i, canonical: 'https://neraium.com/applications' },
@@ -198,7 +198,7 @@ test('contact draft is cleared after edits and form reset', async ({ page }) => 
 
 test('homepage stays compact on phones with readable chart labels', async ({ page }) => {
   await page.goto('/');
-  const panel = page.getByRole('region', { name: /which aeration signals moved together/i });
+  const panel = page.getByRole('region', { name: /how the aeration signals shifted/i });
   await expect(panel.getByText('Pearson correlation (r)', { exact: false })).toBeVisible();
   await expect(panel.getByText('SII withheld qualification in all 10 windows.')).toBeVisible();
   await expect(panel.getByRole('heading', { level: 3 })).toHaveText([
@@ -269,7 +269,7 @@ test('header logo and controls stay proportionate and aligned across viewports',
   const toggle = page.locator('.nav-toggle');
   const viewport = page.viewportSize();
 
-  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-navy.jpg');
+  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-white.png');
   await expect.poll(() => logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
 
   const headerBox = await header.boundingBox();
@@ -282,12 +282,12 @@ test('header logo and controls stay proportionate and aligned across viewports',
   expect(logoBox?.height).toBe(brandBox?.height);
 
   if ((viewport?.width ?? 0) <= 560) {
-    expect(headerBox?.height).toBeLessThanOrEqual(90);
-    expect(brandBox?.width).toBe(100);
-    expect(brandBox?.height).toBeCloseTo(100 * 759 / 1034, 0);
-    expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1034 / 759, 2);
+    expect(headerBox?.height).toBeLessThanOrEqual(100);
+    expect(brandBox?.width).toBe(116);
+    expect(brandBox?.height).toBeCloseTo(116 * 1075 / 1464, 0);
+    expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1464 / 1075, 2);
   } else {
-    expect(brandBox?.width).toBe(112);
+    expect(brandBox?.width).toBe(116);
   }
 
   if (await toggle.isVisible()) {
