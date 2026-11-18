@@ -192,14 +192,32 @@ test('contact draft is cleared after edits and form reset', async ({ page }) => 
 
 test('homepage stays compact on phones with readable chart labels', async ({ page }) => {
   await page.goto('/');
-  const axes = page.locator('.chart-axis');
-  await expect(axes).toHaveCount(2);
+  const panel = page.getByRole('region', { name: /which signals moved together/i });
+  await expect(panel.getByText('Pearson correlation (r)', { exact: false })).toBeVisible();
+  await expect(panel.getByText('SII withheld qualification in all 10 windows.')).toBeVisible();
+  await expect(panel.getByRole('heading', { level: 3 })).toHaveText([
+    'Dissolved oxygen & delivered air',
+    'Dissolved oxygen & blower command',
+    'Delivered air & blower command',
+  ]);
+  await expect(panel.locator('dd')).toHaveText([
+    '-0.313741', '+0.057774', '-0.321915', '+0.049456', '+0.999921', '+0.999941',
+  ]);
+  await expect(panel.getByRole('link', { name: /six-signal investigation/i }))
+    .toHaveAttribute('href', 'https://demo.neraium.com/replay?scenario=aeration');
+  const axes = panel.locator('.pair-ticks');
+  await expect(axes).toHaveCount(3);
   for (const axis of await axes.all()) {
+    await expect(axis.locator('span')).toHaveText(['−1', '0', '+1']);
     await expect(axis).toBeVisible();
     expect(await axis.evaluate(element => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(13);
   }
-  if ((page.viewportSize()?.width ?? 0) <= 430) {
+  const viewport = page.viewportSize();
+  if (viewport && viewport.width <= 430) {
     expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThan(4400);
+  }
+  if (viewport?.width === 390 && viewport.height === 844) {
+    await expect(panel.getByRole('listitem').last()).toBeInViewport({ ratio: 1 });
   }
 });
 
@@ -239,7 +257,7 @@ test('header logo and controls stay proportionate and aligned across viewports',
   const toggle = page.locator('.nav-toggle');
   const viewport = page.viewportSize();
 
-  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-lockup.svg');
+  await expect(logo).toHaveAttribute('src', '/assets/images/neraium-logo-navy.jpg');
   await expect.poll(() => logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
 
   const headerBox = await header.boundingBox();
@@ -254,8 +272,8 @@ test('header logo and controls stay proportionate and aligned across viewports',
   if ((viewport?.width ?? 0) <= 560) {
     expect(headerBox?.height).toBeLessThanOrEqual(126);
     expect(brandBox?.width).toBe(160);
-    expect(brandBox?.height).toBeCloseTo(160 * 833 / 1146, 0);
-    expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1146 / 833, 2);
+    expect(brandBox?.height).toBeCloseTo(160 * 759 / 1034, 0);
+    expect((logoBox?.width ?? 0) / (logoBox?.height ?? 1)).toBeCloseTo(1034 / 759, 2);
   } else {
     expect(brandBox?.width).toBe(128);
   }

@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_ORIGIN = "https://neraium.com"
-HOMEPAGE_MAX_WORD_COUNT = 385
+HOMEPAGE_MAX_WORD_COUNT = 425
 PAGE_MAX_WORD_COUNTS = {
     "platform.html": 400,
     "methodology.html": 440,
@@ -149,7 +149,7 @@ def site_html_files() -> list[Path]:
     return sorted([p for p in ROOT.glob("*.html") if p.is_file()])
 
 
-OFFICIAL_LOGO = "/assets/images/neraium-logo-lockup.svg"
+OFFICIAL_LOGO = "/assets/images/neraium-logo-navy.jpg"
 
 
 def indexable_html_files() -> list[Path]:
@@ -345,8 +345,8 @@ class TestStaticSite(unittest.TestCase):
         scripts = (ROOT / 'scripts.js').read_text(encoding='utf-8')
         self.assertIn("year.textContent = new Date().getFullYear()", scripts)
 
-    def test_public_headers_use_official_white_logo_lockup(self):
-        expected_img = f'<img src="{OFFICIAL_LOGO}" width="1146" height="833" alt="Neraium logo" class="brand-lockup">'
+    def test_public_headers_use_official_navy_logo_lockup(self):
+        expected_img = f'<img src="{OFFICIAL_LOGO}" width="1034" height="759" alt="Neraium logo" class="brand-lockup">'
         errors = []
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
@@ -617,10 +617,10 @@ class TestPositioningAndExperience(unittest.TestCase):
             "--bg-deep",
             "--surface",
             "--surface-raised",
-            "--surface-teal",
-            "--teal",
-            "--teal-bright",
-            "--cyan",
+            "--surface-accent",
+            "--navy: #0F1E40",
+            "--paper: #FDFDFD",
+            "--accent",
             "--ink",
             "--muted",
             "--line",
@@ -709,7 +709,7 @@ class TestDeploymentAndIndexing(unittest.TestCase):
         not_found = (ROOT / "404.html").read_text(encoding="utf-8")
         self.assertIn('name="robots" content="noindex"', not_found)
         self.assertNotIn('rel="canonical"', not_found)
-        for asset in ('/styles.css?v=20261102a', '/scripts.js?v=20261102a', '/site.webmanifest'):
+        for asset in ('/styles.css?v=20261118a', '/scripts.js?v=20261102a', '/site.webmanifest'):
             self.assertIn(asset, not_found)
     def test_deployment_control_files_are_built(self):
         assert_generated_site_output()
@@ -731,15 +731,14 @@ class TestPerformanceOptimizations(unittest.TestCase):
 
     def test_home_hero_prioritizes_structured_proof_over_decorative_media(self):
         self.assertIn('class="behavior-visual"', self.index_html)
-        self.assertIn('aria-labelledby="behavior-visual-title behavior-visual-caption"', self.index_html)
-        self.assertIn("Power relative to delivered flow", self.index_html)
-        self.assertIn("Inside limit", self.index_html)
-        self.assertIn("Persistent departure", self.index_html)
-        self.assertIn("Illustrative chilled-water comparison.", self.index_html)
+        self.assertIn('aria-labelledby="aeration-question"', self.index_html)
+        self.assertEqual(3, self.index_html.count('class="pair-comparison"'))
+        self.assertIn("Pearson correlation (r)", self.index_html)
+        self.assertIn("SII withheld qualification in all 10 windows.", self.index_html)
         self.assertNotIn('class="hero-visual product-hero"', self.index_html)
     def test_below_fold_images_are_lazy_loaded_when_appropriate(self):
         eager_allowlist = {
-            "/assets/images/neraium-logo-lockup.svg",
+            "/assets/images/neraium-logo-navy.jpg",
             "/assets/images/hero-central-plant.webp",
         }
         errors = []
@@ -756,9 +755,7 @@ class TestPerformanceOptimizations(unittest.TestCase):
     def test_stylesheet_loads_without_inline_event_handlers(self):
         for html_file in site_html_files():
             html = html_file.read_text(encoding="utf-8")
-            updated_styles = ("index.html", "applications.html", "pilot.html", "contact.html")
-            style_version = "20261117a" if html_file.name in updated_styles else "20261102a"
-            self.assertIn(f'<link rel="stylesheet" href="/styles.css?v={style_version}">', html)
+            self.assertIn('<link rel="stylesheet" href="/styles.css?v=20261118a">', html)
             script_version = "20261117a" if html_file.name == "contact.html" else "20261102a"
             self.assertIn(f'<script src="/scripts.js?v={script_version}" defer></script>', html)
             self.assertIn('<link rel="manifest" href="/site.webmanifest">', html)
@@ -857,10 +854,8 @@ class TestImageDeploymentPipeline(unittest.TestCase):
         for root in (ROOT, self.DIST):
             logo = root / OFFICIAL_LOGO.lstrip("/")
             self.assertTrue(logo.is_file(), str(logo))
-            self.assertEqual("neraium-logo-lockup.svg", logo.name)
-            self.assertRegex(logo.name, r"^[a-z0-9][a-z0-9.-]*\.svg$")
-            data = logo.read_text(encoding="utf-8")
-            self.assertTrue(data.lstrip().startswith("<svg"))
+            self.assertEqual("neraium-logo-navy.jpg", logo.name)
+            self.assertTrue(logo.read_bytes().startswith(b"\xff\xd8\xff"))
 
     def test_every_visible_logo_has_required_alt_text(self):
         for html_file in site_html_files():
