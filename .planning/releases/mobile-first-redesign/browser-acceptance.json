@@ -1,0 +1,84 @@
+{
+  "servingVersion": "6ce7622c-cd56-4db4-958d-2289744de5ef",
+  "deployment": "ec280d4c-89e5-491b-9205-e2210d899698",
+  "source": "bf77e2986841e61aa5bf35a2f822fb8edd011160",
+  "retainedSha": "febe2e17847c5cba946c67d341e2c56cd8c93ef3a8b409e8fc882740be9c6a0f",
+  "recorded": [
+    {
+      "name": "Dissolved oxygen & delivered air",
+      "reference": -0.313741,
+      "evaluation": 0.057774
+    },
+    {
+      "name": "Dissolved oxygen & blower command",
+      "reference": -0.321915,
+      "evaluation": 0.049456
+    },
+    {
+      "name": "Delivered air & blower command",
+      "reference": 0.999921,
+      "evaluation": 0.999941
+    }
+  ],
+  "liveManifestStatus": 200,
+  "status": "passed",
+  "devices": [
+    {
+      "device": "desktop",
+      "width": 1440,
+      "height": 1040,
+      "opening": {
+        "viewportWidth": 1440,
+        "photoSource": "https://neraium.com/assets/images/hero-central-plant-900.webp",
+        "photoPosition": "66% 50%",
+        "logo": 112,
+        "demoBottom": 599.078125
+      },
+      "routes": 11,
+      "demoStatus": 200,
+      "replayStatus": 200,
+      "replayClock": "2026-08-17 · 00:01 UTC",
+      "pdfSha": "0ca7cd1bf53e7cf84147a51b6bd619adc6a8f755987969714992ffe7f0353133",
+      "draftRecipient": "craig@neraium.com",
+      "emailSent": false
+    },
+    {
+      "device": "390",
+      "width": 390,
+      "height": 844,
+      "opening": {
+        "viewportWidth": 390,
+        "photoSource": "https://neraium.com/assets/images/hero-central-plant-900.webp",
+        "photoPosition": "73% 52%",
+        "logo": 100,
+        "demoBottom": 414.078125
+      },
+      "routes": 11,
+      "demoStatus": 200,
+      "replayStatus": 200,
+      "replayClock": "2026-08-17 · 00:01 UTC",
+      "pdfSha": "0ca7cd1bf53e7cf84147a51b6bd619adc6a8f755987969714992ffe7f0353133",
+      "draftRecipient": "craig@neraium.com",
+      "emailSent": false
+    },
+    {
+      "device": "393",
+      "width": 393,
+      "height": 852,
+      "opening": {
+        "viewportWidth": 393,
+        "photoSource": "https://neraium.com/assets/images/hero-central-plant-900.webp",
+        "photoPosition": "73% 52%",
+        "logo": 100,
+        "demoBottom": 415.234375
+      },
+      "routes": 11,
+      "demoStatus": 200,
+      "replayStatus": 200,
+      "replayClock": "2026-08-17 · 00:01 UTC",
+      "pdfSha": "0ca7cd1bf53e7cf84147a51b6bd619adc6a8f755987969714992ffe7f0353133",
+      "draftRecipient": "craig@neraium.com",
+      "emailSent": false
+    }
+  ]
+}

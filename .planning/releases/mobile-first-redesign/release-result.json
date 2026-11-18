@@ -1,0 +1,14 @@
+{
+  "decision": "accepted",
+  "source": "bf77e2986841e61aa5bf35a2f822fb8edd011160",
+  "deployment": "ec280d4c-89e5-491b-9205-e2210d899698",
+  "version": "6ce7622c-cd56-4db4-958d-2289744de5ef",
+  "rollbackVersion": "5204c92e-8fdb-497f-b150-2ada414b80ab",
+  "planSha256": "cca434540ecff2a94b1b168bb4a04a52a42506044b3e923a743684bb3f9b5930",
+  "verifiedAt": "2026-11-18T03:43:29.707Z",
+  "codeRoutingAndContactPreserved": true,
+  "rollbackPerformed": false,
+  "stageGate": "Both public demo URLs returned HTTP 200 and the replay clock advanced.",
+  "verificationNote": "The first post-cutover read did not confirm all invariants. A separate read-only verification confirmed the exact serving deployment, Worker modules and settings, routing and contact controls, and every public asset hash before browser acceptance.",
+  "screenshots": "live/"
+}

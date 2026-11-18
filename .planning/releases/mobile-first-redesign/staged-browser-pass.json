@@ -1,0 +1,28 @@
+{
+  "commit": "bf77e2986841e61aa5bf35a2f822fb8edd011160",
+  "checkedAt": "2026-11-18T03:40:57.715Z",
+  "viewport": "390 × 844 Chromium",
+  "checks": [
+    {
+      "label": "Explore the demo",
+      "url": "https://demo.neraium.com/",
+      "httpStatus": 200,
+      "finalUrl": "https://demo.neraium.com/",
+      "demoBuild": "af79ac231cca4c87d567582b8bccfdfa9dffd80c",
+      "passed": true
+    },
+    {
+      "label": "Open the six-signal investigation",
+      "url": "https://demo.neraium.com/replay?scenario=aeration",
+      "httpStatus": 200,
+      "finalUrl": "https://demo.neraium.com/replay?scenario=aeration",
+      "demoBuild": "af79ac231cca4c87d567582b8bccfdfa9dffd80c",
+      "clock": {
+        "before": "2026-08-17 · 00:00 UTC",
+        "after": "2026-08-17 · 00:01 UTC"
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}
