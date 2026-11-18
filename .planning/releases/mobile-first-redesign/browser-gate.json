@@ -1,0 +1,40 @@
+{
+  "decision": "hold",
+  "reason": "Both public demo destinations returned HTTP 503 in the browser. The aeration replay could not start.",
+  "approvedBranch": "codex/mobile-first-redesign",
+  "stagedBrowserGate": {
+    "commit": "bf77e2986841e61aa5bf35a2f822fb8edd011160",
+    "checkedAt": "2026-11-18T03:28:44.108Z",
+    "viewport": "390 × 844 Chromium",
+    "checks": [
+      {
+        "label": "Explore the demo",
+        "url": "https://demo.neraium.com/",
+        "httpStatus": 503,
+        "finalUrl": "https://demo.neraium.com/",
+        "error": "503 Service Temporarily Unavailable"
+      },
+      {
+        "label": "Open the six-signal investigation",
+        "url": "https://demo.neraium.com/replay?scenario=aeration",
+        "httpStatus": 503,
+        "finalUrl": "https://demo.neraium.com/replay?scenario=aeration",
+        "error": "503 Service Temporarily Unavailable"
+      }
+    ],
+    "passed": false
+  },
+  "production": {
+    "checkedAt": "2026-11-18T03:29:03.252Z",
+    "worker": "website",
+    "deployment": "df6c0097-3341-4a06-92e6-9d59936858ee",
+    "version": "5204c92e-8fdb-497f-b150-2ada414b80ab",
+    "versionNumber": 71,
+    "percentage": 100,
+    "sourceCommit": "f4b8b2714d2d1f0c1d30a391d804f6c39c35382a",
+    "homepageMatchesSource": true
+  },
+  "cloudflareWrites": false,
+  "rollbackPerformed": false,
+  "liveReleaseAcceptancePerformed": false
+}
