@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /Know when the system/i, canonical: 'https://neraium.com/' },
+  { path: '/', purpose: /See Beyond the Signals/i, canonical: 'https://neraium.com/' },
   { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
   { path: '/applications', purpose: /Practical questions for interconnected facility systems/i, canonical: 'https://neraium.com/applications' },
