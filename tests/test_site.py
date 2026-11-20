@@ -394,8 +394,8 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Systemic Infrastructure Intelligence",
             "See Beyond the Signals.",
-            "A pump can draw more power to deliver the same flow.",
-            "Neraium shows engineers when that relationship changed and how long it lasted.",
+            "See when your infrastructure starts operating differently.",
+            "which relationship shifted, when it began, and how long it lasted.",
             "Establish operating behavior",
             "Learn relationships and context",
             "Identify persistent systemic change",
@@ -751,9 +751,9 @@ class TestPerformanceOptimizations(unittest.TestCase):
         self.assertIn('class="behavior-visual"', self.index_html)
         self.assertIn('aria-labelledby="behavior-visual-title behavior-visual-caption"', self.index_html)
         self.assertIn("Power relative to delivered flow", self.index_html)
-        self.assertIn("Inside limit", self.index_html)
+        self.assertNotIn("Inside limit", self.index_html)
         self.assertIn("Persistent departure", self.index_html)
-        self.assertIn("Illustrative technical representation, not customer data.", self.index_html)
+        self.assertIn("Illustrative chilled-water example.", self.index_html)
         self.assertNotIn('class="hero-visual product-hero"', self.index_html)
     def test_below_fold_images_are_lazy_loaded_when_appropriate(self):
         eager_allowlist = {
