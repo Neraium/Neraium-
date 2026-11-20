@@ -394,8 +394,8 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Systemic Infrastructure Intelligence",
             "See Beyond the Signals.",
-            "individual readings stay in range",
-            "which relationship changed",
+            "A pump can draw more power to deliver the same flow.",
+            "Neraium shows engineers when that relationship changed and how long it lasted.",
             "Establish operating behavior",
             "Learn relationships and context",
             "Identify persistent systemic change",
