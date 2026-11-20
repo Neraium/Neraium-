@@ -393,11 +393,9 @@ class TestPositioningAndExperience(unittest.TestCase):
         text = self.normalized(self.index)
         for phrase in (
             "Systemic Infrastructure Intelligence",
-            "Know when the system stops behaving like itself.",
-            "For facility engineers and plant operators",
-            "needs more power to deliver the same flow",
-            "while individual readings stay within limits",
-            "shows the evidence behind persistent change.",
+            "See Beyond the Signals.",
+            "individual readings stay in range",
+            "which relationship changed",
             "Establish operating behavior",
             "Learn relationships and context",
             "Identify persistent systemic change",
@@ -412,14 +410,12 @@ class TestPositioningAndExperience(unittest.TestCase):
             self.assertIn(phrase, text)
 
         for phrase in (
-            "Individual signals remain within limits. System behavior does not.",
-            "A threshold checks one signal against a limit.",
-            "Degraded delivery",
-            "Rising resource demand",
-            "Operator burden",
-            "Maintenance ambiguity",
-            "Historical Evaluation",
-            "Continued Analysis",
+            "At comparable flow",
+            "Municipal wastewater",
+            "Las Vegas resorts",
+            "Free blind proof of value",
+            "Paid pilot and deployment",
+            "Contact Craig about investing",
         ):
             self.assertIn(phrase, text)
 
