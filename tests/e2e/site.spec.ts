@@ -2,14 +2,14 @@ import { expect, test, type Page } from '@playwright/test';
 import path from 'node:path';
 
 const publicPages = [
-  { path: '/', purpose: /See Beyond the Signals/i, canonical: 'https://neraium.com/' },
+  { path: '/', purpose: /See when your infrastructure starts operating differently/i, canonical: 'https://neraium.com/' },
   { path: '/platform', purpose: /See when infrastructure starts behaving differently/i, canonical: 'https://neraium.com/platform' },
   { path: '/evidence', purpose: /What changed, what supports it/i, canonical: 'https://neraium.com/evidence' },
   { path: '/applications', purpose: /Practical questions for interconnected facility systems/i, canonical: 'https://neraium.com/applications' },
   { path: '/pilot', purpose: /Start with history/i, canonical: 'https://neraium.com/pilot' },
   { path: '/methodology', purpose: /Establish expected behavior/i, canonical: 'https://neraium.com/methodology' },
   { path: '/security', purpose: /Read-only by design/i, canonical: 'https://neraium.com/security' },
-  { path: '/company', purpose: /Built from the gap between what the dashboard/i, canonical: 'https://neraium.com/company' },
+  { path: '/company', purpose: /Built for engineers investigating changes/i, canonical: 'https://neraium.com/company' },
   { path: '/operator-brief', purpose: /What a Neraium finding means/i, canonical: 'https://neraium.com/operator-brief' },
   { path: '/contact', purpose: /one system and one review question/i, canonical: 'https://neraium.com/contact' },
   { path: '/privacy', purpose: /Public inquiry, clearly bounded/i, canonical: 'https://neraium.com/privacy' },
