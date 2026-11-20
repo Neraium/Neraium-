@@ -394,8 +394,8 @@ class TestPositioningAndExperience(unittest.TestCase):
         for phrase in (
             "Systemic Infrastructure Intelligence",
             "See Beyond the Signals.",
-            "See when your infrastructure starts operating differently.",
-            "which relationship shifted, when it began, and how long it lasted.",
+            "Give operators time to plan their response.",
+            "which readings support it.",
             "Establish operating behavior",
             "Learn relationships and context",
             "Identify persistent systemic change",
